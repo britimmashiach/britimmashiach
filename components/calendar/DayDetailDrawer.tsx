@@ -134,53 +134,53 @@ export function DayDetailDrawer({ info, open, onClose }: DayDetailDrawerProps) {
           </section>
         )}
 
-        {/* Parashá */}
+        {/* Parasháh — link explícito para a página na plataforma (slug automático ou lista) */}
         {info.parsha && (() => {
           const match = findParashaByName(info.parsha)
-          const header = (
-            <div className="flex items-center gap-2">
-              <BookMarked className="w-4 h-4 text-petroleum-700 dark:text-petroleum-300" aria-hidden="true" />
-              <h2
-                id="parsha-heading"
-                className="font-cinzel text-sm font-semibold text-petroleum-800 dark:text-parchment-100 uppercase tracking-wider"
-              >
-                Parasháh da Semana
-              </h2>
-            </div>
-          )
-          const body = (
-            <>
-              <p className="font-cinzel text-lg font-semibold text-petroleum-800 dark:text-parchment-100 group-hover:text-gold-700 dark:group-hover:text-gold-400 transition-colors">
+          const parashaHref = match ? `/parashot/${match.slug}` : '/parashot'
+          return (
+            <section
+              className="rounded-xl border border-border/50 p-4 space-y-3 bg-background/60"
+              aria-labelledby="parsha-heading"
+            >
+              <div className="flex items-center gap-2">
+                <BookMarked className="w-4 h-4 text-petroleum-700 dark:text-petroleum-300" aria-hidden="true" />
+                <h2
+                  id="parsha-heading"
+                  className="font-cinzel text-sm font-semibold text-petroleum-800 dark:text-parchment-100 uppercase tracking-wider"
+                >
+                  Parasháh da semana
+                </h2>
+              </div>
+              <p className="font-cinzel text-lg font-semibold text-petroleum-800 dark:text-parchment-100">
                 {info.parsha}
-                {match && match.title.toLowerCase() !== info.parsha.toLowerCase() && (
+                {match && match.title.toLowerCase() !== info.parsha.toLowerCase().replace(/^parashat?\s+/i, '').trim() && (
                   <span className="ml-1.5 text-xs font-inter font-medium text-warmgray-500">
                     ({match.title})
                   </span>
                 )}
               </p>
-              {match && (
-                <p className="text-xs font-inter text-petroleum-700 dark:text-petroleum-300 inline-flex items-center gap-1 mt-1">
-                  Estudar Parasháh <ChevronRight className="w-3 h-3" aria-hidden="true" />
-                </p>
-              )}
-            </>
-          )
-          const className =
-            'rounded-xl border border-border/50 p-4 space-y-1 bg-background/60 group'
-          return match ? (
-            <Link
-              href={`/parashot/${match.slug}`}
-              className={cn(className, 'hover:border-gold-500/30 hover:bg-gold-500/[0.04] transition-colors block')}
-              aria-labelledby="parsha-heading"
-              onClick={onClose}
-            >
-              {header}
-              {body}
-            </Link>
-          ) : (
-            <section className={className} aria-labelledby="parsha-heading">
-              {header}
-              {body}
+              <div className="flex flex-col gap-2 pt-1">
+                <Link
+                  href={parashaHref}
+                  onClick={onClose}
+                  className={cn(
+                    'inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-inter font-semibold transition-colors',
+                    match
+                      ? 'bg-petroleum-800 text-parchment-100 hover:bg-petroleum-900 dark:bg-gold-500 dark:text-petroleum-950 dark:hover:bg-gold-400'
+                      : 'border border-border bg-muted/50 text-foreground hover:bg-muted',
+                  )}
+                >
+                  {match ? 'Abrir esta Parasháh na plataforma' : 'Ver Parashot na plataforma'}
+                  <ChevronRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+                </Link>
+                {!match && (
+                  <p className="text-xs font-inter text-warmgray-500 leading-relaxed">
+                    O nome vindo do calendário não correspondeu automaticamente a uma página. Use a lista para localizar a sedrá
+                    equivalente.
+                  </p>
+                )}
+              </div>
             </section>
           )
         })()}

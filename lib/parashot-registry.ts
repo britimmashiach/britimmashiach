@@ -86,22 +86,26 @@ export function getParashaEntry(slug: string): OfficialParasha | undefined {
 export function findParashaByName(name: string): OfficialParasha | undefined {
   const norm = name.replace(/^parashat?\s+/i, '').trim()
   const lower = norm.toLowerCase()
+  const deApostrophe = lower.replace(/[''`´]/g, '')
+
   const direct = OFFICIAL_PARASHOT.find(
-    p =>
+    (p) =>
       p.title.toLowerCase() === lower ||
+      p.title.toLowerCase().replace(/[''`´]/g, '') === deApostrophe ||
       p.slug === lower ||
-      p.slug === lower.replace(/\s+/g, '-'),
+      p.slug === lower.replace(/\s+/g, '-') ||
+      p.slug === deApostrophe.replace(/\s+/g, '-'),
   )
   if (direct) return direct
 
   // Trata parshiot combinadas como "Tazria-Metzora" / "Matot-Masei" /
   // "Acharei Mot-Kedoshim" — devolve a primeira parashá da combinação,
   // que é a referência de estudo para a semana corrente.
-  const slugForm = lower.replace(/\s+/g, '-')
+  const slugForm = deApostrophe.replace(/\s+/g, '-')
   const parts = slugForm.split('-').filter(Boolean)
   for (let take = parts.length; take >= 1; take--) {
     const candidate = parts.slice(0, take).join('-')
-    const hit = OFFICIAL_PARASHOT.find(p => p.slug === candidate)
+    const hit = OFFICIAL_PARASHOT.find((p) => p.slug === candidate)
     if (hit) return hit
   }
   return undefined
