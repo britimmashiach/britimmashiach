@@ -9,9 +9,7 @@ export const metadata: Metadata = {
   description: 'Porções semanais da Toráh com Aliyot diárias e análise PaRDeS completa.',
 }
 
-// Revalida a listagem a cada 5 minutos para refletir parashot recém-publicadas
-// e PDFs recém-sincronizados (`npm run sync:pdfs`).
-export const revalidate = 300
+export const dynamic = 'force-dynamic'
 
 export default async function ParashotPage() {
   const parashot = await fetchParashot()
@@ -40,12 +38,17 @@ export default async function ParashotPage() {
             Nenhuma Parashá listada no momento.
           </p>
           <p className="text-xs font-inter text-warmgray-500 leading-relaxed">
-            A lista vem da tabela <code className="text-[11px] bg-muted px-1 rounded">parashot</code> no Supabase.
-            Se ela estiver vazia, ou se a leitura pública (RLS) estiver bloqueada, nada aparece aqui — mesmo com o site no ar.
+            A lista vem da tabela <code className="text-[11px] bg-muted px-1 rounded">parashot</code> no Supabase (chave{' '}
+            <code className="text-[11px] bg-muted px-1 rounded">anon</code>).
+            Tabela vazia, RLS sem SELECT para <code className="text-[11px] bg-muted px-1 rounded">anon</code>, ou variáveis{' '}
+            <code className="text-[11px] bg-muted px-1 rounded">NEXT_PUBLIC_SUPABASE_*</code> na Vercel apontando para outro projeto
+            geram a mesma tela vazia.
           </p>
           <p className="text-xs font-inter text-warmgray-400">
-            Administrador: Supabase → <strong>Table Editor</strong> → <strong>parashot</strong> (deve haver linhas) e{' '}
-            <strong>Authentication</strong> / políticas RLS com SELECT permitido para o papel anônimo, se aplicável.
+            Administrador: Supabase → <strong>Table Editor</strong> → <strong>parashot</strong> (linhas);{' '}
+            <strong>Database</strong> → <strong>Policies</strong> em <strong>parashot</strong> — política de SELECT para{' '}
+            <code className="text-[11px] bg-muted px-1 rounded">anon</code> (ex.: <code className="text-[11px] bg-muted px-1 rounded">parashot_select_public</code>).
+            Vercel: conferir URL e anon key do <em>mesmo</em> projeto. SQL de seed: <code className="text-[11px] bg-muted px-1 rounded">supabase/seed_parashot_54.sql</code>.
           </p>
         </div>
       )}
