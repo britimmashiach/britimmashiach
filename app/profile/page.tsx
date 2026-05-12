@@ -3,6 +3,8 @@ import { redirect } from 'next/navigation'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { ProfileClient } from '@/components/ui/ProfileClient'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Meu Perfil',
   description: 'Gerencie sua conta e assinatura na plataforma Brit Mashiach.',
@@ -13,6 +15,12 @@ export default async function ProfilePage({
 }: {
   searchParams: Promise<{ success?: string }>
 }) {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim()
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim()
+  if (!url || !key) {
+    redirect('/auth')
+  }
+
   const supabase = await createServerSupabaseClient()
   const { data: { user } } = await supabase.auth.getUser()
 
