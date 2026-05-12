@@ -4,7 +4,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 const PROTECTED_ROUTES = ['/profile', '/admin']
 const PREMIUM_ROUTES = ['/premium/content']
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
