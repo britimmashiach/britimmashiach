@@ -3,11 +3,10 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, Clock, Crown, Tag } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { fetchStudyBySlug, fetchStudySlugs } from '@/lib/studies-supabase'
+import { fetchStudyBySlug } from '@/lib/studies-supabase'
 
-export async function generateStaticParams() {
-  return fetchStudySlugs()
-}
+// Renderiza on-demand — sem pre-render de build, sem queries Supabase no build
+export const dynamic = 'force-dynamic'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params

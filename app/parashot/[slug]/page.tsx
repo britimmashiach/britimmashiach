@@ -2,21 +2,16 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, Crown, FileText, ExternalLink } from 'lucide-react'
-import { fetchParashaBySlug, fetchAliyotByParasha, fetchParashaSlugs } from '@/lib/parashot-supabase'
+import { fetchParashaBySlug, fetchAliyotByParasha } from '@/lib/parashot-supabase'
 import { getParashaTitle, getParashaEntry } from '@/lib/parashot-registry'
 import { AliyotList } from '@/components/parashot/AliyotList'
 import { getBookTheme } from '@/lib/book-themes'
 import { cn } from '@/lib/utils'
 
+// Renderiza on-demand (sem pré-render de build) — evita 54+ queries no Supabase
+// durante o build. ISR cuida do cache após o primeiro acesso.
+export const dynamic = 'force-dynamic'
 export const dynamicParams = true
-// Revalida a cada 5 minutos para que novos PDFs subidos no Supabase e
-// sincronizados via `npm run sync:pdfs` apareçam no site sem precisar de
-// um novo deploy.
-export const revalidate = 300
-
-export async function generateStaticParams() {
-  return fetchParashaSlugs()
-}
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
