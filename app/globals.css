@@ -1,0 +1,250 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Fonte hebraica local (copiar ShlomStam.ttf para public/fonts/) */
+@font-face {
+  font-family: 'Shlomo Stam';
+  src: url('/fonts/ShlomStam.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --background: 40 50% 96%;
+    --foreground: 210 30% 15%;
+    --card: 40 45% 98%;
+    --card-foreground: 210 30% 15%;
+    --popover: 40 45% 98%;
+    --popover-foreground: 210 30% 15%;
+    --primary: 207 48% 20%;
+    --primary-foreground: 40 50% 95%;
+    --secondary: 40 30% 90%;
+    --secondary-foreground: 207 48% 20%;
+    --muted: 40 25% 88%;
+    --muted-foreground: 30 15% 50%;
+    --accent: 43 52% 55%;
+    --accent-foreground: 207 48% 15%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 40 50% 96%;
+    --border: 40 20% 82%;
+    --input: 40 20% 82%;
+    --ring: 207 48% 20%;
+    --radius: 0.625rem;
+  }
+
+  .dark {
+    --background: 207 43% 10%;
+    --foreground: 40 35% 92%;
+    --card: 207 40% 13%;
+    --card-foreground: 40 35% 92%;
+    --popover: 207 40% 11%;
+    --popover-foreground: 40 35% 92%;
+    --primary: 43 52% 55%;
+    --primary-foreground: 207 43% 10%;
+    --secondary: 207 35% 18%;
+    --secondary-foreground: 40 35% 90%;
+    --muted: 207 30% 16%;
+    --muted-foreground: 30 15% 60%;
+    --accent: 43 52% 55%;
+    --accent-foreground: 207 43% 10%;
+    --destructive: 0 62% 45%;
+    --destructive-foreground: 40 35% 92%;
+    --border: 207 28% 22%;
+    --input: 207 28% 22%;
+    --ring: 43 52% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-inter), 'Inter', system-ui, sans-serif;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-cinzel), 'Cinzel', serif;
+    @apply tracking-wide;
+  }
+
+  .font-cormorant {
+    font-family: var(--font-cormorant), 'Cormorant Garamond', serif;
+  }
+
+  .font-cinzel {
+    font-family: var(--font-cinzel), 'Cinzel', serif;
+  }
+
+  .font-inter {
+    font-family: var(--font-inter), 'Inter', sans-serif;
+  }
+
+  .hebrew {
+    font-family: 'Shlomo Stam', 'Times New Roman', serif;
+    direction: rtl;
+    unicode-bidi: bidi-override;
+    line-height: 2.0;
+  }
+
+  .font-hebrew {
+    font-family: 'Shlomo Stam', 'Times New Roman', serif;
+    line-height: 1.9;
+  }
+}
+
+@layer components {
+  /* Cards */
+  .glass-card {
+    @apply bg-card/90 border border-border/40 rounded-xl;
+    box-shadow: 0 1px 3px rgba(27, 58, 75, 0.06), 0 1px 2px rgba(27, 58, 75, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  }
+
+  .dark .glass-card {
+    @apply bg-card/80 border-border/40;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+
+  /* Tipografia */
+  .gold-accent {
+    @apply text-gold-600 dark:text-gold-400;
+  }
+
+  .section-title {
+    @apply font-cinzel text-2xl md:text-3xl font-semibold text-petroleum-800 dark:text-parchment-100;
+  }
+
+  .section-subtitle {
+    @apply font-cormorant text-lg text-warmgray-600 dark:text-warmgray-400 italic;
+  }
+
+  /* Botões */
+  .btn-primary {
+    @apply inline-flex items-center justify-center
+           bg-petroleum-800 hover:bg-petroleum-700
+           text-parchment-100 font-inter font-medium
+           px-5 py-2.5 rounded-lg text-sm
+           transition-colors duration-150
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring
+           disabled:opacity-50 disabled:pointer-events-none
+           dark:bg-gold-500 dark:hover:bg-gold-400 dark:text-petroleum-950;
+  }
+
+  .btn-gold {
+    @apply inline-flex items-center justify-center
+           bg-gold-500 hover:bg-gold-600
+           text-petroleum-950 font-inter font-semibold
+           px-5 py-2.5 rounded-lg text-sm
+           transition-colors duration-150
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring
+           disabled:opacity-50 disabled:pointer-events-none;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center
+           hover:bg-muted text-foreground
+           px-4 py-2 rounded-lg text-sm font-inter
+           transition-colors duration-150
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring;
+  }
+
+  /* Badges */
+  .premium-badge {
+    @apply inline-flex items-center gap-1
+           bg-gradient-to-r from-gold-500 to-gold-400
+           text-petroleum-900 text-xs font-inter font-semibold
+           px-2.5 py-0.5 rounded-full;
+  }
+
+  /* Divider */
+  .divider-gold {
+    @apply border-0 h-px my-8;
+    background: linear-gradient(to right, transparent, rgba(201, 168, 76, 0.3), transparent);
+  }
+
+  /* Skeleton */
+  .skeleton {
+    @apply rounded-lg bg-muted;
+    background: linear-gradient(
+      90deg,
+      hsl(var(--muted)) 25%,
+      hsl(var(--muted) / 0.6) 50%,
+      hsl(var(--muted)) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.8s ease-in-out infinite;
+  }
+
+  /* Input */
+  .input-field {
+    @apply w-full px-3 py-2.5 rounded-lg border border-border
+           bg-background text-sm font-inter text-foreground
+           placeholder:text-warmgray-400
+           focus:outline-none focus:ring-2 focus:ring-ring/30 focus:border-ring/50
+           transition-colors duration-150;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: theme('colors.gold.500') transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: theme('colors.gold.500');
+    border-radius: 9999px;
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.3s ease-out;
+  }
+
+  /* Aura sutil para o item do dia presente */
+  .animate-today-aura {
+    animation: today-aura 4s ease-in-out infinite;
+  }
+
+  /* Fade-in do overlay dos modais */
+  .animate-drawer-overlay-in {
+    animation: drawer-overlay-in 0.2s ease-out;
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(3px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes today-aura {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(201, 168, 76, 0.12), 0 1px 4px rgba(201, 168, 76, 0.06); }
+  50%       { box-shadow: 0 0 0 2px rgba(201, 168, 76, 0.22), 0 2px 8px rgba(201, 168, 76, 0.10); }
+}
+
+@keyframes drawer-overlay-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
