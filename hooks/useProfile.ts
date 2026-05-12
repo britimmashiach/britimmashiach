@@ -67,6 +67,10 @@ export function useProfile() {
       void applySession(session ?? null)
     })
 
+    void supabase.auth.getSession().then(({ data }) => {
+      if (!cancelled) void applySession(data.session ?? null)
+    })
+
     return () => {
       cancelled = true
       subscription.unsubscribe()

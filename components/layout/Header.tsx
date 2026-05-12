@@ -232,7 +232,7 @@ export function Header() {
                           className="flex w-full items-center gap-2 px-3 py-2 text-sm font-inter text-foreground"
                         >
                           <Users className="h-3.5 w-3.5 text-warmgray-400 shrink-0" aria-hidden="true" />
-                          Promoções
+                          Manutenção
                         </Link>
                       </DropdownMenuItem>
                     )}
@@ -353,7 +353,7 @@ export function Header() {
                       className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-inter text-foreground hover:bg-muted w-full"
                     >
                       <Users className="w-4 h-4 text-warmgray-400 shrink-0" aria-hidden="true" />
-                      Promoções de utilizadores
+                      Manutenção do site
                     </Link>
                   )}
                   <button

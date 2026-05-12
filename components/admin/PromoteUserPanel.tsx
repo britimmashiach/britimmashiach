@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import { ShieldCheck, Crown, User } from 'lucide-react'
 import { promoteUserByEmailAction } from '@/app/admin/actions'
@@ -29,6 +30,7 @@ const roles: { value: UserRole; label: string; icon: typeof User; className: str
 ]
 
 export function PromoteUserPanel({ serviceRoleConfigured }: { serviceRoleConfigured: boolean }) {
+  const router = useRouter()
   const [email, setEmail] = useState('')
   const [loading, setLoading] = useState<UserRole | null>(null)
   const disabled = loading !== null || !serviceRoleConfigured
@@ -46,6 +48,7 @@ export function PromoteUserPanel({ serviceRoleConfigured }: { serviceRoleConfigu
         return
       }
       toast.success('Perfil atualizado', { description: r.message })
+      router.refresh()
     } finally {
       setLoading(null)
     }
