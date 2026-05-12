@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
+import { connection } from 'next/server'
 import { redirect } from 'next/navigation'
-import { createServerSupabaseClient } from '@/lib/supabase-server'
+import { createServerSupabaseClient, hasSupabaseServerEnv } from '@/lib/supabase-server'
 import { ProfileClient } from '@/components/ui/ProfileClient'
 
 export const dynamic = 'force-dynamic'
@@ -15,9 +16,10 @@ export default async function ProfilePage({
 }: {
   searchParams: Promise<{ success?: string }>
 }) {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim()
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim()
-  if (!url || !key) {
+  // Evita pré-render estático no `next build` (sem cookies / sem env no worker).
+  await connection()
+
+  if (!hasSupabaseServerEnv()) {
     redirect('/auth')
   }
 

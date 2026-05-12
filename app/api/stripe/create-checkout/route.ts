@@ -1,8 +1,12 @@
 import { NextResponse } from 'next/server'
 import { getStripe, PLANS } from '@/lib/stripe'
-import { createServerSupabaseClient } from '@/lib/supabase-server'
+import { createServerSupabaseClient, hasSupabaseServerEnv } from '@/lib/supabase-server'
 
 export async function POST() {
+  if (!hasSupabaseServerEnv()) {
+    return NextResponse.json({ error: 'Serviço indisponível: configure o Supabase.' }, { status: 503 })
+  }
+
   const supabase = await createServerSupabaseClient()
   const { data: { user } } = await supabase.auth.getUser()
 

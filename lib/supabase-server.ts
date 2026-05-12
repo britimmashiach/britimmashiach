@@ -3,15 +3,24 @@ import type { SupabaseClient } from '@supabase/supabase-js'
 import { cookies } from 'next/headers'
 import type { Database } from '@/types/database'
 
+/** URL + anon definidos (útil em páginas para evitar pré-render sem env na Vercel). */
+export function hasSupabaseServerEnv(): boolean {
+  return Boolean(
+    process.env.NEXT_PUBLIC_SUPABASE_URL?.trim() &&
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim(),
+  )
+}
+
 export async function createServerSupabaseClient(): Promise<SupabaseClient<Database>> {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  if (!url?.trim() || !key?.trim()) {
+  if (!hasSupabaseServerEnv()) {
     throw new Error(
       '[Supabase] NEXT_PUBLIC_SUPABASE_URL e NEXT_PUBLIC_SUPABASE_ANON_KEY são obrigatórias no servidor. ' +
         'Configure no Vercel (Settings → Environment Variables) e faça um novo deploy.',
     )
   }
+
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL!.trim()
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!.trim()
 
   const cookieStore = await cookies()
 
