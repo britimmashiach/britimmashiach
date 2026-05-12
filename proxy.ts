@@ -46,6 +46,13 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL('/auth', request.url))
   }
 
+  if (pathname.startsWith('/admin') && user) {
+    const { data: adminProfile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
+    if (adminProfile?.role !== 'admin') {
+      return NextResponse.redirect(new URL('/', request.url))
+    }
+  }
+
   if (isPremiumRoute && user) {
     const { data: profile } = await supabase
       .from('profiles')

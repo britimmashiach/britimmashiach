@@ -25,6 +25,7 @@ import {
   User,
   LogOut,
   ShieldCheck,
+  Users,
 } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { cn } from '@/lib/utils'
@@ -224,6 +225,17 @@ export function Header() {
                         Meu Perfil
                       </Link>
                     </DropdownMenuItem>
+                    {sessionDisplay.role === 'admin' && (
+                      <DropdownMenuItem asChild className="cursor-pointer rounded-lg p-0 focus:bg-muted">
+                        <Link
+                          href="/admin"
+                          className="flex w-full items-center gap-2 px-3 py-2 text-sm font-inter text-foreground"
+                        >
+                          <Users className="h-3.5 w-3.5 text-warmgray-400 shrink-0" aria-hidden="true" />
+                          Promoções
+                        </Link>
+                      </DropdownMenuItem>
+                    )}
                     <DropdownMenuSeparator className="my-0.5 h-px bg-border/60" />
                     <DropdownMenuItem
                       className="cursor-pointer rounded-lg px-3 py-2 text-sm font-inter text-warmgray-600 focus:text-foreground dark:text-warmgray-400"
@@ -334,6 +346,16 @@ export function Header() {
                     <User className="w-4 h-4 text-warmgray-400 shrink-0" aria-hidden="true" />
                     Meu Perfil
                   </Link>
+                  {sessionDisplay.role === 'admin' && (
+                    <Link
+                      href="/admin"
+                      onClick={() => setMobileOpen(false)}
+                      className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-inter text-foreground hover:bg-muted w-full"
+                    >
+                      <Users className="w-4 h-4 text-warmgray-400 shrink-0" aria-hidden="true" />
+                      Promoções de utilizadores
+                    </Link>
+                  )}
                   <button
                     type="button"
                     onClick={() => void handleSignOut()}
