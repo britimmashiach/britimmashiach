@@ -5,7 +5,7 @@ import { Crown, ArrowRight, BookOpen, FileText, ExternalLink } from 'lucide-reac
 import { cn } from '@/lib/utils'
 import { Drawer } from '@/components/ui/Drawer'
 import { AliyotTabs } from '@/components/parashot/AliyotTabs'
-import { createClient } from '@/lib/supabase'
+import { createClient, supabaseConfigured } from '@/lib/supabase'
 import { useProfile } from '@/hooks/useProfile'
 import type { Parasha, Aliyah } from '@/lib/parashot-supabase'
 import { getParashaTitle, getParashaEntry, groupParashotByBook } from '@/lib/parashot-registry'
@@ -46,6 +46,10 @@ export function ParashotClient({ parashot }: ParashotClientProps) {
     setLoadingAliyot(true)
     setAliyot([])
     try {
+      if (!supabaseConfigured) {
+        setLoadingAliyot(false)
+        return
+      }
       const supabase = createClient()
       const { data, error } = await supabase
         .from('aliyot')

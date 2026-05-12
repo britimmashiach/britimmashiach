@@ -3,7 +3,7 @@
 import { useEffect } from 'react'
 import { User, Crown, LogOut, Settings, Mail, Shield } from 'lucide-react'
 import { toast } from 'sonner'
-import { createClient } from '@/lib/supabase'
+import { createClient, supabaseConfigured } from '@/lib/supabase'
 import { cn } from '@/lib/utils'
 import type { Profile } from '@/types'
 
@@ -13,8 +13,6 @@ interface ProfileClientProps {
 }
 
 export function ProfileClient({ profile, successPayment }: ProfileClientProps) {
-  const supabase = createClient()
-
   useEffect(() => {
     if (successPayment) {
       toast.success('Assinatura confirmada', {
@@ -24,6 +22,13 @@ export function ProfileClient({ profile, successPayment }: ProfileClientProps) {
   }, [successPayment])
 
   async function handleLogout() {
+    if (!supabaseConfigured) {
+      toast.error('Supabase não configurado', {
+        description: 'Defina NEXT_PUBLIC_SUPABASE_URL e NEXT_PUBLIC_SUPABASE_ANON_KEY no ambiente (ex.: Vercel).',
+      })
+      return
+    }
+    const supabase = createClient()
     await supabase.auth.signOut()
     window.location.href = '/'
   }

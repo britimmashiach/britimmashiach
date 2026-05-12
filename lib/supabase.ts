@@ -35,5 +35,11 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 export function createClient() {
+  if (!supabaseConfigured) {
+    throw new Error(
+      '[Supabase] Defina NEXT_PUBLIC_SUPABASE_URL e NEXT_PUBLIC_SUPABASE_ANON_KEY no ambiente ' +
+        '(Vercel: Settings → Environment Variables → Production).',
+    )
+  }
   return createBrowserClient<Database>(SUPABASE_URL, SUPABASE_ANON_KEY)
 }

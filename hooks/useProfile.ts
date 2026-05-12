@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { createClient } from '@/lib/supabase'
+import { createClient, supabaseConfigured } from '@/lib/supabase'
 import type { Profile } from '@/types'
 
 export function useProfile() {
@@ -13,6 +13,10 @@ export function useProfile() {
 
     async function load() {
       try {
+        if (!supabaseConfigured) {
+          if (!cancelled) setLoading(false)
+          return
+        }
         const supabase = createClient()
         const { data: { user } } = await supabase.auth.getUser()
         if (!user || cancelled) { setLoading(false); return }

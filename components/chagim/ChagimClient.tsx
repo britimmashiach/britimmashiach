@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { Crown, ArrowRight, Flame, FileText, ExternalLink, Lock } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Drawer } from '@/components/ui/Drawer'
-import { createClient } from '@/lib/supabase'
+import { createClient, supabaseConfigured } from '@/lib/supabase'
 import { useProfile } from '@/hooks/useProfile'
 import Link from 'next/link'
 import type { Chag, ChagSection } from '@/lib/chagim-supabase'
@@ -118,6 +118,10 @@ export function ChagimClient({ chagim }: ChagimClientProps) {
       return
     }
     try {
+      if (!supabaseConfigured) {
+        setLoadingSections(false)
+        return
+      }
       const supabase = createClient()
       const { data, error } = await supabase
         .from('chag_sections')
