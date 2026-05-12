@@ -51,7 +51,7 @@ export async function signUpAction(
     password,
     options: {
       data: { full_name: fullName },
-      emailRedirectTo: `${origin}/auth`,
+      emailRedirectTo: `${origin}/auth/callback`,
     },
   })
   if (error) return { ok: false, message: error.message }

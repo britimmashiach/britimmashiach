@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { Mail, Lock, Eye, EyeOff, Loader2, User } from 'lucide-react'
 import { toast } from 'sonner'
 import { signInWithPasswordAction, signUpAction } from '@/app/auth/actions'
@@ -8,11 +9,20 @@ import { cn } from '@/lib/utils'
 
 type Mode = 'login' | 'register'
 
-export function AuthForm() {
+function AuthFormInner() {
+  const searchParams = useSearchParams()
   const [mode, setMode] = useState<Mode>('login')
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [form, setForm] = useState({ email: '', password: '', name: '' })
+
+  useEffect(() => {
+    const err = searchParams.get('error')
+    if (!err) return
+    toast.error('Acesso', { description: err })
+    const path = window.location.pathname + window.location.hash
+    window.history.replaceState(null, '', path)
+  }, [searchParams])
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -145,5 +155,13 @@ export function AuthForm() {
         </button>
       </form>
     </div>
+  )
+}
+
+export function AuthForm() {
+  return (
+    <Suspense fallback={<div className="h-48 animate-pulse rounded-lg bg-muted/40" aria-hidden="true" />}>
+      <AuthFormInner />
+    </Suspense>
   )
 }
