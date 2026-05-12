@@ -1,12 +1,14 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useTheme } from 'next-themes'
-import { Moon, Sun, Menu, X, BookOpen, Calendar, Library, GraduationCap, Crown, Flame } from 'lucide-react'
+import { Moon, Sun, Menu, X, BookOpen, Calendar, Library, GraduationCap, Crown, Flame, User, LogOut, ShieldCheck } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { cn } from '@/lib/utils'
 import { SiteLogo } from '@/components/layout/SiteLogo'
+import { useProfile } from '@/hooks/useProfile'
+import { createClient, supabaseConfigured } from '@/lib/supabase'
 
 const navLinks = [
   { href: '/calendar', label: 'Calendário', icon: Calendar },
@@ -17,18 +19,120 @@ const navLinks = [
   { href: '/premium',  label: 'Premium',    icon: Crown, highlight: true },
 ]
 
+function RoleBadge({ role }: { role: string }) {
+  if (role === 'admin') return (
+    <span className="inline-flex items-center gap-0.5 text-[10px] font-inter font-semibold px-1.5 py-0.5 rounded-full bg-petroleum-800 text-gold-400">
+      <ShieldCheck className="w-2.5 h-2.5" />
+      Admin
+    </span>
+  )
+  if (role === 'premium') return (
+    <span className="inline-flex items-center gap-0.5 text-[10px] font-inter font-semibold px-1.5 py-0.5 rounded-full bg-gold-500/20 text-gold-600 dark:text-gold-400">
+      <Crown className="w-2.5 h-2.5" />
+      Premium
+    </span>
+  )
+  return (
+    <span className="text-[10px] font-inter text-warmgray-400">Membro</span>
+  )
+}
+
+function UserMenu() {
+  const { profile, loading } = useProfile()
+  const [open, setOpen] = useState(false)
+  const router = useRouter()
+
+  async function handleSignOut() {
+    if (!supabaseConfigured) return
+    const supabase = createClient()
+    await supabase.auth.signOut()
+    setOpen(false)
+    router.refresh()
+    router.push('/')
+  }
+
+  if (loading) return <div className="w-8 h-8 rounded-full bg-muted animate-pulse" />
+
+  if (!profile) {
+    return (
+      <Link
+        href="/auth"
+        className="hidden md:inline-flex items-center text-sm font-inter font-medium text-warmgray-600 dark:text-warmgray-400 hover:text-petroleum-800 dark:hover:text-parchment-100 border border-border/50 hover:border-gold-500/30 transition-colors px-3 py-1.5 rounded-lg"
+      >
+        Entrar
+      </Link>
+    )
+  }
+
+  const initials = (profile.full_name || profile.email || 'U')
+    .split(' ').map((w: string) => w[0]).join('').slice(0, 2).toUpperCase()
+
+  return (
+    <div className="relative hidden md:block">
+      <button
+        onClick={() => setOpen(!open)}
+        className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg hover:bg-muted transition-colors"
+        aria-expanded={open}
+      >
+        <div className="w-7 h-7 rounded-full bg-petroleum-gradient flex items-center justify-center flex-shrink-0">
+          <span className="text-[11px] font-cinzel font-semibold text-gold-400">{initials}</span>
+        </div>
+        <div className="flex flex-col items-start leading-none gap-0.5">
+          <span className="text-xs font-inter font-medium text-foreground max-w-[100px] truncate">
+            {profile.full_name?.split(' ')[0] || 'Conta'}
+          </span>
+          <RoleBadge role={profile.role} />
+        </div>
+      </button>
+
+      {open && (
+        <>
+          <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
+          <div className="absolute right-0 top-full mt-2 w-48 bg-background border border-border/60 rounded-xl shadow-lg z-50 py-1 animate-fade-in">
+            <Link
+              href="/profile"
+              onClick={() => setOpen(false)}
+              className="flex items-center gap-2 px-3 py-2 text-sm font-inter text-foreground hover:bg-muted transition-colors"
+            >
+              <User className="w-3.5 h-3.5 text-warmgray-400" />
+              Meu Perfil
+            </Link>
+            <button
+              onClick={handleSignOut}
+              className="w-full flex items-center gap-2 px-3 py-2 text-sm font-inter text-warmgray-500 hover:text-foreground hover:bg-muted transition-colors"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+              Sair
+            </button>
+          </div>
+        </>
+      )}
+    </div>
+  )
+}
+
 export function Header() {
   const { theme, setTheme } = useTheme()
+  const { profile } = useProfile()
   const [mobileOpen, setMobileOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
   const pathname = usePathname()
+  const router = useRouter()
 
   useEffect(() => { setMounted(true) }, [])
   useEffect(() => { setMobileOpen(false) }, [pathname])
 
+  async function handleMobileSignOut() {
+    if (!supabaseConfigured) return
+    const supabase = createClient()
+    await supabase.auth.signOut()
+    setMobileOpen(false)
+    router.refresh()
+    router.push('/')
+  }
+
   return (
     <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm relative">
-      {/* Borda inferior luminosa — gradiente dourado discreto */}
       <div
         className="absolute bottom-0 inset-x-0 h-px pointer-events-none"
         style={{ background: 'linear-gradient(to right, transparent 0%, rgba(201,168,76,0.18) 30%, rgba(201,168,76,0.18) 70%, transparent 100%)' }}
@@ -38,7 +142,6 @@ export function Header() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 md:h-20">
 
-          {/* Emblema / Logo */}
           <Link href="/" className="flex items-center gap-3 group" aria-label="Sinagoga Brit Im Mashiach - Início">
             <SiteLogo />
             <div className="hidden sm:flex flex-col leading-tight">
@@ -51,7 +154,6 @@ export function Header() {
             </div>
           </Link>
 
-          {/* Navegação Desktop — texto limpo, sem ícones */}
           <nav className="hidden md:flex items-center" aria-label="Navegação principal">
             {navLinks.map(({ href, label, highlight }) => {
               const isActive = pathname === href || pathname.startsWith(href + '/')
@@ -70,7 +172,6 @@ export function Header() {
                   aria-current={isActive ? 'page' : undefined}
                 >
                   {label}
-                  {/* Linha ativa sutil */}
                   {isActive && !highlight && (
                     <span
                       className="absolute bottom-0.5 left-3.5 right-3.5 h-px bg-gold-500/50 rounded-full"
@@ -82,7 +183,6 @@ export function Header() {
             })}
           </nav>
 
-          {/* Ações */}
           <div className="flex items-center gap-1.5">
             {mounted && (
               <button
@@ -97,13 +197,7 @@ export function Header() {
               </button>
             )}
 
-            {/* Entrar — estilo portal, não app */}
-            <Link
-              href="/auth"
-              className="hidden md:inline-flex items-center text-sm font-inter font-medium text-warmgray-600 dark:text-warmgray-400 hover:text-petroleum-800 dark:hover:text-parchment-100 border border-border/50 hover:border-gold-500/30 transition-colors px-3 py-1.5 rounded-lg"
-            >
-              Entrar
-            </Link>
+            <UserMenu />
 
             <button
               className="md:hidden p-2 rounded-lg hover:bg-muted transition-colors"
@@ -120,7 +214,6 @@ export function Header() {
           </div>
         </div>
 
-        {/* Navegação Mobile — mantém ícones para reconhecimento */}
         {mobileOpen && (
           <nav
             id="mobile-nav"
@@ -148,10 +241,34 @@ export function Header() {
                 </Link>
               )
             })}
-            <div className="pt-2.5 border-t border-border/40 mt-2">
-              <Link href="/auth" className="btn-primary w-full text-center text-sm">
-                Entrar na plataforma
-              </Link>
+            <div className="pt-2.5 border-t border-border/40 mt-2 px-1 space-y-1">
+              {profile ? (
+                <>
+                  <div className="flex items-center gap-2 px-2 py-1.5">
+                    <div className="w-7 h-7 rounded-full bg-petroleum-gradient flex items-center justify-center flex-shrink-0">
+                      <span className="text-[11px] font-cinzel font-semibold text-gold-400">
+                        {(profile.full_name || profile.email || 'U').split(' ').map((w: string) => w[0]).join('').slice(0, 2).toUpperCase()}
+                      </span>
+                    </div>
+                    <div className="flex flex-col gap-0.5">
+                      <span className="text-xs font-inter font-medium text-foreground">{profile.full_name?.split(' ')[0] || 'Conta'}</span>
+                      <RoleBadge role={profile.role} />
+                    </div>
+                  </div>
+                  <Link href="/profile" onClick={() => setMobileOpen(false)} className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-inter text-foreground hover:bg-muted w-full">
+                    <User className="w-4 h-4 text-warmgray-400" />
+                    Meu Perfil
+                  </Link>
+                  <button onClick={handleMobileSignOut} className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-inter text-warmgray-500 hover:text-foreground hover:bg-muted w-full">
+                    <LogOut className="w-4 h-4" />
+                    Sair
+                  </button>
+                </>
+              ) : (
+                <Link href="/auth" className="btn-primary w-full text-center text-sm">
+                  Entrar na plataforma
+                </Link>
+              )}
             </div>
           </nav>
         )}
