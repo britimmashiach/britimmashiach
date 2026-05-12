@@ -30,7 +30,10 @@ interface AliyotListProps {
 }
 
 export function AliyotList({ aliyot }: AliyotListProps) {
-  const [expanded, setExpanded] = useState<number | null>(null)
+  // Começa com aliyah 1 expandida — é sempre acessível gratuitamente e a mais
+  // provável de ter conteúdo. Hoje pode ser uma aliyah bloqueada (2-7), então
+  // não usamos o dia corrente como padrão de expansão.
+  const [expanded, setExpanded] = useState<number>(1)
   const [todayAliyah, setTodayAliyah] = useState(1)
   const [activePdf, setActivePdf] = useState<{ url: string; title: string } | null>(null)
   const { isPremium, isAdmin, loading: profileLoading } = useProfile()
@@ -38,7 +41,10 @@ export function AliyotList({ aliyot }: AliyotListProps) {
   useEffect(() => {
     const today = new Date().getDay() + 1
     setTodayAliyah(today)
-    setExpanded(today)
+    // Só auto-expande a aliyah do dia se o usuário tiver acesso a ela
+    // (admin, premium, ou domingo/aliyah 1). Evita mostrar gate premium
+    // como primeira coisa visível.
+    if (today === 1) setExpanded(1)
   }, [])
 
   return (
