@@ -33,7 +33,7 @@ export function AliyotList({ aliyot }: AliyotListProps) {
   // Começa com aliyah 1 expandida — é sempre acessível gratuitamente e a mais
   // provável de ter conteúdo. Hoje pode ser uma aliyah bloqueada (2-7), então
   // não usamos o dia corrente como padrão de expansão.
-  const [expanded, setExpanded] = useState<number>(1)
+  const [expanded, setExpanded] = useState<number | null>(1)
   const [todayAliyah, setTodayAliyah] = useState(1)
   const [activePdf, setActivePdf] = useState<{ url: string; title: string } | null>(null)
   const { isPremium, isAdmin, loading: profileLoading } = useProfile()
