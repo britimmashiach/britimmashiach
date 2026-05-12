@@ -35,9 +35,18 @@ export default async function ParashotPage() {
 
       {/* Estado vazio */}
       {parashot.length === 0 && (
-        <div className="glass-card p-10 text-center space-y-2">
-          <p className="font-cinzel text-base text-warmgray-500">Parashot ainda não disponíveis.</p>
-          <p className="text-xs font-inter text-warmgray-400">O conteúdo está sendo preparado pelo Rav.</p>
+        <div className="glass-card p-10 text-center space-y-3 max-w-lg mx-auto">
+          <p className="font-cinzel text-base text-warmgray-600 dark:text-warmgray-400">
+            Nenhuma Parashá listada no momento.
+          </p>
+          <p className="text-xs font-inter text-warmgray-500 leading-relaxed">
+            A lista vem da tabela <code className="text-[11px] bg-muted px-1 rounded">parashot</code> no Supabase.
+            Se ela estiver vazia, ou se a leitura pública (RLS) estiver bloqueada, nada aparece aqui — mesmo com o site no ar.
+          </p>
+          <p className="text-xs font-inter text-warmgray-400">
+            Administrador: Supabase → <strong>Table Editor</strong> → <strong>parashot</strong> (deve haver linhas) e{' '}
+            <strong>Authentication</strong> / políticas RLS com SELECT permitido para o papel anônimo, se aplicável.
+          </p>
         </div>
       )}
 

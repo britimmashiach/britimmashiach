@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Mail, Lock, Eye, EyeOff, Loader2, User } from 'lucide-react'
 import { toast } from 'sonner'
-import { createClient, supabaseConfigured } from '@/lib/supabase'
+import { signInWithPasswordAction, signUpAction } from '@/app/auth/actions'
 import { cn } from '@/lib/utils'
 
 type Mode = 'login' | 'register'
@@ -16,40 +16,25 @@ export function AuthForm() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-
-    if (!supabaseConfigured) {
-      toast.error('Servidor não configurado', {
-        description: 'Preencha NEXT_PUBLIC_SUPABASE_URL e NEXT_PUBLIC_SUPABASE_ANON_KEY no .env.local e reinicie o servidor.',
-      })
-      return
-    }
-
     setLoading(true)
-    const supabase = createClient()
 
     try {
       if (mode === 'login') {
-        const { error } = await supabase.auth.signInWithPassword({
-          email: form.email,
-          password: form.password,
-        })
-        if (error) throw error
-        toast.success('Bem-vindo de volta', { description: 'Redirecionando...' })
-        window.location.href = '/'
+        const err = await signInWithPasswordAction(form.email, form.password)
+        if (err) {
+          toast.error('Erro', { description: err.error })
+          return
+        }
       } else {
-        const { error } = await supabase.auth.signUp({
-          email: form.email,
-          password: form.password,
-          options: {
-            data: { full_name: form.name },
-          },
-        })
-        if (error) throw error
-        toast.success('Conta criada', { description: 'Verifique seu email para confirmar o cadastro.' })
+        const r = await signUpAction(form.email, form.password, form.name)
+        if (!r.ok) {
+          toast.error('Erro', { description: r.message })
+          return
+        }
+        toast.success('Conta criada', { description: r.message })
       }
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Erro inesperado'
-      toast.error('Erro', { description: msg })
+    } catch {
+      // `redirect('/')` na Server Action pode lançar no cliente — navegação segue normalmente.
     } finally {
       setLoading(false)
     }
