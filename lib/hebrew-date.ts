@@ -303,14 +303,15 @@ function buildOmerText(day: number): string {
   return `Dia ${day} - ${daySefirah} de ${weekSefirah}`
 }
 
-export function getParashaName(date: Date = new Date()): string | null {
-  const civil = toCivilNoon(date)
-  const hDate = new HDate(civil)
+/** Parasháh emitida pelo Hebcal nesse dia civil (muitas vezes só em Shabat na diáspora). */
+function parshaFromHebcalDay(civil: Date): string | null {
+  const hDate = new HDate(toCivilNoon(civil))
   const events = HebrewCalendar.calendar({
     start: hDate,
     end: hDate,
     sedrot: true,
     il: false,
+    locale: 'en',
   })
   for (const ev of events) {
     if (ev.getFlags() & flags.PARSHA_HASHAVUA) {
@@ -318,6 +319,31 @@ export function getParashaName(date: Date = new Date()): string | null {
     }
   }
   return null
+}
+
+/** Shabat (meio-dia em SP) da mesma semana civil domingo–sábado da data. */
+function saturdayNoonOfBrazilWeek(civilInput: Date): Date {
+  const { year, monthIndex, day } = getCivilDatePartsInTimeZone(
+    civilInput,
+    SITE_CIVIL_TIMEZONE,
+  )
+  const anchor = dateAtNoonBrazil(year, monthIndex, day)
+  const dow = getDayOfWeekInBrazil(anchor)
+  const addDays = (6 - dow + 7) % 7
+  return toCivilNoon(new Date(anchor.getTime() + addDays * 86_400_000))
+}
+
+/** Se o dia não tem leitura listada, usa o Shabat da mesma semana civil (dom–sáb, SP). */
+function withWeeklyParshaFallback(civil: Date, direct: string | null): string | null {
+  if (direct) return direct
+  const sat = saturdayNoonOfBrazilWeek(civil)
+  if (sat.getTime() === civil.getTime()) return null
+  return parshaFromHebcalDay(sat)
+}
+
+export function getParashaName(date: Date = new Date()): string | null {
+  const civil = toCivilNoon(date)
+  return withWeeklyParshaFallback(civil, parshaFromHebcalDay(civil))
 }
 
 // =============================================================================
@@ -352,6 +378,7 @@ export function getDayInfo(date: Date = new Date()): DayInfo {
       if (match) omerDay = parseInt(match[1], 10)
     }
   }
+  parsha = withWeeklyParshaFallback(civil, parsha)
 
   const holidayEvent = pickPrimaryHolidayEvent(civil)
   const holidayKey = holidayEvent ? mapToHolidayKey(holidayEvent) : null
