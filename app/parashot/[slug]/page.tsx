@@ -5,8 +5,10 @@ import { ArrowLeft, Crown, FileText, ExternalLink } from 'lucide-react'
 import { fetchParashaBySlug, fetchAliyotByParasha } from '@/lib/parashot-supabase'
 import { getParashaTitle, getParashaEntry } from '@/lib/parashot-registry'
 import { AliyotList } from '@/components/parashot/AliyotList'
+import { ParashaPremiumGate } from '@/components/parashot/ParashaPremiumGate'
 import { getBookTheme } from '@/lib/book-themes'
 import { cn } from '@/lib/utils'
+import { userHasPremiumParashaAccess } from '@/lib/parashot-access-server'
 
 // Renderiza on-demand (sem pré-render de build) — evita 54+ queries no Supabase
 // durante o build. ISR cuida do cache após o primeiro acesso.
@@ -17,6 +19,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params
   const parasha = await fetchParashaBySlug(slug)
   if (!parasha) return { title: 'Parashá não encontrada' }
+  if (parasha.isPremium) {
+    const allowed = await userHasPremiumParashaAccess()
+    if (!allowed) {
+      return {
+        title: `${getParashaTitle(slug)} · Premium`,
+        description: 'Estudo completo desta Parasháh disponível para assinantes Premium.',
+        robots: { index: false, follow: true },
+      }
+    }
+  }
   return {
     title: `Parasháh ${getParashaTitle(parasha.slug)}`,
     description: parasha.summary,
@@ -27,6 +39,12 @@ export default async function ParashaDetailPage({ params }: { params: Promise<{ 
   const { slug } = await params
   const parasha = await fetchParashaBySlug(slug)
   if (!parasha) notFound()
+
+  const canReadFull = !parasha.isPremium || (await userHasPremiumParashaAccess())
+  if (!canReadFull) {
+    return <ParashaPremiumGate slug={slug} />
+  }
+
   const aliyot = await fetchAliyotByParasha(parasha.id)
 
   const entry = getParashaEntry(parasha.slug)
