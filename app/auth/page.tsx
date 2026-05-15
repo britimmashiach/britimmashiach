@@ -19,11 +19,11 @@ export default function AuthPage() {
             <Star className="w-6 h-6 text-gold-400 fill-gold-400" />
           </div>
           <div>
-            <h1 className="font-cinzel text-2xl font-semibold text-petroleum-800 dark:text-parchment-100">
-              Brit Mashiach
+            <h1 className="font-cinzel text-2xl font-semibold text-petroleum-800 dark:text-parchment-100 tracking-wide">
+              BRIT IM MASHIACH
             </h1>
             <p className="font-hebrew text-sm text-warmgray-500 dark:text-warmgray-400 mt-0.5" dir="rtl">
-              ברית משיח
+              ברית עם המשיח
             </p>
           </div>
         </div>

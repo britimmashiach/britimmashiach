@@ -138,10 +138,10 @@ export function Header() {
             <SiteLogo />
             <div className="hidden sm:flex flex-col leading-tight">
               <span className="font-cinzel text-sm md:text-base font-semibold text-petroleum-800 dark:text-parchment-100 tracking-widest">
-                Brit Mashiach
+                BRIT IM MASHIACH
               </span>
               <span className="text-[10px] md:text-xs font-hebrew text-warmgray-500 tracking-widest" dir="rtl" lang="he">
-                ברית משיח
+                ברית עם המשיח
               </span>
             </div>
           </Link>

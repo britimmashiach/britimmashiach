@@ -15,8 +15,8 @@ export function Footer() {
               <div className="w-7 h-7 rounded-full bg-petroleum-gradient flex items-center justify-center">
                 <Star className="w-3.5 h-3.5 text-gold-400 fill-gold-400" />
               </div>
-              <span className="font-cinzel text-base font-semibold text-petroleum-800 dark:text-parchment-100">
-                Brit Mashiach
+              <span className="font-cinzel text-base font-semibold text-petroleum-800 dark:text-parchment-100 tracking-wide">
+                BRIT IM MASHIACH
               </span>
             </div>
             <p className="text-sm font-inter text-warmgray-600 dark:text-warmgray-400 leading-relaxed max-w-xs">
