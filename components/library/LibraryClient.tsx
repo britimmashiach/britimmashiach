@@ -2,10 +2,12 @@
 
 import { useState, useMemo, useEffect } from 'react'
 import Link from 'next/link'
-import { Search, Crown, Download, BookMarked, Lock } from 'lucide-react'
+import { Search, Crown, Download, BookMarked, Lock, BookOpen } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { NoLibraryResults } from '@/components/ui/EmptyState'
+import { TanachReadOnlineLink } from '@/components/tanach/TanachReadOnlineLink'
 import { useProfile } from '@/hooks/useProfile'
+import type { TanachResumeScope } from '@/lib/tanach-reading-prefs'
 
 const CATEGORIES = [
   { id: 'all',     label: 'Todos'    },
@@ -24,6 +26,10 @@ interface Book {
   category: string
   isPremium: boolean
   year: number | null
+  /** Se definido, mostra ação “Ler online” em vez de “Baixar” (livro não premium). */
+  readOnlineHref?: string
+  /** “Ler online” para Tanach: usa última leitura no aparelho quando cabe no `scope`. */
+  readOnlineTanachResume?: { fallbackHref: string; scope: TanachResumeScope }
 }
 
 interface LibraryClientProps {
@@ -194,6 +200,21 @@ export function LibraryClient({ books }: LibraryClientProps) {
                       >
                         <Crown className="w-3 h-3" aria-hidden="true" />
                         Premium
+                      </Link>
+                    ) : book.readOnlineTanachResume ? (
+                      <TanachReadOnlineLink
+                        fallbackHref={book.readOnlineTanachResume.fallbackHref}
+                        scope={book.readOnlineTanachResume.scope}
+                        bookTitle={book.title}
+                      />
+                    ) : book.readOnlineHref ? (
+                      <Link
+                        href={book.readOnlineHref}
+                        className="inline-flex items-center gap-1 text-xs font-inter font-medium text-petroleum-700 dark:text-petroleum-300 hover:text-gold-600 dark:hover:text-gold-400 transition-colors"
+                        aria-label={`Ler online: ${book.title}`}
+                      >
+                        <BookOpen className="w-3 h-3" aria-hidden="true" />
+                        Ler online
                       </Link>
                     ) : (
                       <button

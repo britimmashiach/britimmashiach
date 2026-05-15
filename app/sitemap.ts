@@ -34,6 +34,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${APP_URL}/parashot`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${APP_URL}/studies`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${APP_URL}/library`, lastModified: now, changeFrequency: 'weekly', priority: 0.7 },
+    { url: `${APP_URL}/tanach`, lastModified: now, changeFrequency: 'weekly', priority: 0.65 },
+    { url: `${APP_URL}/tehilim`, lastModified: now, changeFrequency: 'weekly', priority: 0.65 },
     { url: `${APP_URL}/premium`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
   ]
 

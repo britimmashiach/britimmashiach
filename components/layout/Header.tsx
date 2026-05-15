@@ -26,6 +26,7 @@ import {
   LogOut,
   ShieldCheck,
   Users,
+  Languages,
 } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { cn } from '@/lib/utils'
@@ -40,6 +41,7 @@ const navLinks = [
   { href: '/chagim', label: 'Chagim', icon: Flame },
   { href: '/studies', label: 'Estudos', icon: GraduationCap },
   { href: '/library', label: 'Biblioteca', icon: Library },
+  { href: '/tanach', label: 'Tanach', icon: Languages },
   { href: '/premium', label: 'Premium', icon: Crown, highlight: true },
 ]
 
@@ -145,14 +147,14 @@ export function Header() {
           </Link>
 
           <nav className="hidden md:flex items-center" aria-label="Navegação principal">
-            {navLinks.map(({ href, label, highlight }) => {
+            {navLinks.map(({ href, label, icon: Icon, highlight }) => {
               const isActive = pathname === href || pathname.startsWith(href + '/')
               return (
                 <Link
                   key={href}
                   href={href}
                   className={cn(
-                    'px-3.5 py-2 text-sm font-inter transition-colors duration-150 relative',
+                    'px-3.5 py-2 text-sm font-inter transition-colors duration-150 relative inline-flex items-center gap-1.5',
                     highlight
                       ? 'text-gold-600 dark:text-gold-400 hover:text-gold-700 dark:hover:text-gold-300 font-medium'
                       : isActive
@@ -161,6 +163,7 @@ export function Header() {
                   )}
                   aria-current={isActive ? 'page' : undefined}
                 >
+                  <Icon className="w-3.5 h-3.5 shrink-0 opacity-90" aria-hidden="true" />
                   {label}
                   {isActive && !highlight && (
                     <span

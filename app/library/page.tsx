@@ -24,13 +24,15 @@ export const books = [
   },
   {
     id: '2',
-    title: 'Tehilim Kabalístico: Livros I e II',
+    title: 'Tehilim: transliteração e PaRDeS (L. I–II)',
     titleHebrew: 'תהלים קבלי',
     author: 'Rav Eliahu Barzilay ben Yehoshua',
-    description: 'Salmos 1 a 72 com análise PaRDeS completa, guematria e correspondências sefirôticas.',
+    description:
+      'Salmos 1 a 72 com análise PaRDeS (obra editorial). Transliteração latina do massoreto em preparação para leitura online neste site.',
     category: 'tehilim',
     isPremium: false,
     year: 5785,
+    readOnlineHref: '/tehilim',
   },
   {
     id: '3',
@@ -91,6 +93,7 @@ export const books = [
     category: 'toráh',
     isPremium: false,
     year: null,
+    readOnlineTanachResume: { fallbackHref: '/tanach/genesis', scope: 'torah' as const },
   },
 ]
 
