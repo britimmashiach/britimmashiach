@@ -22,6 +22,7 @@ const nextConfig: NextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
+              "media-src 'self'",
               "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://js.stripe.com",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",

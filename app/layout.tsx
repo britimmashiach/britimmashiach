@@ -5,6 +5,7 @@ import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { PageWrapper } from '@/components/layout/PageWrapper'
 import { AuthSessionToast } from '@/components/layout/AuthSessionToast'
+import { SiteAmbientAudio } from '@/components/layout/SiteAmbientAudio'
 import { Toaster } from 'sonner'
 import './globals.css'
 
@@ -134,6 +135,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           />
           <AuthSessionToast />
         </ThemeProvider>
+        <SiteAmbientAudio />
       </body>
     </html>
   )
