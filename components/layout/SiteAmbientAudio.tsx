@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { AlertCircle, Pause, Play, Volume2 } from 'lucide-react'
+import { AlertCircle, Pause, Play, Volume2, VolumeX } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 /**
@@ -20,6 +20,8 @@ export function SiteAmbientAudio() {
   const [loadFailed, setLoadFailed] = useState(false)
   const [playing, setPlaying] = useState(false)
   const [needsTap, setNeedsTap] = useState(false)
+  /** Reprodução automática em silêncio (política do browser); primeiro toque desmuta. */
+  const [mutedAutoplay, setMutedAutoplay] = useState(false)
   const [reduceMotion, setReduceMotion] = useState(false)
 
   const tryPlay = useCallback(async () => {
@@ -28,16 +30,29 @@ export function SiteAmbientAudio() {
     if (reduceMotion) return
     if (typeof window !== 'undefined' && window.sessionStorage.getItem(SESSION_PAUSED_KEY) === '1') {
       setPlaying(false)
+      setNeedsTap(false)
+      setMutedAutoplay(false)
       return
     }
     el.volume = DEFAULT_VOLUME
     try {
+      el.muted = false
       await el.play()
       setPlaying(true)
       setNeedsTap(false)
+      setMutedAutoplay(false)
     } catch {
-      setPlaying(false)
-      setNeedsTap(true)
+      try {
+        el.muted = true
+        await el.play()
+        setPlaying(true)
+        setNeedsTap(false)
+        setMutedAutoplay(true)
+      } catch {
+        setPlaying(false)
+        setNeedsTap(true)
+        setMutedAutoplay(false)
+      }
     }
   }, [loadFailed, reduceMotion])
 
@@ -61,7 +76,9 @@ export function SiteAmbientAudio() {
     const el = audioRef.current
     if (!el) return
     el.pause()
+    el.muted = false
     setPlaying(false)
+    setMutedAutoplay(false)
     try {
       window.sessionStorage.setItem(SESSION_PAUSED_KEY, '1')
     } catch {
@@ -78,23 +95,43 @@ export function SiteAmbientAudio() {
       /* ignore */
     }
     el.volume = DEFAULT_VOLUME
+    el.muted = false
     void el
       .play()
       .then(() => {
         setPlaying(true)
         setNeedsTap(false)
+        setMutedAutoplay(false)
       })
       .catch(() => {
         setPlaying(false)
         setNeedsTap(true)
+        setMutedAutoplay(false)
       })
   }, [])
 
+  const unmuteFromAutoplay = useCallback(() => {
+    const el = audioRef.current
+    if (!el) return
+    el.muted = false
+    setMutedAutoplay(false)
+    if (el.paused) {
+      void el.play().catch(() => {
+        setNeedsTap(true)
+        setPlaying(false)
+      })
+    }
+  }, [])
+
   const onMainClick = useCallback(() => {
+    if (mutedAutoplay) {
+      unmuteFromAutoplay()
+      return
+    }
     if (needsTap) void resume()
     else if (playing) pause()
     else void resume()
-  }, [needsTap, playing, pause, resume])
+  }, [mutedAutoplay, needsTap, playing, pause, resume, unmuteFromAutoplay])
 
   const retryLoad = useCallback(() => {
     const el = audioRef.current
@@ -105,16 +142,29 @@ export function SiteAmbientAudio() {
     const run = async () => {
       if (typeof window !== 'undefined' && window.sessionStorage.getItem(SESSION_PAUSED_KEY) === '1') {
         setPlaying(false)
+        setNeedsTap(false)
+        setMutedAutoplay(false)
         return
       }
       el.volume = DEFAULT_VOLUME
       try {
+        el.muted = false
         await el.play()
         setPlaying(true)
         setNeedsTap(false)
+        setMutedAutoplay(false)
       } catch {
-        setPlaying(false)
-        setNeedsTap(true)
+        try {
+          el.muted = true
+          await el.play()
+          setPlaying(true)
+          setNeedsTap(false)
+          setMutedAutoplay(true)
+        } catch {
+          setPlaying(false)
+          setNeedsTap(true)
+          setMutedAutoplay(false)
+        }
       }
     }
 
@@ -162,30 +212,44 @@ export function SiteAmbientAudio() {
       className={cn(
         position,
         'inline-flex items-center gap-2 rounded-full border shadow-lg backdrop-blur-sm',
-        needsTap
+        needsTap || mutedAutoplay
           ? 'border-gold-500/45 bg-petroleum-950/92 px-3 py-2.5 text-parchment-50'
           : 'border-border/60 bg-background/95 px-3 py-2 text-foreground hover:border-gold-500/35 hover:bg-muted/80',
         'text-xs font-inter font-medium',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500/45',
       )}
-      aria-pressed={playing}
+      aria-pressed={playing && !mutedAutoplay}
       aria-label={
-        needsTap
-          ? 'Ativar música de fundo — Ana BeKoach'
-          : playing
-            ? 'Pausar música de fundo'
-            : 'Retomar música de fundo'
+        mutedAutoplay
+          ? 'Ligar som da música de fundo — Ana BeKoach'
+          : needsTap
+            ? 'Ativar música de fundo — Ana BeKoach'
+            : playing
+              ? 'Pausar música de fundo'
+              : 'Retomar música de fundo'
       }
-      title="Ana BeKoach — volume baixo"
+      title={
+        mutedAutoplay
+          ? 'A reprodução já começou em silêncio (regra do navegador). Toque para ouvir.'
+          : 'Ana BeKoach — volume baixo'
+      }
     >
       {needsTap ? (
         <Volume2 className="w-4 h-4 shrink-0 text-gold-400" aria-hidden="true" />
+      ) : mutedAutoplay ? (
+        <VolumeX className="w-4 h-4 shrink-0 text-gold-400" aria-hidden="true" />
       ) : playing ? (
         <Pause className="w-4 h-4 shrink-0 text-gold-600 dark:text-gold-400" aria-hidden="true" />
       ) : (
         <Play className="w-4 h-4 shrink-0 text-gold-600 dark:text-gold-400" aria-hidden="true" />
       )}
-      {needsTap ? 'Ativar som de fundo' : playing ? 'Pausar fundo' : 'Tocar fundo'}
+      {needsTap
+        ? 'Ativar som de fundo'
+        : mutedAutoplay
+          ? 'Ligar som de fundo'
+          : playing
+            ? 'Pausar fundo'
+            : 'Tocar fundo'}
     </button>
   )
 
