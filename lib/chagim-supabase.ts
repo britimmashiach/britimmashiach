@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
+import { getPlaceholderChagBySlug } from '@/lib/chagim-placeholders'
 import type { Database } from '@/types/database'
 
 type ChagRow = Database['public']['Tables']['chagim']['Row']
@@ -134,4 +135,31 @@ export async function fetchChagBySlug(slug: string): Promise<Chag | null> {
     devWarn(`fetchChagBySlug slug="${slug}" falhou:`, err)
     return null
   }
+}
+
+export async function fetchChagSectionsByChagId(chagId: string): Promise<ChagSection[]> {
+  if (chagId.startsWith('ph-')) return []
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL ?? ''
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ''
+  if (!url || !key) return []
+  try {
+    const supabase = createClient<Database>(url, key)
+    const { data, error } = await supabase
+      .from('chag_sections')
+      .select('*')
+      .eq('chag_id', chagId)
+      .order('order_num', { ascending: true })
+    if (error) throw error
+    return (data ?? []).map(normalizeChagSection)
+  } catch (err) {
+    devWarn(`fetchChagSectionsByChagId chagId="${chagId}" falhou:`, err)
+    return []
+  }
+}
+
+/** Resolve Chag do banco ou placeholder editorial (build/SEO sem Supabase). */
+export async function resolveChagBySlug(slug: string): Promise<Chag | null> {
+  const fromDb = await fetchChagBySlug(slug)
+  if (fromDb) return fromDb
+  return getPlaceholderChagBySlug(slug)
 }

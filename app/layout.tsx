@@ -8,6 +8,9 @@ import { AuthSessionToast } from '@/components/layout/AuthSessionToast'
 import { SiteAmbientAudio } from '@/components/layout/SiteAmbientAudio'
 import { Toaster } from 'sonner'
 import './globals.css'
+import { getPublicSiteOrigin } from '@/lib/public-site-url'
+import { rootJsonLdGraph } from '@/lib/json-ld'
+import { SITE_NAME, SITE_TAGLINE, RAV_NAME } from '@/lib/site-brand'
 
 const cinzel = Cinzel({
   subsets: ['latin'],
@@ -30,39 +33,49 @@ const inter = Inter({
   display: 'swap',
 })
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://brit-mashiach.vercel.app'
+const APP_URL = getPublicSiteOrigin()
 
 export const metadata: Metadata = {
   metadataBase: new URL(APP_URL),
   title: {
-    default: 'Brit Mashiach - Plataforma Judaico-Messiânica',
-    template: '%s | Brit Mashiach',
+    default: `${SITE_NAME} — Plataforma Judaico-Messiânica`,
+    template: `%s | ${SITE_NAME}`,
   },
-  description: 'Plataforma de estudos judaico-messiânicos, Kabaláh Luriana, calendário hebraico e espiritualidade profunda sob a orientação do Rav Eliahu Barzilay ben Yehoshua.',
-  keywords: ['judaísmo messiânico', 'kabaláh', 'toráh', 'parashá', 'calendário hebraico', 'estudos judaicos', 'brit mashiach', 'rav eliahu barzilay'],
-  authors: [{ name: 'Rav Eliahu Barzilay ben Yehoshua', url: APP_URL }],
+  description: `${SITE_TAGLINE} Sob a orientação do ${RAV_NAME}.`,
+  keywords: [
+    'judaísmo messiânico',
+    'kabaláh luriana',
+    'toráh',
+    'parashá',
+    'calendário hebraico',
+    'tanach',
+    'chagim',
+    'brit im mashiach',
+    'rav eliahu barzilay',
+  ],
+  authors: [{ name: RAV_NAME, url: APP_URL }],
   creator: 'Congregação Brit Im Mashiach',
-  publisher: 'Brit Mashiach',
+  publisher: SITE_NAME,
   openGraph: {
     type: 'website',
     locale: 'pt_BR',
     url: APP_URL,
-    siteName: 'Brit Mashiach',
-    title: 'Brit Mashiach - Plataforma Judaico-Messiânica',
-    description: 'Estudos aprofundados, Kabaláh Luriana, calendário hebraico e espiritualidade messiânica autêntica.',
+    siteName: SITE_NAME,
+    title: `${SITE_NAME} — Plataforma Judaico-Messiânica`,
+    description: SITE_TAGLINE,
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Brit Mashiach',
+        alt: SITE_NAME,
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Brit Mashiach',
-    description: 'Plataforma judaico-messiânica de estudos e espiritualidade profunda.',
+    title: SITE_NAME,
+    description: SITE_TAGLINE,
     images: ['/og-image.png'],
   },
   robots: {
@@ -87,20 +100,7 @@ export const viewport: Viewport = {
 
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: 'Brit Mashiach',
-  description: 'Plataforma judaico-messiânica de estudos espirituais',
-  url: APP_URL,
-  founder: {
-    '@type': 'Person',
-    name: 'Rav Eliahu Barzilay ben Yehoshua',
-  },
-  address: {
-    '@type': 'PostalAddress',
-    addressLocality: 'Franca',
-    addressRegion: 'São Paulo',
-    addressCountry: 'BR',
-  },
+  '@graph': rootJsonLdGraph(),
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

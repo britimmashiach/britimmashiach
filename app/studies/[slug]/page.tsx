@@ -4,7 +4,8 @@ import Link from 'next/link'
 import { ArrowLeft, Clock, Crown, Tag } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { fetchStudyBySlug, fetchStudySlugs } from '@/lib/studies-supabase'
-import { studyArticleJsonLd } from '@/lib/json-ld'
+import { breadcrumbJsonLd, studyArticleJsonLd } from '@/lib/json-ld'
+import { Breadcrumbs } from '@/components/seo/Breadcrumbs'
 import { getPublicSiteOrigin } from '@/lib/public-site-url'
 import { JsonLd } from '@/components/seo/JsonLd'
 
@@ -55,17 +56,27 @@ export default async function StudyDetailPage({ params }: { params: Promise<{ sl
 
   if (!study) notFound()
 
+  const crumbs = [
+    { name: 'Início', path: '/' },
+    { name: 'Estudos', path: '/studies' },
+    { name: study.title, path: `/studies/${slug}` },
+  ]
+
   return (
     <div className="container mx-auto px-4 py-10 max-w-3xl">
       <JsonLd
-        data={studyArticleJsonLd({
-          slug: study.slug,
-          title: study.title,
-          excerpt: study.excerpt,
-          publishedAt: study.publishedAt,
-          category: study.category,
-        })}
+        data={[
+          studyArticleJsonLd({
+            slug: study.slug,
+            title: study.title,
+            excerpt: study.excerpt,
+            publishedAt: study.publishedAt,
+            category: study.category,
+          }),
+          breadcrumbJsonLd(crumbs),
+        ]}
       />
+      <Breadcrumbs items={crumbs} />
       <Link href="/studies" className="inline-flex items-center gap-1.5 text-sm font-inter text-warmgray-500 hover:text-foreground transition-colors mb-8">
         <ArrowLeft className="w-4 h-4" />
         Voltar aos estudos

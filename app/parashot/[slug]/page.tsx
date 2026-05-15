@@ -11,9 +11,11 @@ import { cn } from '@/lib/utils'
 import { userHasPremiumParashaAccess } from '@/lib/parashot-access-server'
 import { OFFICIAL_PARASHOT } from '@/lib/parashot-registry'
 import { fetchParashaSlugs } from '@/lib/parashot-supabase'
-import { parashaWebPageJsonLd } from '@/lib/json-ld'
+import { breadcrumbJsonLd, parashaWebPageJsonLd } from '@/lib/json-ld'
 import { getPublicSiteOrigin } from '@/lib/public-site-url'
 import { JsonLd } from '@/components/seo/JsonLd'
+import { Breadcrumbs } from '@/components/seo/Breadcrumbs'
+import { AliyotIndexable } from '@/components/parashot/AliyotIndexable'
 
 export const revalidate = 3600
 export const dynamicParams = true
@@ -70,12 +72,21 @@ export default async function ParashaDetailPage({ params }: { params: Promise<{ 
     return <ParashaPremiumGate slug={slug} />
   }
 
-  const jsonLd = parashaWebPageJsonLd({
-    slug: parasha.slug,
-    title: getParashaTitle(parasha.slug),
-    description: parasha.summary,
-    publishedAt: parasha.publishedAt,
-  })
+  const parashaTitle = getParashaTitle(parasha.slug)
+  const crumbs = [
+    { name: 'Início', path: '/' },
+    { name: 'Parashot', path: '/parashot' },
+    { name: parashaTitle, path: `/parashot/${slug}` },
+  ]
+  const jsonLd = [
+    parashaWebPageJsonLd({
+      slug: parasha.slug,
+      title: parashaTitle,
+      description: parasha.summary,
+      publishedAt: parasha.publishedAt,
+    }),
+    breadcrumbJsonLd(crumbs),
+  ]
 
   const aliyot = await fetchAliyotByParasha(parasha.id)
 
@@ -86,6 +97,7 @@ export default async function ParashaDetailPage({ params }: { params: Promise<{ 
   return (
     <div className="relative min-h-screen">
       <JsonLd data={jsonLd} />
+      <Breadcrumbs items={crumbs} />
       {/* Glow sutil por livro — quase imperceptível, sentido, não visto */}
       {bookTheme.glow && (
         <div
@@ -164,8 +176,9 @@ export default async function ParashaDetailPage({ params }: { params: Promise<{ 
 
         <hr className="divider-gold" />
 
-        {/* Aliyot */}
-        <div className="mt-8">
+        <AliyotIndexable parashaTitle={parashaTitle} aliyot={aliyot} />
+
+        <div className="mt-8" aria-label="Estudo interativo das Aliyot">
           <AliyotList aliyot={aliyot} />
         </div>
 
