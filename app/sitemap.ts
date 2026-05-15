@@ -1,57 +1,68 @@
 import type { MetadataRoute } from 'next'
+import { TANACH_BOOKS } from '@/lib/tanach-books'
+import { OFFICIAL_PARASHOT } from '@/lib/parashot-registry'
+import { fetchParashaSlugs } from '@/lib/parashot-supabase'
+import { fetchStudySlugs } from '@/lib/studies-supabase'
+import { getPublicSiteOrigin } from '@/lib/public-site-url'
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://brit-mashiach.vercel.app'
-
-const parashotSlugs = [
-  'bereshit', 'noach', 'lech-lecha', 'vayera', 'chayei-sarah', 'toldot',
-  'vayetze', 'vayishlach', 'vayeshev', 'miketz', 'vayigash', 'vayechi',
-  'shemot', 'vaera', 'bo', 'beshalach', 'yitro', 'mishpatim', 'terumah',
-  'tetzaveh', 'ki-tisa', 'vayakhel', 'pekudei', 'vayikra', 'tzav',
-  'shemini', 'tazria', 'metzora', 'acharei-mot', 'kedoshim', 'emor',
-  'behar', 'bechukotai', 'bamidbar', 'nasso', 'behaalotecha', 'shelach',
-  'korach', 'chukat', 'balak', 'pinchas', 'matot', 'masei', 'devarim',
-  'vaetchanan', 'eikev', 'reeh', 'shoftim', 'ki-teitzei', 'ki-tavo',
-  'nitzavim', 'vayeilech', 'haazinu', 'vezot-habracha',
-]
-
-const studySlugs = [
-  'ain-sof-e-a-emanacao-divina',
-  'chesed-de-malchut-sefirat-haomer',
-  'netivot-caminho-13-dalet-keter-tiferet',
-  'parashat-emor-5786',
-  'tehilim-23-ado-nai-roi',
-  'letra-alef-em-kabalah',
-  'shabat-e-a-rainha',
-  'olamot-quatro-mundos',
-]
-
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const origin = getPublicSiteOrigin()
   const now = new Date()
 
   const staticRoutes: MetadataRoute.Sitemap = [
-    { url: APP_URL, lastModified: now, changeFrequency: 'daily', priority: 1 },
-    { url: `${APP_URL}/calendar`, lastModified: now, changeFrequency: 'daily', priority: 0.9 },
-    { url: `${APP_URL}/parashot`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
-    { url: `${APP_URL}/studies`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
-    { url: `${APP_URL}/library`, lastModified: now, changeFrequency: 'weekly', priority: 0.7 },
-    { url: `${APP_URL}/tanach`, lastModified: now, changeFrequency: 'weekly', priority: 0.65 },
-    { url: `${APP_URL}/tehilim`, lastModified: now, changeFrequency: 'weekly', priority: 0.65 },
-    { url: `${APP_URL}/premium`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: origin, lastModified: now, changeFrequency: 'daily', priority: 1 },
+    { url: `${origin}/calendar`, lastModified: now, changeFrequency: 'daily', priority: 0.9 },
+    { url: `${origin}/parashot`, lastModified: now, changeFrequency: 'weekly', priority: 0.85 },
+    { url: `${origin}/chagim`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
+    { url: `${origin}/studies`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
+    { url: `${origin}/library`, lastModified: now, changeFrequency: 'weekly', priority: 0.7 },
+    { url: `${origin}/tanach`, lastModified: now, changeFrequency: 'weekly', priority: 0.75 },
+    { url: `${origin}/tehilim`, lastModified: now, changeFrequency: 'weekly', priority: 0.65 },
+    { url: `${origin}/premium`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
   ]
 
-  const parashaRoutes: MetadataRoute.Sitemap = parashotSlugs.map((slug) => ({
-    url: `${APP_URL}/parashot/${slug}`,
+  const [studySlugs, parashaDbSlugs] = await Promise.all([fetchStudySlugs(), fetchParashaSlugs()])
+
+  const parashaSlugs = new Set([
+    ...OFFICIAL_PARASHOT.map((p) => p.slug),
+    ...parashaDbSlugs.map((p) => p.slug),
+  ])
+
+  const parashaRoutes: MetadataRoute.Sitemap = [...parashaSlugs].map((slug) => ({
+    url: `${origin}/parashot/${slug}`,
     lastModified: now,
     changeFrequency: 'monthly' as const,
-    priority: 0.6,
+    priority: 0.65,
   }))
 
-  const studyRoutes: MetadataRoute.Sitemap = studySlugs.map((slug) => ({
-    url: `${APP_URL}/studies/${slug}`,
+  const studyRoutes: MetadataRoute.Sitemap = studySlugs.map(({ slug }) => ({
+    url: `${origin}/studies/${slug}`,
     lastModified: now,
     changeFrequency: 'monthly' as const,
-    priority: 0.6,
+    priority: 0.65,
   }))
 
-  return [...staticRoutes, ...parashaRoutes, ...studyRoutes]
+  const tanachBookRoutes: MetadataRoute.Sitemap = TANACH_BOOKS.map((b) => ({
+    url: `${origin}/tanach/${b.slug}`,
+    lastModified: now,
+    changeFrequency: 'monthly' as const,
+    priority: 0.55,
+  }))
+
+  const tanachChapterRoutes: MetadataRoute.Sitemap = TANACH_BOOKS.flatMap((b) =>
+    Array.from({ length: b.chapters }, (_, i) => ({
+      url: `${origin}/tanach/${b.slug}/${i + 1}`,
+      lastModified: now,
+      changeFrequency: 'yearly' as const,
+      priority: 0.45,
+    })),
+  )
+
+  return [
+    ...staticRoutes,
+    ...parashaRoutes,
+    ...studyRoutes,
+    ...tanachBookRoutes,
+    ...tanachChapterRoutes,
+  ]
 }

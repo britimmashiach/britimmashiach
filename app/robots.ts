@@ -1,16 +1,16 @@
 import type { MetadataRoute } from 'next'
-
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://brit-mashiach.vercel.app'
+import { getPublicSiteOrigin } from '@/lib/public-site-url'
 
 export default function robots(): MetadataRoute.Robots {
+  const origin = getPublicSiteOrigin()
   return {
     rules: [
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/api/', '/profile', '/admin'],
+        disallow: ['/api/', '/profile', '/admin', '/auth'],
       },
     ],
-    sitemap: `${APP_URL}/sitemap.xml`,
+    sitemap: `${origin}/sitemap.xml`,
   }
 }

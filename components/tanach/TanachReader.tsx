@@ -7,19 +7,12 @@ import { ArrowLeft, ArrowRight, ExternalLink, Sparkles } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { getTanachBook, type TanachSection } from '@/lib/tanach-books'
 import { saveTanachLastRead, saveTanachViewPref, loadTanachViewPref } from '@/lib/tanach-reading-prefs'
+import type { TanachChapterPayload } from '@/lib/sefaria-tanach'
 
 export type TanachViewMode = 'both' | 'he' | 'pt'
 
-export type TanachApiPayload = {
-  ref: string
-  heRef: string
-  he: string[]
-  translation: string[]
-  locale: 'pt' | 'en'
-  versionTitle: string
-  sefariaUrl: string
-  attribution: { source: string; url: string; translationVersion: string }
-}
+/** @deprecated Use TanachChapterPayload de @/lib/sefaria-tanach */
+export type TanachApiPayload = TanachChapterPayload
 
 type InnerProps = {
   apiBook: string
@@ -28,6 +21,8 @@ type InnerProps = {
   titleHe: string
   chapter: number
   section: TanachSection
+  /** Pré-carregado no servidor (SSR) para indexação e primeira pintura sem skeleton. */
+  initialData?: TanachChapterPayload | null
 }
 
 function parseView(raw: string | null): TanachViewMode {
@@ -45,7 +40,15 @@ const SECTION_HEADLINE: Record<TanachSection, string> = {
   ketuvim: 'Ketuvim — leitura cabalística',
 }
 
-function TanachReaderInner({ apiBook, bookSlug, titlePt, titleHe, chapter, section }: InnerProps) {
+function TanachReaderInner({
+  apiBook,
+  bookSlug,
+  titlePt,
+  titleHe,
+  chapter,
+  section,
+  initialData = null,
+}: InnerProps) {
   const searchParams = useSearchParams()
   const pathname = usePathname()
   const router = useRouter()
@@ -53,11 +56,16 @@ function TanachReaderInner({ apiBook, bookSlug, titlePt, titleHe, chapter, secti
   const viewSuffix = viewQuery(view)
   const skipRestoreFromPrefsRef = useRef(false)
 
-  const [data, setData] = useState<TanachApiPayload | null>(null)
+  const [data, setData] = useState<TanachChapterPayload | null>(initialData)
   const [error, setError] = useState<string | null>(null)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(!initialData)
 
   useEffect(() => {
+    if (initialData) {
+      saveTanachLastRead(bookSlug, chapter)
+      return
+    }
+
     let cancelled = false
     async function load() {
       setLoading(true)
@@ -66,10 +74,10 @@ function TanachReaderInner({ apiBook, bookSlug, titlePt, titleHe, chapter, secti
         const res = await fetch(
           `/api/tanach?book=${encodeURIComponent(apiBook)}&chapter=${encodeURIComponent(String(chapter))}`,
         )
-        const json = (await res.json()) as TanachApiPayload & { error?: string }
+        const json = (await res.json()) as TanachChapterPayload & { error?: string }
         if (!res.ok) throw new Error(json.error || 'Falha ao carregar o capítulo.')
         if (!cancelled) {
-          setData(json as TanachApiPayload)
+          setData(json)
           saveTanachLastRead(bookSlug, chapter)
         }
       } catch (e) {
@@ -82,7 +90,7 @@ function TanachReaderInner({ apiBook, bookSlug, titlePt, titleHe, chapter, secti
     return () => {
       cancelled = true
     }
-  }, [apiBook, chapter, bookSlug])
+  }, [apiBook, chapter, bookSlug, initialData])
 
   useEffect(() => {
     const param = searchParams.get('view')

@@ -3,18 +3,39 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, Clock, Crown, Tag } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { fetchStudyBySlug } from '@/lib/studies-supabase'
+import { fetchStudyBySlug, fetchStudySlugs } from '@/lib/studies-supabase'
+import { studyArticleJsonLd } from '@/lib/json-ld'
+import { getPublicSiteOrigin } from '@/lib/public-site-url'
+import { JsonLd } from '@/components/seo/JsonLd'
 
-// Renderiza on-demand — sem pre-render de build, sem queries Supabase no build
-export const dynamic = 'force-dynamic'
+export const revalidate = 3600
+
+export async function generateStaticParams() {
+  return fetchStudySlugs()
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
   const study = await fetchStudyBySlug(slug)
   if (!study) return { title: 'Estudo não encontrado' }
+
+  const origin = getPublicSiteOrigin()
+  const url = `${origin}/studies/${slug}`
+  const title = study.title
+  const description = study.excerpt
+
   return {
-    title: study.title,
-    description: study.excerpt,
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      type: 'article',
+      locale: 'pt_BR',
+      url,
+      title,
+      description,
+      publishedTime: study.publishedAt,
+    },
   }
 }
 
@@ -36,6 +57,15 @@ export default async function StudyDetailPage({ params }: { params: Promise<{ sl
 
   return (
     <div className="container mx-auto px-4 py-10 max-w-3xl">
+      <JsonLd
+        data={studyArticleJsonLd({
+          slug: study.slug,
+          title: study.title,
+          excerpt: study.excerpt,
+          publishedAt: study.publishedAt,
+          category: study.category,
+        })}
+      />
       <Link href="/studies" className="inline-flex items-center gap-1.5 text-sm font-inter text-warmgray-500 hover:text-foreground transition-colors mb-8">
         <ArrowLeft className="w-4 h-4" />
         Voltar aos estudos

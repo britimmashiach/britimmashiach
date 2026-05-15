@@ -9,16 +9,31 @@ import { ParashaPremiumGate } from '@/components/parashot/ParashaPremiumGate'
 import { getBookTheme } from '@/lib/book-themes'
 import { cn } from '@/lib/utils'
 import { userHasPremiumParashaAccess } from '@/lib/parashot-access-server'
+import { OFFICIAL_PARASHOT } from '@/lib/parashot-registry'
+import { fetchParashaSlugs } from '@/lib/parashot-supabase'
+import { parashaWebPageJsonLd } from '@/lib/json-ld'
+import { getPublicSiteOrigin } from '@/lib/public-site-url'
+import { JsonLd } from '@/components/seo/JsonLd'
 
-// Renderiza on-demand (sem pré-render de build) — evita 54+ queries no Supabase
-// durante o build. ISR cuida do cache após o primeiro acesso.
-export const dynamic = 'force-dynamic'
+export const revalidate = 3600
 export const dynamicParams = true
+
+export async function generateStaticParams() {
+  const fromDb = await fetchParashaSlugs()
+  const slugs = new Set([...OFFICIAL_PARASHOT.map((p) => p.slug), ...fromDb.map((p) => p.slug)])
+  return [...slugs].map((slug) => ({ slug }))
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
   const parasha = await fetchParashaBySlug(slug)
   if (!parasha) return { title: 'Parashá não encontrada' }
+
+  const origin = getPublicSiteOrigin()
+  const url = `${origin}/parashot/${slug}`
+  const title = `Parasháh ${getParashaTitle(parasha.slug)}`
+  const description = parasha.summary || `Estudo da Parasháh ${getParashaTitle(slug)} com Aliyot e análise PaRDeS.`
+
   if (parasha.isPremium) {
     const allowed = await userHasPremiumParashaAccess()
     if (!allowed) {
@@ -26,12 +41,22 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         title: `${getParashaTitle(slug)} · Premium`,
         description: 'Estudo completo desta Parasháh disponível para assinantes Premium.',
         robots: { index: false, follow: true },
+        alternates: { canonical: url },
       }
     }
   }
+
   return {
-    title: `Parasháh ${getParashaTitle(parasha.slug)}`,
-    description: parasha.summary,
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      type: 'article',
+      locale: 'pt_BR',
+      url,
+      title,
+      description,
+    },
   }
 }
 
@@ -45,6 +70,13 @@ export default async function ParashaDetailPage({ params }: { params: Promise<{ 
     return <ParashaPremiumGate slug={slug} />
   }
 
+  const jsonLd = parashaWebPageJsonLd({
+    slug: parasha.slug,
+    title: getParashaTitle(parasha.slug),
+    description: parasha.summary,
+    publishedAt: parasha.publishedAt,
+  })
+
   const aliyot = await fetchAliyotByParasha(parasha.id)
 
   const entry = getParashaEntry(parasha.slug)
@@ -53,6 +85,7 @@ export default async function ParashaDetailPage({ params }: { params: Promise<{ 
 
   return (
     <div className="relative min-h-screen">
+      <JsonLd data={jsonLd} />
       {/* Glow sutil por livro — quase imperceptível, sentido, não visto */}
       {bookTheme.glow && (
         <div
