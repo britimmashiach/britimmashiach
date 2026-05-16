@@ -40,7 +40,7 @@ UPDATE public.studies
 -- -------------------------------------------------------------
 UPDATE public.parashot
    SET is_premium = TRUE
- WHERE book IN ('Vayikra', 'Bamidbar', 'Devarim');
+ WHERE book IN ('Vayikrá', 'Bamidbar', 'Devarim');
 
 UPDATE public.parashot
    SET is_premium = FALSE
