@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { ChevronDown, ChevronUp, FileText, Download, Crown, CheckCircle2 } from 'lucide-react'
+import { ChevronDown, ChevronUp, FileText, Crown, CheckCircle2 } from 'lucide-react'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { useProfile } from '@/hooks/useProfile'
@@ -213,15 +213,6 @@ export function AliyotList({ aliyot }: AliyotListProps) {
                               <FileText className="w-3.5 h-3.5" aria-hidden="true" />
                               Ler PDF
                             </button>
-                            <a
-                              href={pdfHref}
-                              download
-                              onClick={(e) => e.stopPropagation()}
-                              className="inline-flex items-center gap-1.5 text-xs font-inter font-medium text-warmgray-500 hover:text-petroleum-700 dark:hover:text-parchment-100 transition-colors px-3 py-1.5 rounded-lg border border-border/60 hover:bg-muted"
-                            >
-                              <Download className="w-3.5 h-3.5" aria-hidden="true" />
-                              Download
-                            </a>
                           </div>
                         )}
                       </div>

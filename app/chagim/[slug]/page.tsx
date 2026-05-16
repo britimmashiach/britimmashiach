@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { ArrowLeft, Crown, FileText, ExternalLink } from 'lucide-react'
+import { ArrowLeft, Crown } from 'lucide-react'
+import { PdfButton } from '@/components/ui/PdfButton'
 import { cn } from '@/lib/utils'
 import {
   fetchChagSectionsByChagIdAdmin,
@@ -158,16 +159,7 @@ export default async function ChagDetailPage({ params }: Props) {
           {chag.summary}
         </p>
         {chag.pdfUrl && (
-          <a
-            href={chag.pdfUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm font-inter font-medium text-petroleum-700 dark:text-petroleum-300 hover:text-gold-600 dark:hover:text-gold-400 transition-colors"
-          >
-            <FileText className="w-4 h-4" aria-hidden="true" />
-            PDF do Chag
-            <ExternalLink className="w-3 h-3" aria-hidden="true" />
-          </a>
+          <PdfButton url={chag.pdfUrl} title={`${chag.name} — PDF`} label="Ler PDF do Chag" />
         )}
       </header>
       <hr className="divider-gold" />

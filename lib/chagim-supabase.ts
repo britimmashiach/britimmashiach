@@ -2,6 +2,7 @@ import { createClient } from '@supabase/supabase-js'
 import { getPlaceholderChagBySlug } from '@/lib/chagim-placeholders'
 import type { Database } from '@/types/database'
 import { getSupabaseAdmin, hasServiceRoleEnv } from '@/lib/supabase-admin'
+import { chagPdfUrl, chagSectionPdfUrl } from '@/lib/pdf-urls'
 
 type ChagRow = Database['public']['Tables']['chagim']['Row']
 type ChagSectionRow = Database['public']['Tables']['chag_sections']['Row']
@@ -50,9 +51,9 @@ function normalizeChag(row: ChagRow): Chag {
     content: row.content,
     levelPardes: row.level_pardes ?? [],
     isPremium: row.is_premium,
-    pdfUrl: row.pdf_url ?? null,
-    pdfPremiumUrl: row.pdf_premium_url ?? null,
-    pdfKabbalahUrl: row.pdf_kabbalah_url ?? null,
+    pdfUrl: chagPdfUrl(row.id, row.pdf_url, ''),
+    pdfPremiumUrl: chagPdfUrl(row.id, row.pdf_premium_url, '/premium'),
+    pdfKabbalahUrl: chagPdfUrl(row.id, row.pdf_kabbalah_url, '/kabbalah'),
     publishedAt: row.published_at,
   }
 }
@@ -66,7 +67,7 @@ export function normalizeChagSection(row: ChagSectionRow): ChagSection {
     content: row.content,
     levelPardes: row.level_pardes ?? [],
     isPremium: row.is_premium,
-    pdfUrl: row.pdf_url ?? null,
+    pdfUrl: chagSectionPdfUrl(row.id, row.pdf_url),
   }
 }
 

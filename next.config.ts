@@ -16,8 +16,12 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
-        source: '/tehilim/:path*',
-        headers: [{ key: 'X-Frame-Options', value: 'SAMEORIGIN' }],
+        // Permite que o iframe do PdfViewer carregue /api/pdf/... no mesmo origin.
+        source: '/api/pdf/:path*',
+        headers: [
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'Content-Disposition', value: 'inline' },
+        ],
       },
       {
         source: '/((?!api/stripe/webhook).*)',
@@ -27,12 +31,15 @@ const nextConfig: NextConfig = {
             value: [
               "default-src 'self'",
               "media-src 'self'",
-              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://js.stripe.com",
+              // unsafe-eval necessário para o worker do pdf.js
+              "script-src 'self' 'unsafe-eval' 'unsafe-inline' blob: https://js.stripe.com",
+              "worker-src 'self' blob:",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
               "img-src 'self' data: blob: https://*.supabase.co",
               "connect-src 'self' https://*.supabase.co https://api.stripe.com",
               "frame-src 'self' blob: https://js.stripe.com https://hooks.stripe.com https://*.supabase.co",
+              "object-src 'self' blob:",
             ].join('; '),
           },
         ],

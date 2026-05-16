@@ -1,6 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
 import type { Database } from '@/types/database'
 import { getSupabaseAdmin, hasServiceRoleEnv } from '@/lib/supabase-admin'
+import { aliyahPdfUrl, parashaPdfUrl } from '@/lib/pdf-urls'
 
 type ParashaRow = Database['public']['Tables']['parashot']['Row']
 type AliyahRow = Database['public']['Tables']['aliyot']['Row']
@@ -35,6 +36,12 @@ export interface Aliyah {
   pdfKabbalahUrl: string | null
 }
 
+/**
+ * Os PDFs ficam em bucket privado. Cada coluna pdf_*_url do banco guarda apenas
+ * o path relativo dentro do bucket. O front recebe a URL do proxy /api/pdf,
+ * que valida sessão, role e estampa marca d'água por usuário antes de servir.
+ */
+
 function normalizeParasha(row: ParashaRow): Parasha {
   return {
     id: row.id,
@@ -47,9 +54,9 @@ function normalizeParasha(row: ParashaRow): Parasha {
     haftarahHebrew: row.haftarah_hebrew,
     summary: row.summary,
     isPremium: row.is_premium,
-    pdfUrl: row.pdf_url ?? null,
-    pdfPremiumUrl: row.pdf_premium_url ?? null,
-    pdfKabbalahUrl: row.pdf_kabbalah_url ?? null,
+    pdfUrl: parashaPdfUrl(row.id, row.pdf_url),
+    pdfPremiumUrl: parashaPdfUrl(row.id, row.pdf_premium_url),
+    pdfKabbalahUrl: parashaPdfUrl(row.id, row.pdf_kabbalah_url),
     publishedAt: row.published_at,
   }
 }
@@ -63,9 +70,9 @@ function normalizeAliyah(row: AliyahRow): Aliyah {
     title: row.title,
     content: row.content,
     levelPardes: row.level_pardes ?? [],
-    pdfUrl: row.pdf_url ?? null,
-    pdfPremiumUrl: row.pdf_premium_url ?? null,
-    pdfKabbalahUrl: row.pdf_kabbalah_url ?? null,
+    pdfUrl: aliyahPdfUrl(row.id, row.pdf_url, ''),
+    pdfPremiumUrl: aliyahPdfUrl(row.id, row.pdf_premium_url, '/premium'),
+    pdfKabbalahUrl: aliyahPdfUrl(row.id, row.pdf_kabbalah_url, '/kabbalah'),
   }
 }
 

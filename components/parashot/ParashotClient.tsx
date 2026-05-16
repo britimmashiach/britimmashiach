@@ -1,7 +1,8 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { Crown, ArrowRight, BookOpen, FileText, ExternalLink } from 'lucide-react'
+import { Crown, ArrowRight, BookOpen, FileText } from 'lucide-react'
+import { PdfViewer } from '@/components/parashot/PdfViewer'
 import { cn } from '@/lib/utils'
 import { Drawer } from '@/components/ui/Drawer'
 import { AliyotTabs } from '@/components/parashot/AliyotTabs'
@@ -9,6 +10,7 @@ import { createClient, supabaseConfigured } from '@/lib/supabase'
 import { useProfile } from '@/hooks/useProfile'
 import type { Parasha, Aliyah } from '@/lib/parashot-supabase'
 import { getParashaTitle, getParashaEntry, groupParashotByBook } from '@/lib/parashot-registry'
+import { aliyahPdfUrl } from '@/lib/pdf-urls'
 
 const PARDES_INFO = [
   { letra: 'פ', nome: 'Peshat', desc: 'Sentido literal', color: 'text-blue-600 dark:text-blue-400 bg-blue-500/10' },
@@ -18,17 +20,18 @@ const PARDES_INFO = [
 ]
 
 function normalizeAliyahRow(row: Record<string, unknown>): Aliyah {
+  const id = String(row.id)
   return {
-    id: String(row.id),
+    id,
     parashaId: String(row.parasha_id),
     aliyahNumber: Number(row.aliyah_number),
     dayOfWeek: Number(row.day_of_week),
     title: String(row.title),
     content: String(row.content),
     levelPardes: Array.isArray(row.level_pardes) ? row.level_pardes as string[] : [],
-    pdfUrl: row.pdf_url ? String(row.pdf_url) : null,
-    pdfPremiumUrl: row.pdf_premium_url ? String(row.pdf_premium_url) : null,
-    pdfKabbalahUrl: row.pdf_kabbalah_url ? String(row.pdf_kabbalah_url) : null,
+    pdfUrl: aliyahPdfUrl(id, row.pdf_url ? String(row.pdf_url) : null, ''),
+    pdfPremiumUrl: aliyahPdfUrl(id, row.pdf_premium_url ? String(row.pdf_premium_url) : null, '/premium'),
+    pdfKabbalahUrl: aliyahPdfUrl(id, row.pdf_kabbalah_url ? String(row.pdf_kabbalah_url) : null, '/kabbalah'),
   }
 }
 
@@ -40,6 +43,7 @@ export function ParashotClient({ parashot }: ParashotClientProps) {
   const [selected, setSelected] = useState<Parasha | null>(null)
   const [aliyot, setAliyot] = useState<Aliyah[]>([])
   const [loadingAliyot, setLoadingAliyot] = useState(false)
+  const [activePdf, setActivePdf] = useState<{ url: string; title: string } | null>(null)
   const { isPremium, isAdmin } = useProfile()
 
   const fetchAliyot = useCallback(async (parashaId: string) => {
@@ -218,32 +222,38 @@ export function ParashotClient({ parashot }: ParashotClientProps) {
                 </p>
               )}
 
-              {/* PDFs da Parashá */}
+              {/* PDFs da Parashá — abrem no visualizador interno (sem download) */}
               {(selected.pdfUrl || (isPremium && selected.pdfPremiumUrl) || (isAdmin && selected.pdfKabbalahUrl)) && (
-                <div className="flex flex-wrap gap-3 pt-1">
+                <div className="flex flex-wrap gap-2 pt-1">
                   {selected.pdfUrl && (
-                    <a href={selected.pdfUrl} target="_blank" rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-inter font-medium text-petroleum-700 dark:text-petroleum-300 hover:text-gold-600 dark:hover:text-gold-400 transition-colors">
+                    <button
+                      type="button"
+                      onClick={() => setActivePdf({ url: selected.pdfUrl!, title: `${selected.name} — PDF Geral` })}
+                      className="inline-flex items-center gap-1.5 text-xs font-inter font-medium text-petroleum-700 dark:text-petroleum-300 hover:text-gold-600 dark:hover:text-gold-400 transition-colors px-3 py-1.5 rounded-lg border border-border/60 hover:bg-muted"
+                    >
                       <FileText className="w-3.5 h-3.5" aria-hidden="true" />
-                      PDF Geral
-                      <ExternalLink className="w-3 h-3" aria-hidden="true" />
-                    </a>
+                      Ler PDF Geral
+                    </button>
                   )}
                   {isPremium && selected.pdfPremiumUrl && (
-                    <a href={selected.pdfPremiumUrl} target="_blank" rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-inter font-medium text-gold-600 dark:text-gold-400 hover:text-gold-500 transition-colors">
+                    <button
+                      type="button"
+                      onClick={() => setActivePdf({ url: selected.pdfPremiumUrl!, title: `${selected.name} — Premium` })}
+                      className="inline-flex items-center gap-1.5 text-xs font-inter font-medium text-gold-600 dark:text-gold-400 hover:text-gold-500 transition-colors px-3 py-1.5 rounded-lg border border-gold-500/40 hover:bg-gold-500/5"
+                    >
                       <FileText className="w-3.5 h-3.5" aria-hidden="true" />
-                      PDF Premium
-                      <ExternalLink className="w-3 h-3" aria-hidden="true" />
-                    </a>
+                      Ler PDF Premium
+                    </button>
                   )}
                   {isAdmin && selected.pdfKabbalahUrl && (
-                    <a href={selected.pdfKabbalahUrl} target="_blank" rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-inter font-medium text-purple-600 dark:text-purple-400 hover:text-purple-500 transition-colors">
+                    <button
+                      type="button"
+                      onClick={() => setActivePdf({ url: selected.pdfKabbalahUrl!, title: `${selected.name} — Cabalístico` })}
+                      className="inline-flex items-center gap-1.5 text-xs font-inter font-medium text-purple-600 dark:text-purple-400 hover:text-purple-500 transition-colors px-3 py-1.5 rounded-lg border border-purple-500/40 hover:bg-purple-500/5"
+                    >
                       <FileText className="w-3.5 h-3.5" aria-hidden="true" />
-                      PDF Cabalístico
-                      <ExternalLink className="w-3 h-3" aria-hidden="true" />
-                    </a>
+                      Ler PDF Cabalístico
+                    </button>
                   )}
                 </div>
               )}
@@ -270,6 +280,13 @@ export function ParashotClient({ parashot }: ParashotClientProps) {
           </div>
         )}
       </Drawer>
+
+      <PdfViewer
+        url={activePdf?.url ?? ''}
+        title={activePdf?.title ?? ''}
+        open={!!activePdf}
+        onClose={() => setActivePdf(null)}
+      />
     </>
   )
 }

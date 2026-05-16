@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Lock, Crown, FileText, ExternalLink } from 'lucide-react'
+import { Lock, Crown, FileText } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useProfile } from '@/hooks/useProfile'
 import type { Aliyah } from '@/lib/parashot-supabase'
+import { PdfViewer } from '@/components/parashot/PdfViewer'
 
 const DAY_NAMES = [
   { pt: 'Domingo', trans: 'Yom Rishon' },
@@ -36,6 +37,7 @@ interface AliyotTabsProps {
 export function AliyotTabs({ aliyot }: AliyotTabsProps) {
   const [activeTab, setActiveTab] = useState(1)
   const [todayTab, setTodayTab] = useState(1)
+  const [activePdf, setActivePdf] = useState<{ url: string; title: string } | null>(null)
   const { isPremium, isAdmin, loading: profileLoading } = useProfile()
 
   useEffect(() => {
@@ -222,50 +224,51 @@ export function AliyotTabs({ aliyot }: AliyotTabsProps) {
               })}
             </div>
 
-            {/* PDFs */}
+            {/* PDFs — abre no visualizador interno, sem download/nova aba */}
             {(currentAliyah.pdfUrl || (isPremium && currentAliyah.pdfPremiumUrl) || (isAdmin && currentAliyah.pdfKabbalahUrl)) && (
-              <div className="pt-4 border-t border-border/40 flex flex-wrap gap-4">
+              <div className="pt-4 border-t border-border/40 flex flex-wrap gap-2">
                 {currentAliyah.pdfUrl && (
-                  <a
-                    href={currentAliyah.pdfUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-sm font-inter font-medium text-petroleum-700 dark:text-petroleum-300 hover:text-gold-600 dark:hover:text-gold-400 transition-colors"
+                  <button
+                    type="button"
+                    onClick={() => setActivePdf({ url: currentAliyah.pdfUrl!, title: `Aliyáh ${currentAliyah.aliyahNumber} — PDF` })}
+                    className="inline-flex items-center gap-2 text-sm font-inter font-medium text-petroleum-700 dark:text-petroleum-300 hover:text-gold-600 dark:hover:text-gold-400 transition-colors px-3 py-1.5 rounded-lg border border-border/60 hover:bg-muted"
                   >
                     <FileText className="w-4 h-4" aria-hidden="true" />
-                    PDF desta Aliyáh
-                    <ExternalLink className="w-3 h-3" aria-hidden="true" />
-                  </a>
+                    Ler PDF desta Aliyáh
+                  </button>
                 )}
                 {isPremium && currentAliyah.pdfPremiumUrl && (
-                  <a
-                    href={currentAliyah.pdfPremiumUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-sm font-inter font-medium text-gold-600 dark:text-gold-400 hover:text-gold-500 transition-colors"
+                  <button
+                    type="button"
+                    onClick={() => setActivePdf({ url: currentAliyah.pdfPremiumUrl!, title: `Aliyáh ${currentAliyah.aliyahNumber} — Premium` })}
+                    className="inline-flex items-center gap-2 text-sm font-inter font-medium text-gold-600 dark:text-gold-400 hover:text-gold-500 transition-colors px-3 py-1.5 rounded-lg border border-gold-500/40 hover:bg-gold-500/5"
                   >
                     <FileText className="w-4 h-4" aria-hidden="true" />
-                    PDF Premium
-                    <ExternalLink className="w-3 h-3" aria-hidden="true" />
-                  </a>
+                    Ler PDF Premium
+                  </button>
                 )}
                 {isAdmin && currentAliyah.pdfKabbalahUrl && (
-                  <a
-                    href={currentAliyah.pdfKabbalahUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-sm font-inter font-medium text-purple-600 dark:text-purple-400 hover:text-purple-500 transition-colors"
+                  <button
+                    type="button"
+                    onClick={() => setActivePdf({ url: currentAliyah.pdfKabbalahUrl!, title: `Aliyáh ${currentAliyah.aliyahNumber} — Cabalístico` })}
+                    className="inline-flex items-center gap-2 text-sm font-inter font-medium text-purple-600 dark:text-purple-400 hover:text-purple-500 transition-colors px-3 py-1.5 rounded-lg border border-purple-500/40 hover:bg-purple-500/5"
                   >
                     <FileText className="w-4 h-4" aria-hidden="true" />
-                    PDF Cabalístico
-                    <ExternalLink className="w-3 h-3" aria-hidden="true" />
-                  </a>
+                    Ler PDF Cabalístico
+                  </button>
                 )}
               </div>
             )}
           </div>
         )}
       </div>
+
+      <PdfViewer
+        url={activePdf?.url ?? ''}
+        title={activePdf?.title ?? ''}
+        open={!!activePdf}
+        onClose={() => setActivePdf(null)}
+      />
     </div>
   )
 }

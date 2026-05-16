@@ -248,3 +248,19 @@
   from { opacity: 0; }
   to   { opacity: 1; }
 }
+
+/* Proteção: o documento todo não imprime. PDFs servidos via /api/pdf
+   já são estampados com email do usuário, mas a impressão de páginas
+   do app não acrescenta nada além de risco de vazamento de preview. */
+@media print {
+  body, html { display: none !important; }
+  .no-print { display: none !important; }
+}
+
+/* Endurecimento adicional do PdfViewer: evita seleção e callout */
+.pdf-viewer-protected {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}

@@ -6,7 +6,8 @@ import { TehilimPerekClient } from '@/components/tehilim/TehilimPerekClient'
 export const dynamicParams = true
 
 export async function generateStaticParams() {
-  return listTehilimPerakim().map((p) => ({ perek: p.slug }))
+  const perakim = await listTehilimPerakim()
+  return perakim.map((p) => ({ perek: p.slug }))
 }
 
 export async function generateMetadata({
@@ -15,7 +16,7 @@ export async function generateMetadata({
   params: Promise<{ perek: string }>
 }): Promise<Metadata> {
   const { perek: slug } = await params
-  const perek = getTehilimPerek(slug)
+  const perek = await getTehilimPerek(slug)
   if (!perek) return { title: 'Perek não encontrado' }
   return {
     title: `${perek.label} | Tehilim`,
@@ -29,7 +30,7 @@ export default async function TehilimPerekPage({
   params: Promise<{ perek: string }>
 }) {
   const { perek: slug } = await params
-  const perek = getTehilimPerek(slug)
+  const perek = await getTehilimPerek(slug)
   if (!perek) notFound()
 
   return (

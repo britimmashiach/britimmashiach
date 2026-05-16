@@ -119,18 +119,18 @@ async function main() {
       continue
     }
 
-    const pdfUrl = `${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${filePath}`
-
+    // Bucket é privado: guardamos apenas o path. O acesso vai sempre pelo
+    // proxy /api/pdf/aliyah/{id}, que aplica auth + watermark.
     const { error: uErr } = await supabase
       .from('aliyot')
-      .update({ pdf_url: pdfUrl })
+      .update({ pdf_url: filePath })
       .eq('id', aliyah.id)
 
     if (uErr) {
       console.log(`❌ ${slug}/aliyah-${aliyah.aliyah_number} — erro ao atualizar: ${uErr.message}`)
       countError++
     } else {
-      console.log(`✔  ${slug}/aliyah-${aliyah.aliyah_number} → ${pdfUrl}`)
+      console.log(`✔  ${slug}/aliyah-${aliyah.aliyah_number} → ${filePath}`)
       countUpdated++
     }
   }

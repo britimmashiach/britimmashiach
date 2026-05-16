@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { ArrowLeft, Crown, FileText, ExternalLink } from 'lucide-react'
+import { ArrowLeft, Crown } from 'lucide-react'
 import { fetchParashaBySlugAdmin, fetchAliyotByParasha } from '@/lib/parashot-supabase'
 import { getParashaTitle, getParashaEntry } from '@/lib/parashot-registry'
 import { AliyotList } from '@/components/parashot/AliyotList'
@@ -160,18 +160,8 @@ export default async function ParashaDetailPage({ params }: { params: Promise<{ 
             </div>
           )}
 
-          {parasha.pdfUrl && (
-            <a
-              href={parasha.pdfUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm font-inter font-medium text-petroleum-700 dark:text-petroleum-300 hover:text-gold-600 dark:hover:text-gold-400 transition-colors"
-            >
-              <FileText className="w-4 h-4" aria-hidden="true" />
-              Baixar PDF desta Parashá
-              <ExternalLink className="w-3 h-3" aria-hidden="true" />
-            </a>
-          )}
+          {/* O PDF da Parashá fica disponível dentro das Aliyot via visualizador interno,
+              que estampa marca d'água com o email do usuário. Não há download. */}
         </div>
 
         <hr className="divider-gold" />

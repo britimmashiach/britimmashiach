@@ -14,8 +14,8 @@ export const metadata: Metadata = {
   },
 }
 
-export default function TehilimPage() {
-  const perakim = listTehilimPerakim()
+export default async function TehilimPage() {
+  const perakim = await listTehilimPerakim()
 
   return (
     <div className="container mx-auto px-4 py-10 max-w-5xl">
@@ -45,9 +45,11 @@ export default function TehilimPage() {
           Análise kabalística PaRDeS do Rav EBBY. Cada <strong className="font-medium text-petroleum-800 dark:text-parchment-100">Perek</strong> tem sua pasta; dentro dela ficam os PDFs dos <strong className="font-medium text-petroleum-800 dark:text-parchment-100">Passukim</strong> (convertidos do DOCX).
         </p>
         <p className="text-xs font-inter text-warmgray-500 max-w-2xl">
-          Para publicar: coloque os PDFs em <code className="text-gold-700 dark:text-gold-400">public/tehilim/perek-001/</code>,{' '}
-          <code className="text-gold-700 dark:text-gold-400">perek-002/</code>, etc. A apresentação fica em{' '}
-          <code className="text-gold-700 dark:text-gold-400">public/tehilim/livro-0/</code>.
+          Publicação: suba os PDFs no Supabase Storage (bucket{' '}
+          <code className="text-gold-700 dark:text-gold-400">tehilim-pdfs</code>), em pastas{' '}
+          <code className="text-gold-700 dark:text-gold-400">perek-001/</code>,{' '}
+          <code className="text-gold-700 dark:text-gold-400">perek-002/</code>… A apresentação fica em{' '}
+          <code className="text-gold-700 dark:text-gold-400">livro-0/</code>.
         </p>
       </div>
 

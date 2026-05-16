@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { ExternalLink, FileText, ScrollText } from 'lucide-react'
+import { FileText, ScrollText } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { PdfViewer } from '@/components/parashot/PdfViewer'
 import type { TehilimPerekFolder } from '@/lib/tehilim-catalog'
@@ -46,31 +46,18 @@ export function TehilimPerekClient({ perek }: TehilimPerekClientProps) {
       ) : (
         <ul className="space-y-2">
           {perek.pdfs.map((pdf) => (
-            <li key={pdf.fileName} className="flex gap-2">
+            <li key={pdf.fileName}>
               <button
                 type="button"
                 onClick={() => setActivePdf({ url: pdf.url, title: pdf.title })}
                 className={cn(
-                  'flex-1 flex items-center gap-3 rounded-xl border border-border/50 bg-card/80 px-4 py-3.5',
+                  'w-full flex items-center gap-3 rounded-xl border border-border/50 bg-card/80 px-4 py-3.5',
                   'text-left hover:border-gold-500/35 hover:bg-gold-500/5 transition-colors',
                 )}
               >
                 <FileText className="w-4 h-4 text-gold-600 dark:text-gold-400 shrink-0" aria-hidden="true" />
                 <span className="font-inter text-sm text-petroleum-800 dark:text-parchment-100">{pdf.title}</span>
               </button>
-              <a
-                href={pdf.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={cn(
-                  'shrink-0 flex items-center justify-center rounded-xl border border-border/50 bg-card/80 px-3',
-                  'hover:border-gold-500/35 hover:bg-gold-500/5 transition-colors',
-                )}
-                aria-label={`Abrir ${pdf.title} em nova aba`}
-                title="Abrir em nova aba"
-              >
-                <ExternalLink className="w-4 h-4 text-gold-600 dark:text-gold-400" aria-hidden="true" />
-              </a>
             </li>
           ))}
         </ul>

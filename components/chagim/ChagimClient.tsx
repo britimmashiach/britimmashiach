@@ -1,7 +1,8 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { Crown, ArrowRight, Flame, FileText, ExternalLink, Lock } from 'lucide-react'
+import { Crown, ArrowRight, Flame, FileText, Lock } from 'lucide-react'
+import { PdfViewer } from '@/components/parashot/PdfViewer'
 import { cn } from '@/lib/utils'
 import { Drawer } from '@/components/ui/Drawer'
 import { createClient, supabaseConfigured } from '@/lib/supabase'
@@ -10,6 +11,7 @@ import Link from 'next/link'
 import type { Chag, ChagSection } from '@/lib/chagim-supabase'
 import { PLACEHOLDER_CHAGIM } from '@/lib/chagim-placeholders'
 import type { Database } from '@/types/database'
+import { chagSectionPdfUrl } from '@/lib/pdf-urls'
 
 type ChagSectionRow = Database['public']['Tables']['chag_sections']['Row']
 
@@ -22,7 +24,7 @@ function normalizeSection(row: ChagSectionRow): ChagSection {
     content: row.content,
     levelPardes: row.level_pardes ?? [],
     isPremium: row.is_premium,
-    pdfUrl: row.pdf_url ?? null,
+    pdfUrl: chagSectionPdfUrl(row.id, row.pdf_url),
   }
 }
 
@@ -94,6 +96,7 @@ export function ChagimClient({ chagim }: ChagimClientProps) {
   const [sections, setSections] = useState<ChagSection[]>([])
   const [loadingSections, setLoadingSections] = useState(false)
   const [nextChagSlug, setNextChagSlug] = useState<string | null>(null)
+  const [activePdf, setActivePdf] = useState<{ url: string; title: string } | null>(null)
   const { isPremium, isAdmin } = useProfile()
 
   useEffect(() => {
@@ -308,32 +311,38 @@ export function ChagimClient({ chagim }: ChagimClientProps) {
                 </p>
               )}
 
-              {/* PDFs do Chag */}
+              {/* PDFs do Chag — abrem no visualizador interno (sem download) */}
               {(selected.pdfUrl || (isPremium && selected.pdfPremiumUrl) || (isAdmin && selected.pdfKabbalahUrl)) && (
-                <div className="flex flex-wrap gap-3 pt-1">
+                <div className="flex flex-wrap gap-2 pt-1">
                   {selected.pdfUrl && (
-                    <a href={selected.pdfUrl} target="_blank" rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-inter font-medium text-petroleum-700 dark:text-petroleum-300 hover:text-gold-600 dark:hover:text-gold-400 transition-colors">
+                    <button
+                      type="button"
+                      onClick={() => setActivePdf({ url: selected.pdfUrl!, title: `${selected.name} — PDF Geral` })}
+                      className="inline-flex items-center gap-1.5 text-xs font-inter font-medium text-petroleum-700 dark:text-petroleum-300 hover:text-gold-600 dark:hover:text-gold-400 transition-colors px-3 py-1.5 rounded-lg border border-border/60 hover:bg-muted"
+                    >
                       <FileText className="w-3.5 h-3.5" aria-hidden="true" />
-                      PDF Geral
-                      <ExternalLink className="w-3 h-3" aria-hidden="true" />
-                    </a>
+                      Ler PDF Geral
+                    </button>
                   )}
                   {isPremium && selected.pdfPremiumUrl && (
-                    <a href={selected.pdfPremiumUrl} target="_blank" rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-inter font-medium text-gold-600 dark:text-gold-400 hover:text-gold-500 transition-colors">
+                    <button
+                      type="button"
+                      onClick={() => setActivePdf({ url: selected.pdfPremiumUrl!, title: `${selected.name} — Premium` })}
+                      className="inline-flex items-center gap-1.5 text-xs font-inter font-medium text-gold-600 dark:text-gold-400 hover:text-gold-500 transition-colors px-3 py-1.5 rounded-lg border border-gold-500/40 hover:bg-gold-500/5"
+                    >
                       <FileText className="w-3.5 h-3.5" aria-hidden="true" />
-                      PDF Premium
-                      <ExternalLink className="w-3 h-3" aria-hidden="true" />
-                    </a>
+                      Ler PDF Premium
+                    </button>
                   )}
                   {isAdmin && selected.pdfKabbalahUrl && (
-                    <a href={selected.pdfKabbalahUrl} target="_blank" rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-inter font-medium text-purple-600 dark:text-purple-400 hover:text-purple-500 transition-colors">
+                    <button
+                      type="button"
+                      onClick={() => setActivePdf({ url: selected.pdfKabbalahUrl!, title: `${selected.name} — Cabalístico` })}
+                      className="inline-flex items-center gap-1.5 text-xs font-inter font-medium text-purple-600 dark:text-purple-400 hover:text-purple-500 transition-colors px-3 py-1.5 rounded-lg border border-purple-500/40 hover:bg-purple-500/5"
+                    >
                       <FileText className="w-3.5 h-3.5" aria-hidden="true" />
-                      PDF Cabalístico
-                      <ExternalLink className="w-3 h-3" aria-hidden="true" />
-                    </a>
+                      Ler PDF Cabalístico
+                    </button>
                   )}
                 </div>
               )}
@@ -426,12 +435,14 @@ export function ChagimClient({ chagim }: ChagimClientProps) {
                             </div>
                           )}
                           {section.pdfUrl && (
-                            <a href={section.pdfUrl} target="_blank" rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1.5 text-xs font-inter font-medium text-petroleum-700 dark:text-petroleum-300 hover:text-gold-600 transition-colors pt-1">
+                            <button
+                              type="button"
+                              onClick={() => setActivePdf({ url: section.pdfUrl!, title: `${selected.name} — ${section.title}` })}
+                              className="inline-flex items-center gap-1.5 text-xs font-inter font-medium text-petroleum-700 dark:text-petroleum-300 hover:text-gold-600 transition-colors pt-1"
+                            >
                               <FileText className="w-3.5 h-3.5" aria-hidden="true" />
-                              PDF
-                              <ExternalLink className="w-3 h-3" aria-hidden="true" />
-                            </a>
+                              Ler PDF
+                            </button>
                           )}
                         </>
                       ) : (
@@ -458,6 +469,13 @@ export function ChagimClient({ chagim }: ChagimClientProps) {
           </div>
         )}
       </Drawer>
+
+      <PdfViewer
+        url={activePdf?.url ?? ''}
+        title={activePdf?.title ?? ''}
+        open={!!activePdf}
+        onClose={() => setActivePdf(null)}
+      />
     </>
   )
 }
