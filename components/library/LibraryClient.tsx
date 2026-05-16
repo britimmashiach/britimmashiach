@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { Search, Crown, Download, BookMarked, Lock, BookOpen } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { NoLibraryResults } from '@/components/ui/EmptyState'
@@ -37,9 +38,18 @@ interface LibraryClientProps {
 }
 
 export function LibraryClient({ books }: LibraryClientProps) {
+  const router = useRouter()
   const [query, setQuery] = useState('')
   const [activeCategory, setActiveCategory] = useState('all')
   const { isPremium, isAdmin } = useProfile()
+
+  function handleCategoryClick(catId: string) {
+    if (catId === 'tehilim') {
+      router.push('/tehilim')
+      return
+    }
+    setActiveCategory(catId)
+  }
 
   useEffect(() => {
     function blockKeys(e: KeyboardEvent) {
@@ -87,7 +97,7 @@ export function LibraryClient({ books }: LibraryClientProps) {
         {CATEGORIES.map((cat) => (
           <button
             key={cat.id}
-            onClick={() => setActiveCategory(cat.id)}
+            onClick={() => handleCategoryClick(cat.id)}
             className={cn(
               'px-3.5 py-1.5 rounded-full text-sm font-inter transition-colors duration-150 border',
               activeCategory === cat.id

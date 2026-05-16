@@ -241,7 +241,7 @@ export default function HomePage() {
           {recentStudies.map((study) => (
             <Link
               key={study.id}
-              href={`/studies/${study.slug}`}
+              href={study.category === 'tehilim' ? '/tehilim' : `/studies/${study.slug}`}
               className="glass-card p-5 group hover:-translate-y-0.5 transition-all duration-150 flex flex-col gap-3"
             >
               <div className="flex items-center justify-between">

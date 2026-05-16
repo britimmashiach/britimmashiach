@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { Search, ArrowRight, Clock, Crown, Tag } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { NoStudiesFound } from '@/components/ui/EmptyState'
@@ -44,9 +45,18 @@ interface StudiesClientProps {
 }
 
 export function StudiesClient({ studies }: StudiesClientProps) {
+  const router = useRouter()
   const displayStudies = studies
   const [query, setQuery] = useState('')
   const [activeCategory, setActiveCategory] = useState('all')
+
+  function handleCategoryClick(catId: string) {
+    if (catId === 'tehilim') {
+      router.push('/tehilim')
+      return
+    }
+    setActiveCategory(catId)
+  }
 
   const filtered = useMemo(() => {
     const q = query.toLowerCase().trim()
@@ -83,7 +93,7 @@ export function StudiesClient({ studies }: StudiesClientProps) {
         {CATEGORIES.map((cat) => (
           <button
             key={cat.id}
-            onClick={() => setActiveCategory(cat.id)}
+            onClick={() => handleCategoryClick(cat.id)}
             className={cn(
               'px-3.5 py-1.5 rounded-full text-sm font-inter transition-colors duration-150 border',
               activeCategory === cat.id
@@ -110,7 +120,7 @@ export function StudiesClient({ studies }: StudiesClientProps) {
             {filtered.map((study) => (
               <Link
                 key={study.slug}
-                href={`/studies/${study.slug}`}
+                href={study.category === 'tehilim' ? '/tehilim' : `/studies/${study.slug}`}
                 className="glass-card p-5 group hover:-translate-y-0.5 transition-all duration-150 space-y-3"
               >
                 <div className="flex items-start justify-between gap-3">
