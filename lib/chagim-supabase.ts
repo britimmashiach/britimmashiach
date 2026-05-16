@@ -1,6 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
 import { getPlaceholderChagBySlug } from '@/lib/chagim-placeholders'
 import type { Database } from '@/types/database'
+import { getSupabaseAdmin, hasServiceRoleEnv } from '@/lib/supabase-admin'
 
 type ChagRow = Database['public']['Tables']['chagim']['Row']
 type ChagSectionRow = Database['public']['Tables']['chag_sections']['Row']
@@ -162,4 +163,52 @@ export async function resolveChagBySlug(slug: string): Promise<Chag | null> {
   const fromDb = await fetchChagBySlug(slug)
   if (fromDb) return fromDb
   return getPlaceholderChagBySlug(slug)
+}
+
+/**
+ * Lê o chag via service-role, bypassando RLS.
+ * Use apenas em Server Components / Route Handlers, e SEMPRE associado a um
+ * gate explícito (userHasPremiumAccess) na página antes de renderizar o conteúdo.
+ */
+export async function fetchChagBySlugAdmin(slug: string): Promise<Chag | null> {
+  if (!hasServiceRoleEnv()) return fetchChagBySlug(slug)
+  try {
+    const supabase = getSupabaseAdmin()
+    const { data, error } = await supabase
+      .from('chagim')
+      .select('*')
+      .eq('slug', slug)
+      .single()
+    if (error) throw error
+    return data ? normalizeChag(data) : null
+  } catch (err) {
+    devWarn(`fetchChagBySlugAdmin slug="${slug}" falhou:`, err)
+    return null
+  }
+}
+
+/** Resolve Chag via admin client, com fallback para placeholder editorial. */
+export async function resolveChagBySlugAdmin(slug: string): Promise<Chag | null> {
+  const fromDb = await fetchChagBySlugAdmin(slug)
+  if (fromDb) return fromDb
+  return getPlaceholderChagBySlug(slug)
+}
+
+/** Lê as seções de um chag via service-role, bypassando RLS. */
+export async function fetchChagSectionsByChagIdAdmin(chagId: string): Promise<ChagSection[]> {
+  if (chagId.startsWith('ph-')) return []
+  if (!hasServiceRoleEnv()) return fetchChagSectionsByChagId(chagId)
+  try {
+    const supabase = getSupabaseAdmin()
+    const { data, error } = await supabase
+      .from('chag_sections')
+      .select('*')
+      .eq('chag_id', chagId)
+      .order('order_num', { ascending: true })
+    if (error) throw error
+    return (data ?? []).map(normalizeChagSection)
+  } catch (err) {
+    devWarn(`fetchChagSectionsByChagIdAdmin chagId="${chagId}" falhou:`, err)
+    return []
+  }
 }

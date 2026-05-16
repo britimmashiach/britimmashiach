@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
 import type { Database } from '@/types/database'
+import { getSupabaseAdmin, hasServiceRoleEnv } from '@/lib/supabase-admin'
 
 type ParashaRow = Database['public']['Tables']['parashot']['Row']
 type AliyahRow = Database['public']['Tables']['aliyot']['Row']
@@ -134,6 +135,28 @@ export async function fetchParashaBySlug(slug: string): Promise<Parasha | null> 
     return data ? normalizeParasha(data) : null
   } catch (err) {
     devWarn(`fetchParashaBySlug slug="${slug}" falhou:`, err)
+    return null
+  }
+}
+
+/**
+ * Lê a Parasháh via service-role, bypassando RLS.
+ * Use apenas em Server Components / Route Handlers e SEMPRE associado a um
+ * gate explícito (userHasPremiumAccess) na página antes de renderizar o conteúdo.
+ */
+export async function fetchParashaBySlugAdmin(slug: string): Promise<Parasha | null> {
+  if (!hasServiceRoleEnv()) return fetchParashaBySlug(slug)
+  try {
+    const supabase = getSupabaseAdmin()
+    const { data, error } = await supabase
+      .from('parashot')
+      .select('*')
+      .eq('slug', slug)
+      .single()
+    if (error) throw error
+    return data ? normalizeParasha(data) : null
+  } catch (err) {
+    devWarn(`fetchParashaBySlugAdmin slug="${slug}" falhou:`, err)
     return null
   }
 }

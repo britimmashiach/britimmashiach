@@ -3,11 +3,13 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, Clock, Crown, Tag } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { fetchStudyBySlug, fetchStudySlugs } from '@/lib/studies-supabase'
+import { fetchStudyBySlugAdmin, fetchStudySlugs } from '@/lib/studies-supabase'
 import { breadcrumbJsonLd, studyArticleJsonLd } from '@/lib/json-ld'
 import { Breadcrumbs } from '@/components/seo/Breadcrumbs'
 import { getPublicSiteOrigin } from '@/lib/public-site-url'
 import { JsonLd } from '@/components/seo/JsonLd'
+import { userHasPremiumAccess } from '@/lib/premium-access'
+import { PremiumGate } from '@/components/ui/PremiumGate'
 
 export const revalidate = 3600
 
@@ -17,13 +19,25 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
-  const study = await fetchStudyBySlug(slug)
+  const study = await fetchStudyBySlugAdmin(slug)
   if (!study) return { title: 'Estudo não encontrado' }
 
   const origin = getPublicSiteOrigin()
   const url = `${origin}/studies/${slug}`
   const title = study.title
   const description = study.excerpt
+
+  if (study.isPremium) {
+    const allowed = await userHasPremiumAccess()
+    if (!allowed) {
+      return {
+        title: `${title} · Premium`,
+        description: 'Estudo completo disponível para assinantes Premium.',
+        robots: { index: false, follow: true },
+        alternates: { canonical: url },
+      }
+    }
+  }
 
   return {
     title,
@@ -52,9 +66,20 @@ const categoryColors: Record<string, string> = {
 
 export default async function StudyDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const study = await fetchStudyBySlug(slug)
+  const study = await fetchStudyBySlugAdmin(slug)
 
   if (!study) notFound()
+
+  if (study.isPremium && !(await userHasPremiumAccess())) {
+    return (
+      <PremiumGate
+        title={study.title}
+        description="O conteúdo completo deste estudo é exclusivo para assinantes Premium. Ative o plano para liberar o material e o restante do acervo do Rav EBBY."
+        backHref="/studies"
+        backLabel="Voltar aos estudos"
+      />
+    )
+  }
 
   const crumbs = [
     { name: 'Início', path: '/' },

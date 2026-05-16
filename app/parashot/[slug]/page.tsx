@@ -2,13 +2,13 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, Crown, FileText, ExternalLink } from 'lucide-react'
-import { fetchParashaBySlug, fetchAliyotByParasha } from '@/lib/parashot-supabase'
+import { fetchParashaBySlugAdmin, fetchAliyotByParasha } from '@/lib/parashot-supabase'
 import { getParashaTitle, getParashaEntry } from '@/lib/parashot-registry'
 import { AliyotList } from '@/components/parashot/AliyotList'
 import { ParashaPremiumGate } from '@/components/parashot/ParashaPremiumGate'
 import { getBookTheme } from '@/lib/book-themes'
 import { cn } from '@/lib/utils'
-import { userHasPremiumParashaAccess } from '@/lib/parashot-access-server'
+import { userHasPremiumAccess } from '@/lib/premium-access'
 import { OFFICIAL_PARASHOT } from '@/lib/parashot-registry'
 import { fetchParashaSlugs } from '@/lib/parashot-supabase'
 import { breadcrumbJsonLd, parashaWebPageJsonLd } from '@/lib/json-ld'
@@ -28,7 +28,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
-  const parasha = await fetchParashaBySlug(slug)
+  const parasha = await fetchParashaBySlugAdmin(slug)
   if (!parasha) return { title: 'Parashá não encontrada' }
 
   const origin = getPublicSiteOrigin()
@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const description = parasha.summary || `Estudo da Parasháh ${getParashaTitle(slug)} com Aliyot e análise PaRDeS.`
 
   if (parasha.isPremium) {
-    const allowed = await userHasPremiumParashaAccess()
+    const allowed = await userHasPremiumAccess()
     if (!allowed) {
       return {
         title: `${getParashaTitle(slug)} · Premium`,
@@ -64,10 +64,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function ParashaDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const parasha = await fetchParashaBySlug(slug)
+  const parasha = await fetchParashaBySlugAdmin(slug)
   if (!parasha) notFound()
 
-  const canReadFull = !parasha.isPremium || (await userHasPremiumParashaAccess())
+  const canReadFull = !parasha.isPremium || (await userHasPremiumAccess())
   if (!canReadFull) {
     return <ParashaPremiumGate slug={slug} />
   }

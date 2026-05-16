@@ -5,6 +5,7 @@ import {
   getPlaceholderStudyBySlug,
   mergeStudySlugsFromDb,
 } from '@/lib/placeholder-studies'
+import { getSupabaseAdmin, hasServiceRoleEnv } from '@/lib/supabase-admin'
 
 export interface Study {
   slug: string
@@ -103,6 +104,31 @@ export async function fetchStudies(): Promise<Study[]> {
   } catch (err) {
     devWarn('fetchStudies falhou:', err)
     return PLACEHOLDER_STUDIES.map(seedStudyToStudy)
+  }
+}
+
+/**
+ * Lê o estudo via service-role, bypassando RLS.
+ * Use apenas em Server Components / Route Handlers, e SEMPRE associado a um
+ * gate explícito (userHasPremiumAccess) na página antes de renderizar o conteúdo.
+ */
+export async function fetchStudyBySlugAdmin(slug: string): Promise<Study | null> {
+  if (!hasServiceRoleEnv()) return fetchStudyBySlug(slug)
+  try {
+    const supabase = getSupabaseAdmin()
+    const { data, error } = await supabase
+      .from('studies')
+      .select('*')
+      .eq('slug', slug)
+      .single()
+    if (error) throw error
+    if (data) return normalizeRow(data)
+    const ph = getPlaceholderStudyBySlug(slug)
+    return ph ? seedStudyToStudy(ph) : null
+  } catch (err) {
+    devWarn(`fetchStudyBySlugAdmin slug="${slug}" falhou:`, err)
+    const ph = getPlaceholderStudyBySlug(slug)
+    return ph ? seedStudyToStudy(ph) : null
   }
 }
 

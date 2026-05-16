@@ -4,15 +4,17 @@ import Link from 'next/link'
 import { ArrowLeft, Crown, FileText, ExternalLink } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import {
-  fetchChagSectionsByChagId,
+  fetchChagSectionsByChagIdAdmin,
   fetchChagimSlugs,
-  resolveChagBySlug,
+  resolveChagBySlugAdmin,
 } from '@/lib/chagim-supabase'
 import { getAllChagSlugsForSitemap } from '@/lib/chagim-placeholders'
 import { breadcrumbJsonLd, chagWebPageJsonLd } from '@/lib/json-ld'
 import { getPublicSiteOrigin } from '@/lib/public-site-url'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { Breadcrumbs } from '@/components/seo/Breadcrumbs'
+import { userHasPremiumAccess } from '@/lib/premium-access'
+import { PremiumGate } from '@/components/ui/PremiumGate'
 
 type Props = { params: Promise<{ slug: string }> }
 
@@ -29,7 +31,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
-  const chag = await resolveChagBySlug(slug)
+  const chag = await resolveChagBySlugAdmin(slug)
   if (!chag) return { title: 'Chag não encontrado' }
 
   const origin = getPublicSiteOrigin()
@@ -38,11 +40,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const description = chag.summary
 
   if (chag.isPremium) {
-    return {
-      title: `${chag.name} · Premium`,
-      description,
-      robots: { index: false, follow: true },
-      alternates: { canonical: url },
+    const allowed = await userHasPremiumAccess()
+    if (!allowed) {
+      return {
+        title: `${chag.name} · Premium`,
+        description,
+        robots: { index: false, follow: true },
+        alternates: { canonical: url },
+      }
     }
   }
 
@@ -69,10 +74,25 @@ const PARDES_COLORS: Record<string, string> = {
 
 export default async function ChagDetailPage({ params }: Props) {
   const { slug } = await params
-  const chag = await resolveChagBySlug(slug)
+  const chag = await resolveChagBySlugAdmin(slug)
   if (!chag) notFound()
 
-  const sections = await fetchChagSectionsByChagId(chag.id)
+  const hasPremium = await userHasPremiumAccess()
+
+  if (chag.isPremium && !hasPremium) {
+    return (
+      <PremiumGate
+        title={chag.name}
+        description="O estudo completo deste Chag (incluindo seções de Sod e materiais reservados) é exclusivo para assinantes Premium."
+        backHref="/chagim"
+        backLabel="Todos os Chagim"
+      />
+    )
+  }
+
+  const allSections = await fetchChagSectionsByChagIdAdmin(chag.id)
+  const sections = hasPremium ? allSections : allSections.filter((s) => !s.isPremium)
+  const lockedSectionsCount = allSections.length - sections.length
   const crumbs = [
     { name: 'Início', path: '/' },
     { name: 'Chagim', path: '/chagim' },
@@ -185,6 +205,27 @@ export default async function ChagDetailPage({ params }: Props) {
               )}
             </div>
           ))}
+        </section>
+      )}
+      {lockedSectionsCount > 0 && (
+        <section className="mt-8 glass-card p-5 border-gold-500/25 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+          <div className="flex-1 space-y-1">
+            <p className="text-xs font-inter font-semibold text-gold-600 dark:text-gold-400 uppercase tracking-widest">
+              Seções reservadas
+            </p>
+            <p className="text-sm font-inter text-warmgray-600 dark:text-warmgray-400 leading-relaxed">
+              {lockedSectionsCount === 1
+                ? 'Mais uma seção (Sod, Kavannot ou material aprofundado) está disponível para assinantes Premium.'
+                : `Mais ${lockedSectionsCount} seções (Sod, Kavannot ou material aprofundado) estão disponíveis para assinantes Premium.`}
+            </p>
+          </div>
+          <Link
+            href="/premium"
+            className="inline-flex items-center justify-center gap-2 rounded-lg bg-gold-500 px-4 py-2 text-sm font-inter font-semibold text-petroleum-950 hover:bg-gold-400 transition-colors flex-shrink-0"
+          >
+            <Crown className="h-4 w-4 shrink-0" aria-hidden="true" />
+            Liberar Premium
+          </Link>
         </section>
       )}
       <footer className="mt-10 glass-card p-4 flex items-center gap-3">
