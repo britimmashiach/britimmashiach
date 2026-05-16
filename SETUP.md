@@ -43,9 +43,10 @@ npm install
 ### 3.3 Configurar Auth
 1. Em **Authentication > Providers**, habilite Email
 2. Em **Authentication > Email Templates**, personalize os emails (opcional)
-3. Em **Authentication > URL Configuration**, defina:
-   - Site URL: `https://brit-mashiach.vercel.app`
-   - Redirect URLs: `https://brit-mashiach.vercel.app/**`
+3. Em **Authentication > URL Configuration**, defina (use o **mesmo domínio** que está na Vercel como produção):
+   - Site URL: `https://britimmashiach.com`
+   - Redirect URLs: inclua pelo menos `https://britimmashiach.com/auth/callback` e, se usar query `?next=`, também `https://britimmashiach.com/auth/callback**` ou as entradas que o projeto já documentar no `.env.local.example`.
+   *(Em previews com URL `*.vercel.app`, pode adicionar também as URLs correspondentes aos ambientes de teste.)*
 
 ### 3.4 Copiar chaves
 Em **Settings > API**:
@@ -65,7 +66,7 @@ Em **Settings > API**:
 
 ### 4.2 Configurar webhook (após deploy)
 1. Em **Developers > Webhooks > Add endpoint**
-2. URL: `https://brit-mashiach.vercel.app/api/stripe/webhook`
+2. URL de produção: `https://britimmashiach.com/api/stripe/webhook` *(se já existir endpoint antigo com outro host, atualize ou crie um novo endpoint com esta URL.)*
 3. Eventos a ouvir:
    - `customer.subscription.created`
    - `customer.subscription.updated`
@@ -149,6 +150,9 @@ vercel --prod
 ### Variáveis no dashboard Vercel
 Adicione todas as do `.env.local.example` em:
 Settings > Environment Variables
+
+Importante para SEO e redirects:
+- **`NEXT_PUBLIC_APP_URL`**: na **Production**, use `https://britimmashiach.com` (sem barra no fim). Após criar ou alterar, faça um **Redeploy** porque variáveis `NEXT_PUBLIC_*` entram no build.
 
 ---
 
