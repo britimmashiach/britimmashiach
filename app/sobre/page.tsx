@@ -63,9 +63,7 @@ export default function QuemSomosPage() {
             <HeartHandshake className="w-6 h-6 shrink-0 text-gold-600 dark:text-gold-400 mt-1" aria-hidden />
             <div className="space-y-4 font-inter text-base md:text-[17px] leading-relaxed text-petroleum-800 dark:text-parchment-100/95">
               <p>
-                Somos uma sinagoga judaico-messiânica dedicada à restauração da Toráh, da identidade de Israel e da fé hebraica original em{' '}
-                <strong className="font-semibold text-petroleum-900 dark:text-parchment-50">Yeshua HaMashiach ben Yosef</strong>.
-                Reconhecemos Yeshua como o Mashiach prometido às tribos de Israel e às nações, porém não o definimos como Deus, o Criador, nem seguimos a doutrina da trindade.
+                Somos uma sinagoga judaico-messiânica dedicada à restauração da Toráh, da identidade de Israel e da fé hebraica original. Cremos em Yeshua HaMashiach ben Yosef. O reconhecemos como o Mashiach prometido às tribos de Israel e às nações, porém não o definimos como Deus, o Criador, nem seguimos a doutrina da trindade.
               </p>
               <p>
                 Respeitamos os que assim crêem. Nossa base é o monoteísmo absoluto revelado nas Escrituras Sagradas{' '}
