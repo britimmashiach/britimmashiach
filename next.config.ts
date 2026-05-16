@@ -16,6 +16,10 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
+        source: '/tehilim/:path*',
+        headers: [{ key: 'X-Frame-Options', value: 'SAMEORIGIN' }],
+      },
+      {
         source: '/((?!api/stripe/webhook).*)',
         headers: [
           {
@@ -28,7 +32,7 @@ const nextConfig: NextConfig = {
               "font-src 'self' https://fonts.gstatic.com",
               "img-src 'self' data: blob: https://*.supabase.co",
               "connect-src 'self' https://*.supabase.co https://api.stripe.com",
-              "frame-src https://js.stripe.com https://hooks.stripe.com https://*.supabase.co",
+              "frame-src 'self' blob: https://js.stripe.com https://hooks.stripe.com https://*.supabase.co",
             ].join('; '),
           },
         ],

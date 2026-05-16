@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { GraduationCap } from 'lucide-react'
 import { StudiesClient } from '@/components/library/StudiesClient'
 import { fetchStudies } from '@/lib/studies-supabase'
+import { isLegacyTehilimStudySlug } from '@/lib/tehilim-catalog'
 
 export const metadata: Metadata = {
   title: 'Estudos',
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
 }
 
 export default async function StudiesPage() {
-  const studies = await fetchStudies()
+  const studies = (await fetchStudies()).filter((s) => !isLegacyTehilimStudySlug(s.slug))
 
   return (
     <div className="container mx-auto px-4 py-10">

@@ -31,6 +31,13 @@ export default function TehilimPage() {
           <span className="text-xs font-inter font-semibold uppercase tracking-[0.3em]">Sefer Tehilim</span>
         </div>
         <h1 className="section-title">Tehilim — Passukim em PDF</h1>
+        <p className="text-sm font-inter text-warmgray-600 dark:text-warmgray-400 max-w-2xl">
+          A <strong className="font-medium text-petroleum-800 dark:text-parchment-100">Introdução aos Salmos</strong> está em{' '}
+          <Link href="/tehilim/livro-0" className="text-gold-600 dark:text-gold-400 hover:underline underline-offset-2">
+            Livro 0 — Apresentação
+          </Link>
+          {' '}(PDF editorial do Rav EBBY), não na seção Estudos.
+        </p>
         <p className="font-hebrew text-2xl text-warmgray-500 dark:text-warmgray-400" dir="rtl" lang="he">
           תהלים
         </p>

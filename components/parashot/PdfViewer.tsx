@@ -134,7 +134,7 @@ export function PdfViewer({ url, title, open, onClose }: PdfViewerProps) {
             ) : (
               <iframe
                 key={url}
-                src={url}
+                src={`${url}#view=FitH`}
                 className={cn(
                   'w-full h-full border-0 transition-opacity duration-700',
                   loading ? 'opacity-0' : 'opacity-100',

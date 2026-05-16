@@ -24,11 +24,11 @@ export const books = [
   },
   {
     id: '2',
-    title: 'Tehilim: transliteração e PaRDeS (L. I–II)',
-    titleHebrew: 'תהלים קבלי',
+    title: 'Tehilim — Livro 0: Apresentação',
+    titleHebrew: 'תהלים הקדמה',
     author: 'Rav Eliahu Barzilay ben Yehoshua',
     description:
-      'Salmos 1 a 72 com análise PaRDeS (obra editorial). Transliteração latina do massoreto em preparação para leitura online neste site.',
+      'Introdução ao Sefer Tehilim (obra editorial PaRDeS). Leia o PDF da apresentação; os Perakim e Passukim seguem em pastas próprias.',
     category: 'tehilim',
     isPremium: false,
     year: 5785,

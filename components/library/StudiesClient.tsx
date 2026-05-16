@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { Search, ArrowRight, Clock, Crown, Tag } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { NoStudiesFound } from '@/components/ui/EmptyState'
@@ -45,18 +45,10 @@ interface StudiesClientProps {
 }
 
 export function StudiesClient({ studies }: StudiesClientProps) {
-  const router = useRouter()
+  const pathname = usePathname()
   const displayStudies = studies
   const [query, setQuery] = useState('')
   const [activeCategory, setActiveCategory] = useState('all')
-
-  function handleCategoryClick(catId: string) {
-    if (catId === 'tehilim') {
-      router.push('/tehilim')
-      return
-    }
-    setActiveCategory(catId)
-  }
 
   const filtered = useMemo(() => {
     const q = query.toLowerCase().trim()
@@ -90,21 +82,41 @@ export function StudiesClient({ studies }: StudiesClientProps) {
 
       {/* Categorias */}
       <div className="flex flex-wrap gap-1.5" role="group" aria-label="Filtrar por categoria">
-        {CATEGORIES.map((cat) => (
-          <button
-            key={cat.id}
-            onClick={() => handleCategoryClick(cat.id)}
-            className={cn(
-              'px-3.5 py-1.5 rounded-full text-sm font-inter transition-colors duration-150 border',
-              activeCategory === cat.id
-                ? 'bg-petroleum-800 text-parchment-100 border-petroleum-800 dark:bg-gold-500 dark:text-petroleum-950 dark:border-gold-500'
-                : 'border-border text-warmgray-600 dark:text-warmgray-400 hover:border-gold-500/40 hover:bg-gold-500/5',
-            )}
-            aria-pressed={activeCategory === cat.id}
-          >
-            {cat.label}
-          </button>
-        ))}
+        {CATEGORIES.map((cat) => {
+          if (cat.id === 'tehilim') {
+            return (
+              <Link
+                key={cat.id}
+                href="/tehilim"
+                className={cn(
+                  'px-3.5 py-1.5 rounded-full text-sm font-inter transition-colors duration-150 border',
+                  pathname.startsWith('/tehilim')
+                    ? 'bg-petroleum-800 text-parchment-100 border-petroleum-800 dark:bg-gold-500 dark:text-petroleum-950 dark:border-gold-500'
+                    : 'border-border text-warmgray-600 dark:text-warmgray-400 hover:border-gold-500/40 hover:bg-gold-500/5',
+                )}
+                aria-current={pathname.startsWith('/tehilim') ? 'page' : undefined}
+              >
+                {cat.label}
+              </Link>
+            )
+          }
+          return (
+            <button
+              key={cat.id}
+              type="button"
+              onClick={() => setActiveCategory(cat.id)}
+              className={cn(
+                'px-3.5 py-1.5 rounded-full text-sm font-inter transition-colors duration-150 border',
+                activeCategory === cat.id
+                  ? 'bg-petroleum-800 text-parchment-100 border-petroleum-800 dark:bg-gold-500 dark:text-petroleum-950 dark:border-gold-500'
+                  : 'border-border text-warmgray-600 dark:text-warmgray-400 hover:border-gold-500/40 hover:bg-gold-500/5',
+              )}
+              aria-pressed={activeCategory === cat.id}
+            >
+              {cat.label}
+            </button>
+          )
+        })}
       </div>
 
       {/* Resultado */}

@@ -4,6 +4,19 @@ import path from 'path'
 const TEHILIM_PUBLIC = path.join(process.cwd(), 'public', 'tehilim')
 const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
 
+/** Estudos antigos em markdown que na verdade são PDFs em `public/tehilim/`. */
+export const TEHILIM_STUDY_REDIRECTS: Record<string, string> = {
+  'tehilim-1-peshat': '/tehilim/livro-0',
+}
+
+export function getTehilimStudyRedirect(slug: string): string | null {
+  return TEHILIM_STUDY_REDIRECTS[slug] ?? null
+}
+
+export function isLegacyTehilimStudySlug(slug: string): boolean {
+  return slug in TEHILIM_STUDY_REDIRECTS
+}
+
 export interface TehilimPdfFile {
   fileName: string
   title: string

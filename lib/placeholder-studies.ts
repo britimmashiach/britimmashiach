@@ -43,20 +43,6 @@ export const PLACEHOLDER_STUDIES: SeedStudy[] = [
     publishedAt: '2026-01-02T12:00:00.000Z',
   },
   {
-    slug: 'tehilim-1-peshat',
-    title: 'Tehilim 1: Introdução aos Salmos',
-    titleHebrew: 'תְּהִלִּים א',
-    excerpt:
-      'O primeiro Salmo de Davi como porta de entrada espiritual. Análise da palavra Ashrei, os dois caminhos e o pó ao vento.',
-    content:
-      'O livro de Tehilim abre com a distinção entre tzadik e rasha.\n\n## Peshat\n\nEstrutura poética, paralelismo e imagens da árvore plantada junto às correntes de água.\n\n## Drash\n\nO tzadik medita na Toráh dia e noite — modelo de constância espiritual.\n\n---\n\nMais capítulos serão acrescentados ao ciclo regular de estudo.',
-    category: 'tehilim',
-    readingTime: 12,
-    isPremium: false,
-    tags: ['tehilim', 'salmos', 'davi'],
-    publishedAt: '2026-01-03T12:00:00.000Z',
-  },
-  {
     slug: 'netivot-alef-keter',
     title: 'Netivot: O Caminho Alef-Keter',
     titleHebrew: 'נְתִיבוֹת',

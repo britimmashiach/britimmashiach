@@ -1,9 +1,10 @@
 import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, Clock, Crown, Tag } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { fetchStudyBySlugAdmin, fetchStudySlugs } from '@/lib/studies-supabase'
+import { getTehilimStudyRedirect } from '@/lib/tehilim-catalog'
 import { breadcrumbJsonLd, studyArticleJsonLd } from '@/lib/json-ld'
 import { Breadcrumbs } from '@/components/seo/Breadcrumbs'
 import { getPublicSiteOrigin } from '@/lib/public-site-url'
@@ -66,6 +67,9 @@ const categoryColors: Record<string, string> = {
 
 export default async function StudyDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
+  const tehilimRedirect = getTehilimStudyRedirect(slug)
+  if (tehilimRedirect) redirect(tehilimRedirect)
+
   const study = await fetchStudyBySlugAdmin(slug)
 
   if (!study) notFound()
