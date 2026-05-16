@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getTanachBook } from '@/lib/tanach-books'
-import { fetchTanachChapter, TANACH_CHAPTER_REVALIDATE } from '@/lib/sefaria-tanach'
+import { fetchTanachChapter } from '@/lib/sefaria-tanach'
 import { breadcrumbJsonLd, tanachChapterWebPageJsonLd } from '@/lib/json-ld'
 import { Breadcrumbs } from '@/components/seo/Breadcrumbs'
 import { getPublicSiteOrigin } from '@/lib/public-site-url'
@@ -10,7 +10,8 @@ import { JsonLd } from '@/components/seo/JsonLd'
 
 type Props = { params: Promise<{ book: string; chapter: string }> }
 
-export const revalidate = TANACH_CHAPTER_REVALIDATE
+/** ISR 7 dias — literal obrigatório para o build (ver TANACH_CHAPTER_REVALIDATE em lib/sefaria-tanach). */
+export const revalidate = 604_800
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { book, chapter } = await params
