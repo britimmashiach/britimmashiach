@@ -34,6 +34,7 @@ export function Footer() {
             </h4>
             <ul className="space-y-2">
               {[
+                { href: '/sobre', label: 'Quem somos' },
                 { href: '/calendar', label: 'Calendário' },
                 { href: '/parashot', label: 'Parashot' },
                 { href: '/studies', label: 'Estudos' },

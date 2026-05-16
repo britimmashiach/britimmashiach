@@ -27,6 +27,7 @@ import {
   ShieldCheck,
   Users,
   Languages,
+  Landmark,
 } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { cn } from '@/lib/utils'
@@ -36,6 +37,7 @@ import type { SessionDisplay } from '@/hooks/useProfile'
 import { createClient, supabaseConfigured } from '@/lib/supabase'
 
 const navLinks = [
+  { href: '/sobre', label: 'Quem somos', icon: Landmark },
   { href: '/calendar', label: 'Calendário', icon: Calendar },
   { href: '/parashot', label: 'Parashot', icon: BookOpen },
   { href: '/chagim', label: 'Chagim', icon: Flame },

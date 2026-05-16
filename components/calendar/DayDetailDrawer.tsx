@@ -21,6 +21,12 @@ import type { DayInfo } from '@/lib/hebrew-date'
 import { SEASON_STYLES } from '@/lib/calendar-season'
 import { HOLIDAY_ICON, HOLIDAY_BADGE_COLOR } from '@/lib/holiday-visual'
 import { findParashaByName } from '@/lib/parashot-registry'
+import {
+  canonicalStudySlugForParshaRegistrySlug,
+  hasCanonicalParshaStudy,
+  tanachHrefForOfficialParasha,
+  tanachOpeningLabelPt,
+} from '@/lib/parasha-readlinks'
 import { ZemanimSunTimes } from '@/components/calendar/ZemanimSunTimes'
 import { buildCalendarResumo } from '@/lib/calendar-resumo'
 
@@ -151,6 +157,10 @@ export function DayDetailDrawer({ info, open, onClose }: DayDetailDrawerProps) {
         {info.parsha && (() => {
           const match = findParashaByName(info.parsha)
           const parashaHref = match ? `/parashot/${match.slug}` : '/parashot'
+          const tanachHref = match ? tanachHrefForOfficialParasha(match) : null
+          const showStudyLink = match ? hasCanonicalParshaStudy(match.slug) : false
+          const studySlug = match ? canonicalStudySlugForParshaRegistrySlug(match.slug) : ''
+          const studyHref = `/studies/${studySlug}`
           return (
             <section
               className="rounded-xl border border-border/50 p-4 space-y-3 bg-background/60"
@@ -187,6 +197,33 @@ export function DayDetailDrawer({ info, open, onClose }: DayDetailDrawerProps) {
                   {match ? 'Abrir esta Parasháh na plataforma' : 'Ver Parashot na plataforma'}
                   <ChevronRight className="h-4 w-4 shrink-0" aria-hidden="true" />
                 </Link>
+                {match && tanachHref && (
+                  <Link
+                    href={tanachHref}
+                    onClick={onClose}
+                    className="inline-flex w-full sm:w-auto flex-col items-stretch gap-0.5 rounded-lg border border-petroleum-600/35 bg-background/90 px-4 py-2.5 text-left transition-colors hover:bg-muted/80 dark:border-petroleum-400/25"
+                  >
+                    <span className="inline-flex items-center gap-2 text-sm font-inter font-semibold text-petroleum-800 dark:text-parchment-100">
+                      <ScrollText className="h-4 w-4 shrink-0 opacity-90" aria-hidden="true" />
+                      Abrir o capítulo inicial no Tanach
+                      <ChevronRight className="h-4 w-4 shrink-0 ml-auto" aria-hidden="true" />
+                    </span>
+                    <span className="text-xs font-inter text-warmgray-500 pl-7">
+                      {tanachOpeningLabelPt(match)}
+                    </span>
+                  </Link>
+                )}
+                {match && showStudyLink && (
+                  <Link
+                    href={studyHref}
+                    onClick={onClose}
+                    className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-lg border border-green-700/35 bg-green-950/[0.04] px-4 py-2.5 text-sm font-inter font-semibold text-green-900 hover:bg-green-950/10 dark:border-green-400/35 dark:bg-green-500/10 dark:text-green-100 dark:hover:bg-green-500/15 transition-colors"
+                  >
+                    <BookOpenCheck className="h-4 w-4 shrink-0" aria-hidden="true" />
+                    Abrir estudo PaRDeS desta sedrá
+                    <ChevronRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+                  </Link>
+                )}
                 {!match && (
                   <p className="text-xs font-inter text-warmgray-500 leading-relaxed">
                     O nome vindo do calendário não correspondeu automaticamente a uma página. Use a lista para localizar a sedrá
