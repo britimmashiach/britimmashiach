@@ -6,7 +6,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "type-check": "tsc --noEmit",
     "seed:aliyot": "tsx --env-file=.env.local scripts/seed-aliyot.ts",
     "sync:pdfs": "tsx --env-file=.env.local scripts/sync-aliyot-pdfs.ts",

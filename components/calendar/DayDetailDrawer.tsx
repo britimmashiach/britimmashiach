@@ -28,7 +28,11 @@ interface DayDetailDrawerProps {
 
 export function DayDetailDrawer({ info, open, onClose }: DayDetailDrawerProps) {
   if (!info) {
-    return <Drawer open={open} onClose={onClose} title="" children={null} />
+    return (
+      <Drawer open={open} onClose={onClose} title="">
+        {null}
+      </Drawer>
+    )
   }
 
   const seasonStyle = SEASON_STYLES[info.season]

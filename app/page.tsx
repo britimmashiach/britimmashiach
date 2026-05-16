@@ -176,7 +176,9 @@ export default function HomePage() {
               {/* Citação contemplativa */}
               <figure className="pl-4 border-l-2 border-gold-500/25 py-1">
                 <blockquote className="font-cormorant text-base italic text-petroleum-700 dark:text-parchment-300 leading-relaxed">
-                  "Quão preciosa é a tua misericórdia, ó Elohim! Os filhos dos homens se refugiam à sombra das tuas asas."
+                  {'\u201C'}
+                  Quão preciosa é a tua misericórdia, ó Elohim! Os filhos dos homens se refugiam à sombra das tuas asas.
+                  {'\u201D'}
                 </blockquote>
                 <figcaption className="text-[10px] font-inter text-warmgray-400 mt-1.5 not-italic uppercase tracking-widest">
                   Tehilim 36:8

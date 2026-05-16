@@ -126,7 +126,10 @@ Acesse http://localhost:3000
 ```bash
 npm run build
 npm run type-check
+npm run lint
 ```
+
+O Next.js 16 já não inclui o comando `next lint`; este projeto usa `eslint` com `eslint.config.mjs`.
 
 Corrija quaisquer erros antes de fazer o deploy.
 
@@ -158,6 +161,8 @@ Importante para SEO e redirects:
 
 ## 11. Verificação pós-deploy
 
+- [ ] **Supabase (projeto PRODUÇÃO)** → Authentication → URL do site é `https://britimmashiach.com` (não `http://localhost:3000`) e há redirect para `https://britimmashiach.com/auth/callback` (+ variante com `*` se usarem `?next=`)
+- [ ] **`NEXT_PUBLIC_APP_URL`** na Vercel Production = `https://britimmashiach.com` e há **Redeploy** após última alteração
 - [ ] Home carrega com data hebraica
 - [ ] Dark/light mode funciona
 - [ ] Login/cadastro funcionam
