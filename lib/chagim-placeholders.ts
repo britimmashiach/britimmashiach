@@ -73,7 +73,7 @@ export const PLACEHOLDER_CHAGIM: Chag[] = [
     content:
       'Rosh Hashanah inaugura os Yamim Noraim: Shofar, soberania divina e introspecção.\n\nConteúdo premium em preparação incluirá meditações cabalísticas e guia de Teshuvah segundo a tradição.',
     levelPardes: ['sod'],
-    isPremium: true,
+    isPremium: false,
     pdfUrl: null,
     pdfPremiumUrl: null,
     pdfKabbalahUrl: null,
@@ -92,7 +92,7 @@ export const PLACEHOLDER_CHAGIM: Chag[] = [
     content:
       'Yom Kippur é Shabat Shabaton: cessar do trabalho físico para aprofundar o trabalho espiritual.\n\nA liturgia do dia (vidui, avodah) será estudada em camadas, com material reservado a assinantes Premium.',
     levelPardes: ['sod'],
-    isPremium: true,
+    isPremium: false,
     pdfUrl: null,
     pdfPremiumUrl: null,
     pdfKabbalahUrl: null,
