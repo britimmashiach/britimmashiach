@@ -10,7 +10,6 @@ import {
   FileText,
   Flame,
   Quote,
-  Sun,
   Star,
   Sparkles,
 } from 'lucide-react'
@@ -19,6 +18,7 @@ import type { DayInfo } from '@/lib/hebrew-date'
 import { SEASON_STYLES } from '@/lib/calendar-season'
 import { HOLIDAY_ICON, HOLIDAY_BADGE_COLOR } from '@/lib/holiday-visual'
 import { findParashaByName } from '@/lib/parashot-registry'
+import { ZemanimSunTimes } from '@/components/calendar/ZemanimSunTimes'
 
 interface DayDetailDrawerProps {
   info: DayInfo | null
@@ -189,27 +189,7 @@ export function DayDetailDrawer({ info, open, onClose }: DayDetailDrawerProps) {
           )
         })()}
 
-        {/* Zmanim mínimo */}
-        <section
-          className="rounded-xl border border-border/50 p-4 space-y-2 bg-background/60"
-          aria-labelledby="zmanim-heading"
-        >
-          <div className="flex items-center gap-2">
-            <Sun className="w-4 h-4 text-gold-500" aria-hidden="true" />
-            <h2
-              id="zmanim-heading"
-              className="font-cinzel text-sm font-semibold text-petroleum-800 dark:text-parchment-100 uppercase tracking-wider"
-            >
-              Zmanim · São Paulo
-            </h2>
-          </div>
-          <div className="flex items-baseline gap-1.5">
-            <span className="text-xs font-inter text-warmgray-500">Pôr do sol</span>
-            <span className="font-cinzel text-base font-semibold text-petroleum-800 dark:text-parchment-100">
-              {info.sunsetLabel}
-            </span>
-          </div>
-        </section>
+        <ZemanimSunTimes brasil={info.zemanimBrazil} yerushalayim={info.zemanimYerushalayim} />
 
         {/* Estudo do dia */}
         <section

@@ -45,7 +45,7 @@ export function dateAtNoonBrazil(
 // LOCALIZAÇÃO PARA ZMANIM (São Paulo, sede da congregação)
 // =============================================================================
 
-/** São Paulo, lat/lon clássicos do Hebcal. Reuso em todas as chamadas. */
+/** São Paulo via Hebcal (lat/lon padrão) — zemanim centro-sul para referência da plataforma. */
 const SAO_PAULO_LOCATION = new Location(
   -23.5505,
   -46.6333,
@@ -56,6 +56,13 @@ const SAO_PAULO_LOCATION = new Location(
   undefined,
   760,
 )
+
+const ZMANIM_LOCATION_BRAZIL_SP =
+  Location.lookup('Sao Paulo') ?? SAO_PAULO_LOCATION
+
+const ZMANIM_LOCATION_YERUSHALAYIM =
+  Location.lookup('Jerusalem') ??
+  new Location(31.76904, 35.21633, true, 'Asia/Jerusalem', 'Yerushalayim', 'IL')
 
 // =============================================================================
 // CONSTANTES E LABELS
@@ -136,6 +143,13 @@ export type HolidayKey =
   | 'yom_yerushalayim'
   | null
 
+/** Nascer e pôr do sol para um lugar (fusos vindos do Hebcal em `title`/cálculos). */
+export type ZemanimPlace = {
+  title: string
+  sunriseLabel: string
+  sunsetLabel: string
+}
+
 export interface HebrewDateInfo {
   hebrewDate: string
   hebrewDateFull: string
@@ -186,8 +200,12 @@ export interface DayInfo {
   /** Estado litúrgico (para paleta). */
   season: LiturgicalSeason
 
-  /** Pôr do sol em São Paulo: "HH:mm". */
+  /** Pôr do sol em São Paulo, só para compatibilidade: igual a `zemanimBrazil.sunsetLabel`. */
   sunsetLabel: string
+  /** Hanetz · shkiá com base em São Paulo (Hebcal), alinhado à congregação em Franca/região centro-sul Brasil. */
+  zemanimBrazil: ZemanimPlace
+  /** Nascer e pôr em Yerushalayim (Hanetz háma / shkiá, Eretz Israel). */
+  zemanimYerushalayim: ZemanimPlace
 
   /** Tehilim sugerido (rotação devocional simples). */
   tehilimSuggestion: string
@@ -406,7 +424,7 @@ export function getDayInfo(date: Date = new Date()): DayInfo {
   const chanukahInfo =
     holidayKey === 'chanukah' ? buildChanukahInfo(holidayEvent) : ''
   const brachaInfo = buildBrachaInfo(holidayKey, holidayEvent)
-  const sunsetLabel = computeSunsetSaoPaulo(civil)
+  const { sunsetLabel, zemanimBrazil, zemanimYerushalayim } = computeDualZmanim(civil)
   const tehilimSuggestion = buildTehilimSuggestion(hDate)
   const pirkeiFrase = pickPirkeiFrase(hebrewDay)
 
@@ -432,6 +450,8 @@ export function getDayInfo(date: Date = new Date()): DayInfo {
     brachaInfo,
     season,
     sunsetLabel,
+    zemanimBrazil,
+    zemanimYerushalayim,
     tehilimSuggestion,
     pirkeiFrase,
   }
@@ -682,21 +702,57 @@ function pickPirkeiFrase(hebrewDay: number): string {
 }
 
 // =============================================================================
-// ZMANIM — PÔR DO SOL SP
+// ZMANIM — NASCER E PÔR DO SOL (Brasil SP + Yerushalayim, NOAA via @hebcal/core)
 // =============================================================================
 
-function computeSunsetSaoPaulo(civil: Date): string {
+function formatZmanHmInTz(d: Date, timeZone: string): string {
   try {
-    const z = new Zmanim(SAO_PAULO_LOCATION, civil, false)
-    const sunset = z.sunset()
     return new Intl.DateTimeFormat('pt-BR', {
       hour: '2-digit',
       minute: '2-digit',
-      timeZone: SITE_CIVIL_TIMEZONE,
+      timeZone,
       hour12: false,
-    }).format(sunset)
+    }).format(d)
   } catch {
     return 'indisponível'
+  }
+}
+
+function sunriseSunsetLabels(loc: Location, civil: Date): {
+  sunriseLabel: string
+  sunsetLabel: string
+} {
+  const tzId = loc.getTzid()
+  try {
+    const z = new Zmanim(loc, civil, false)
+    return {
+      sunriseLabel: formatZmanHmInTz(z.sunrise(), tzId),
+      sunsetLabel: formatZmanHmInTz(z.sunset(), tzId),
+    }
+  } catch {
+    return { sunriseLabel: 'indisponível', sunsetLabel: 'indisponível' }
+  }
+}
+
+function computeDualZmanim(civil: Date): {
+  sunsetLabel: string
+  zemanimBrazil: ZemanimPlace
+  zemanimYerushalayim: ZemanimPlace
+} {
+  const br = sunriseSunsetLabels(ZMANIM_LOCATION_BRAZIL_SP, civil)
+  const il = sunriseSunsetLabels(ZMANIM_LOCATION_YERUSHALAYIM, civil)
+  return {
+    sunsetLabel: br.sunsetLabel,
+    zemanimBrazil: {
+      title: 'Brasil · São Paulo (referência zemanim)',
+      sunriseLabel: br.sunriseLabel,
+      sunsetLabel: br.sunsetLabel,
+    },
+    zemanimYerushalayim: {
+      title: 'Yerushalayim · Eretz Israel',
+      sunriseLabel: il.sunriseLabel,
+      sunsetLabel: il.sunsetLabel,
+    },
   }
 }
 

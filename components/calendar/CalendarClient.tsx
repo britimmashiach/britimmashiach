@@ -6,7 +6,6 @@ import {
   ChevronLeft,
   ChevronRight,
   Sparkles,
-  Sun,
   Star,
 } from 'lucide-react'
 import Link from 'next/link'
@@ -20,6 +19,7 @@ import {
 import { SEASON_STYLES, cellStyleFor } from '@/lib/calendar-season'
 import { HOLIDAY_ICON, HOLIDAY_BADGE_COLOR } from '@/lib/holiday-visual'
 import { DayDetailDrawer } from '@/components/calendar/DayDetailDrawer'
+import { ZemanimSunTimes } from '@/components/calendar/ZemanimSunTimes'
 import { findParashaByName } from '@/lib/parashot-registry'
 
 const DAYS_WEEK_PT = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Shab']
@@ -406,10 +406,11 @@ export function CalendarClient({
               </p>
             )}
 
-            <div className="flex items-center gap-1.5 text-xs font-inter text-warmgray-500 pt-1 border-t border-border/30">
-              <Sun className="w-3.5 h-3.5 text-gold-500" aria-hidden="true" />
-              Pôr do sol em SP: <span className="font-medium text-foreground">{selected.sunsetLabel}</span>
-            </div>
+            <ZemanimSunTimes
+              brasil={selected.zemanimBrazil}
+              yerushalayim={selected.zemanimYerushalayim}
+              compact
+            />
 
             <button
               onClick={() => setDrawerOpen(true)}
