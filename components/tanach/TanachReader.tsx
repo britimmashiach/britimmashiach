@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { ArrowLeft, ArrowRight, ExternalLink, Sparkles } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Sparkles } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { getTanachBook, type TanachSection } from '@/lib/tanach-books'
 import { saveTanachLastRead, saveTanachViewPref, loadTanachViewPref } from '@/lib/tanach-reading-prefs'
@@ -161,17 +161,6 @@ function TanachReaderInner({
             <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
             Capítulos
           </Link>
-          {data?.sefariaUrl && (
-            <a
-              href={data.sefariaUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-lg border border-gold-500/30 bg-gold-500/10 px-3 py-2 text-xs font-inter font-medium text-gold-800 dark:text-gold-300 hover:bg-gold-500/15 transition-colors"
-            >
-              <ExternalLink className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
-              Sefaria (incl. transliteração)
-            </a>
-          )}
         </div>
       </div>
 
@@ -267,9 +256,7 @@ function TanachReaderInner({
               )}
 
               <p className="text-[11px] font-inter text-parchment-200/70 leading-relaxed border-b border-gold-500/15 pb-4">
-                Texto massorético (hebraico com nikud) e coluna de tradução via acervo público do Sefaria. A{' '}
-                <strong className="text-parchment-100/90">transliteração latina</strong> por versículo não está
-                estável nesta API; use o botão <em>Sefaria</em> acima para recursos de leitura e comentários.
+                Texto massorético (hebraico com nikud) e coluna de tradução via acervo público do Sefaria.
               </p>
 
               <ol className="space-y-6 list-none m-0 p-0">
