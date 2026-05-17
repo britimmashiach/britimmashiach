@@ -1,5 +1,6 @@
 import { stripSefariaHtml } from '@/lib/strip-sefaria-html'
-import { TANACH_BOOKS, sefariaRef } from '@/lib/tanach-books'
+import { TANACH_BOOKS, getTanachBookByApiName, sefariaRef } from '@/lib/tanach-books'
+import { CUSTOM_PT_ATTRIBUTION, loadCustomPtChapter } from '@/lib/tanach-custom-pt'
 
 const SEFARIA_TEXTS = 'https://www.sefaria.org/api/texts'
 const PT_PRIMARY = 'Tanach Completo em Português [pt]'
@@ -88,8 +89,29 @@ export async function fetchTanachChapter(
   let versionTitle = base.versionTitle ?? ''
   let locale = inferLocaleFromVersion(base.versionTitle, base.actualLanguage)
   let venUsed = versionTitle || '(edição padrão Sefaria)'
+  let attribution = {
+    source: 'Sefaria',
+    url: 'https://www.sefaria.org',
+    translationVersion: venUsed,
+  }
 
-  for (const ven of [PT_PRIMARY, PT_FALLBACK]) {
+  const bookMeta = getTanachBookByApiName(book)
+  if (bookMeta) {
+    const custom = await loadCustomPtChapter(bookMeta.slug, chapter, n)
+    if (custom) {
+      translation = custom.verses
+      versionTitle = custom.title
+      locale = 'pt'
+      venUsed = custom.title
+      attribution = {
+        source: CUSTOM_PT_ATTRIBUTION.source,
+        url: 'https://britimmashiach.com',
+        translationVersion: custom.title,
+      }
+    }
+  }
+
+  if (locale !== 'pt') for (const ven of [PT_PRIMARY, PT_FALLBACK]) {
     const res = await fetchSefaria(refDot, ven)
     if (!res.ok) continue
     const data = (await res.json()) as SefariaTextJson
@@ -114,10 +136,6 @@ export async function fetchTanachChapter(
     locale,
     versionTitle,
     sefariaUrl,
-    attribution: {
-      source: 'Sefaria',
-      url: 'https://www.sefaria.org',
-      translationVersion: venUsed,
-    },
+    attribution,
   }
 }

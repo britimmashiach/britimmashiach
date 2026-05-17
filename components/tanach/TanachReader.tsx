@@ -260,9 +260,9 @@ function TanachReaderInner({
                   className="text-[11px] font-inter text-amber-200/90 leading-relaxed border border-amber-500/25 rounded-lg bg-amber-950/30 px-3 py-2"
                   role="status"
                 >
-                  Para este livro o Sefaria ainda não oferece tradução completa em português alinhada versículo a
-                  versículo. Estamos a mostrar a tradução em <strong className="text-parchment-100/95">inglês</strong>{' '}
-                  (edição padrão do site), alinhada ao hebraico massorético.
+                  A tradução em português para este livro. Trouxemos a tradução em{' '}
+                  <strong className="text-parchment-100/95">inglês</strong> (como edição padrão do site), alinhada ao
+                  hebraico massorético, pois pode ajudar a alguns.
                 </p>
               )}
 
