@@ -30,14 +30,14 @@ const nextConfig: NextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "media-src 'self'",
+              "media-src 'self' https://raw.githubusercontent.com",
               // unsafe-eval necessário para o worker do pdf.js
               "script-src 'self' 'unsafe-eval' 'unsafe-inline' blob: https://js.stripe.com",
               "worker-src 'self' blob:",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
               "img-src 'self' data: blob: https://*.supabase.co",
-              "connect-src 'self' https://*.supabase.co https://api.stripe.com",
+              "connect-src 'self' https://*.supabase.co https://api.stripe.com https://www.sefaria.org",
               "frame-src 'self' blob: https://js.stripe.com https://hooks.stripe.com https://*.supabase.co",
               "object-src 'self' blob:",
             ].join('; '),

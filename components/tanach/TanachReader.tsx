@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils'
 import { getTanachBook, type TanachSection } from '@/lib/tanach-books'
 import { saveTanachLastRead, saveTanachViewPref, loadTanachViewPref } from '@/lib/tanach-reading-prefs'
 import type { TanachChapterPayload } from '@/lib/sefaria-tanach'
+import { TorahChapterAudioPlayer } from '@/components/tanach/TorahChapterAudioPlayer'
 
 export type TanachViewMode = 'both' | 'he' | 'pt'
 
@@ -59,6 +60,7 @@ function TanachReaderInner({
   const [data, setData] = useState<TanachChapterPayload | null>(initialData)
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(!initialData)
+  const [audioVerse, setAudioVerse] = useState<number | null>(null)
 
   useEffect(() => {
     if (initialData) {
@@ -91,6 +93,10 @@ function TanachReaderInner({
       cancelled = true
     }
   }, [apiBook, chapter, bookSlug, initialData])
+
+  useEffect(() => {
+    setAudioVerse(null)
+  }, [apiBook, chapter])
 
   useEffect(() => {
     const param = searchParams.get('view')
@@ -208,6 +214,15 @@ function TanachReaderInner({
         ))}
       </div>
 
+      {section === 'torah' && !loading && !error && data && (
+        <TorahChapterAudioPlayer
+          apiBook={apiBook}
+          chapter={chapter}
+          verseCount={data.he.length}
+          onActiveVerseChange={setAudioVerse}
+        />
+      )}
+
       <section
         className={cn(
           'relative overflow-hidden rounded-2xl border border-gold-500/25',
@@ -264,6 +279,7 @@ function TanachReaderInner({
                     className={cn(
                       'rounded-xl border border-gold-500/10 bg-petroleum-950/35 backdrop-blur-[2px]',
                       'p-4 md:p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]',
+                      audioVerse === i + 1 && 'border-gold-500/45 ring-1 ring-gold-500/25',
                     )}
                   >
                     <div className="flex items-start gap-3 md:gap-4">

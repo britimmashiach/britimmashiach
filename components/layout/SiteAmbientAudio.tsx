@@ -4,6 +4,7 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react
 import { createPortal } from 'react-dom'
 import { AlertCircle, Pause, Play, Volume2, VolumeX } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { TORAH_AUDIO_PLAY_EVENT, TORAH_AUDIO_STOP_EVENT } from '@/lib/ambient-audio-bus'
 
 /**
  * Áudio ambiente (Ana BeKoach). Coloque `public/audio/ana-bekoach.mp3` com licença válida.
@@ -25,6 +26,8 @@ function isSessionPaused(): boolean {
 export function SiteAmbientAudio() {
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const userPausedRef = useRef(false)
+  const duckedByTorahRef = useRef(false)
+  const wasPlayingBeforeTorahRef = useRef(false)
   const unmuteAttemptedRef = useRef(false)
   const [mounted, setMounted] = useState(false)
   const [loadFailed, setLoadFailed] = useState(false)
@@ -141,6 +144,33 @@ export function SiteAmbientAudio() {
         })
       })
   }, [])
+
+  useEffect(() => {
+    if (!mounted) return
+
+    const duckForTorah = () => {
+      const el = audioRef.current
+      if (!el || userPausedRef.current || isSessionPaused()) return
+      wasPlayingBeforeTorahRef.current = !el.paused
+      duckedByTorahRef.current = true
+      el.pause()
+      setPlaying(false)
+    }
+
+    const unduckAfterTorah = () => {
+      if (!duckedByTorahRef.current) return
+      duckedByTorahRef.current = false
+      if (userPausedRef.current || isSessionPaused() || !wasPlayingBeforeTorahRef.current) return
+      void startPlayback(false)
+    }
+
+    window.addEventListener(TORAH_AUDIO_PLAY_EVENT, duckForTorah)
+    window.addEventListener(TORAH_AUDIO_STOP_EVENT, unduckAfterTorah)
+    return () => {
+      window.removeEventListener(TORAH_AUDIO_PLAY_EVENT, duckForTorah)
+      window.removeEventListener(TORAH_AUDIO_STOP_EVENT, unduckAfterTorah)
+    }
+  }, [mounted, startPlayback])
 
   useEffect(() => {
     if (!mounted) return
