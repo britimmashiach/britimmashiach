@@ -11,8 +11,10 @@ import { getPublicSiteOrigin } from '@/lib/public-site-url'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { userHasPremiumAccess } from '@/lib/premium-access'
 import { PremiumGate } from '@/components/ui/PremiumGate'
+import { StudyLibraryPdf } from '@/components/studies/StudyLibraryPdf'
+import { libraryBookSlugForStudy } from '@/lib/study-library-pdf'
 
-export const revalidate = 3600
+export const dynamic = 'force-dynamic'
 
 export async function generateStaticParams() {
   return fetchStudySlugs()
@@ -75,10 +77,14 @@ export default async function StudyDetailPage({ params }: { params: Promise<{ sl
   if (!study) notFound()
 
   if (study.isPremium && !(await userHasPremiumAccess())) {
+    const netivotPdfNote =
+      slug === 'netivot-alef-keter'
+        ? ' O bloco «Modelo Fixo de Netivot (PDF)» só aparece com role admin ou premium em Supabase → profiles (não basta acessar /admin na interface).'
+        : ''
     return (
       <PremiumGate
         title={study.title}
-        description="O conteúdo completo deste estudo é exclusivo para assinantes Premium. Ative o plano para liberar o material e o restante do acervo do Rav EBBY."
+        description={`O conteúdo completo deste estudo é exclusivo para assinantes Premium. Ative o plano para liberar o material e o restante do acervo do Rav EBBY.${netivotPdfNote}`}
         backHref="/studies"
         backLabel="Voltar aos estudos"
       />
@@ -153,6 +159,13 @@ export default async function StudyDetailPage({ params }: { params: Promise<{ sl
       </div>
 
       <hr className="divider-gold" />
+
+      {libraryBookSlugForStudy(slug) && (
+        <StudyLibraryPdf
+          studySlug={slug}
+          pdfTitle={`${study.title} — Modelo Fixo de Netivot`}
+        />
+      )}
 
       {/* Conteúdo */}
       <div className="prose prose-sm md:prose-base max-w-none mt-8

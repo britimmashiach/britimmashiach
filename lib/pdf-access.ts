@@ -13,7 +13,16 @@ export interface ResolvedPdf {
 
 const PARASHOT_BUCKET = 'parashot-pdfs'
 const TEHILIM_BUCKET = 'tehilim-pdfs'
+const LIBRARY_BUCKET = 'library-pdfs'
 const WATERMARKED_BUCKET = 'users-watermarked'
+
+/** Fallback quando `library_books` ainda não foi migrada no Supabase. */
+const LIBRARY_PDF_FALLBACK: Record<string, { path: string; isPremium: boolean }> = {
+  'modelo-fixo-netivot': {
+    path: 'netivot/modelo-fixo-rav-ebby.pdf',
+    isPremium: true,
+  },
+}
 
 function basename(p: string): string {
   const parts = p.split('/')
@@ -42,6 +51,7 @@ function pathOnly(raw: string): string {
  *   aliyah/{id}/kabbalah              → aliyot.pdf_kabbalah_url   (tier=admin)
  *   parasha/{id}                      → parashot.pdf_url          (tier=free; se parasha.is_premium → tier=premium)
  *   tehilim/{perek_slug}/{filename}   → bucket tehilim-pdfs       (tier=free, mas exige login)
+ *   library/{slug}                    → library_books.file_url    (tier conforme is_premium)
  */
 export async function resolvePdfRequest(segments: string[]): Promise<ResolvedPdf | null> {
   if (!hasServiceRoleEnv() || segments.length === 0) return null
@@ -138,6 +148,33 @@ export async function resolvePdfRequest(segments: string[]): Promise<ResolvedPdf
     const p = pathOnly(data.pdf_url)
     return {
       bucket: PARASHOT_BUCKET,
+      path: p,
+      filename: basename(p),
+      requiredTier: data.is_premium ? 'premium' : 'free',
+    }
+  }
+
+  if (head === 'library' && rest.length === 1) {
+    const slug = rest[0]
+    if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) return null
+    const { data, error } = await admin
+      .from('library_books')
+      .select('file_url, is_premium')
+      .eq('slug', slug)
+      .single()
+    const fallback = LIBRARY_PDF_FALLBACK[slug]
+    if (error || !data?.file_url) {
+      if (!fallback) return null
+      return {
+        bucket: LIBRARY_BUCKET,
+        path: fallback.path,
+        filename: basename(fallback.path),
+        requiredTier: fallback.isPremium ? 'premium' : 'free',
+      }
+    }
+    const p = pathOnly(data.file_url)
+    return {
+      bucket: LIBRARY_BUCKET,
       path: p,
       filename: basename(p),
       requiredTier: data.is_premium ? 'premium' : 'free',

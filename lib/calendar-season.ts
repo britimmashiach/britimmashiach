@@ -144,7 +144,7 @@ export function cellStyleFor(args: {
   if (omerDay > 0) {
     return 'bg-parchment-100/40 text-foreground dark:bg-petroleum-900/30 ring-1 ring-gold-500/15'
   }
-  if (holidayKey === 'rosh_chodesh') {
+  if (holidayKey === 'rosh_chodesh' || holidayKey === 'yom_kippur_katan') {
     return 'bg-petroleum-500/8 text-petroleum-700 dark:text-petroleum-200 ring-1 ring-petroleum-500/20'
   }
   return 'bg-muted/40 text-foreground hover:bg-muted'

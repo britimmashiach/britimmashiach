@@ -214,7 +214,11 @@ function leiturasBullets(info: DayInfo): string[] {
   } else {
     r.push(`Consulte o material impresso da Brit Im Mashiach para aliyot e leituras extras desta data.`)
   }
-  if (info.holidayKey && info.holidayName) {
+  if (info.holidayKey === 'yom_kippur_katan') {
+    r.push(
+      `${info.holidayName}: dia de teshuvah leve antes de Rosh Chodesh (minhag sefardita). Não é o Yom Kippur de Tishrei; confirme com o Rav se há jejum opcional nesta data.`,
+    )
+  } else if (info.holidayKey && info.holidayName) {
     r.push(`Leitura propria de ${info.holidayName} na ordem do humash e machzor segundo o minhague autorizado.`)
   }
   return r
@@ -247,6 +251,12 @@ function halachotBullets(info: DayInfo): string[] {
   }
   if (info.holidayKey === 'rosh_chodesh') {
     h.push(`Rosh Chodesh: Halel parcial, Musaf proprio, costume de refeicao reforcada leve segundo minhague.`)
+    return h
+  }
+  if (info.holidayKey === 'yom_kippur_katan') {
+    h.push(
+      `Yom Kippur Katán: teshuvah e tefilah extras conforme minhague; não tratar como Yom Kippur de Tishrei nem como Yom Tov completo.`,
+    )
     return h
   }
   if (info.omerDay > 0) {

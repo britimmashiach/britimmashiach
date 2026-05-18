@@ -33,7 +33,7 @@ import { useState, useEffect } from 'react'
 import { cn } from '@/lib/utils'
 import { SiteLogo } from '@/components/layout/SiteLogo'
 import { useProfile } from '@/hooks/useProfile'
-import type { SessionDisplay } from '@/hooks/useProfile'
+import type { SessionDisplay } from '@/lib/session-display'
 import { createClient, supabaseConfigured } from '@/lib/supabase'
 
 const navLinks = [
@@ -100,6 +100,8 @@ function AccountTriggerContent({ session }: { session: SessionDisplay }) {
 export function Header() {
   const { theme, setTheme } = useTheme()
   const { loading, sessionDisplay } = useProfile()
+  const showSession = Boolean(sessionDisplay)
+  const showAuthLoading = loading && !showSession
   const [mobileOpen, setMobileOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
   const pathname = usePathname()
@@ -195,9 +197,9 @@ export function Header() {
             )}
 
             {/* Desktop: logado = dropdown Radix; deslogado = Entrar */}
-            {loading ? (
+            {showAuthLoading ? (
               <div className="hidden md:block">{authLoadingSlot}</div>
-            ) : sessionDisplay ? (
+            ) : showSession && sessionDisplay ? (
               <DropdownMenu modal={false}>
                 <DropdownMenuTrigger asChild>
                   <button
@@ -268,9 +270,9 @@ export function Header() {
             )}
 
             {/* Mobile: barra superior — avatar (abre menu) ou Entrar */}
-            {loading ? (
+            {showAuthLoading ? (
               <div className="md:hidden flex items-center">{authLoadingSlot}</div>
-            ) : sessionDisplay ? (
+            ) : showSession && sessionDisplay ? (
               <button
                 type="button"
                 className="md:hidden flex h-9 w-9 items-center justify-center shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-gold-500/40 rounded-full"
@@ -331,7 +333,7 @@ export function Header() {
               )
             })}
             <div className="pt-2.5 border-t border-border/40 mt-2 px-1 space-y-1">
-              {sessionDisplay ? (
+              {showSession && sessionDisplay ? (
                 <>
                   <div className="flex items-center gap-2.5 px-2 py-2 rounded-lg bg-muted/40">
                     <AvatarCircle initials={sessionDisplay.initials} className="h-10 w-10 text-xs" />

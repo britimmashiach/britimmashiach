@@ -34,6 +34,8 @@ export async function proxy(request: NextRequest) {
     },
   })
 
+  // Renova tokens nos cookies antes de validar o utilizador (crítico em mobile/Safari).
+  await supabase.auth.getSession()
   const {
     data: { user },
   } = await supabase.auth.getUser()

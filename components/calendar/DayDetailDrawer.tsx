@@ -81,46 +81,53 @@ export function DayDetailDrawer({ info, open, onClose }: DayDetailDrawerProps) {
             )}
             aria-labelledby="chag-heading"
           >
-            <div className="flex items-center gap-2">
-              {holidayBadge && HolidayIcon && (
-                <span
-                  className={cn(
-                    'w-7 h-7 rounded-md flex items-center justify-center',
-                    holidayBadge,
-                  )}
-                  aria-hidden="true"
-                >
-                  <HolidayIcon className="w-4 h-4" />
+            <div className="space-y-2">
+              {info.holidayKey === 'yom_kippur_katan' && (
+                <span className="inline-block text-[10px] font-inter font-semibold uppercase tracking-wider text-petroleum-600 dark:text-petroleum-300 bg-petroleum-500/10 border border-petroleum-500/20 px-2 py-0.5 rounded-full">
+                  Não é Yom Kippur de Tishrei
                 </span>
               )}
-              <h2
-                id="chag-heading"
-                className="font-cinzel text-base font-semibold text-petroleum-800 dark:text-parchment-100"
-              >
-                {info.holidayName}
-                {info.holidayTotalDays > 1 && (
-                  <span className="ml-1.5 text-xs font-inter font-medium text-warmgray-500">
-                    ({info.holidayDayNumber}/{info.holidayTotalDays})
+              <div className="flex items-center gap-2 flex-wrap">
+                {holidayBadge && HolidayIcon && (
+                  <span
+                    className={cn(
+                      'w-7 h-7 rounded-md flex items-center justify-center',
+                      holidayBadge,
+                    )}
+                    aria-hidden="true"
+                  >
+                    <HolidayIcon className="w-4 h-4" />
                   </span>
                 )}
-              </h2>
+                <h2
+                  id="chag-heading"
+                  className="font-cinzel text-base font-semibold text-petroleum-800 dark:text-parchment-100"
+                >
+                  {info.holidayName}
+                  {info.holidayTotalDays > 1 && (
+                    <span className="ml-1.5 text-xs font-inter font-medium text-warmgray-500">
+                      ({info.holidayDayNumber}/{info.holidayTotalDays})
+                    </span>
+                  )}
+                </h2>
+              </div>
+              {info.holidayDetail && (
+                <p className="font-cormorant text-base italic text-petroleum-800 dark:text-parchment-200 leading-relaxed">
+                  {info.holidayDetail}
+                </p>
+              )}
+              {info.chanukahInfo && (
+                <p className="text-sm font-inter text-foreground/80 leading-relaxed">
+                  {info.chanukahInfo}
+                </p>
+              )}
+              {info.brachaInfo && (
+                <p className="text-xs font-inter text-warmgray-600 dark:text-warmgray-400">
+                  <Flame className="inline w-3 h-3 mr-1 -mt-0.5" aria-hidden="true" />
+                  {info.brachaInfo}
+                </p>
+              )}
             </div>
-            {info.holidayDetail && (
-              <p className="font-cormorant text-base italic text-petroleum-800 dark:text-parchment-200 leading-relaxed">
-                {info.holidayDetail}
-              </p>
-            )}
-            {info.chanukahInfo && (
-              <p className="text-sm font-inter text-foreground/80 leading-relaxed">
-                {info.chanukahInfo}
-              </p>
-            )}
-            {info.brachaInfo && (
-              <p className="text-xs font-inter text-warmgray-600 dark:text-warmgray-400">
-                <Flame className="inline w-3 h-3 mr-1 -mt-0.5" aria-hidden="true" />
-                {info.brachaInfo}
-              </p>
-            )}
           </section>
         )}
 

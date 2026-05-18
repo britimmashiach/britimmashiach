@@ -7,6 +7,8 @@ import { Search, Crown, Download, BookMarked, Lock, BookOpen } from 'lucide-reac
 import { cn } from '@/lib/utils'
 import { NoLibraryResults } from '@/components/ui/EmptyState'
 import { TanachReadOnlineLink } from '@/components/tanach/TanachReadOnlineLink'
+import { PdfButton } from '@/components/ui/PdfButton'
+import { libraryBookPdfUrl } from '@/lib/pdf-urls'
 import { useProfile } from '@/hooks/useProfile'
 import type { TanachResumeScope } from '@/lib/tanach-reading-prefs'
 
@@ -31,6 +33,8 @@ interface Book {
   readOnlineHref?: string
   /** “Ler online” para Tanach: usa última leitura no aparelho quando cabe no `scope`. */
   readOnlineTanachResume?: { fallbackHref: string; scope: TanachResumeScope }
+  /** Slug em `library_books` + PDF em `library-pdfs` (proxy /api/pdf/library/{slug}). */
+  libraryBookSlug?: string
 }
 
 interface LibraryClientProps {
@@ -242,6 +246,13 @@ export function LibraryClient({ books }: LibraryClientProps) {
                         <BookOpen className="w-3 h-3" aria-hidden="true" />
                         Ler online
                       </Link>
+                    ) : book.libraryBookSlug && libraryBookPdfUrl(book.libraryBookSlug) ? (
+                      <PdfButton
+                        url={libraryBookPdfUrl(book.libraryBookSlug)!}
+                        title={book.title}
+                        label="Ler PDF"
+                        className="!px-0 !py-0 !border-0 !bg-transparent text-xs"
+                      />
                     ) : (
                       <button
                         className="inline-flex items-center gap-1 text-xs font-inter font-medium text-petroleum-700 dark:text-petroleum-300 hover:text-gold-600 dark:hover:text-gold-400 transition-colors"

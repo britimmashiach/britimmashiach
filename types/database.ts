@@ -305,6 +305,7 @@ export interface Database {
       library_books: {
         Row: {
           id: string
+          slug: string | null
           title: string
           title_hebrew: string | null
           author: string
@@ -318,6 +319,7 @@ export interface Database {
         }
         Insert: {
           id?: string
+          slug?: string | null
           title: string
           title_hebrew?: string | null
           author: string
@@ -331,6 +333,7 @@ export interface Database {
         }
         Update: {
           id?: string
+          slug?: string | null
           title?: string
           title_hebrew?: string | null
           author?: string

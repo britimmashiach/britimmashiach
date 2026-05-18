@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 
 // Calendário muda a cada dia. Cache curto evita data "presa" e ainda assim
 // poupa cálculos do Hebcal/Zmanim.
-export const revalidate = 3600
+export const dynamic = 'force-dynamic'
 
 export default function CalendarPage() {
   const todayParts = getCivilDatePartsInTimeZone(new Date())

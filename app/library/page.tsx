@@ -36,13 +36,15 @@ export const books = [
   },
   {
     id: '3',
-    title: 'Modelo Netivot: 32 Caminhos',
-    titleHebrew: 'מודל נתיבות',
+    title: 'Modelo Fixo de Netivot',
+    titleHebrew: 'נְתִיבֹות',
     author: 'Rav Eliahu Barzilay ben Yehoshua',
-    description: 'Sistema proprietário de 32 caminhos da Árvore da Vida segundo o método do Rav EBBY.',
+    description:
+      'Os 22 caminhos (11 a 32) da Etz Chaim: letras do Alef-Beit, conexões entre Sefirot e Olamot. Referência fixa do Método Rav EBBY.',
     category: 'kabaláh',
     isPremium: true,
-    year: 5785,
+    year: 5786,
+    libraryBookSlug: 'modelo-fixo-netivot',
   },
   {
     id: '4',

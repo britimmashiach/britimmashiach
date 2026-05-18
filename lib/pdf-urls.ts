@@ -26,3 +26,8 @@ export function chagSectionPdfUrl(id: string, path: string | null): string | nul
   if (!path) return null
   return `/api/pdf/chag-section/${id}`
 }
+
+export function libraryBookPdfUrl(slug: string | null | undefined): string | null {
+  if (!slug) return null
+  return `/api/pdf/library/${slug}`
+}

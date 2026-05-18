@@ -206,6 +206,7 @@ create policy "Admin acesso total parashot"
 -- =============================================================
 create table if not exists public.library_books (
   id uuid primary key default uuid_generate_v4(),
+  slug text,
   title text not null,
   title_hebrew text,
   author text not null,
@@ -217,6 +218,10 @@ create table if not exists public.library_books (
   published_year integer,
   created_at timestamptz not null default now()
 );
+
+create unique index if not exists idx_library_books_slug
+  on public.library_books (slug)
+  where slug is not null;
 
 create index if not exists idx_library_category on public.library_books(category);
 create index if not exists idx_library_premium on public.library_books(is_premium);

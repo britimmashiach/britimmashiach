@@ -121,6 +121,7 @@ export type HolidayKey =
   | 'shavuot'
   | 'rosh_hashana'
   | 'yom_kippur'
+  | 'yom_kippur_katan'
   | 'sukkot'
   | 'chol_hamoed_sukkot'
   | 'shemini_atzeret'
@@ -399,7 +400,10 @@ export function getDayInfo(date: Date = new Date()): DayInfo {
   parsha = withWeeklyParshaFallback(civil, parsha)
 
   const holidayEvent = pickPrimaryHolidayEvent(civil)
-  const holidayKey = holidayEvent ? mapToHolidayKey(holidayEvent) : null
+  let holidayKey = holidayEvent ? resolveHolidayKey(holidayEvent) : null
+  if (holidayEvent && isYomKippurKatanEvent(holidayEvent)) {
+    holidayKey = 'yom_kippur_katan'
+  }
   const holidayName = holidayEvent
     ? holidayDisplayName(holidayKey, holidayEvent)
     : ''
@@ -445,7 +449,9 @@ export function getDayInfo(date: Date = new Date()): DayInfo {
     holidayName,
     holidayDayNumber: dayNumber,
     holidayTotalDays: totalDays,
-    holidayDetail: holidayKey ? holidayExplanation(holidayKey) : '',
+    holidayDetail: holidayKey
+      ? buildHolidayDetail(holidayKey, holidayEvent, civil, hDate)
+      : '',
     chanukahInfo,
     brachaInfo,
     season,
@@ -484,8 +490,32 @@ function scoreHolidayEvent(ev: Event): number {
   return 10
 }
 
+/** Texto unificado do evento Hebcal (basename, desc, render) para detecção robusta. */
+function eventTextBlob(ev: Event): string {
+  return [ev.basename(), ev.getDesc(), ev.render('en')]
+    .filter(Boolean)
+    .join(' ')
+    .toLowerCase()
+}
+
+function isYomKippurKatanEvent(ev: Event): boolean {
+  return eventTextBlob(ev).includes('yom kippur katan')
+}
+
+function resolveHolidayKey(ev: Event): HolidayKey {
+  const key = mapToHolidayKey(ev)
+  if (key === 'yom_kippur' && isYomKippurKatanEvent(ev)) return 'yom_kippur_katan'
+  return key
+}
+
+function formatYomKippurKatanName(ev: Event): string {
+  const raw = normalizeSephardicText(ev.render('en'))
+  const month = raw.replace(/^Yom Kippur Katan\s*/i, '').trim()
+  return month ? `Yom Kippur Katán (${month})` : 'Yom Kippur Katán'
+}
+
 function mapToHolidayKey(ev: Event): HolidayKey {
-  const base = (ev.basename() ?? ev.getDesc()).toLowerCase()
+  const base = eventTextBlob(ev)
   const m = ev.getFlags()
 
   if (m & flags.ROSH_CHODESH) return 'rosh_chodesh'
@@ -496,6 +526,8 @@ function mapToHolidayKey(ev: Event): HolidayKey {
   }
   if (base.includes('shavuot') || base.includes('shavuos')) return 'shavuot'
   if (base.includes('rosh hashana')) return 'rosh_hashana'
+  // Yom Kippur Katan (véspera de Rosh Chodesh) — não confundir com Yom Kippur de Tishrei
+  if (base.includes('yom kippur katan')) return 'yom_kippur_katan'
   if (base.includes('yom kippur')) return 'yom_kippur'
   if (base.includes('shmini atzeret') || base.includes('shemini atzeret'))
     return 'shemini_atzeret'
@@ -537,7 +569,7 @@ function computeHolidaySpan(
   prev.setDate(prev.getDate() - 1)
   for (let i = 0; i < 10; i++) {
     const ev = pickPrimaryHolidayEvent(prev)
-    if (ev && mapToHolidayKey(ev) === key) {
+    if (ev && resolveHolidayKey(ev) === key) {
       dayNumber++
       prev = new Date(prev)
       prev.setDate(prev.getDate() - 1)
@@ -548,7 +580,7 @@ function computeHolidaySpan(
   next.setDate(next.getDate() + 1)
   for (let i = 0; i < 10; i++) {
     const ev = pickPrimaryHolidayEvent(next)
-    if (ev && mapToHolidayKey(ev) === key) {
+    if (ev && resolveHolidayKey(ev) === key) {
       totalDays++
       next = new Date(next)
       next.setDate(next.getDate() + 1)
@@ -559,6 +591,7 @@ function computeHolidaySpan(
 }
 
 function holidayDisplayName(key: HolidayKey, ev: Event): string {
+  if (isYomKippurKatanEvent(ev)) return formatYomKippurKatanName(ev)
   if (!key) return normalizeSephardicText(ev.render('en'))
   const MAP: Record<NonNullable<HolidayKey>, string> = {
     pesach: 'Pesach',
@@ -566,6 +599,7 @@ function holidayDisplayName(key: HolidayKey, ev: Event): string {
     shavuot: 'Shavuot',
     rosh_hashana: 'Rosh Hashanah',
     yom_kippur: 'Yom Kippur',
+    yom_kippur_katan: formatYomKippurKatanName(ev),
     sukkot: 'Sukkot',
     chol_hamoed_sukkot: 'Chol haMoed Sukkot',
     shemini_atzeret: 'Shemini Atzeret',
@@ -590,6 +624,87 @@ function holidayDisplayName(key: HolidayKey, ev: Event): string {
   return MAP[key]
 }
 
+function buildHolidayDetail(
+  key: NonNullable<HolidayKey>,
+  ev: Event | null,
+  civil: Date,
+  hDate: HDate,
+): string {
+  if (ev && isYomKippurKatanEvent(ev)) {
+    return buildYomKippurKatanExplanation(ev, civil, hDate)
+  }
+  if (key === 'yom_kippur_katan') {
+    return buildYomKippurKatanExplanation(ev, civil, hDate)
+  }
+  return holidayExplanation(key)
+}
+
+/** Contexto pastoral para Yom Kippur Katan (não confundir com Yom Kippur de Tishrei). */
+function buildYomKippurKatanExplanation(
+  ev: Event | null,
+  civil: Date,
+  hDate: HDate,
+): string {
+  const title = ev ? formatYomKippurKatanName(ev) : 'Yom Kippur Katán'
+  const hebrewMonth = MONTHS_PT[hDate.getMonthName()] ?? hDate.getMonthName()
+  const hebrewLabel = `${hDate.getDate()} ${hebrewMonth} ${hDate.getFullYear()}`
+  const civilLabel = civil.toLocaleDateString('pt-BR', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: SITE_CIVIL_TIMEZONE,
+  })
+
+  const parts: string[] = [
+    `${title} não é o Yom Kippur de Tishrei (10 Tishrei). É um pequeno dia de teshuvah na véspera de Rosh Chodesh, em minhag sefardita; jejum é opcional conforme o minhague da congregação.`,
+    `Hoje na data hebraica ${hebrewLabel} (${civilLabel}). O número no quadrado do calendário civil é o dia do mês gregoriano e pode ser diferente do dia hebraico (por exemplo, 14 em maio pode ser 27 Iyar).`,
+  ]
+
+  const nextRc = findNextRoshChodesh(civil)
+  if (nextRc) {
+    const rcDow = getDayOfWeekInBrazil(nextRc.date)
+    let rcLine = `O Rosh Chodesh seguinte é ${nextRc.hebrew}, em ${nextRc.civilLabel}.`
+    if (rcDow === 0) {
+      rcLine +=
+        ' Quando Rosh Chodesh cai no domingo, o Yom Kippur Katan costuma ser antecipado para a quinta-feira anterior, e não para o dia imediatamente antes do mês novo.'
+    }
+    parts.push(rcLine)
+  }
+
+  return parts.join(' ')
+}
+
+function findNextRoshChodesh(fromCivil: Date): {
+  hebrew: string
+  civilLabel: string
+  date: Date
+} | null {
+  for (let offset = 1; offset <= 6; offset++) {
+    const d = new Date(fromCivil)
+    d.setDate(d.getDate() + offset)
+    const noon = toCivilNoon(d)
+    const evs = getHolidaysOnDate(new HDate(noon), false) ?? []
+    for (const ev of evs) {
+      if (ev.getFlags() & flags.ROSH_CHODESH) {
+        const g = ev.getDate().greg()
+        const civilNoon = toCivilNoon(g)
+        return {
+          hebrew: normalizeSephardicText(ev.render('en')),
+          civilLabel: civilNoon.toLocaleDateString('pt-BR', {
+            weekday: 'long',
+            day: 'numeric',
+            month: 'long',
+            timeZone: SITE_CIVIL_TIMEZONE,
+          }),
+          date: civilNoon,
+        }
+      }
+    }
+  }
+  return null
+}
+
 function holidayExplanation(key: NonNullable<HolidayKey>): string {
   const MAP: Record<NonNullable<HolidayKey>, string> = {
     pesach: 'Festa da libertação do Egito. Noite do Seder, Matsot e relato do Êxodo.',
@@ -597,6 +712,8 @@ function holidayExplanation(key: NonNullable<HolidayKey>): string {
     shavuot: 'Entrega da Toráh no Sinai. Estudo noturno (Tikun Leil) e leitura de Rut.',
     rosh_hashana: 'Ano Novo. Sopro do Shofar, soberania divina e introspecção.',
     yom_kippur: 'Dia do Perdão. Jejum, oração contínua e teshuvah.',
+    yom_kippur_katan:
+      'Pequeno dia de teshuvah antes de Rosh Chodesh (minhag sefardita). Não é o Yom Kippur de Tishrei.',
     sukkot: 'Festa dos Tabernáculos. Sete dias na Sucá, alegria e hospitalidade.',
     chol_hamoed_sukkot: 'Dias intermediários de Sukkot. Sucá, lulav e arbaat haminim.',
     shemini_atzeret: 'Oitavo dia de assembleia. Pedido por chuvas (Tefilat Geshem).',
@@ -634,7 +751,10 @@ function chanukahPhrase(day: number): string {
 }
 
 function buildBrachaInfo(key: HolidayKey, ev: Event | null): string {
-  if (!key) return ''
+  if (!key && !ev) return ''
+  if (ev && isYomKippurKatanEvent(ev)) {
+    return 'Yom Kippur Katán: teshuvah e tefilah extras; jejum opcional conforme o minhague (não é o jejum de Tishrei).'
+  }
   if (key === 'chanukah') {
     return ev?.basename()?.includes('1 Candle') || ev?.getDesc()?.includes('1 Candle')
       ? 'Lehadlik Ner shel Chanukáh · She’asá Nissim · Shehecheyánu.'
@@ -797,6 +917,10 @@ function computeSeason(args: {
     return 'chol_hamoed'
   }
 
+  if (holidayKey === 'yom_kippur_katan') {
+    return omerDay > 0 ? 'omer' : 'default'
+  }
+
   if (
     holidayKey === 'tisha_beav' ||
     holidayKey === 'shiv_asar_tammuz' ||
@@ -892,10 +1016,13 @@ export function getUpcomingEvents(
     const msPerDay = 1000 * 60 * 60 * 24
     const daysUntil = Math.round((greg.getTime() - from.getTime()) / msPerDay)
 
+    const titleRaw = normalizeSephardicText(ev.render('en'))
+    const title = isYomKippurKatanEvent(ev) ? formatYomKippurKatanName(ev) : titleRaw
+
     upcoming.push({
       isoDate: greg.toISOString().slice(0, 10),
       dateLabel: `${hd.getDate()} ${monthPt} ${hd.getFullYear()}`,
-      title: normalizeSephardicText(ev.render('en')),
+      title,
       hebrew: ev.render('he'),
       category,
       daysUntil,

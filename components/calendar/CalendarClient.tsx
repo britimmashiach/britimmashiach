@@ -11,6 +11,7 @@ import {
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import {
+  dateAtNoonBrazil,
   getDayInfo,
   type DayInfo,
   type UpcomingEvent,
@@ -83,9 +84,13 @@ export function CalendarClient({
 
   // Subtítulo hebraico do cabeçalho (mês hebraico que ocorre no 1º e no último dia civil)
   const hebrewMonthLabel = useMemo(() => {
-    const first = getDayInfo(new Date(viewDate.getFullYear(), viewDate.getMonth(), 1, 12))
-    const lastDay = new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 0, 12)
-    const last = getDayInfo(lastDay)
+    const first = getDayInfo(
+      dateAtNoonBrazil(viewDate.getFullYear(), viewDate.getMonth(), 1),
+    )
+    const lastDay = new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 0)
+    const last = getDayInfo(
+      dateAtNoonBrazil(lastDay.getFullYear(), lastDay.getMonth(), lastDay.getDate()),
+    )
     if (first.hebrewMonth === last.hebrewMonth && first.hebrewYear === last.hebrewYear) {
       return `${first.hebrewMonth} ${first.hebrewYear}`
     }
@@ -103,16 +108,16 @@ export function CalendarClient({
     const cells: Array<DayInfo | null> = []
     for (let i = 0; i < blanks; i++) cells.push(null)
     for (let d = 1; d <= last.getDate(); d++) {
-      const dt = new Date(viewDate.getFullYear(), viewDate.getMonth(), d, 12, 0, 0, 0)
-      cells.push(getDayInfo(dt))
+      cells.push(getDayInfo(dateAtNoonBrazil(viewDate.getFullYear(), viewDate.getMonth(), d)))
     }
     return cells
   }, [viewDate])
 
   // Season do mês: usa o dia 15 como "centro" para escolher atmosfera global
   const monthSeason: LiturgicalSeason = useMemo(() => {
-    const probe = new Date(viewDate.getFullYear(), viewDate.getMonth(), 15, 12)
-    return getDayInfo(probe).season
+    return getDayInfo(
+      dateAtNoonBrazil(viewDate.getFullYear(), viewDate.getMonth(), 15),
+    ).season
   }, [viewDate])
   const seasonStyle = SEASON_STYLES[monthSeason]
 
@@ -154,7 +159,7 @@ export function CalendarClient({
     selected.date.getDate() === today.getDate()
 
   return (
-    <div className="container mx-auto px-4 py-10">
+    <div className="container mx-auto px-4 py-10" data-calendar-holiday="ykk-v2">
       {/* Cabeçalho */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
         <div>
@@ -392,11 +397,23 @@ export function CalendarClient({
             </div>
 
             {selected.holidayName && (
-              <p className="text-sm font-inter font-medium text-gold-700 dark:text-gold-400">
-                {selected.holidayName}
-                {selected.holidayTotalDays > 1 &&
-                  ` (${selected.holidayDayNumber}/${selected.holidayTotalDays})`}
-              </p>
+              <div className="space-y-1.5">
+                {selected.holidayKey === 'yom_kippur_katan' && (
+                  <span className="inline-block text-[10px] font-inter font-semibold uppercase tracking-wider text-petroleum-600 dark:text-petroleum-300 bg-petroleum-500/10 border border-petroleum-500/20 px-2 py-0.5 rounded-full">
+                    Não é Yom Kippur de Tishrei
+                  </span>
+                )}
+                <p className="text-sm font-inter font-medium text-gold-700 dark:text-gold-400">
+                  {selected.holidayName}
+                  {selected.holidayTotalDays > 1 &&
+                    ` (${selected.holidayDayNumber}/${selected.holidayTotalDays})`}
+                </p>
+                {selected.holidayDetail && (
+                  <p className="text-xs font-inter text-warmgray-600 dark:text-warmgray-400 leading-relaxed line-clamp-5">
+                    {selected.holidayDetail}
+                  </p>
+                )}
+              </div>
             )}
 
             {selected.omerDay > 0 && (

@@ -1,11 +1,13 @@
 import type { Metadata, Viewport } from 'next'
 import { Cinzel, Cormorant_Garamond, Inter } from 'next/font/google'
 import { ThemeProvider } from '@/components/layout/ThemeProvider'
+import { AuthSessionProvider } from '@/components/layout/AuthSessionProvider'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { PageWrapper } from '@/components/layout/PageWrapper'
 import { AuthSessionToast } from '@/components/layout/AuthSessionToast'
 import { SiteAmbientAudio } from '@/components/layout/SiteAmbientAudio'
+import { getAuthSnapshot } from '@/lib/auth-snapshot'
 import { Toaster } from 'sonner'
 import './globals.css'
 import { getPublicSiteOrigin } from '@/lib/public-site-url'
@@ -103,7 +105,9 @@ const jsonLd = {
   '@graph': rootJsonLdGraph(),
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const authSnapshot = await getAuthSnapshot()
+
   return (
     <html
       lang="pt-BR"
@@ -119,21 +123,23 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="min-h-screen flex flex-col bg-background">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <Header />
-          <main className="flex-1">
-            <PageWrapper>{children}</PageWrapper>
-          </main>
-          <Footer />
-          <Toaster
-            position="bottom-right"
-            richColors
-            toastOptions={{
-              classNames: {
-                toast: 'font-inter text-sm rounded-xl border border-border/60',
-              },
-            }}
-          />
-          <AuthSessionToast />
+          <AuthSessionProvider snapshot={authSnapshot}>
+            <Header />
+            <main className="flex-1">
+              <PageWrapper>{children}</PageWrapper>
+            </main>
+            <Footer />
+            <Toaster
+              position="bottom-right"
+              richColors
+              toastOptions={{
+                classNames: {
+                  toast: 'font-inter text-sm rounded-xl border border-border/60',
+                },
+              }}
+            />
+            <AuthSessionToast />
+          </AuthSessionProvider>
         </ThemeProvider>
         <SiteAmbientAudio />
       </body>
