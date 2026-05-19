@@ -1,0 +1,21 @@
+{
+  "slug": "shavuot",
+  "name": "Shavuot",
+  "name_hebrew": "שָׁבוּעוֹת",
+  "category": "shalosh_regalim",
+  "month_hebrew": "Sivan",
+  "day_start": 6,
+  "duration_days": 2,
+  "is_premium": false,
+  "summary": "Z'man Matan Torateinu, o Tempo da Outorga da Toráh. No sexto dia de Sivan, no Monte Sinai, HaShem entrega a Toráh a Israel. Festa de peregrinação, encerramento dos cinquenta dias do Omer, e véspera da promessa profética: *natati et Torati bekirbam*, porei Minha Toráh no íntimo deles.",
+  "level_pardes": ["peshat", "remez", "drash", "sod"],
+  "pdf_url": null,
+  "pdf_premium_url": null,
+  "pdf_kabbalah_url": null,
+  "content_intro": "Shavuot é o segundo dos Shalosh Regalim, as três festas de peregrinação prescritas pela Toráh, e marca o aniversário da entrega da Toráh no Monte Sinai. Vem cinquenta dias após o segundo dia de Pessach, encerrando a Sefirat haOmer. Em sua dimensão histórica, recorda *Matan Toráh*, a outorga; em sua dimensão agrícola, celebra *Chag haKatzir*, a colheita do trigo; em sua dimensão profética, abre a janela para a promessa de Yirmiyahu 31:33, *natati et Torati bekirbam*, porei Minha Toráh no íntimo deles.",
+  "sections_count": 16,
+  "estimated_reading_time_minutes": 15,
+  "rav_signature": "Rav.: EBBY",
+  "ken_yehi_ratzon": "Ken Yehi Ratzon, Chag Sameach",
+  "tags": ["shavuot", "matan-torah", "sinai", "tikun-leil-shavuot", "shalosh-regalim", "megilat-rut", "akdamut", "sefirat-haomer", "yirmeyahu-31", "naaseh-venishma"]
+}
