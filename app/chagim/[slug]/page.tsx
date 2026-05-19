@@ -87,7 +87,10 @@ export default async function ChagDetailPage({ params }: Props) {
   const isLoggedIn = !!auth.user
   const hasPremium = await userHasPremiumAccess()
 
-  if (chag.isPremium && !hasPremium) {
+  // Ordem dos gates: cadastro antes de assinatura. Visitantes anônimos
+  // sempre veem o hero + SignupGate inline; somente membros logados em
+  // Chag totalmente premium caem no PremiumGate fullscreen.
+  if (isLoggedIn && chag.isPremium && !hasPremium) {
     return (
       <PremiumGate
         title={chag.name}

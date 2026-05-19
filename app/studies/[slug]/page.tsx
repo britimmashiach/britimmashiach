@@ -78,7 +78,13 @@ export default async function StudyDetailPage({ params }: { params: Promise<{ sl
 
   if (!study) notFound()
 
-  if (study.isPremium && !(await userHasPremiumAccess())) {
+  const auth = await getAuthSnapshot()
+  const isLoggedIn = !!auth.user
+
+  // Ordem dos gates: cadastro antes de assinatura. Visitantes anônimos
+  // sempre veem o cabeçalho como vitrine + SignupGate inline; somente
+  // membros logados em estudo premium caem no PremiumGate fullscreen.
+  if (isLoggedIn && study.isPremium && !(await userHasPremiumAccess())) {
     const netivotPdfNote =
       slug === 'netivot-alef-keter'
         ? ' O bloco «Modelo Fixo de Netivot (PDF)» só aparece com role admin ou premium em Supabase → profiles (não basta acessar /admin na interface).'
@@ -92,9 +98,6 @@ export default async function StudyDetailPage({ params }: { params: Promise<{ sl
       />
     )
   }
-
-  const auth = await getAuthSnapshot()
-  const isLoggedIn = !!auth.user
 
   const crumbs = [
     { name: 'Início', path: '/' },
