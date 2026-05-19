@@ -281,7 +281,7 @@ export function ChagHero(props: ChagHeroProps) {
             style={{
               fontFamily: '"Shlomo Stam", "Times New Roman", serif',
               fontSize: 88,
-              fontWeight: 700,
+              fontWeight: 400,
               color: '#d4af6a',
               lineHeight: 1,
               filter: 'drop-shadow(0 0 18px rgba(212, 175, 106, 0.25))',
