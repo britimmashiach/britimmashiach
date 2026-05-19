@@ -11,8 +11,10 @@ import { getPublicSiteOrigin } from '@/lib/public-site-url'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { userHasPremiumAccess } from '@/lib/premium-access'
 import { PremiumGate } from '@/components/ui/PremiumGate'
+import { SignupGate } from '@/components/ui/SignupGate'
 import { StudyLibraryPdf } from '@/components/studies/StudyLibraryPdf'
 import { libraryBookSlugForStudy } from '@/lib/study-library-pdf'
+import { getAuthSnapshot } from '@/lib/auth-snapshot'
 
 export const dynamic = 'force-dynamic'
 
@@ -91,6 +93,9 @@ export default async function StudyDetailPage({ params }: { params: Promise<{ sl
     )
   }
 
+  const auth = await getAuthSnapshot()
+  const isLoggedIn = !!auth.user
+
   const crumbs = [
     { name: 'Início', path: '/' },
     { name: 'Estudos', path: '/studies' },
@@ -158,56 +163,65 @@ export default async function StudyDetailPage({ params }: { params: Promise<{ sl
         </div>
       </div>
 
-      <hr className="divider-gold" />
+      {isLoggedIn ? (
+        <>
+          <hr className="divider-gold" />
 
-      {libraryBookSlugForStudy(slug) && (
-        <StudyLibraryPdf
-          studySlug={slug}
-          pdfTitle={`${study.title} — Modelo Fixo de Netivot`}
+          {libraryBookSlugForStudy(slug) && (
+            <StudyLibraryPdf
+              studySlug={slug}
+              pdfTitle={`${study.title} — Modelo Fixo de Netivot`}
+            />
+          )}
+
+          {/* Conteúdo */}
+          <div className="prose prose-sm md:prose-base max-w-none mt-8
+            prose-headings:font-cinzel prose-headings:text-petroleum-800 dark:prose-headings:text-parchment-100
+            prose-p:font-inter prose-p:text-foreground prose-p:leading-relaxed
+            prose-strong:text-petroleum-800 dark:prose-strong:text-parchment-100
+            prose-hr:border-border/40
+            dark:prose-invert">
+            {study.content.split('\n').map((line, i) => {
+              if (line.startsWith('## ')) {
+                const text = line.replace('## ', '')
+                const isHebrew = text.includes('פ') || text.includes('ר') || text.includes('ד') || text.includes('ס')
+                return (
+                  <h2 key={i} className={cn(
+                    'font-cinzel text-xl font-semibold mt-10 mb-4',
+                    isHebrew ? 'text-gold-600 dark:text-gold-400' : 'text-petroleum-800 dark:text-parchment-100',
+                  )}>
+                    {text}
+                  </h2>
+                )
+              }
+              if (line.startsWith('---')) {
+                return <hr key={i} className="divider-gold" />
+              }
+              if (line.trim() === '') return <br key={i} />
+              return (
+                <p key={i} className="font-inter text-base text-foreground leading-relaxed mb-4">
+                  {line}
+                </p>
+              )
+            })}
+          </div>
+
+          {/* Tags */}
+          <div className="mt-10 pt-6 border-t border-border/40 flex flex-wrap gap-2">
+            {study.tags.map((tag) => (
+              <span key={tag} className="inline-flex items-center gap-1 text-xs font-inter text-warmgray-500 bg-muted px-2.5 py-1 rounded-full">
+                <Tag className="w-2.5 h-2.5" />
+                {tag}
+              </span>
+            ))}
+          </div>
+        </>
+      ) : (
+        <SignupGate
+          resourceName={study.title}
+          description="Cadastre-se gratuitamente na Brit Im Mashiach para acessar o conteúdo completo deste estudo do Rav EBBY. Membros gratuitos veem o material público; assinantes Premium liberam os estudos aprofundados e os PDFs reservados do acervo."
         />
       )}
-
-      {/* Conteúdo */}
-      <div className="prose prose-sm md:prose-base max-w-none mt-8
-        prose-headings:font-cinzel prose-headings:text-petroleum-800 dark:prose-headings:text-parchment-100
-        prose-p:font-inter prose-p:text-foreground prose-p:leading-relaxed
-        prose-strong:text-petroleum-800 dark:prose-strong:text-parchment-100
-        prose-hr:border-border/40
-        dark:prose-invert">
-        {study.content.split('\n').map((line, i) => {
-          if (line.startsWith('## ')) {
-            const text = line.replace('## ', '')
-            const isHebrew = text.includes('פ') || text.includes('ר') || text.includes('ד') || text.includes('ס')
-            return (
-              <h2 key={i} className={cn(
-                'font-cinzel text-xl font-semibold mt-10 mb-4',
-                isHebrew ? 'text-gold-600 dark:text-gold-400' : 'text-petroleum-800 dark:text-parchment-100',
-              )}>
-                {text}
-              </h2>
-            )
-          }
-          if (line.startsWith('---')) {
-            return <hr key={i} className="divider-gold" />
-          }
-          if (line.trim() === '') return <br key={i} />
-          return (
-            <p key={i} className="font-inter text-base text-foreground leading-relaxed mb-4">
-              {line}
-            </p>
-          )
-        })}
-      </div>
-
-      {/* Tags */}
-      <div className="mt-10 pt-6 border-t border-border/40 flex flex-wrap gap-2">
-        {study.tags.map((tag) => (
-          <span key={tag} className="inline-flex items-center gap-1 text-xs font-inter text-warmgray-500 bg-muted px-2.5 py-1 rounded-full">
-            <Tag className="w-2.5 h-2.5" />
-            {tag}
-          </span>
-        ))}
-      </div>
 
       {/* Assinatura do Rav */}
       <div className="mt-8 glass-card p-4 flex items-center gap-3">
