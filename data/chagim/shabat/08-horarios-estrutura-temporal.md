@@ -15,7 +15,7 @@ Em **Franca, São Paulo**, aproximadamente:
 ▸ **Verão** (dez/jan/fev): entre 18h30 e 19h00.
 ▸ **Meios** do ano: entre 17h30 e 18h30.
 
-Para o horário exato semanal, consulte a tabela publicada pela comunidade ou um aplicativo halácico confiável (Chabad.org, Sefaria).
+Para o horário exato semanal, consulte a tabela publicada pela Brit Im Mashiach ou calcule pelo pôr do sol local da sua cidade.
 
 ### Sequência do dia
 
