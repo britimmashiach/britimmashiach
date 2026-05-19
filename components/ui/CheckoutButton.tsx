@@ -25,7 +25,16 @@ export function CheckoutButton({ mode = 'monthly' }: CheckoutButtonProps) {
     setLoading(true)
     try {
       const res = await fetch(endpoint, { method: 'POST' })
-      const data = (await res.json()) as { url?: string; error?: string }
+
+      let data: { url?: string; error?: string } = {}
+      try {
+        data = await res.json()
+      } catch {
+        toast.error('Resposta inválida do servidor', {
+          description: `Status ${res.status}. Verifique se STRIPE_SECRET_KEY e STRIPE_PRICE_ID_PREMIUM estão configuradas no Vercel.`,
+        })
+        return
+      }
 
       if (data.error) {
         if (data.error === 'Não autenticado') {
@@ -41,9 +50,13 @@ export function CheckoutButton({ mode = 'monthly' }: CheckoutButtonProps) {
 
       if (data.url) {
         window.location.href = data.url
+        return
       }
-    } catch {
-      toast.error('Erro de conexão', { description: 'Verifique sua internet e tente novamente.' })
+
+      toast.error('Resposta sem URL', { description: 'O servidor não retornou a URL do checkout.' })
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : 'Falha desconhecida'
+      toast.error('Erro de conexão', { description: msg })
     } finally {
       setLoading(false)
     }
