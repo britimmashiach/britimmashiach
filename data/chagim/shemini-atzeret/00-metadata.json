@@ -1,0 +1,21 @@
+{
+  "slug": "shemini-atzeret",
+  "name": "Shemini Atzeret",
+  "name_hebrew": "שְׁמִינִי עֲצֶרֶת",
+  "category": "shalosh_regalim",
+  "month_hebrew": "Tishrei",
+  "day_start": 22,
+  "duration_days": 1,
+  "is_premium": false,
+  "summary": "O Oitavo Dia de Detenção. Chag separado de Sukkot, em que HaShem detém Israel por mais um dia de intimidade, antes de despedir. Tefilat Geshem, Yizkor, alegria contida sem Sucá nem lulav.",
+  "level_pardes": ["peshat", "remez", "drash", "sod"],
+  "pdf_url": null,
+  "pdf_premium_url": null,
+  "pdf_kabbalah_url": null,
+  "content_intro": "Shemini Atzeret é o oitavo dia após o início de Sukkot, conforme Vayikra 23:36, mas é Chag distinto, não continuação de Sukkot. A palavra *atzeret* significa detenção, retenção. Rashi (sobre Bamidbar 29:36) traz o midrash mais célebre: HaShem diz a Israel, *kasheh alai peridatchem, hitakvu odi yom echad*. É difícil para Mim a vossa partida, fiquem comigo mais um dia. Esta página guia você por este dia íntimo de transição entre Sukkot e o ano que se inicia, com Tefilat Geshem, Yizkor e a alegria contida do oitavo dia.",
+  "sections_count": 16,
+  "estimated_reading_time_minutes": 14,
+  "rav_signature": "Rav.: EBBY",
+  "ken_yehi_ratzon": "Chag Sameach",
+  "tags": ["shemini-atzeret", "atzeret", "geshem", "yizkor", "oitavo-dia", "tishrei", "tefilat-geshem"]
+}

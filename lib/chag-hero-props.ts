@@ -97,6 +97,63 @@ const HERO_PROPS: Record<string, ChagHeroProps> = {
     anchorText:
       'Bem-vindo ao portal de Yom Kippur da Brit Im Mashiach. Aqui você encontra tudo o que precisa para receber, viver e despedir o Dia do Perdão com a profundidade que ele merece. Liturgia em hebraico com transliteração e tradução, programa dos cinco serviços, guia da Avodá do Kohen Gadol e dos Treze Atributos, perspectiva kabalística luriânica e a correlação messiânica que reconhece o Mashiach como Kohen Gadol na ordem de Malki-Tzedek, sem qualquer substituição da Avodá histórica. Do Kol Nidrei à Tekiá Gedolá final, conduzimos você no ritmo do Método Rav EBBY.',
   },
+  sukkot: {
+    hebrew: 'סֻכּוֹת',
+    latin: 'Sukkot',
+    subtitle: "Zman Simchateinu, o Tempo da Nossa Alegria",
+    verseTransliteration: "ki yitzpenéni besukó beyom ra'á",
+    verseTranslation: 'pois Ele me esconderá em Sua Sucá no dia mal',
+    backgroundVerses: [
+      'בַּסֻּכּוֹת תֵּשְׁבוּ שִׁבְעַת יָמִים, כָּל הָאֶזְרָח בְּיִשְׂרָאֵל יֵשְׁבוּ בַּסֻּכּוֹת',
+      'לְמַעַן יֵדְעוּ דֹרֹתֵיכֶם כִּי בַסֻּכּוֹת הוֹשַׁבְתִּי אֶת בְּנֵי יִשְׂרָאֵל',
+      'וּלְקַחְתֶּם לָכֶם בַּיּוֹם הָרִאשׁוֹן פְּרִי עֵץ הָדָר, כַּפֹּת תְּמָרִים',
+      'וַעֲנַף עֵץ עָבֹת וְעַרְבֵי נָחַל, וּשְׂמַחְתֶּם לִפְנֵי יְהוָה אֱלֹהֵיכֶם שִׁבְעַת יָמִים',
+      'כִּי יִצְפְּנֵנִי בְּסֻכּוֹ בְּיוֹם רָעָה, יַסְתִּירֵנִי בְּסֵתֶר אָהֳלוֹ',
+      'וְעָלוּ מִדֵּי שָׁנָה בְשָׁנָה לְהִשְׁתַּחֲוֹת לְמֶלֶךְ יְהוָה צְבָאוֹת',
+      'וְלָחֹג אֶת חַג הַסֻּכּוֹת, וְהָיָה אֲשֶׁר לֹא יַעֲלֶה לֹא עֲלֵיהֶם הַגֶּשֶׁם',
+      'וְשִׂמַּחְתָּ בְּחַגֶּךָ, וְהָיִיתָ אַךְ שָׂמֵחַ',
+    ],
+    anchorText:
+      'Bem-vindo ao portal de Sukkot da Brit Im Mashiach. Aqui você encontra tudo o que precisa para construir e viver a Sucá, agitar as Arba Minim, receber os sete Ushpizin, cumprir as Hoshanot até a Hoshaná Rabá, com liturgia em hebraico, transliteração e tradução, perspectiva kabalística luriânica e correlação messiânica alinhada à Toráh. Do primeiro schach colocado ao último Hoshaná, conduzimos você no Z\'man Simchateinu no ritmo do Método Rav EBBY.',
+  },
+  'shemini-atzeret': {
+    hebrew: 'שְׁמִינִי עֲצֶרֶת',
+    latin: 'Shemini Atzeret',
+    subtitle: 'O Oitavo Dia de Detenção',
+    verseTransliteration: "bayom hash'mini atzeret tihyé lachem",
+    verseTranslation: 'no oitavo dia detenção será para vós',
+    backgroundVerses: [
+      'בַּיּוֹם הַשְּׁמִינִי עֲצֶרֶת תִּהְיֶה לָכֶם, כָּל מְלֶאכֶת עֲבֹדָה לֹא תַעֲשׂוּ',
+      'וְהִקְרַבְתֶּם עֹלָה אִשֵּׁה רֵיחַ נִיחֹחַ לַיהוָה',
+      'קָשֶׁה עָלַי פְּרֵדַתְכֶם, הִתְעַכְּבוּ עוֹדִי יוֹם אֶחָד',
+      'מַשִּׁיב הָרוּחַ וּמוֹרִיד הַגֶּשֶׁם',
+      'יִזְכּוֹר אֱלֹהִים נִשְׁמַת אָבִי מוֹרִי, בְּגַן עֵדֶן תְּהֵא מְנוּחָתוֹ',
+      'הֲיֵשׁ בְּהַבְלֵי הַגּוֹיִם מַגְשִׁמִים, וְאִם הַשָּׁמַיִם יִתְּנוּ רְבִיבִים',
+      'הֲלֹא אַתָּה הוּא יְהוָה אֱלֹהֵינוּ וּנְקַוֶּה לָּךְ',
+      'וְיָבֹא כַגֶּשֶׁם לָנוּ, כְּמַלְקוֹשׁ יוֹרֶה אָרֶץ',
+    ],
+    anchorText:
+      'Bem-vindo ao portal de Shemini Atzeret da Brit Im Mashiach. Aqui você encontra o guia do oitavo dia íntimo, em que HaShem detém Israel por mais um dia de proximidade antes da partida: Tefilat Geshem (oração formal pela chuva), Yizkor pelos falecidos, perspectiva kabalística luriânica e correlação messiânica alinhada à Toráh. Do último ato em Sucá ao primeiro Mashiv haRuach umorid haGashem na Amidá, conduzimos você no ritmo do Método Rav EBBY.',
+  },
+  'simchat-torah': {
+    hebrew: 'שִׂמְחַת תּוֹרָה',
+    latin: 'Simchat Toráh',
+    subtitle: 'A Alegria da Toráh',
+    verseTransliteration: "Toráh tzivá-lanu Moshé, morasháh kehilat Yaakov",
+    verseTranslation: 'a Toráh nos ordenou Moshé, herança da congregação de Yaakov',
+    backgroundVerses: [
+      'תּוֹרָה צִוָּה לָנוּ מֹשֶׁה, מוֹרָשָׁה קְהִלַּת יַעֲקֹב',
+      'לִפְנֵי עֵינֵי כָּל יִשְׂרָאֵל, חֲזַק חֲזַק וְנִתְחַזֵּק',
+      'בְּרֵאשִׁית בָּרָא אֱלֹהִים אֵת הַשָּׁמַיִם וְאֵת הָאָרֶץ',
+      'שִׂישׂוּ וְשִׂמְחוּ בְּשִׂמְחַת תּוֹרָה, וּתְנוּ כָבוֹד לַתּוֹרָה כִּי טוֹבָה סְחָרָהּ',
+      'אָז תִּשְׂמַח בְּתוּלָה בְּמָחוֹל, וּבַחוּרִים וּזְקֵנִים יַחְדָּו',
+      'פִּקּוּדֵי יְהוָה יְשָׁרִים, מְשַׂמְּחֵי לֵב',
+      'נָחַלְתִּי עֵדְוֹתֶיךָ לְעוֹלָם, כִּי שְׂשׂוֹן לִבִּי הֵמָּה',
+      'יָמִין וּשְׂמֹאל תִּפְרוֹצִי וְאֶת יְהוָה תַּעֲרִיצִי, וְנִשְׂמְחָה וְנָגִילָה',
+    ],
+    anchorText:
+      'Bem-vindo ao portal de Simchat Toráh da Brit Im Mashiach. Aqui você encontra o guia da alegria mais explosiva do calendário judaico: as sete Hakafot dançando com os Sifrei Toráh, Chatan Toráh e Chatan Bereshit, Kol haNearim, conclusão e reinício do ciclo anual, perspectiva kabalística luriânica e correlação messiânica alinhada à Toráh. Da última palavra de Devarim à primeira de Bereshit, formando o lev (coração) circular da Toráh viva, conduzimos você no ritmo do Método Rav EBBY.',
+  },
 }
 
 export function getChagHeroProps(slug: string): ChagHeroProps | null {

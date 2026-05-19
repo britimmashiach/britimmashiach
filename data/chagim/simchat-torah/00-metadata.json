@@ -1,0 +1,21 @@
+{
+  "slug": "simchat-torah",
+  "name": "Simchat Toráh",
+  "name_hebrew": "שִׂמְחַת תּוֹרָה",
+  "category": "shalosh_regalim",
+  "month_hebrew": "Tishrei",
+  "day_start": 23,
+  "duration_days": 1,
+  "is_premium": false,
+  "summary": "A Alegria da Toráh. Conclusão e reinício do ciclo anual da leitura, com sete Hakafot dançando com os Sifrei Toráh, Chatan Toráh e Chatan Bereshit, e a alegria mais explosiva do calendário.",
+  "level_pardes": ["peshat", "remez", "drash", "sod"],
+  "pdf_url": null,
+  "pdf_premium_url": null,
+  "pdf_kabbalah_url": null,
+  "content_intro": "Simchat Toráh é o ápice da alegria do calendário judaico. Não está prescrito explicitamente na Toráh — é Chag rabínico estabelecido nos gueonim para celebrar a conclusão e o reinício do ciclo anual de leitura. Na diáspora, é o 23 de Tishrei (dia após Shemini Atzeret); em Israel, condensa-se com Shemini Atzeret no dia 22. Sete Hakafot com os Sifrei Toráh, Chatan Toráh (último versículo de Devarim) e Chatan Bereshit (primeiro versículo de Bereshit), dança, canto e a alegria mais corporificada do ano. Esta página guia você através do ciclo que termina e recomeça no Método Rav EBBY.",
+  "sections_count": 16,
+  "estimated_reading_time_minutes": 14,
+  "rav_signature": "Rav.: EBBY",
+  "ken_yehi_ratzon": "Chag Sameach uShaná Tová baToráh",
+  "tags": ["simchat-torah", "hakafot", "chatan-torah", "chatan-bereshit", "tishrei", "alegria", "torah", "ciclo-anual"]
+}

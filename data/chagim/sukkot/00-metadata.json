@@ -1,0 +1,21 @@
+{
+  "slug": "sukkot",
+  "name": "Sukkot",
+  "name_hebrew": "סֻכּוֹת",
+  "category": "shalosh_regalim",
+  "month_hebrew": "Tishrei",
+  "day_start": 15,
+  "duration_days": 7,
+  "is_premium": false,
+  "summary": "A Festa das Cabanas, Chag haAsif, festa da colheita final. Sete dias morando sob o schach da Sucá, agitando as Arba Minim, recebendo os sete Ushpizin, em alegria que culmina em Hoshaná Rabá.",
+  "level_pardes": ["peshat", "remez", "drash", "sod"],
+  "pdf_url": null,
+  "pdf_premium_url": null,
+  "pdf_kabbalah_url": null,
+  "content_intro": "Sukkot é o terceiro dos Shalosh Regalim, a Festa das Cabanas (Vayikra 23:33-43). Começa em 15 de Tishrei, cinco dias após Yom Kippur, e dura sete dias (mais Shemini Atzeret e Simchat Toráh, considerados Chag à parte). É também Chag haAsif (Festa da Colheita) e Z'man Simchateinu, o Tempo da Nossa Alegria, único Chag em que a Toráh ordena explicitamente alegria. Esta página guia você da construção da Sucá ao último Hoshaná Rabá no Método Rav EBBY.",
+  "sections_count": 16,
+  "estimated_reading_time_minutes": 15,
+  "rav_signature": "Rav.: EBBY",
+  "ken_yehi_ratzon": "Chag Sameach uMoadim leSimchá",
+  "tags": ["sukkot", "sucah", "arba-minim", "lulav", "etrog", "ushpizin", "hoshana-rabah", "shalosh-regalim", "chag-haasif", "zman-simchateinu"]
+}
