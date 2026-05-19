@@ -16,6 +16,7 @@ async function updateProfile(
   updates: {
     stripe_subscription_id?: string | null
     subscription_status?: 'active' | 'canceled' | 'past_due' | null
+    subscription_current_period_end?: string | null
     role?: 'free' | 'premium'
   },
 ) {
@@ -53,12 +54,20 @@ export async function POST(req: NextRequest) {
         const sub = event.data.object as Stripe.Subscription
         const customerId = sub.customer as string
         const status = sub.status
+        // current_period_end vem em segundos UTC; converter para ISO string
+        const periodEnd =
+          typeof (sub as unknown as { current_period_end?: number }).current_period_end === 'number'
+            ? new Date(
+                (sub as unknown as { current_period_end: number }).current_period_end * 1000,
+              ).toISOString()
+            : null
 
         await updateProfile(customerId, {
           stripe_subscription_id: sub.id,
           subscription_status: status === 'active' || status === 'canceled' || status === 'past_due'
             ? status
             : null,
+          subscription_current_period_end: periodEnd,
           role: status === 'active' ? 'premium' : 'free',
         })
         break
@@ -70,6 +79,7 @@ export async function POST(req: NextRequest) {
           role: 'free',
           subscription_status: 'canceled',
           stripe_subscription_id: null,
+          subscription_current_period_end: null,
         })
         break
       }
@@ -78,6 +88,22 @@ export async function POST(req: NextRequest) {
         const invoice = event.data.object as Stripe.Invoice
         if (typeof invoice.customer === 'string') {
           await updateProfile(invoice.customer, { subscription_status: 'past_due' })
+        }
+        break
+      }
+
+      case 'checkout.session.completed': {
+        const session = event.data.object as Stripe.Checkout.Session
+        if (session.mode === 'payment' && session.metadata?.type === 'annual-pix') {
+          const customerId = session.customer as string
+          const months = parseInt(session.metadata.months ?? '12', 10)
+          const periodEnd = new Date()
+          periodEnd.setMonth(periodEnd.getMonth() + months)
+          await updateProfile(customerId, {
+            role: 'premium',
+            subscription_status: 'active',
+            subscription_current_period_end: periodEnd.toISOString(),
+          })
         }
         break
       }

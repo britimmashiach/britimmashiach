@@ -131,13 +131,19 @@ export default function PremiumPage() {
               ))}
             </ul>
 
-            <CheckoutButton />
+            <div className="space-y-2.5">
+              <CheckoutButton />
+              <CheckoutButton mode="pix-annual" />
+              <p className="text-xs font-inter text-warmgray-500 text-center pt-1">
+                PIX: 12 meses prepagos. Cartão: renovação mensal automática.
+              </p>
+            </div>
           </div>
         </div>
 
         {/* Garantia */}
         <p className="text-center text-sm font-inter text-warmgray-500 mt-8">
-          Cancele a qualquer momento. Sem fidelidade. Pagamento seguro via Stripe.
+          Cancele a qualquer momento. Sem fidelidade. Pagamento seguro via Stripe (cartão, PIX).
         </p>
       </section>
 

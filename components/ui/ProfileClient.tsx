@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect } from 'react'
-import { User, Crown, LogOut, Settings, Mail, Shield } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { User, Crown, LogOut, Settings, Mail, Shield, CalendarClock, CreditCard, Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { createClient, supabaseConfigured } from '@/lib/supabase'
 import { cn } from '@/lib/utils'
@@ -13,6 +13,8 @@ interface ProfileClientProps {
 }
 
 export function ProfileClient({ profile, successPayment }: ProfileClientProps) {
+  const [portalLoading, setPortalLoading] = useState(false)
+
   useEffect(() => {
     if (successPayment) {
       toast.success('Assinatura confirmada', {
@@ -31,6 +33,22 @@ export function ProfileClient({ profile, successPayment }: ProfileClientProps) {
     const supabase = createClient()
     await supabase.auth.signOut()
     window.location.href = '/'
+  }
+
+  async function handleBillingPortal() {
+    setPortalLoading(true)
+    try {
+      const response = await fetch('/api/stripe/billing-portal', { method: 'POST' })
+      const data = await response.json()
+      if (!response.ok) {
+        throw new Error(data?.error || 'Erro ao abrir portal')
+      }
+      window.location.href = data.url
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : 'Erro desconhecido'
+      toast.error('Não foi possível abrir o portal', { description: msg })
+      setPortalLoading(false)
+    }
   }
 
   if (!profile) {
@@ -92,14 +110,35 @@ export function ProfileClient({ profile, successPayment }: ProfileClientProps) {
             <div className="flex items-center gap-1.5">
               <div className={cn(
                 'w-2 h-2 rounded-full',
-                profile.subscription_status === 'active' ? 'bg-green-500' : 'bg-warmgray-400',
+                profile.subscription_status === 'active' ? 'bg-green-500' :
+                profile.subscription_status === 'past_due' ? 'bg-amber-500' :
+                'bg-warmgray-400',
               )} />
-              <p className="text-sm font-inter text-foreground capitalize">
-                {profile.subscription_status === 'active' ? 'Ativa' : 'Inativa'}
+              <p className="text-sm font-inter text-foreground">
+                {profile.subscription_status === 'active' ? 'Ativa' :
+                 profile.subscription_status === 'past_due' ? 'Pagamento pendente' :
+                 profile.subscription_status === 'canceled' ? 'Cancelada' :
+                 'Inativa'}
               </p>
             </div>
           </div>
         </div>
+
+        {profile.subscription_current_period_end && profile.subscription_status === 'active' && (
+          <div className="flex items-center gap-2 pt-2 text-sm font-inter text-warmgray-600 dark:text-warmgray-400">
+            <CalendarClock className="w-4 h-4 flex-shrink-0 text-gold-600 dark:text-gold-400" />
+            <span>
+              Renova em{' '}
+              <span className="font-medium text-foreground">
+                {new Date(profile.subscription_current_period_end).toLocaleDateString('pt-BR', {
+                  day: '2-digit',
+                  month: 'long',
+                  year: 'numeric',
+                })}
+              </span>
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Ações */}
@@ -112,6 +151,23 @@ export function ProfileClient({ profile, successPayment }: ProfileClientProps) {
             <Crown className="w-4 h-4" />
             Assinar Premium - R$ 47/mês
           </a>
+        )}
+
+        {isPremium && profile.stripe_customer_id && (
+          <button
+            onClick={handleBillingPortal}
+            disabled={portalLoading}
+            className="w-full glass-card p-4 flex items-center justify-center gap-2 hover:shadow-petroleum-sm transition-shadow disabled:opacity-60 disabled:cursor-not-allowed"
+          >
+            {portalLoading ? (
+              <Loader2 className="w-4 h-4 animate-spin text-gold-600 dark:text-gold-400" />
+            ) : (
+              <CreditCard className="w-4 h-4 text-gold-600 dark:text-gold-400" />
+            )}
+            <span className="text-sm font-inter font-medium text-foreground">
+              {portalLoading ? 'Abrindo portal...' : 'Gerenciar Assinatura'}
+            </span>
+          </button>
         )}
 
         <div className="grid grid-cols-2 gap-3">

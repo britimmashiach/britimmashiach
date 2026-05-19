@@ -17,6 +17,7 @@ create table if not exists public.profiles (
   stripe_subscription_id text unique,
   subscription_status text
     check (subscription_status in ('active', 'canceled', 'past_due')),
+  subscription_current_period_end timestamptz,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
