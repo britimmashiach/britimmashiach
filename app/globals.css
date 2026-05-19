@@ -264,3 +264,31 @@
   user-select: none;
   -webkit-touch-callout: none;
 }
+
+/* === Hero dos Chagim (Shabat e demais) === */
+@keyframes shabat-fall {
+  0%   { opacity: 0;   transform: translateY(-10px); }
+  30%  { opacity: 0.7; }
+  60%  { opacity: 0.4; }
+  100% { opacity: 0;   transform: translateY(600px); }
+}
+@keyframes shabat-glow {
+  0%, 100% { opacity: 0.20; }
+  50%      { opacity: 0.32; }
+}
+@keyframes shabat-flame-outer {
+  0%, 100% { transform: scale(1, 1) rotate(0deg); }
+  50%      { transform: scale(1.10, 1.08) rotate(1.5deg); }
+}
+@keyframes shabat-flame-outer-rev {
+  0%, 100% { transform: scale(1, 1) rotate(0deg); }
+  50%      { transform: scale(0.92, 0.94) rotate(-1.5deg); }
+}
+@keyframes shabat-flame-inner {
+  0%, 100% { transform: scale(1, 1) rotate(0deg); }
+  50%      { transform: scale(1.18, 1.12) rotate(1deg); }
+}
+@keyframes shabat-flame-inner-rev {
+  0%, 100% { transform: scale(1, 1) rotate(0deg); }
+  50%      { transform: scale(0.84, 0.90) rotate(-1deg); }
+}

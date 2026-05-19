@@ -17,6 +17,8 @@ import { Breadcrumbs } from '@/components/seo/Breadcrumbs'
 import { userHasPremiumAccess } from '@/lib/premium-access'
 import { PremiumGate } from '@/components/ui/PremiumGate'
 import { RichMarkdown } from '@/components/ui/RichMarkdown'
+import { ChagHero } from '@/components/chagim/ChagHero'
+import { getChagHeroProps } from '@/lib/chag-hero-props'
 
 type Props = { params: Promise<{ slug: string }> }
 
@@ -92,9 +94,13 @@ export default async function ChagDetailPage({ params }: Props) {
     )
   }
 
+  const heroProps = getChagHeroProps(slug)
   const allSections = await fetchChagSectionsByChagIdAdmin(chag.id)
-  const sections = hasPremium ? allSections : allSections.filter((s) => !s.isPremium)
-  const lockedSectionsCount = allSections.length - sections.length
+  const visibleSections = hasPremium ? allSections : allSections.filter((s) => !s.isPremium)
+  // Quando o hero cinematográfico está ativo, a seção order_num=1 (Capa Hero /
+  // boas-vindas) vira o bloco âncora dentro do hero — não repete no listing.
+  const sections = heroProps ? visibleSections.filter((s) => s.orderNum !== 1) : visibleSections
+  const lockedSectionsCount = allSections.length - visibleSections.length
   const crumbs = [
     { name: 'Início', path: '/' },
     { name: 'Chagim', path: '/chagim' },
@@ -124,49 +130,85 @@ export default async function ChagDetailPage({ params }: Props) {
         Todos os Chagim
       </Link>
 
-      <header className="space-y-4 mb-8">
-        <div className="flex flex-wrap items-center gap-2">
-          {chag.levelPardes.map((lvl) => (
-            <span
-              key={lvl}
-              className={cn(
-                'text-xs font-inter font-medium px-2.5 py-0.5 rounded-full capitalize',
-                PARDES_COLORS[lvl] ?? 'bg-muted text-warmgray-500',
+      {heroProps ? (
+        <>
+          <ChagHero {...heroProps} />
+          <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
+            <div className="flex flex-wrap items-center gap-2">
+              {chag.levelPardes.map((lvl) => (
+                <span
+                  key={lvl}
+                  className={cn(
+                    'text-xs font-inter font-medium px-2.5 py-0.5 rounded-full capitalize',
+                    PARDES_COLORS[lvl] ?? 'bg-muted text-warmgray-500',
+                  )}
+                >
+                  {lvl}
+                </span>
+              ))}
+              {chag.isPremium && (
+                <span className="premium-badge">
+                  <Crown className="w-3 h-3" aria-hidden="true" />
+                  Premium
+                </span>
               )}
-            >
-              {lvl}
-            </span>
-          ))}
-          {chag.isPremium && (
-            <span className="premium-badge">
-              <Crown className="w-3 h-3" aria-hidden="true" />
-              Premium
-            </span>
-          )}
-        </div>
-        <div className="flex items-start justify-between gap-4">
-          <h1 className="font-cinzel text-3xl md:text-4xl font-semibold text-petroleum-800 dark:text-parchment-100">
-            {chag.name}
-          </h1>
-          <p
-            className="font-hebrew text-2xl text-warmgray-500 dark:text-warmgray-400 flex-shrink-0"
-            dir="rtl"
-            lang="he"
-          >
-            {chag.nameHebrew}
-          </p>
-        </div>
-        <p className="font-cormorant text-xl italic text-warmgray-600 dark:text-warmgray-400 leading-relaxed">
-          {chag.summary}
-        </p>
-        {chag.pdfUrl && (
-          <PdfButton url={chag.pdfUrl} title={`${chag.name} — PDF`} label="Ler PDF do Chag" />
-        )}
-      </header>
-      <hr className="divider-gold" />
-      <article className="max-w-none mt-8">
-        <RichMarkdown text={chag.content} />
-      </article>
+            </div>
+            {chag.pdfUrl && (
+              <PdfButton
+                url={chag.pdfUrl}
+                title={`${chag.name} — PDF`}
+                label="Ler PDF do Chag"
+              />
+            )}
+          </div>
+        </>
+      ) : (
+        <>
+          <header className="space-y-4 mb-8">
+            <div className="flex flex-wrap items-center gap-2">
+              {chag.levelPardes.map((lvl) => (
+                <span
+                  key={lvl}
+                  className={cn(
+                    'text-xs font-inter font-medium px-2.5 py-0.5 rounded-full capitalize',
+                    PARDES_COLORS[lvl] ?? 'bg-muted text-warmgray-500',
+                  )}
+                >
+                  {lvl}
+                </span>
+              ))}
+              {chag.isPremium && (
+                <span className="premium-badge">
+                  <Crown className="w-3 h-3" aria-hidden="true" />
+                  Premium
+                </span>
+              )}
+            </div>
+            <div className="flex items-start justify-between gap-4">
+              <h1 className="font-cinzel text-3xl md:text-4xl font-semibold text-petroleum-800 dark:text-parchment-100">
+                {chag.name}
+              </h1>
+              <p
+                className="font-hebrew text-2xl text-warmgray-500 dark:text-warmgray-400 flex-shrink-0"
+                dir="rtl"
+                lang="he"
+              >
+                {chag.nameHebrew}
+              </p>
+            </div>
+            <p className="font-cormorant text-xl italic text-warmgray-600 dark:text-warmgray-400 leading-relaxed">
+              {chag.summary}
+            </p>
+            {chag.pdfUrl && (
+              <PdfButton url={chag.pdfUrl} title={`${chag.name} — PDF`} label="Ler PDF do Chag" />
+            )}
+          </header>
+          <hr className="divider-gold" />
+          <article className="max-w-none mt-8">
+            <RichMarkdown text={chag.content} />
+          </article>
+        </>
+      )}
       {sections.length > 0 && (
         <section className="mt-12 space-y-8" aria-labelledby="chag-sections-heading">
           <h2
