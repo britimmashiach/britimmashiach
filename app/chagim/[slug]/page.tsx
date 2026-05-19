@@ -16,9 +16,11 @@ import { JsonLd } from '@/components/seo/JsonLd'
 import { Breadcrumbs } from '@/components/seo/Breadcrumbs'
 import { userHasPremiumAccess } from '@/lib/premium-access'
 import { PremiumGate } from '@/components/ui/PremiumGate'
+import { SignupGate } from '@/components/ui/SignupGate'
 import { RichMarkdown } from '@/components/ui/RichMarkdown'
 import { ChagHero } from '@/components/chagim/ChagHero'
 import { getChagHeroProps } from '@/lib/chag-hero-props'
+import { getAuthSnapshot } from '@/lib/auth-snapshot'
 
 type Props = { params: Promise<{ slug: string }> }
 
@@ -81,6 +83,8 @@ export default async function ChagDetailPage({ params }: Props) {
   const chag = await resolveChagBySlugAdmin(slug)
   if (!chag) notFound()
 
+  const auth = await getAuthSnapshot()
+  const isLoggedIn = !!auth.user
   const hasPremium = await userHasPremiumAccess()
 
   if (chag.isPremium && !hasPremium) {
@@ -153,7 +157,7 @@ export default async function ChagDetailPage({ params }: Props) {
                 </span>
               )}
             </div>
-            {chag.pdfUrl && (
+            {chag.pdfUrl && isLoggedIn && (
               <PdfButton
                 url={chag.pdfUrl}
                 title={`${chag.name} — PDF`}
@@ -199,17 +203,22 @@ export default async function ChagDetailPage({ params }: Props) {
             <p className="font-cormorant text-xl italic text-warmgray-600 dark:text-warmgray-400 leading-relaxed">
               {chag.summary}
             </p>
-            {chag.pdfUrl && (
+            {chag.pdfUrl && isLoggedIn && (
               <PdfButton url={chag.pdfUrl} title={`${chag.name} — PDF`} label="Ler PDF do Chag" />
             )}
           </header>
-          <hr className="divider-gold" />
-          <article className="max-w-none mt-8">
-            <RichMarkdown text={chag.content} />
-          </article>
+          {isLoggedIn && (
+            <>
+              <hr className="divider-gold" />
+              <article className="max-w-none mt-8">
+                <RichMarkdown text={chag.content} />
+              </article>
+            </>
+          )}
         </>
       )}
-      {sections.length > 0 && (
+      {!isLoggedIn && <SignupGate resourceName={chag.name} />}
+      {isLoggedIn && sections.length > 0 && (
         <section className="mt-12 space-y-8" aria-labelledby="chag-sections-heading">
           <h2
             id="chag-sections-heading"
@@ -227,7 +236,7 @@ export default async function ChagDetailPage({ params }: Props) {
           ))}
         </section>
       )}
-      {lockedSectionsCount > 0 && (
+      {isLoggedIn && lockedSectionsCount > 0 && (
         <section className="mt-8 glass-card p-5 border-gold-500/25 flex flex-col sm:flex-row items-start sm:items-center gap-4">
           <div className="flex-1 space-y-1">
             <p className="text-xs font-inter font-semibold text-gold-600 dark:text-gold-400 uppercase tracking-widest">
