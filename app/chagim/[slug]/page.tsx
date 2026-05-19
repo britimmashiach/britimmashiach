@@ -16,6 +16,7 @@ import { JsonLd } from '@/components/seo/JsonLd'
 import { Breadcrumbs } from '@/components/seo/Breadcrumbs'
 import { userHasPremiumAccess } from '@/lib/premium-access'
 import { PremiumGate } from '@/components/ui/PremiumGate'
+import { RichMarkdown } from '@/components/ui/RichMarkdown'
 
 type Props = { params: Promise<{ slug: string }> }
 
@@ -163,15 +164,8 @@ export default async function ChagDetailPage({ params }: Props) {
         )}
       </header>
       <hr className="divider-gold" />
-      <article className="prose prose-sm md:prose-base max-w-none mt-8 dark:prose-invert">
-        {chag.content.split('\n').map((line, i) => {
-          if (line.trim() === '') return <br key={i} />
-          return (
-            <p key={i} className="font-inter text-base text-foreground leading-relaxed mb-4">
-              {line}
-            </p>
-          )
-        })}
+      <article className="max-w-none mt-8">
+        <RichMarkdown text={chag.content} />
       </article>
       {sections.length > 0 && (
         <section className="mt-12 space-y-8" aria-labelledby="chag-sections-heading">
@@ -182,19 +176,11 @@ export default async function ChagDetailPage({ params }: Props) {
             Seções do estudo
           </h2>
           {sections.map((sec) => (
-            <div key={sec.id} className="glass-card p-5 space-y-3">
-              <h3 className="font-cinzel text-lg font-semibold text-petroleum-800 dark:text-parchment-100">
+            <div key={sec.id} className="glass-card p-5 md:p-6 space-y-2">
+              <h3 className="font-cinzel text-lg md:text-xl font-semibold text-petroleum-800 dark:text-parchment-100">
                 {sec.title}
               </h3>
-              {sec.content.split('\n').map((line, i) =>
-                line.trim() === '' ? (
-                  <br key={i} />
-                ) : (
-                  <p key={i} className="font-inter text-sm text-foreground leading-relaxed">
-                    {line}
-                  </p>
-                ),
-              )}
+              <RichMarkdown text={sec.content} />
             </div>
           ))}
         </section>
