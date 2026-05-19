@@ -138,7 +138,7 @@ export function Header() {
 
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 md:h-20">
-          <Link href="/" className="flex items-center gap-3 group" aria-label="Sinagoga Brit Im Mashiach - Início">
+          <Link href="/" className="flex items-center gap-3 group shrink-0" aria-label="Sinagoga Brit Im Mashiach - Início">
             <SiteLogo />
             <div className="hidden sm:flex flex-col leading-tight">
               <span className="font-cinzel text-sm md:text-base font-semibold text-petroleum-800 dark:text-parchment-100 tracking-widest">
@@ -150,7 +150,10 @@ export function Header() {
             </div>
           </Link>
 
-          <nav className="hidden md:flex items-center" aria-label="Navegação principal">
+          <nav
+            className="hidden md:flex items-center justify-center flex-1 min-w-0 flex-wrap xl:flex-nowrap gap-y-1"
+            aria-label="Navegação principal"
+          >
             {navLinks.map(({ href, label, icon: Icon, highlight }) => {
               const isActive = pathname === href || pathname.startsWith(href + '/')
               return (
@@ -158,7 +161,7 @@ export function Header() {
                   key={href}
                   href={href}
                   className={cn(
-                    'px-3.5 py-2 text-sm font-inter transition-colors duration-150 relative inline-flex items-center gap-1.5',
+                    'whitespace-nowrap shrink-0 py-2 text-[13px] xl:text-sm font-inter transition-colors duration-150 relative inline-flex items-center gap-1 px-2 lg:px-2.5 xl:px-3.5',
                     highlight
                       ? 'text-gold-600 dark:text-gold-400 hover:text-gold-700 dark:hover:text-gold-300 font-medium'
                       : isActive
@@ -171,7 +174,7 @@ export function Header() {
                   {label}
                   {isActive && !highlight && (
                     <span
-                      className="absolute bottom-0.5 left-3.5 right-3.5 h-px bg-gold-500/50 rounded-full"
+                      className="absolute bottom-0.5 left-2 right-2 lg:left-2.5 lg:right-2.5 xl:left-3.5 xl:right-3.5 h-px bg-gold-500/50 rounded-full"
                       aria-hidden="true"
                     />
                   )}
@@ -180,7 +183,7 @@ export function Header() {
             })}
           </nav>
 
-          <div className="flex items-center gap-1.5 sm:gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             {mounted && (
               <button
                 type="button"
