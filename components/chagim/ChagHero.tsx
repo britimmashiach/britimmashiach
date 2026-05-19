@@ -143,27 +143,27 @@ function Candle({ side }: { side: 'L' | 'R' }) {
   )
 }
 
-function Seal() {
-  const cx = 24
-  const cy = 24
-  const rOut = 22
-  const rIn = 11
-  const pts: string[] = []
-  for (let i = 0; i < 20; i++) {
-    const angle = (Math.PI * 2 * i) / 20 - Math.PI / 2
-    const r = i % 2 === 0 ? rOut : rIn
-    pts.push(`${(cx + r * Math.cos(angle)).toFixed(2)},${(cy + r * Math.sin(angle)).toFixed(2)}`)
-  }
+function MagenDavid({ side }: { side: 'L' | 'R' }) {
+  // Hexagrama formado por dois triângulos equiláteros sobrepostos.
+  // Centro em (24,24), raio 22 num viewBox 48x48.
+  // Triângulo apontando para cima (vértice superior em norte).
+  // Triângulo apontando para baixo (vértice inferior em sul).
+  const up = '24,2 43.05,35 4.95,35'
+  const down = '24,46 4.95,13 43.05,13'
+  const pos =
+    side === 'L'
+      ? { bottom: 18, left: 22 }
+      : { bottom: 18, right: 22 }
   return (
     <svg
       width="48"
       height="48"
       viewBox="0 0 48 48"
-      style={{ position: 'absolute', bottom: 18, right: 22, opacity: 0.22 }}
+      style={{ position: 'absolute', ...pos, opacity: 0.22 }}
       aria-hidden="true"
     >
-      <polygon points={pts.join(' ')} fill="none" stroke="#d4af6a" strokeWidth="0.7" />
-      <circle cx={cx} cy={cy} r="6" fill="none" stroke="#d4af6a" strokeWidth="0.7" />
+      <polygon points={up} fill="none" stroke="#d4af6a" strokeWidth="0.9" strokeLinejoin="round" />
+      <polygon points={down} fill="none" stroke="#d4af6a" strokeWidth="0.9" strokeLinejoin="round" />
     </svg>
   )
 }
@@ -347,7 +347,8 @@ export function ChagHero(props: ChagHeroProps) {
           </div>
         </div>
 
-        <Seal />
+        <MagenDavid side="L" />
+        <MagenDavid side="R" />
 
         {/* Linha dourada */}
         <div
