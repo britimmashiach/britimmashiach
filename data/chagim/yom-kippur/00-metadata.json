@@ -1,0 +1,21 @@
+{
+  "slug": "yom-kippur",
+  "name": "Yom Kippur",
+  "name_hebrew": "יוֹם כִּפּוּר",
+  "category": "yamim_noraim",
+  "month_hebrew": "Tishrei",
+  "day_start": 10,
+  "duration_days": 1,
+  "is_premium": false,
+  "summary": "Shabat Shabaton, o Shabat dos Shabats. Dia do Perdão e da Expiação, em que toda Israel se apresenta diante do Eterno em jejum, vidui e teshuváh. Cinco serviços, cinco aflições, uma única alma diante do Trono.",
+  "level_pardes": ["peshat", "remez", "drash", "sod"],
+  "pdf_url": null,
+  "pdf_premium_url": null,
+  "pdf_kabbalah_url": null,
+  "content_intro": "Yom Kippur é o dia mais santo do calendário judaico, *Shabat Shabaton* segundo Vayikra 23:32. Em 10 de Tishrei, no Beit haMikdash, o Kohen Gadol entrava no Kodesh haKodashim, único acesso anual ao recinto mais íntimo do Santuário. Hoje, sem Templo, cada um de Israel é seu próprio Kohen Gadol, e o coração é o Kodesh haKodashim onde o Eterno desce. Esta página guia você da entrada do dia até a Neilá, com Vidui, Avodá, cinco serviços e os Treze Atributos no Método Rav EBBY.",
+  "sections_count": 16,
+  "estimated_reading_time_minutes": 15,
+  "rav_signature": "Rav.: EBBY",
+  "ken_yehi_ratzon": "Gmar Chatimá Tová",
+  "tags": ["yom-kippur", "kippur", "yamim-noraim", "vidui", "avodah", "neilah", "kol-nidrei", "yonah", "thirteen-attributes", "teshuva", "kohen-gadol"]
+}

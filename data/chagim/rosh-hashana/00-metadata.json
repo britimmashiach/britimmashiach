@@ -1,0 +1,21 @@
+{
+  "slug": "rosh-hashana",
+  "name": "Rosh Hashanáh",
+  "name_hebrew": "רֹאשׁ הַשָּׁנָה",
+  "category": "yamim_noraim",
+  "month_hebrew": "Tishrei",
+  "day_start": 1,
+  "duration_days": 2,
+  "is_premium": false,
+  "summary": "Yom Teruáh, o Dia do Toque do Shofar. Cabeça do ano, dia em que o Eterno é coroado como Rei sobre toda a Criação. Início dos Aseret Yemei Teshuváh, os Dez Dias de Retorno que culminam em Yom Kippur.",
+  "level_pardes": ["peshat", "remez", "drash", "sod"],
+  "pdf_url": null,
+  "pdf_premium_url": null,
+  "pdf_kabbalah_url": null,
+  "content_intro": "Rosh Hashanáh é o aniversário da Criação do mundo, segundo Chazal (Talmud Bavli, Rosh Hashanáh 11a). Em 1 de Tishrei, o Eterno renova o pacto cósmico e julga toda a humanidade. A Toráh o chama de *Yom Teruáh* (Bamidbar 29:1), Dia do Toque do Shofar; *Yom haZikaron* (Vayikra 23:24), Dia da Lembrança; e *Yom haDin* na liturgia, Dia do Julgamento. Esta página guia você da preparação do mês de Elul até a Tashlich, com Malchuyot, Zichronot e Shofarot no Método Rav EBBY.",
+  "sections_count": 16,
+  "estimated_reading_time_minutes": 15,
+  "rav_signature": "Rav.: EBBY",
+  "ken_yehi_ratzon": "Ketivá vaChatimá Tová",
+  "tags": ["rosh-hashana", "yom-teruah", "shofar", "malchuyot", "zichronot", "shofarot", "tashlich", "yamim-noraim", "teshuva", "yom-hadin"]
+}
