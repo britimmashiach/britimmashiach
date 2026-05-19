@@ -1,0 +1,21 @@
+{
+  "slug": "pessach",
+  "name": "Pessach",
+  "name_hebrew": "פֶּסַח",
+  "category": "shalosh_regalim",
+  "month_hebrew": "Nissan",
+  "day_start": 15,
+  "duration_days": 8,
+  "is_premium": false,
+  "summary": "A Festa da Libertação. Nissan 15-22 (8 dias na diáspora), Z'man Cheruteinu. Saída do Mitzraim, Seder de Pessach, Hagadá, matsá, arba kosot, afikoman, eliminação total do chametz, e a memória que se torna vivência: como se cada um de nós tivesse saído do Mitzraim.",
+  "level_pardes": ["peshat", "remez", "drash", "sod"],
+  "pdf_url": null,
+  "pdf_premium_url": null,
+  "pdf_kabbalah_url": null,
+  "content_intro": "Pessach é o maior Chag da Toráh depois de Shabat. Inaugura o calendário religioso (Shemot 12:2: *hachodesh hazê lachem rosh chodashim*, este mês será para vós cabeça dos meses) e celebra a libertação do Mitzraim, fundação do povo de Israel. Por oito dias (sete em Israel), Israel elimina todo o chametz, come matsá, conduz o Seder com Hagadá e Arba Kosot, e relembra a saída como vivência presente. Esta página guia você da bedikat chametz até o último dia, no Método Rav EBBY.",
+  "sections_count": 16,
+  "estimated_reading_time_minutes": 16,
+  "rav_signature": "Rav.: EBBY",
+  "ken_yehi_ratzon": "Chag Pessach Kasher veSameach",
+  "tags": ["pessach", "passover", "seder", "hagadá", "matsá", "chametz", "arba-kosot", "afikoman", "yetziat-mitzraim", "zman-cheruteinu", "shalosh-regalim"]
+}

@@ -1,0 +1,21 @@
+{
+  "slug": "lag-baomer",
+  "name": "Lag baOmer",
+  "name_hebrew": "ל\"ג בָּעֹמֶר",
+  "category": "minor",
+  "month_hebrew": "Iyar",
+  "day_start": 18,
+  "duration_days": 1,
+  "is_premium": false,
+  "summary": "O 33° dia do Omer (Iyar 18). Marco que termina o luto dos primeiros 32 dias da Sefirat haOmer e celebra a hilulá (yahrzeit) de Rabi Shimon bar Yochai (Rashbi), revelador do Zohar. Fogueiras, cortes de cabelo, casamentos.",
+  "level_pardes": ["peshat", "remez", "drash", "sod"],
+  "pdf_url": null,
+  "pdf_premium_url": null,
+  "pdf_kabbalah_url": null,
+  "content_intro": "Lag baOmer é o 33° dia da Sefirat haOmer, contado a partir do segundo dia de Pessach até Shavuot. Marca o fim do período de luto pelas 24.000 discípulos de Rabi Akiva que morreram entre Pessach e Shavuot, e celebra a *hilulá* (festividade da elevação da alma) de Rabi Shimon bar Yochai (Rashbi), o sábio revelador do Zohar, que morreu em 18 de Iyar. Tradição forte: fogueiras (que iluminaram a noite de sua morte), primeiro corte de cabelo de meninos de 3 anos (chalakah/upsherin), peregrinação a seu túmulo em Meron. Esta página guia você no Método Rav EBBY.",
+  "sections_count": 16,
+  "estimated_reading_time_minutes": 12,
+  "rav_signature": "Rav.: EBBY",
+  "ken_yehi_ratzon": "Chag Sameach",
+  "tags": ["lag-baomer", "rashbi", "shimon-bar-yochai", "zohar", "meron", "chalakah", "upsherin", "fogueiras", "kabbalah", "iyar", "sefirat-haomer"]
+}

@@ -1,0 +1,21 @@
+{
+  "slug": "chanukah",
+  "name": "Chanukáh",
+  "name_hebrew": "חֲנֻכָּה",
+  "category": "minor",
+  "month_hebrew": "Kislev",
+  "day_start": 25,
+  "duration_days": 8,
+  "is_premium": false,
+  "summary": "A Festa das Luzes. Oito dias acendendo a Chanukiá em comemoração ao milagre do óleo do Beit haMikdash após a vitória dos Macabeus sobre os gregos selêucidas. Cada noite uma vela a mais, do escuro à plenitude.",
+  "level_pardes": ["peshat", "remez", "drash", "sod"],
+  "pdf_url": null,
+  "pdf_premium_url": null,
+  "pdf_kabbalah_url": null,
+  "content_intro": "Chanukáh é Chag rabínico de oito dias instituído em comemoração à purificação do Beit haMikdash após a vitória dos Macabeus (Chashmonaim) sobre o império grego selêucida em 165 a.C. e o milagre do óleo que durou oito dias quando deveria durar apenas um. O nome *Chanukáh* significa *inauguração* ou *dedicação*, do verbo *chanach* (consagrar). É o Chag de iluminar a escuridão, de afirmar a identidade contra a assimilação, e de pirsum hanes (publicação do milagre). Esta página guia você do primeiro acendimento à oitava noite no Método Rav EBBY.",
+  "sections_count": 16,
+  "estimated_reading_time_minutes": 14,
+  "rav_signature": "Rav.: EBBY",
+  "ken_yehi_ratzon": "Chag Sameach uChanukáh Mesaméach",
+  "tags": ["chanukah", "chanukiah", "menorá", "macabeus", "chashmonaim", "milagre-do-oleo", "pirsum-hanes", "maoz-tzur", "dreidel", "sufganiyot"]
+}

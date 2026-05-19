@@ -1,0 +1,21 @@
+{
+  "slug": "tu-bishvat",
+  "name": "Tu B'Shvat",
+  "name_hebrew": "ט\"וּ בִּשְׁבָט",
+  "category": "minor",
+  "month_hebrew": "Shvat",
+  "day_start": 15,
+  "duration_days": 1,
+  "is_premium": false,
+  "summary": "O Ano Novo das Árvores. Shvat 15, marco legal halácico para a contagem dos anos das árvores frutíferas, celebrado com Seder de Tu B'Shvat e brachot sobre as Shiv'at haMinim (sete espécies da Terra de Israel).",
+  "level_pardes": ["peshat", "remez", "drash", "sod"],
+  "pdf_url": null,
+  "pdf_premium_url": null,
+  "pdf_kabbalah_url": null,
+  "content_intro": "Tu B'Shvat é o *Rosh haShaná laIlanot* (Ano Novo das Árvores), conforme estabelecido pela Mishná, Rosh haShaná 1:1. Marca o ponto a partir do qual se conta a idade das árvores para fins haláchicos (orla, terumá, ma'aser). Não é mencionado na Toráh diretamente; é instituição rabínica antiga. Os cabalistas de Tzefat (séc. XVI) instituíram o *Seder de Tu B'Shvat* — celebração noturna com 30 frutos, quatro copos de vinho, e estudo do Pri Etz Hadar (Fruto da Árvore Formosa). Esta página guia você no Método Rav EBBY.",
+  "sections_count": 16,
+  "estimated_reading_time_minutes": 12,
+  "rav_signature": "Rav.: EBBY",
+  "ken_yehi_ratzon": "Chag Sameach laIlanot",
+  "tags": ["tu-bishvat", "rosh-hashana-laironot", "arvores", "shivat-haminim", "shvat", "kabalah", "pri-etz-hadar", "seder-tu-bishvat"]
+}

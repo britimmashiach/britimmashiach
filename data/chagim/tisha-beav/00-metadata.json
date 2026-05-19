@@ -1,0 +1,21 @@
+{
+  "slug": "tisha-beav",
+  "name": "Tisha B'Av",
+  "name_hebrew": "תִּשְׁעָה בְּאָב",
+  "category": "minor",
+  "month_hebrew": "Av",
+  "day_start": 9,
+  "duration_days": 1,
+  "is_premium": false,
+  "summary": "O 9° de Av. O Dia mais Triste do Calendário. Jejum de 25 horas em memória da destruição dos dois Beit haMikdash, a Catástrofe de Bar Kochba, a expulsão da Espanha, e outras tragédias históricas de Israel. Leitura de Eichá, kinot, três semanas de luto.",
+  "level_pardes": ["peshat", "remez", "drash", "sod"],
+  "pdf_url": null,
+  "pdf_premium_url": null,
+  "pdf_kabbalah_url": null,
+  "content_intro": "Tisha B'Av (Nove de Av) é o dia mais triste do calendário judaico. Lembra a destruição do Primeiro Beit haMikdash (586 a.C.), do Segundo Beit haMikdash (70 d.C.), e várias outras tragédias históricas que se concentram nesta data. Jejum completo de 25 horas, leitura de Megilat Eichá (Lamentações de Yirmiyahu), kinot (lamentos litúrgicos), três semanas de luto crescente (de 17 Tamuz a 9 Av). Esta página guia você através do luto e da esperança messiânica que o atravessa, no Método Rav EBBY.",
+  "sections_count": 16,
+  "estimated_reading_time_minutes": 13,
+  "rav_signature": "Rav.: EBBY",
+  "ken_yehi_ratzon": "Tehé Geulá Shleimá",
+  "tags": ["tisha-beav", "av", "luto", "beit-hamikdash", "eichá", "kinot", "tres-semanas", "yirmeyahu", "destruicao-do-templo", "geula"]
+}

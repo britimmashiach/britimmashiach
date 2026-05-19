@@ -1,0 +1,21 @@
+{
+  "slug": "tu-beav",
+  "name": "Tu B'Av",
+  "name_hebrew": "ט\"וּ בְּאָב",
+  "category": "minor",
+  "month_hebrew": "Av",
+  "day_start": 15,
+  "duration_days": 1,
+  "is_premium": false,
+  "summary": "O 15° de Av. Chag do Amor. Apenas seis dias após Tisha B'Av, é o dia mais alegre do calendário judaico segundo a Mishná. Casamentos, dança das filhas de Yerushalaim em vinhedos, paralelos messiânicos com a reconciliação cósmica.",
+  "level_pardes": ["peshat", "remez", "drash", "sod"],
+  "pdf_url": null,
+  "pdf_premium_url": null,
+  "pdf_kabbalah_url": null,
+  "content_intro": "Tu B'Av é o 15° dia de Av, vindo apenas seis dias após Tisha B'Av. A Mishná (Taanit 4:8) declara: *lo hayu yamim tovim leYisrael keChamishá Asar beAv u'cheYom haKippurim* — não havia dias melhores para Israel que o 15 de Av e Yom Kippur. É Chag do Amor: as filhas de Yerushalaim vestiam-se de branco e dançavam em vinhedos, e os homens vinham escolher esposas. Mais sete eventos históricos felizes ocorreram em Tu B'Av. Esta página guia você no Método Rav EBBY.",
+  "sections_count": 16,
+  "estimated_reading_time_minutes": 12,
+  "rav_signature": "Rav.: EBBY",
+  "ken_yehi_ratzon": "Chag Ahavá Sameach",
+  "tags": ["tu-beav", "chag-haahava", "av", "casamento", "dance-of-tu-beav", "reconciliacao", "amor-messianico"]
+}

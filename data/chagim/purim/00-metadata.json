@@ -1,0 +1,21 @@
+{
+  "slug": "purim",
+  "name": "Purim",
+  "name_hebrew": "פּוּרִים",
+  "category": "minor",
+  "month_hebrew": "Adar",
+  "day_start": 14,
+  "duration_days": 1,
+  "is_premium": false,
+  "summary": "A festa da Megilá. Adar 14, comemoração da salvação dos judeus do Império Persa pela mão de Esther e Mordechai contra a conspiração de Haman. Alegria invertida, máscaras, mishloach manot, matanot la'evyonim e a leitura da Megilat Esther.",
+  "level_pardes": ["peshat", "remez", "drash", "sod"],
+  "pdf_url": null,
+  "pdf_premium_url": null,
+  "pdf_kabbalah_url": null,
+  "content_intro": "Purim é Chag instituído pelos sábios em comemoração à salvação dos judeus do Império Persa, narrada na *Megilat Esther* (Livro de Ester). O nome *Purim* vem de *pur*, sorte (lançada por Haman para escolher o dia da destruição). A festa subverte o sorteio: o dia escolhido para a morte se torna dia de salvação. Quatro mitzvot definem o dia: leitura da Megilá (duas vezes), mishloach manot (presentes aos amigos), matanot la'evyonim (presentes aos pobres) e seudat Purim (refeição festiva). Esta página guia você através da alegria invertida no Método Rav EBBY.",
+  "sections_count": 16,
+  "estimated_reading_time_minutes": 14,
+  "rav_signature": "Rav.: EBBY",
+  "ken_yehi_ratzon": "Chag Purim Sameach",
+  "tags": ["purim", "megilat-esther", "esther", "mordechai", "haman", "mishloach-manot", "matanot-laevyonim", "seudat-purim", "venahafoch-hu", "hester-panim"]
+}
