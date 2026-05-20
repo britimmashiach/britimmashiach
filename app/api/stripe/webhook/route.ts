@@ -107,6 +107,37 @@ export async function POST(req: NextRequest) {
         }
         break
       }
+
+      // Reembolso total via Dashboard revoga acesso premium imediatamente.
+      // Reembolso parcial nao revoga (membro fica com credito proporcional).
+      // Sem este handler, usuario PIX reembolsado mantem acesso ate o
+      // periodo expirar mesmo apos receber o dinheiro de volta.
+      case 'charge.refunded': {
+        const charge = event.data.object as Stripe.Charge
+        const fullRefund = charge.amount_refunded >= charge.amount
+        if (fullRefund && typeof charge.customer === 'string') {
+          await updateProfile(charge.customer, {
+            role: 'free',
+            subscription_status: 'canceled',
+            subscription_current_period_end: null,
+          })
+        }
+        break
+      }
+
+      // Disputa aberta congela o acesso preventivamente (past_due),
+      // espelhando o tratamento de invoice.payment_failed. Ao resolver
+      // a disputa no Dashboard, customer.subscription.updated reativa.
+      case 'charge.dispute.created': {
+        const dispute = event.data.object as Stripe.Dispute
+        if (typeof dispute.charge === 'string') {
+          const charge = await getStripe().charges.retrieve(dispute.charge)
+          if (typeof charge.customer === 'string') {
+            await updateProfile(charge.customer, { subscription_status: 'past_due' })
+          }
+        }
+        break
+      }
     }
   } catch (err) {
     console.error('[Webhook] Erro interno:', err)
