@@ -3,7 +3,7 @@
 import { redirect } from 'next/navigation'
 import { getPublicSiteOrigin } from '@/lib/public-site-url'
 import { createServerSupabaseClient, hasSupabaseServerEnv } from '@/lib/supabase-server'
-import { notifyNewSignup } from '@/lib/whatsapp-notify'
+import { notifyNewSignup } from '@/lib/notify'
 
 export type SignUpResult =
   | { ok: true; message: string }
@@ -51,8 +51,8 @@ export async function signUpAction(
   })
   if (error) return { ok: false, message: error.message }
 
-  // Fire-and-forget: notifica o Rav EBBY por WhatsApp sem bloquear a resposta.
-  // Falhas no envio nao quebram o cadastro.
+  // Fire-and-forget: dispara chamada telefonica TTS para o Rav EBBY
+  // via CallMeBot sem bloquear a resposta. Falha nao quebra o cadastro.
   void notifyNewSignup({ email, fullName }).catch(() => undefined)
 
   return {
