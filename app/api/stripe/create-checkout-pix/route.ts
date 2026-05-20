@@ -89,6 +89,7 @@ export async function POST() {
       success_url: `${process.env.NEXT_PUBLIC_APP_URL}/profile?success=true`,
       cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/premium`,
       locale: 'pt-BR',
+      allow_promotion_codes: true,
     })
 
     return NextResponse.json({ url: session.url })
