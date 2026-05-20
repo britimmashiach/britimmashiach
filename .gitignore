@@ -31,3 +31,6 @@ next-env.d.ts
 # OS
 .DS_Store
 Thumbs.db
+
+# Build artifacts
+/scripts/uploads/
