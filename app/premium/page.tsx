@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Crown, Check, Star, Sparkles, BookOpen, Calendar, Library, Layers } from 'lucide-react'
+import { Crown, Check, Star, Sparkles, BookOpen, Library, Layers } from 'lucide-react'
 import { PLANS } from '@/lib/stripe'
 import { CheckoutButton } from '@/components/ui/CheckoutButton'
 import { cn } from '@/lib/utils'
@@ -14,7 +14,6 @@ const features = [
   { icon: Library, title: 'Biblioteca completa', desc: 'Download de todos os títulos: Siddur, Machzor, Netivot, 49 Portões.' },
   { icon: Layers, title: 'Modelo Netivot', desc: 'Os 32 caminhos proprietários do Rav EBBY com análise kabalística profunda.' },
   { icon: Star, title: 'Kabaláh Luriana', desc: 'Etz Chaim, Olamot, Sefirot, Tzimtzum - o sistema completo do Arizal.' },
-  { icon: Calendar, title: 'Calendário premium', desc: 'Detalhes litúrgicos, Kavannot para cada Moed e Omer interativo.' },
   { icon: Crown, title: 'Cursos exclusivos', desc: 'Acesso antecipado a novos cursos e conteúdo do Rav antes do lançamento.' },
 ]
 

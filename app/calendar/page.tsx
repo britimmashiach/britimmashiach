@@ -6,9 +6,7 @@ import {
   getDayInfo,
   getUpcomingEvents,
 } from '@/lib/hebrew-date'
-import { userHasPremiumAccess } from '@/lib/premium-access'
 import { getAuthSnapshot } from '@/lib/auth-snapshot'
-import { PremiumGate } from '@/components/ui/PremiumGate'
 import { SignupGate } from '@/components/ui/SignupGate'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
@@ -30,11 +28,7 @@ export const dynamic = 'force-dynamic'
 export default async function CalendarPage() {
   const auth = await getAuthSnapshot()
   const isLoggedIn = !!auth.user
-  const hasPremium = await userHasPremiumAccess()
 
-  // Acesso temporariamente reservado a assinantes Premium.
-  // Visitantes anônimos primeiro veem SignupGate (cadastro grátis);
-  // membros free logados veem PremiumGate (upgrade).
   if (!isLoggedIn) {
     return (
       <div className="container mx-auto px-4 py-10 max-w-3xl">
@@ -47,21 +41,9 @@ export default async function CalendarPage() {
         </Link>
         <SignupGate
           resourceName="o Calendário Hebraico"
-          description="O Calendário Hebraico-messiânico, com Moedim, Shabatot, Rosh Chódesh, Sefirat haOmer e zmanim em São Paulo, é recurso reservado da Brit Im Mashiach. Cadastre-se gratuitamente para criar sua conta; a liberação completa do Calendário fica disponível para assinantes Premium."
+          description="O Calendário Hebraico-messiânico, com Moedim, Shabatot, Rosh Chódesh, Sefirat haOmer e zmanim em São Paulo, é recurso reservado da Brit Im Mashiach. Cadastre-se gratuitamente para criar sua conta e acessar o Calendário completo."
         />
       </div>
-    )
-  }
-
-  if (!hasPremium) {
-    return (
-      <PremiumGate
-        title="Calendário Hebraico"
-        description="O Calendário Hebraico-messiânico, com Moedim, Shabatot, Rosh Chódesh, Sefirat haOmer e zmanim em São Paulo, é recurso reservado a assinantes Premium. Ative o plano para liberar o ciclo litúrgico completo do Rav EBBY."
-        backHref="/"
-        backLabel="Início"
-        eyebrow="Recurso Premium"
-      />
     )
   }
 
