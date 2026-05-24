@@ -87,7 +87,7 @@ const ecosystemCards = [
     href: '/loja',
     icon: ShoppingBag,
     title: 'Acqua Rios',
-    description: 'Velas decorativas e artigos Kosher para o lar. Loja Acqua Rios da congregacao.',
+    description: 'Velas decorativas e artigos Kosher para o lar. Loja Acqua Rios da congregação.',
   },
   {
     href: '/premium',

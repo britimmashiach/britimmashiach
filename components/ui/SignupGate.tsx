@@ -19,7 +19,7 @@ interface SignupGateProps {
  */
 export function SignupGate({ resourceName, description }: SignupGateProps) {
   const fallback =
-    'Cadastre-se gratuitamente na Brit Im Mashiach para acessar o conteudo completo deste Chag. Membros gratuitos veem todas as secoes publicas. As secoes aprofundadas (Kabala luriana, Tikun Leil, PaRDeS) ficam reservadas a assinantes Premium.'
+    'Cadastre-se gratuitamente na Brit Im Mashiach para acessar o conteúdo completo deste Chag. Membros gratuitos veem todas as seções públicas. As seções aprofundadas (Kabalá luriana, Tikun Leil, PaRDeS) ficam reservadas a assinantes Premium.'
 
   return (
     <section
@@ -33,7 +33,7 @@ export function SignupGate({ resourceName, description }: SignupGateProps) {
       </div>
       <div>
         <p className="text-xs font-inter font-semibold text-petroleum-700 dark:text-gold-400 uppercase tracking-widest mb-2">
-          Conteudo para membros
+          Conteúdo para membros
         </p>
         <h2
           id="signup-gate-heading"
@@ -56,7 +56,7 @@ export function SignupGate({ resourceName, description }: SignupGateProps) {
           href="/auth"
           className="inline-flex items-center justify-center gap-2 rounded-lg border border-border px-5 py-2.5 text-sm font-inter font-medium text-foreground hover:bg-muted transition-colors"
         >
-          Ja tenho conta
+          Já tenho conta
         </Link>
       </div>
       <p className="text-[11px] font-inter text-warmgray-500 leading-relaxed pt-2 flex items-center justify-center gap-1">

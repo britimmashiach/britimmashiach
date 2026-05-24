@@ -10,7 +10,7 @@ type Props = { params: Promise<{ slug: string }> }
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const product = await getShopProduct(slug)
-  if (!product) return { title: 'Produto nao encontrado' }
+  if (!product) return { title: 'Produto não encontrado' }
   return {
     title: product.name,
     description: product.description.slice(0, 160),
@@ -67,10 +67,10 @@ export default async function LojaProdutoPage({ params }: Props) {
             rel="noopener noreferrer"
             className="inline-flex w-full sm:w-auto justify-center items-center gap-2 rounded-lg bg-[#25D366] hover:bg-[#1ebe5d] text-white px-8 py-3 text-sm font-inter font-semibold transition-colors mt-4"
           >
-            Pedir pelo WhatsApp
+            Tenho interesse
           </a>
           <p className="text-xs font-inter text-warmgray-500 pt-2">
-            Retirada em Franca SP ou combinacao de entrega pelo WhatsApp.
+            Vendas em breve. Enquanto isso, envie sua mensagem pelo WhatsApp.
           </p>
         </div>
       </div>

@@ -6,8 +6,8 @@ import { LeaderGate } from '@/components/ui/LeaderGate'
 import { BookOpen, Calendar, FileText, MessageCircle, Crown } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Painel de Lideres',
-  description: 'Materiais e avisos para lideres aprovados da Brit Im Mashiach.',
+  title: 'Painel de Líderes',
+  description: 'Materiais e avisos para líderes aprovados da Brit Im Mashiach.',
 }
 
 export const dynamic = 'force-dynamic'
@@ -16,16 +16,16 @@ const resources = [
   {
     icon: FileText,
     title: 'Roteiros de estudo',
-    text: 'Guias para conduzir estudos em casa ou celulas. Em expansao.',
+    text: 'Guias para conduzir estudos em casa ou células. Em expansão.',
     href: '/studies',
-    cta: 'Ver estudos publicos',
+    cta: 'Ver estudos públicos',
   },
   {
     icon: Calendar,
-    title: 'Calendario liturgico',
-    text: 'Moedim, Parashot e zmanim para planejar reunioes e ensino.',
+    title: 'Calendário litúrgico',
+    text: 'Moedim, Parashot e zmanim para planejar reuniões e ensino.',
     href: '/calendar',
-    cta: 'Abrir calendario',
+    cta: 'Abrir calendário',
   },
   {
     icon: BookOpen,
@@ -36,8 +36,8 @@ const resources = [
   },
   {
     icon: Crown,
-    title: 'Conteudo Premium',
-    text: 'Lideres podem assinar Premium separadamente para Netivot e Kabala aprofundada.',
+    title: 'Conteúdo Premium',
+    text: 'Líderes podem assinar Premium separadamente para Netivot e Kabalá aprofundada.',
     href: '/premium',
     cta: 'Sobre Premium',
   },
@@ -51,7 +51,7 @@ export default async function LideresPainelPage() {
   if (!isLoggedIn) {
     return (
       <div className="container mx-auto px-4 py-10 max-w-3xl">
-        <LeaderGate resourceName="o Painel de Lideres" />
+        <LeaderGate resourceName="o Painel de Líderes" />
       </div>
     )
   }
@@ -60,28 +60,28 @@ export default async function LideresPainelPage() {
     return (
       <div className="container mx-auto px-4 py-10 max-w-3xl">
         <LeaderGate
-          resourceName="o Painel de Lideres"
-          description="Sua conta esta ativa, mas ainda nao consta como lider aprovado. O Rav EBBY libera o acesso manualmente apos conversa e discernimento. Premium pago nao libera este painel."
+          resourceName="o Painel de Líderes"
+          description="Sua conta está ativa, mas ainda não consta como líder aprovado. O Rav EBBY libera o acesso manualmente após conversa e discernimento. Premium pago não libera este painel."
         />
       </div>
     )
   }
 
-  const firstName = auth.sessionDisplay?.firstName ?? 'Lider'
+  const firstName = auth.sessionDisplay?.firstName ?? 'Líder'
 
   return (
     <div className="min-h-screen">
       <section className="border-b border-border/40 bg-petroleum-800/5 dark:bg-petroleum-950/40">
         <div className="container mx-auto px-4 py-10 max-w-4xl space-y-2">
           <p className="text-xs font-inter font-semibold uppercase tracking-widest text-gold-700 dark:text-gold-400">
-            Portal de lideres
+            Portal de líderes
           </p>
           <h1 className="font-cinzel text-3xl font-semibold text-petroleum-800 dark:text-parchment-100">
             Shalom, {firstName}
           </h1>
           <p className="text-sm font-inter text-warmgray-600 dark:text-warmgray-400 max-w-2xl">
-            Bem-vindo ao painel reservado a lideres aprovados. Novos modulos (PDFs exclusivos, checklist de
-            ministerio, avisos do Rav) serao adicionados aqui.
+            Bem-vindo ao painel reservado a líderes aprovados. Novos módulos (PDFs exclusivos, checklist de
+            ministério, avisos do Rav) serão adicionados aqui.
           </p>
         </div>
       </section>
@@ -105,10 +105,10 @@ export default async function LideresPainelPage() {
             <MessageCircle className="w-6 h-6 text-gold-600 shrink-0 mt-0.5" aria-hidden />
             <div>
               <h2 className="font-cinzel text-lg font-semibold text-petroleum-800 dark:text-parchment-100">
-                Fale com a lideranca
+                Fale com a liderança
               </h2>
               <p className="text-sm font-inter text-warmgray-600 dark:text-warmgray-400">
-                Duvidas sobre ministerio, eventos ou materiais novos.
+                Dúvidas sobre ministério, eventos ou materiais novos.
               </p>
             </div>
           </div>

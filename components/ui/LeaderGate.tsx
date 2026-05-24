@@ -7,14 +7,14 @@ interface LeaderGateProps {
 }
 
 /**
- * Portal de lideres: acesso por aprovacao do Rav (is_leader), nao por pagamento premium.
+ * Portal de líderes: acesso por aprovação do Rav (is_leader), não por pagamento premium.
  */
 export function LeaderGate({
-  resourceName = 'o Portal de Lideres',
+  resourceName = 'o Portal de Líderes',
   description,
 }: LeaderGateProps) {
   const fallback =
-    'O Portal de Lideres e reservado a irmaos e irmas aprovados pelo Rav EBBY para servir na congregacao. Assinar Premium nao libera este acesso. Se voce lidera ou deseja liderar, fale com a lideranca.'
+    'O Portal de Líderes é reservado a irmãos e irmãs aprovados pelo Rav EBBY para servir na congregação. Assinar Premium não libera este acesso. Se você lidera ou deseja liderar, fale com a liderança.'
 
   return (
     <section
@@ -28,7 +28,7 @@ export function LeaderGate({
       </div>
       <div>
         <p className="text-xs font-inter font-semibold text-petroleum-700 dark:text-gold-400 uppercase tracking-widest mb-2">
-          Acesso por aprovacao
+          Acesso por aprovação
         </p>
         <h2
           id="leader-gate-heading"
@@ -52,7 +52,7 @@ export function LeaderGate({
           className="inline-flex items-center justify-center gap-2 rounded-lg border border-border px-5 py-2.5 text-sm font-inter font-medium text-foreground hover:bg-muted transition-colors"
         >
           <Shield className="h-4 w-4" aria-hidden="true" />
-          Saiba mais sobre lideres
+          Saiba mais sobre líderes
         </Link>
       </div>
     </section>

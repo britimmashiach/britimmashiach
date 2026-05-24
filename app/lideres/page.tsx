@@ -4,26 +4,26 @@ import { Users, BookOpen, HeartHandshake, Shield, ArrowRight } from 'lucide-reac
 import { CONGREGATION } from '@/lib/site-brand'
 
 export const metadata: Metadata = {
-  title: 'Lideres',
+  title: 'Líderes',
   description:
-    'Portal de lideres da Brit Im Mashiach: servico na congregacao, materiais de ministerio e formacao. Acesso por aprovacao do Rav EBBY.',
+    'Portal de líderes da Brit Im Mashiach: serviço na congregação, materiais de ministério e formação. Acesso por aprovação do Rav EBBY.',
 }
 
 const pillars = [
   {
     icon: HeartHandshake,
-    title: 'Servico na congregacao',
-    text: 'Lideres apoiam Shabatot, estudos, acolhimento e a vida comunitaria em Franca e online.',
+    title: 'Serviço na congregação',
+    text: 'Líderes apoiam Shabatot, estudos, acolhimento e a vida comunitária em Franca e online.',
   },
   {
     icon: BookOpen,
-    title: 'Formacao continua',
-    text: 'Materiais de ministerio, roteiros de estudo e orientacao alinhados ao Metodo Rav EBBY.',
+    title: 'Formação contínua',
+    text: 'Materiais de ministério, roteiros de estudo e orientação alinhados ao Método Rav EBBY.',
   },
   {
     icon: Shield,
     title: 'Acesso distinto do Premium',
-    text: 'Premium e assinatura paga de conteudo. Lider e papel aprovado pelo Rav para quem serve na obra.',
+    text: 'Premium é assinatura paga de conteúdo. Líder é papel aprovado pelo Rav para quem serve na obra.',
   },
 ]
 
@@ -36,18 +36,18 @@ export default function LideresPage() {
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-petroleum-800/10 border border-petroleum-800/20 dark:border-gold-500/25">
             <Users className="w-3.5 h-3.5 text-petroleum-700 dark:text-gold-400" aria-hidden />
             <span className="text-xs font-inter font-semibold text-petroleum-700 dark:text-gold-400 uppercase tracking-widest">
-              Lideres
+              Líderes
             </span>
           </div>
           <h1 className="font-cinzel text-3xl md:text-5xl font-semibold text-petroleum-800 dark:text-parchment-100">
-            Area de lideres
+            Área de líderes
           </h1>
           <p className="font-cormorant text-lg md:text-xl text-warmgray-600 dark:text-warmgray-400 italic">
             {CONGREGATION}
           </p>
           <p className="text-sm font-inter text-warmgray-600 dark:text-warmgray-400 leading-relaxed max-w-prose mx-auto pt-2">
-            Este espaco e para irmaos e irmas que o Rav EBBY aprovar para liderar, ensinar e servir.
-            Assinar Premium nao substitui esta aprovacao.
+            Este espaço é para irmãos e irmãs que o Rav EBBY aprovar para liderar, ensinar e servir.
+            Assinar Premium não substitui esta aprovação.
           </p>
         </div>
       </section>
@@ -65,22 +65,22 @@ export default function LideresPage() {
 
         <div className="glass-card p-8 space-y-4 text-center max-w-xl mx-auto">
           <h2 className="font-cinzel text-xl font-semibold text-petroleum-800 dark:text-parchment-100">
-            Ja e lider aprovado?
+            Já é líder aprovado?
           </h2>
           <p className="text-sm font-inter text-warmgray-600 dark:text-warmgray-400">
-            Entre com sua conta e acesse o painel com materiais e avisos para lideres.
+            Entre com sua conta e acesse o painel com materiais e avisos para líderes.
           </p>
           <Link
             href="/lideres/painel"
             className="inline-flex items-center gap-2 rounded-lg bg-petroleum-800 dark:bg-gold-500 px-6 py-3 text-sm font-inter font-semibold text-parchment-50 dark:text-petroleum-950 hover:opacity-90 transition-opacity"
           >
-            Ir ao painel de lideres
+            Ir ao painel de líderes
             <ArrowRight className="w-4 h-4" aria-hidden />
           </Link>
         </div>
 
         <p className="text-center text-xs font-inter text-warmgray-500 mt-8 max-w-md mx-auto leading-relaxed">
-          Deseja servir como lider? Converse com o Rav EBBY apos os cultos ou pelo contato da congregacao.
+          Deseja servir como líder? Converse com o Rav EBBY após os cultos ou pelo contato da congregação.
         </p>
       </section>
     </div>
