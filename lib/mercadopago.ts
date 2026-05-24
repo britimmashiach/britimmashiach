@@ -27,6 +27,26 @@ export function hasMpEnv(): boolean {
   return Boolean(process.env.MERCADOPAGO_ACCESS_TOKEN?.trim())
 }
 
+/**
+ * Access Token de producao comeca com APP_USR- e tem varios segmentos.
+ * Public Key tambem comeca com APP_USR- mas e curta (nao serve no servidor).
+ */
+export function validateMpAccessToken(token: string): string | null {
+  const t = token.trim()
+  if (!t.startsWith('TEST-') && !t.startsWith('APP_USR-')) {
+    return 'MERCADOPAGO_ACCESS_TOKEN invalido: deve comecar com APP_USR- (producao) ou TEST- (teste).'
+  }
+  // Public Key tipica: APP_USR-xxxx-xxxx-xxxx (poucos segmentos, ~50 chars)
+  const segments = t.split('-')
+  if (t.startsWith('APP_USR-') && segments.length < 5) {
+    return (
+      'Parece que voce colou a Public Key no lugar do Access Token. ' +
+      'No Mercado Pago, copie o Access Token (token longo), nao a Public Key.'
+    )
+  }
+  return null
+}
+
 export function getMpClient(): MercadoPagoConfig {
   if (!_client) {
     _client = new MercadoPagoConfig({

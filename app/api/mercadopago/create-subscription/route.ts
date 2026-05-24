@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { getMpPreApproval, hasMpEnv, MP_PREMIUM_PLAN, formatMpError, mpSandboxEmailError } from '@/lib/mercadopago'
+import { getMpPreApproval, hasMpEnv, MP_PREMIUM_PLAN, formatMpError, mpSandboxEmailError, validateMpAccessToken } from '@/lib/mercadopago'
 import { createServerSupabaseClient, hasSupabaseServerEnv } from '@/lib/supabase-server'
 
 /**
@@ -26,6 +26,11 @@ export async function POST() {
       { error: 'MERCADOPAGO_ACCESS_TOKEN não configurada no servidor.' },
       { status: 503 },
     )
+  }
+
+  const tokenErr = validateMpAccessToken(process.env.MERCADOPAGO_ACCESS_TOKEN ?? '')
+  if (tokenErr) {
+    return NextResponse.json({ error: tokenErr }, { status: 503 })
   }
 
   if (!process.env.NEXT_PUBLIC_APP_URL) {
