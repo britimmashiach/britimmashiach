@@ -16,6 +16,10 @@ export interface Parasha {
   haftarah: string
   haftarahHebrew: string
   summary: string
+  peshat: string
+  remez: string
+  drash: string
+  sod: string
   isPremium: boolean
   pdfUrl: string | null
   pdfPremiumUrl: string | null
@@ -53,6 +57,10 @@ function normalizeParasha(row: ParashaRow): Parasha {
     haftarah: row.haftarah,
     haftarahHebrew: row.haftarah_hebrew,
     summary: row.summary,
+    peshat: row.peshat ?? '',
+    remez: row.remez ?? '',
+    drash: row.drash ?? '',
+    sod: row.sod ?? '',
     isPremium: row.is_premium,
     pdfUrl: parashaPdfUrl(row.id, row.pdf_url),
     pdfPremiumUrl: parashaPdfUrl(row.id, row.pdf_premium_url),

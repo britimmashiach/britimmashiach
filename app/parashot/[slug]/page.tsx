@@ -5,17 +5,21 @@ import { ArrowLeft, Crown } from 'lucide-react'
 import { fetchParashaBySlugAdmin, fetchAliyotByParasha } from '@/lib/parashot-supabase'
 import { getParashaTitle, getParashaEntry } from '@/lib/parashot-registry'
 import { AliyotList } from '@/components/parashot/AliyotList'
-import { ParashaPremiumGate } from '@/components/parashot/ParashaPremiumGate'
 import { getBookTheme } from '@/lib/book-themes'
 import { cn } from '@/lib/utils'
 import { userHasPremiumAccess } from '@/lib/premium-access'
 import { OFFICIAL_PARASHOT } from '@/lib/parashot-registry'
 import { fetchParashaSlugs } from '@/lib/parashot-supabase'
-import { breadcrumbJsonLd, parashaWebPageJsonLd } from '@/lib/json-ld'
+import { breadcrumbJsonLd, faqPageJsonLd, parashaWebPageJsonLd } from '@/lib/json-ld'
 import { getPublicSiteOrigin } from '@/lib/public-site-url'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { Breadcrumbs } from '@/components/seo/Breadcrumbs'
 import { AliyotIndexable } from '@/components/parashot/AliyotIndexable'
+import { ParashaPardesTeaser } from '@/components/parashot/ParashaPardesTeaser'
+import { ParashaRelatedLinks } from '@/components/parashot/ParashaRelatedLinks'
+import { FaqSection } from '@/components/seo/FaqSection'
+import { PremiumGate } from '@/components/ui/PremiumGate'
+import { getParashaFaqItems } from '@/lib/parasha-seo-faq'
 
 export const revalidate = 3600
 export const dynamicParams = true
@@ -35,18 +39,6 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const url = `${origin}/parashot/${slug}`
   const title = `Parasháh ${getParashaTitle(parasha.slug)}`
   const description = parasha.summary || `Estudo da Parasháh ${getParashaTitle(slug)} com Aliyot e análise PaRDeS.`
-
-  if (parasha.isPremium) {
-    const allowed = await userHasPremiumAccess()
-    if (!allowed) {
-      return {
-        title: `${getParashaTitle(slug)} · Premium`,
-        description: 'Estudo completo desta Parasháh disponível para assinantes Premium.',
-        robots: { index: false, follow: true },
-        alternates: { canonical: url },
-      }
-    }
-  }
 
   return {
     title,
@@ -68,11 +60,14 @@ export default async function ParashaDetailPage({ params }: { params: Promise<{ 
   if (!parasha) notFound()
 
   const canReadFull = !parasha.isPremium || (await userHasPremiumAccess())
-  if (!canReadFull) {
-    return <ParashaPremiumGate slug={slug} />
-  }
+  const aliyot = await fetchAliyotByParasha(parasha.id)
 
   const parashaTitle = getParashaTitle(parasha.slug)
+  const entry = getParashaEntry(parasha.slug)
+  const book = entry?.book ?? parasha.book
+  const bookTheme = getBookTheme(book)
+  const faqItems = getParashaFaqItems(parashaTitle, parasha.isPremium)
+
   const crumbs = [
     { name: 'Início', path: '/' },
     { name: 'Parashot', path: '/parashot' },
@@ -84,21 +79,16 @@ export default async function ParashaDetailPage({ params }: { params: Promise<{ 
       title: parashaTitle,
       description: parasha.summary,
       publishedAt: parasha.publishedAt,
+      isPremium: parasha.isPremium,
     }),
     breadcrumbJsonLd(crumbs),
+    faqPageJsonLd(faqItems),
   ]
-
-  const aliyot = await fetchAliyotByParasha(parasha.id)
-
-  const entry = getParashaEntry(parasha.slug)
-  const book = entry?.book ?? parasha.book
-  const bookTheme = getBookTheme(book)
 
   return (
     <div className="relative min-h-screen">
       <JsonLd data={jsonLd} />
       <Breadcrumbs items={crumbs} />
-      {/* Glow sutil por livro — quase imperceptível, sentido, não visto */}
       {bookTheme.glow && (
         <div
           className="absolute inset-0 pointer-events-none"
@@ -116,7 +106,6 @@ export default async function ParashaDetailPage({ params }: { params: Promise<{ 
           Todas as Parashot
         </Link>
 
-        {/* Cabeçalho */}
         <div className="space-y-4 mb-8">
           <div className="flex items-center gap-2 flex-wrap">
             <span className={cn('text-xs font-inter font-medium px-2.5 py-0.5 rounded-full', bookTheme.accentClass)}>
@@ -136,7 +125,7 @@ export default async function ParashaDetailPage({ params }: { params: Promise<{ 
           <div className="flex items-start justify-between gap-4">
             <div>
               <h1 className="font-cinzel text-4xl font-semibold text-petroleum-800 dark:text-parchment-100">
-                {getParashaTitle(parasha.slug)}
+                {parashaTitle}
               </h1>
               {parasha.haftarah && (
                 <p className="font-inter text-xs text-warmgray-500 mt-1">
@@ -159,20 +148,31 @@ export default async function ParashaDetailPage({ params }: { params: Promise<{ 
               </p>
             </div>
           )}
-
-          {/* O PDF da Parashá fica disponível dentro das Aliyot via visualizador interno,
-              que estampa marca d'água com o email do usuário. Não há download. */}
         </div>
+
+        <ParashaPardesTeaser parasha={parasha} />
 
         <hr className="divider-gold" />
 
         <AliyotIndexable parashaTitle={parashaTitle} aliyot={aliyot} />
 
-        <div className="mt-8" aria-label="Estudo interativo das Aliyot">
-          <AliyotList aliyot={aliyot} />
-        </div>
+        {canReadFull ? (
+          <div className="mt-8" aria-label="Estudo interativo das Aliyot">
+            <AliyotList aliyot={aliyot} />
+          </div>
+        ) : (
+          <PremiumGate
+            inline
+            title={`Estudo completo de ${parashaTitle}`}
+            description="O índice e a Aliyáh 1 acima são públicos. As sete Aliyot com PDF, comentários dos sábios e PaRDeS completo são exclusivos para assinantes Premium."
+            backHref="/parashot"
+            backLabel="Todas as Parashot"
+          />
+        )}
 
-        {/* Assinatura */}
+        <ParashaRelatedLinks book={book} />
+        <FaqSection items={faqItems} />
+
         <div className="mt-10 glass-card p-4 flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-petroleum-gradient flex items-center justify-center flex-shrink-0">
             <span className="font-hebrew text-sm text-gold-400">ר</span>

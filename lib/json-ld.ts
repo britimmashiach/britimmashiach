@@ -124,11 +124,27 @@ export function chagWebPageJsonLd(input: {
   }
 }
 
+export function faqPageJsonLd(items: { question: string; answer: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: items.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+  }
+}
+
 export function parashaWebPageJsonLd(input: {
   slug: string
   title: string
   description: string
   publishedAt?: string
+  isPremium?: boolean
 }) {
   const origin = getPublicSiteOrigin()
   const url = `${origin}/parashot/${input.slug}`
@@ -144,6 +160,9 @@ export function parashaWebPageJsonLd(input: {
     author: { '@type': 'Person', name: RAV_NAME },
     publisher: { '@type': 'Organization', name: SITE_NAME, url: origin },
     about: { '@type': 'Book', name: 'Toráh' },
+    ...(input.isPremium
+      ? { isAccessibleForFree: false, creativeWorkStatus: 'Premium content with public summary' }
+      : { isAccessibleForFree: true }),
   }
 }
 

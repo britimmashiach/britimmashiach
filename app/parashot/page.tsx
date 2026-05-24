@@ -26,8 +26,20 @@ export default async function ParashotPage() {
           </span>
         </div>
         <h1 className="section-title">Parashot Semanais</h1>
-        <p className="section-subtitle max-w-xl">
-          54 porções da Toráh. Cada Parashá contém 7 Aliyot — uma por dia da semana.
+        <p className="section-subtitle max-w-2xl">
+          54 porções da Toráh. Cada Parashá contém 7 Aliyot, uma por dia da semana, com estudo nos quatro níveis
+          PaRDeS do Rav EBBY. A introdução e a Aliyáh 1 são públicas; o estudo completo com PDFs está no Premium.
+        </p>
+        <p className="text-sm font-inter text-warmgray-500 max-w-2xl leading-relaxed">
+          Entenda o método em{' '}
+          <Link href="/metodo-pardes" className="text-gold-600 hover:underline dark:text-gold-400">
+            Método PaRDeS
+          </Link>
+          {' '}ou consulte o{' '}
+          <Link href="/faq" className="text-gold-600 hover:underline dark:text-gold-400">
+            FAQ
+          </Link>
+          .
         </p>
       </div>
 

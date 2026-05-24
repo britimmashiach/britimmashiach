@@ -35,8 +35,11 @@ export function Footer() {
             <ul className="space-y-2">
               {[
                 { href: '/sobre', label: 'Quem somos' },
+                { href: '/metodo-pardes', label: 'Método PaRDeS' },
+                { href: '/faq', label: 'Perguntas frequentes' },
                 { href: '/calendar', label: 'Calendário' },
                 { href: '/parashot', label: 'Parashot' },
+                { href: '/chagim', label: 'Chagim' },
                 { href: '/studies', label: 'Estudos' },
                 { href: '/library', label: 'Biblioteca' },
               ].map(({ href, label }) => (
