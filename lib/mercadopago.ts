@@ -55,3 +55,52 @@ export const MP_PREMIUM_PLAN = {
   frequency: 1,
   frequencyType: 'months' as const,
 } as const
+
+export function isMpTestToken(): boolean {
+  return getMpToken().startsWith('TEST-')
+}
+
+/** Extrai mensagem legível do corpo de erro JSON lançado pelo SDK do MP. */
+export function formatMpError(err: unknown): string {
+  if (err instanceof Error && err.message) return err.message
+
+  if (err && typeof err === 'object') {
+    const body = err as {
+      message?: string
+      error?: string
+      status?: number
+      cause?: Array<{ description?: string; code?: string | number }>
+    }
+
+    const parts: string[] = []
+    if (body.message) parts.push(body.message)
+    if (body.error && body.error !== body.message) parts.push(body.error)
+
+    const causeDesc = body.cause
+      ?.map((c) => c.description)
+      .filter(Boolean)
+      .join('; ')
+    if (causeDesc) parts.push(causeDesc)
+
+    if (parts.length > 0) return parts.join(' — ')
+
+    try {
+      return JSON.stringify(err)
+    } catch {
+      return 'Erro desconhecido ao iniciar assinatura MP'
+    }
+  }
+
+  return 'Erro desconhecido ao iniciar assinatura MP'
+}
+
+/** Em credencial TEST, o MP exige e-mail @testuser.com no payer_email. */
+export function mpSandboxEmailError(email: string): string | null {
+  if (!isMpTestToken()) return null
+  if (email.toLowerCase().endsWith('@testuser.com')) return null
+  return (
+    'Modo teste do Mercado Pago: use credenciais de PRODUÇÃO (APP_USR) no Vercel para ' +
+    'e-mails reais, ou cadastre-se no site com um e-mail de teste @testuser.com ' +
+    'criado em Developers → Contas de teste.'
+  )
+}

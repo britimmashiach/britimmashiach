@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { getMpPreApproval, hasMpEnv, MP_PREMIUM_PLAN } from '@/lib/mercadopago'
+import { getMpPreApproval, hasMpEnv, MP_PREMIUM_PLAN, formatMpError, mpSandboxEmailError } from '@/lib/mercadopago'
 import { createServerSupabaseClient, hasSupabaseServerEnv } from '@/lib/supabase-server'
 
 /**
@@ -44,6 +44,11 @@ export async function POST() {
     return NextResponse.json({ error: 'Não autenticado' }, { status: 401 })
   }
 
+  const sandboxErr = mpSandboxEmailError(user.email)
+  if (sandboxErr) {
+    return NextResponse.json({ error: sandboxErr }, { status: 400 })
+  }
+
   try {
     const backUrl = `${process.env.NEXT_PUBLIC_APP_URL}/profile?mp_subscription=pending`
 
@@ -75,16 +80,20 @@ export async function POST() {
     // Salva o id do preapproval no perfil (status pending) para podermos
     // correlacionar com webhooks que vierem depois.
     if (preapproval.id) {
-      await supabase
+      const { error: profileErr } = await supabase
         .from('profiles')
         .update({ mp_subscription_id: preapproval.id })
         .eq('id', user.id)
+
+      if (profileErr) {
+        console.warn('[mp create-subscription] perfil nao atualizado:', profileErr.message)
+      }
     }
 
     return NextResponse.json({ url: initPoint })
   } catch (err) {
-    const msg = err instanceof Error ? err.message : 'Erro desconhecido ao iniciar assinatura MP'
-    console.error('[mp create-subscription] falha:', msg)
+    const msg = formatMpError(err)
+    console.error('[mp create-subscription] falha:', msg, err)
     return NextResponse.json({ error: msg }, { status: 500 })
   }
 }
