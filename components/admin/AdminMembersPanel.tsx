@@ -9,6 +9,7 @@ import {
   Loader2,
   ShieldCheck,
   User,
+  Users,
   Ban,
   Trash2,
   Unlock,
@@ -18,6 +19,7 @@ import type { AdminMemberRow } from '@/app/admin/actions'
 import {
   listMembersAction,
   promoteUserByIdAction,
+  setLeaderByIdAction,
   banUserAction,
   unbanUserAction,
   deleteUserAction,
@@ -116,6 +118,22 @@ export function AdminMembersPanel({
     }
   }
 
+  async function toggleLeader(id: string, isLeader: boolean) {
+    setRowBusy(id)
+    try {
+      const r = await setLeaderByIdAction(id, isLeader)
+      if (!r.ok) {
+        toast.error('Líder', { description: r.message })
+        return
+      }
+      toast.success('Portal de líderes', { description: r.message })
+      setMembers((prev) => prev.map((m) => (m.id === id ? { ...m, is_leader: isLeader } : m)))
+      refreshFromServer()
+    } finally {
+      setRowBusy(null)
+    }
+  }
+
   async function ban(id: string) {
     if (!confirm('Banir este utilizador? Não poderá iniciar sessão até ser desbanido.')) return
     setRowBusy(id)
@@ -189,6 +207,7 @@ export function AdminMembersPanel({
           </h2>
           <p className="text-xs font-inter text-warmgray-500 mt-0.5">
             {total} conta(s) no Auth · promoção altera <code className="text-[10px] bg-muted px-1 rounded">profiles.role</code>
+            ; líder altera <code className="text-[10px] bg-muted px-1 rounded">is_leader</code>
             ; banir bloqueia login; excluir remove a conta (e o perfil se houver CASCADE).
           </p>
         </div>
@@ -235,6 +254,12 @@ export function AdminMembersPanel({
                     >
                       {roleLabel(m.role)}
                     </span>
+                    {m.is_leader && (
+                      <span className="ml-1.5 inline-flex items-center gap-0.5 rounded-full bg-petroleum-800/15 text-petroleum-800 dark:text-gold-400 px-2 py-0.5 text-[10px] font-semibold">
+                        <Users className="h-2.5 w-2.5" aria-hidden="true" />
+                        Líder
+                      </span>
+                    )}
                     {banned && (
                       <span className="ml-1.5 inline-flex items-center rounded-full bg-red-500/15 text-red-600 dark:text-red-400 px-2 py-0.5 text-[10px] font-semibold">
                         Banido
@@ -286,6 +311,16 @@ export function AdminMembersPanel({
                               </>
                             )}
                           </div>
+                          <button
+                            type="button"
+                            disabled={busy}
+                            onClick={() => void toggleLeader(m.id, !m.is_leader)}
+                            className="inline-flex items-center gap-1 rounded-lg border border-petroleum-600/30 px-2 py-1 text-xs hover:bg-petroleum-900/10 disabled:opacity-50"
+                            title={m.is_leader ? 'Revogar líder' : 'Aprovar líder'}
+                          >
+                            <Users className="h-3.5 w-3.5" />
+                            {m.is_leader ? '− Líder' : '+ Líder'}
+                          </button>
                           {banned ? (
                             <button
                               type="button"

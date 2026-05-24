@@ -28,6 +28,7 @@ import {
   Users,
   Languages,
   Landmark,
+  ShoppingBag,
 } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { cn } from '@/lib/utils'
@@ -44,15 +45,24 @@ const navLinks = [
   { href: '/studies', label: 'Estudos', icon: GraduationCap },
   { href: '/library', label: 'Biblioteca', icon: Library },
   { href: '/tanach', label: 'Tanach', icon: Languages },
+  { href: '/loja', label: 'Loja', icon: ShoppingBag },
+  { href: '/lideres', label: 'Líderes', icon: Users },
   { href: '/premium', label: 'Premium', icon: Crown, highlight: true },
 ]
 
-function RoleBadge({ role }: { role: string }) {
+function RoleBadge({ role, isLeader }: { role: string; isLeader?: boolean }) {
   if (role === 'admin')
     return (
       <span className="inline-flex items-center gap-0.5 text-[10px] font-inter font-semibold px-1.5 py-0.5 rounded-full bg-petroleum-800 text-gold-400">
         <ShieldCheck className="w-2.5 h-2.5 shrink-0" aria-hidden="true" />
         Admin
+      </span>
+    )
+  if (isLeader)
+    return (
+      <span className="inline-flex items-center gap-0.5 text-[10px] font-inter font-semibold px-1.5 py-0.5 rounded-full bg-petroleum-800/15 text-petroleum-800 dark:text-gold-400">
+        <Users className="w-2.5 h-2.5 shrink-0" aria-hidden="true" />
+        Líder
       </span>
     )
   if (role === 'premium')
@@ -83,7 +93,7 @@ function AvatarCircle({ initials, className }: { initials: string; className?: s
   )
 }
 
-function AccountTriggerContent({ session }: { session: SessionDisplay }) {
+function AccountTriggerContent({ session, isLeader }: { session: SessionDisplay; isLeader?: boolean }) {
   return (
     <>
       <AvatarCircle initials={session.initials} className="h-8 w-8 text-[11px]" />
@@ -91,7 +101,7 @@ function AccountTriggerContent({ session }: { session: SessionDisplay }) {
         <span className="text-xs font-inter font-medium text-foreground max-w-[120px] truncate">
           {session.firstName}
         </span>
-        <RoleBadge role={session.role} />
+        <RoleBadge role={session.role} isLeader={isLeader} />
       </div>
     </>
   )
@@ -99,7 +109,7 @@ function AccountTriggerContent({ session }: { session: SessionDisplay }) {
 
 export function Header() {
   const { theme, setTheme } = useTheme()
-  const { loading, sessionDisplay } = useProfile()
+  const { loading, sessionDisplay, isLeader } = useProfile()
   const showSession = Boolean(sessionDisplay)
   const showAuthLoading = loading && !showSession
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -214,7 +224,7 @@ export function Header() {
                     )}
                     aria-label="Menu da conta"
                   >
-                    <AccountTriggerContent session={sessionDisplay} />
+                    <AccountTriggerContent session={sessionDisplay} isLeader={isLeader} />
                   </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuPortal>
@@ -235,6 +245,17 @@ export function Header() {
                         Meu Perfil
                       </Link>
                     </DropdownMenuItem>
+                    {isLeader && (
+                      <DropdownMenuItem asChild className="cursor-pointer rounded-lg p-0 focus:bg-muted">
+                        <Link
+                          href="/lideres/painel"
+                          className="flex w-full items-center gap-2 px-3 py-2 text-sm font-inter text-foreground"
+                        >
+                          <Users className="h-3.5 w-3.5 text-warmgray-400 shrink-0" aria-hidden="true" />
+                          Portal de Líderes
+                        </Link>
+                      </DropdownMenuItem>
+                    )}
                     {sessionDisplay.role === 'admin' && (
                       <DropdownMenuItem asChild className="cursor-pointer rounded-lg p-0 focus:bg-muted">
                         <Link
@@ -344,7 +365,7 @@ export function Header() {
                       <span className="text-sm font-inter font-medium text-foreground truncate">
                         {sessionDisplay.firstName}
                       </span>
-                      <RoleBadge role={sessionDisplay.role} />
+                      <RoleBadge role={sessionDisplay.role} isLeader={isLeader} />
                       <span className="text-[10px] font-inter text-warmgray-500 truncate">{sessionDisplay.email}</span>
                     </div>
                   </div>
@@ -356,6 +377,16 @@ export function Header() {
                     <User className="w-4 h-4 text-warmgray-400 shrink-0" aria-hidden="true" />
                     Meu Perfil
                   </Link>
+                  {isLeader && (
+                    <Link
+                      href="/lideres/painel"
+                      onClick={() => setMobileOpen(false)}
+                      className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-inter text-foreground hover:bg-muted w-full"
+                    >
+                      <Users className="w-4 h-4 text-warmgray-400 shrink-0" aria-hidden="true" />
+                      Portal de Líderes
+                    </Link>
+                  )}
                   {sessionDisplay.role === 'admin' && (
                     <Link
                       href="/admin"

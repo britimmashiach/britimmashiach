@@ -29,14 +29,18 @@ function AuthFormInner() {
     setLoading(true)
 
     try {
+      const fd = new FormData()
+      fd.set('email', form.email)
+      fd.set('password', form.password)
       if (mode === 'login') {
-        const err = await signInWithPasswordAction(form.email, form.password)
+        const err = await signInWithPasswordAction(fd)
         if (err) {
           toast.error('Erro', { description: err.error })
           return
         }
       } else {
-        const r = await signUpAction(form.email, form.password, form.name)
+        fd.set('name', form.name)
+        const r = await signUpAction(fd)
         if (!r.ok) {
           toast.error('Erro', { description: r.message })
           return

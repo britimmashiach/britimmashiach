@@ -11,6 +11,7 @@ export type AdminMemberRow = {
   email: string
   full_name: string | null
   role: UserRole
+  is_leader: boolean
   created_at: string
   banned_until: string | null
   last_sign_in_at: string | null
@@ -86,7 +87,7 @@ export async function listMembersAction(
 
   const { data: profiles, error: profErr } = await admin
     .from('profiles')
-    .select('id, email, full_name, role')
+    .select('id, email, full_name, role, is_leader')
     .in('id', ids)
 
   if (profErr) return { ok: false, message: profErr.message }
@@ -101,6 +102,7 @@ export async function listMembersAction(
       email: u.email ?? p?.email ?? '',
       full_name: p?.full_name ?? null,
       role,
+      is_leader: Boolean(p?.is_leader),
       created_at: u.created_at,
       banned_until: u.banned_until ?? null,
       last_sign_in_at: u.last_sign_in_at ?? null,
@@ -177,6 +179,69 @@ export async function promoteUserByIdAction(
   if (updateErr) return { ok: false, message: updateErr.message }
 
   const label = role === 'admin' ? 'Administrador' : role === 'premium' ? 'Premium' : 'Membro'
+  return { ok: true, message: `${target.email} → ${label}` }
+}
+
+export async function setLeaderByEmailAction(
+  email: string,
+  isLeader: boolean,
+): Promise<{ ok: true; message: string } | { ok: false; message: string }> {
+  const gate = await requireAdmin()
+  if (!gate.ok) return { ok: false, message: gate.message }
+
+  const normalized = email.trim().toLowerCase()
+  if (!normalized || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalized)) {
+    return { ok: false, message: 'Indique um e-mail válido.' }
+  }
+
+  const admin = getSupabaseAdmin()
+  const trimmed = email.trim()
+  let target =
+    (await admin.from('profiles').select('id, email').eq('email', trimmed).maybeSingle()).data ?? null
+  if (!target) {
+    target =
+      (await admin.from('profiles').select('id, email').eq('email', normalized).maybeSingle()).data ?? null
+  }
+  if (!target) {
+    return { ok: false, message: 'Nenhum perfil com este e-mail.' }
+  }
+
+  const { error: updateErr } = await admin
+    .from('profiles')
+    .update({ is_leader: isLeader, updated_at: new Date().toISOString() })
+    .eq('id', target.id)
+
+  if (updateErr) return { ok: false, message: updateErr.message }
+
+  const label = isLeader ? 'Líder aprovado' : 'Líder revogado'
+  return { ok: true, message: `${target.email} → ${label}` }
+}
+
+export async function setLeaderByIdAction(
+  userId: string,
+  isLeader: boolean,
+): Promise<{ ok: true; message: string } | { ok: false; message: string }> {
+  const gate = await requireAdmin()
+  if (!gate.ok) return { ok: false, message: gate.message }
+
+  const admin = getSupabaseAdmin()
+  const { data: target, error: findErr } = await admin
+    .from('profiles')
+    .select('id, email')
+    .eq('id', userId)
+    .maybeSingle()
+
+  if (findErr) return { ok: false, message: findErr.message }
+  if (!target) return { ok: false, message: 'Perfil não encontrado.' }
+
+  const { error: updateErr } = await admin
+    .from('profiles')
+    .update({ is_leader: isLeader, updated_at: new Date().toISOString() })
+    .eq('id', userId)
+
+  if (updateErr) return { ok: false, message: updateErr.message }
+
+  const label = isLeader ? 'Líder aprovado' : 'Líder revogado'
   return { ok: true, message: `${target.email} → ${label}` }
 }
 

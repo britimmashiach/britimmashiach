@@ -82,6 +82,7 @@ export function useProfile() {
 
   const isPremium = profile?.role === 'premium' || profile?.role === 'admin'
   const isAdmin = profile?.role === 'admin'
+  const isLeader = Boolean(profile?.is_leader) || isAdmin
 
-  return { user, profile, loading, sessionDisplay, isPremium, isAdmin }
+  return { user, profile, loading, sessionDisplay, isPremium, isAdmin, isLeader }
 }

@@ -12,14 +12,17 @@ export type SignUpResult =
 const missingEnvMsg =
   'Supabase não configurado no servidor. Na Vercel: Settings → Environment Variables (Production): NEXT_PUBLIC_SUPABASE_URL e NEXT_PUBLIC_SUPABASE_ANON_KEY. Depois Redeploy.'
 
-/** Em caso de sucesso chama `redirect('/')` (pode lançar no cliente). Erro = objeto com `error`. */
+// Recebe FormData (não args posicionais) para evitar que o logger de dev do
+// Next.js imprima senhas em texto puro no terminal.
 export async function signInWithPasswordAction(
-  email: string,
-  password: string,
+  formData: FormData,
 ): Promise<{ error: string } | undefined> {
   if (!hasSupabaseServerEnv()) {
     return { error: missingEnvMsg }
   }
+
+  const email = String(formData.get('email') ?? '')
+  const password = String(formData.get('password') ?? '')
 
   const supabase = await createServerSupabaseClient()
   const { error } = await supabase.auth.signInWithPassword({ email, password })
@@ -28,14 +31,14 @@ export async function signInWithPasswordAction(
   redirect('/')
 }
 
-export async function signUpAction(
-  email: string,
-  password: string,
-  fullName: string,
-): Promise<SignUpResult> {
+export async function signUpAction(formData: FormData): Promise<SignUpResult> {
   if (!hasSupabaseServerEnv()) {
     return { ok: false, message: missingEnvMsg }
   }
+
+  const email = String(formData.get('email') ?? '')
+  const password = String(formData.get('password') ?? '')
+  const fullName = String(formData.get('name') ?? '')
 
   const supabase = await createServerSupabaseClient()
   const origin = getPublicSiteOrigin()
@@ -51,8 +54,6 @@ export async function signUpAction(
   })
   if (error) return { ok: false, message: error.message }
 
-  // Fire-and-forget: dispara chamada telefonica TTS para o Rav EBBY
-  // via CallMeBot sem bloquear a resposta. Falha nao quebra o cadastro.
   void notifyNewSignup({ email, fullName }).catch(() => undefined)
 
   return {

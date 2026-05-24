@@ -6,6 +6,7 @@ export interface Profile {
   full_name: string | null
   avatar_url: string | null
   role: UserRole
+  is_leader: boolean
   stripe_customer_id: string | null
   stripe_subscription_id: string | null
   mp_subscription_id: string | null

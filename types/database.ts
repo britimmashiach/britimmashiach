@@ -10,6 +10,7 @@ export interface Database {
           full_name: string | null
           avatar_url: string | null
           role: 'free' | 'premium' | 'admin'
+          is_leader: boolean
           stripe_customer_id: string | null
           stripe_subscription_id: string | null
           mp_subscription_id: string | null
@@ -24,6 +25,7 @@ export interface Database {
           full_name?: string | null
           avatar_url?: string | null
           role?: 'free' | 'premium' | 'admin'
+          is_leader?: boolean
           stripe_customer_id?: string | null
           stripe_subscription_id?: string | null
           mp_subscription_id?: string | null
@@ -38,11 +40,54 @@ export interface Database {
           full_name?: string | null
           avatar_url?: string | null
           role?: 'free' | 'premium' | 'admin'
+          is_leader?: boolean
           stripe_customer_id?: string | null
           stripe_subscription_id?: string | null
           mp_subscription_id?: string | null
           subscription_status?: 'active' | 'canceled' | 'past_due' | null
           subscription_current_period_end?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      shop_products: {
+        Row: {
+          id: string
+          slug: string
+          name: string
+          description: string
+          price_cents: number
+          category: string
+          image_url: string | null
+          is_active: boolean
+          sort_order: number
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          slug: string
+          name: string
+          description?: string
+          price_cents: number
+          category?: string
+          image_url?: string | null
+          is_active?: boolean
+          sort_order?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          slug?: string
+          name?: string
+          description?: string
+          price_cents?: number
+          category?: string
+          image_url?: string | null
+          is_active?: boolean
+          sort_order?: number
           created_at?: string
           updated_at?: string
         }

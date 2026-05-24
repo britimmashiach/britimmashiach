@@ -6,6 +6,7 @@ import { fetchChagimSlugs } from '@/lib/chagim-supabase'
 import { fetchParashaSlugs } from '@/lib/parashot-supabase'
 import { fetchStudySlugs } from '@/lib/studies-supabase'
 import { getPublicSiteOrigin } from '@/lib/public-site-url'
+import { getShopCatalog } from '@/lib/shop-catalog'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const origin = getPublicSiteOrigin()
@@ -22,12 +23,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${origin}/tanach`, lastModified: now, changeFrequency: 'weekly', priority: 0.75 },
     { url: `${origin}/tehilim`, lastModified: now, changeFrequency: 'weekly', priority: 0.65 },
     { url: `${origin}/premium`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${origin}/loja`, lastModified: now, changeFrequency: 'weekly', priority: 0.55 },
+    { url: `${origin}/lideres`, lastModified: now, changeFrequency: 'monthly', priority: 0.45 },
   ]
 
-  const [studySlugs, parashaDbSlugs, chagDbSlugs] = await Promise.all([
+  const [studySlugs, parashaDbSlugs, chagDbSlugs, shopProducts] = await Promise.all([
     fetchStudySlugs(),
     fetchParashaSlugs(),
     fetchChagimSlugs(),
+    getShopCatalog(),
   ])
   const chagSlugs = new Set([
     ...getAllChagSlugsForSitemap().map((s) => s.slug),
@@ -76,11 +80,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
   )
 
+  const shopRoutes: MetadataRoute.Sitemap = shopProducts.map((p) => ({
+    url: `${origin}/loja/${p.slug}`,
+    lastModified: now,
+    changeFrequency: 'monthly' as const,
+    priority: 0.5,
+  }))
+
   return [
     ...staticRoutes,
     ...parashaRoutes,
     ...studyRoutes,
     ...chagRoutes,
+    ...shopRoutes,
     ...tanachBookRoutes,
     ...tanachChapterRoutes,
   ]

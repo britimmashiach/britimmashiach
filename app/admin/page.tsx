@@ -64,7 +64,8 @@ export default async function AdminPage() {
             </div>
             <p className="section-subtitle max-w-2xl">
               Olá{profile?.full_name ? `, ${profile.full_name.split(/\s+/)[0]}` : ''}. Gestão de membros: alterar papel (Membro /
-              Premium / Admin), banir ou revogar banimento no Auth, e excluir contas. Requer{' '}
+              Premium / Admin), aprovar ou revogar líderes (<code className="text-xs bg-muted px-1 rounded">is_leader</code>
+              ), banir ou revogar banimento no Auth, e excluir contas. Requer{' '}
               <code className="text-xs bg-muted px-1 rounded">SUPABASE_SERVICE_ROLE_KEY</code> no servidor.
             </p>
           </div>
