@@ -6,6 +6,8 @@
 export const SHOP_NAME = process.env.NEXT_PUBLIC_SHOP_NAME?.trim() || 'Acqua Rios'
 export const SHOP_NAME_UPPER = 'ACQUA RIOS'
 export const SHOP_LOGO = '/loja/acqua-rios-logo.png'
+/** Fundo da logo (igual ao parchment-50 do site) — sem recorte transparente. */
+export const SHOP_LOGO_BG = '#fdfaf4'
 export const SHOP_TAGLINE =
   'Velas decorativas e artigos Kosher para o lar. Um rio de luz e shalom para sua casa.'
 

@@ -60,7 +60,7 @@ export function ProductCard({ product }: { product: ShopProduct }) {
 
 export function ShopHero() {
   return (
-    <section className="relative overflow-hidden border-b border-border/40">
+    <section className="relative overflow-hidden border-b border-border/40 bg-parchment-50 dark:bg-petroleum-950">
       <div
         className="absolute inset-0 opacity-[0.07] dark:opacity-[0.14]"
         style={{
