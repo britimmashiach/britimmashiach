@@ -7,7 +7,7 @@ export const SHOP_NAME = process.env.NEXT_PUBLIC_SHOP_NAME?.trim() || 'Acqua Rio
 export const SHOP_NAME_UPPER = 'ACQUA RIOS'
 export const SHOP_LOGO = '/loja/acqua-rios-logo.png'
 export const SHOP_TAGLINE =
-  'Velas decorativas e artigos para o lar messianico. Um rio de luz e shalom para sua casa.'
+  'Velas decorativas e artigos Kosher para o lar. Um rio de luz e shalom para sua casa.'
 
 export const SHOP_WHATSAPP =
   process.env.NEXT_PUBLIC_SHOP_WHATSAPP?.trim().replace(/\D/g, '') || '5516996326446'

@@ -5,7 +5,7 @@ import { SHOP_NAME } from '@/lib/shop-brand'
 
 export const metadata: Metadata = {
   title: 'Acqua Rios',
-  description: `${SHOP_NAME}: velas decorativas e artigos para o lar messianico da Brit Im Mashiach.`,
+  description: `${SHOP_NAME}: velas decorativas e artigos Kosher para o lar. Brit Im Mashiach, Franca SP.`,
 }
 
 export const dynamic = 'force-dynamic'
