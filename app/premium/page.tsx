@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import { Crown, Check, Star, Sparkles, BookOpen, Library, Layers } from 'lucide-react'
-import { PLANS } from '@/lib/stripe'
+import { PLANS, hasStripeEnv } from '@/lib/stripe'
+import { hasMpEnv } from '@/lib/mercadopago'
 import { CheckoutButton } from '@/components/ui/CheckoutButton'
-import { cn } from '@/lib/utils'
 
 export const metadata: Metadata = {
   title: 'Premium',
@@ -18,6 +18,8 @@ const features = [
 ]
 
 export default function PremiumPage() {
+  const stripeReady = hasStripeEnv()
+  const mpReady = hasMpEnv()
   const freePlan = PLANS.free
   const premiumPlan = PLANS.premium
   const priceFormatted = new Intl.NumberFormat('pt-BR', {
@@ -131,11 +133,25 @@ export default function PremiumPage() {
             </ul>
 
             <div className="space-y-2.5">
-              <CheckoutButton mode="mp-monthly" />
-              <CheckoutButton />
-              <CheckoutButton mode="pix-annual" />
+              {mpReady ? (
+                <CheckoutButton mode="mp-monthly" />
+              ) : (
+                <p className="text-xs font-inter text-warmgray-500 text-center py-2">
+                  Pagamento via Mercado Pago em breve.
+                </p>
+              )}
+              {stripeReady && (
+                <>
+                  <CheckoutButton />
+                  <CheckoutButton mode="pix-annual" />
+                </>
+              )}
               <p className="text-xs font-inter text-warmgray-500 text-center pt-1">
-                Mercado Pago: cartão recorrente mensal. Stripe Cartão: renovação automática. PIX: 12 meses prepagos.
+                {mpReady && stripeReady
+                  ? 'Mercado Pago: cartão recorrente mensal. Stripe Cartão: renovação automática. PIX: 12 meses prepagos.'
+                  : mpReady
+                    ? 'Mercado Pago: cartão recorrente mensal (R$ 47/mês).'
+                    : 'Configure o gateway de pagamento para assinar online.'}
               </p>
             </div>
           </div>
@@ -143,7 +159,8 @@ export default function PremiumPage() {
 
         {/* Garantia */}
         <p className="text-center text-sm font-inter text-warmgray-500 mt-8">
-          Cancele a qualquer momento. Sem fidelidade. Pagamento seguro via Mercado Pago ou Stripe (cartão, PIX).
+          Cancele a qualquer momento. Sem fidelidade. Pagamento seguro via Mercado Pago
+          {stripeReady ? ' ou Stripe (cartão, PIX)' : ''}.
         </p>
       </section>
 

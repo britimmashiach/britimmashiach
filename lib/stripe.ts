@@ -2,6 +2,13 @@ import Stripe from 'stripe'
 
 let _stripe: Stripe | undefined
 
+/** Stripe configurado no servidor (secret key + price id premium). */
+export function hasStripeEnv(): boolean {
+  return Boolean(
+    process.env.STRIPE_SECRET_KEY?.trim() && process.env.STRIPE_PRICE_ID_PREMIUM?.trim(),
+  )
+}
+
 export function getStripe(): Stripe {
   if (!_stripe) {
     _stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
