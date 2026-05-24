@@ -37,7 +37,14 @@ import { useProfile } from '@/hooks/useProfile'
 import type { SessionDisplay } from '@/lib/session-display'
 import { createClient, supabaseConfigured } from '@/lib/supabase'
 
-const navLinks = [
+type NavItem = {
+  href: string
+  label: string
+  icon: typeof BookOpen
+  accent?: 'gold' | 'shop'
+}
+
+const mainNavLinks: NavItem[] = [
   { href: '/sobre', label: 'Quem somos', icon: Landmark },
   { href: '/calendar', label: 'Calendário', icon: Calendar },
   { href: '/parashot', label: 'Parashot', icon: BookOpen },
@@ -45,10 +52,29 @@ const navLinks = [
   { href: '/studies', label: 'Estudos', icon: GraduationCap },
   { href: '/library', label: 'Biblioteca', icon: Library },
   { href: '/tanach', label: 'Tanach', icon: Languages },
-  { href: '/loja', label: 'Acqua Rios', icon: ShoppingBag },
   { href: '/lideres', label: 'Líderes', icon: Users },
-  { href: '/premium', label: 'Premium', icon: Crown, highlight: true },
 ]
+
+/** Sempre visíveis no desktop, ao lado da conta — não ficam cortados pelo menu central. */
+const featuredNavLinks: NavItem[] = [
+  { href: '/loja', label: 'Acqua Rios', icon: ShoppingBag, accent: 'shop' },
+  { href: '/premium', label: 'Premium', icon: Crown, accent: 'gold' },
+]
+
+const mobileNavLinks: NavItem[] = [...featuredNavLinks, ...mainNavLinks]
+
+function navLinkClass(accent: NavItem['accent'], isActive: boolean) {
+  if (accent === 'gold') {
+    return 'text-gold-600 dark:text-gold-400 hover:text-gold-700 dark:hover:text-gold-300 font-medium'
+  }
+  if (accent === 'shop') {
+    return 'text-cyan-700 dark:text-cyan-400 hover:text-cyan-800 dark:hover:text-cyan-300 font-medium'
+  }
+  if (isActive) {
+    return 'text-petroleum-800 dark:text-parchment-100 font-semibold'
+  }
+  return 'text-warmgray-500 dark:text-warmgray-400 hover:text-foreground dark:hover:text-parchment-100'
+}
 
 function RoleBadge({ role, isLeader }: { role: string; isLeader?: boolean }) {
   if (role === 'admin')
@@ -161,30 +187,26 @@ export function Header() {
           </Link>
 
           <nav
-            className="hidden md:flex items-center justify-center flex-1 min-w-0 flex-wrap xl:flex-nowrap gap-y-1"
+            className="hidden lg:flex items-center justify-center flex-1 min-w-0 overflow-x-auto scrollbar-none"
             aria-label="Navegação principal"
           >
-            {navLinks.map(({ href, label, icon: Icon, highlight }) => {
+            {mainNavLinks.map(({ href, label, icon: Icon, accent }) => {
               const isActive = pathname === href || pathname.startsWith(href + '/')
               return (
                 <Link
                   key={href}
                   href={href}
                   className={cn(
-                    'whitespace-nowrap shrink-0 py-2 text-[13px] xl:text-sm font-inter transition-colors duration-150 relative inline-flex items-center gap-1 px-2 lg:px-2.5 xl:px-3.5',
-                    highlight
-                      ? 'text-gold-600 dark:text-gold-400 hover:text-gold-700 dark:hover:text-gold-300 font-medium'
-                      : isActive
-                        ? 'text-petroleum-800 dark:text-parchment-100 font-semibold'
-                        : 'text-warmgray-500 dark:text-warmgray-400 hover:text-foreground dark:hover:text-parchment-100',
+                    'whitespace-nowrap shrink-0 py-2 text-[13px] xl:text-sm font-inter transition-colors duration-150 relative inline-flex items-center gap-1 px-2 lg:px-2.5 xl:px-3',
+                    navLinkClass(accent, isActive),
                   )}
                   aria-current={isActive ? 'page' : undefined}
                 >
                   <Icon className="w-3.5 h-3.5 shrink-0 opacity-90" aria-hidden="true" />
                   {label}
-                  {isActive && !highlight && (
+                  {isActive && !accent && (
                     <span
-                      className="absolute bottom-0.5 left-2 right-2 lg:left-2.5 lg:right-2.5 xl:left-3.5 xl:right-3.5 h-px bg-gold-500/50 rounded-full"
+                      className="absolute bottom-0.5 left-2 right-2 xl:left-3 xl:right-3 h-px bg-gold-500/50 rounded-full"
                       aria-hidden="true"
                     />
                   )}
@@ -194,6 +216,30 @@ export function Header() {
           </nav>
 
           <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+            <nav
+              className="hidden md:flex items-center gap-0.5 sm:gap-1 pr-1 border-r border-border/40 mr-0.5"
+              aria-label="Loja e Premium"
+            >
+              {featuredNavLinks.map(({ href, label, icon: Icon, accent }) => {
+                const isActive = pathname === href || pathname.startsWith(href + '/')
+                return (
+                  <Link
+                    key={href}
+                    href={href}
+                    className={cn(
+                      'whitespace-nowrap shrink-0 py-2 text-[13px] font-inter transition-colors duration-150 inline-flex items-center gap-1 px-2 lg:px-2.5 rounded-lg',
+                      navLinkClass(accent, isActive),
+                      accent === 'shop' && 'hover:bg-cyan-500/10',
+                      accent === 'gold' && 'hover:bg-gold-500/10',
+                    )}
+                    aria-current={isActive ? 'page' : undefined}
+                  >
+                    <Icon className="w-3.5 h-3.5 shrink-0 opacity-90" aria-hidden="true" />
+                    {label}
+                  </Link>
+                )
+              })}
+            </nav>
             {mounted && (
               <button
                 type="button"
@@ -335,7 +381,7 @@ export function Header() {
             className="md:hidden border-t border-border/40 py-3 pb-4 space-y-0.5 animate-fade-in"
             aria-label="Navegação mobile"
           >
-            {navLinks.map(({ href, label, icon: Icon, highlight }) => {
+            {mobileNavLinks.map(({ href, label, icon: Icon, accent }) => {
               const isActive = pathname === href || pathname.startsWith(href + '/')
               return (
                 <Link
@@ -343,8 +389,8 @@ export function Header() {
                   href={href}
                   className={cn(
                     'flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm font-inter transition-colors w-full',
-                    highlight
-                      ? 'text-gold-600 dark:text-gold-400 font-medium'
+                    accent
+                      ? navLinkClass(accent, isActive)
                       : isActive
                         ? 'text-petroleum-800 dark:text-parchment-100 bg-muted font-semibold'
                         : 'text-foreground/70 hover:text-foreground hover:bg-muted',

@@ -1,6 +1,6 @@
 import { Suspense } from 'react'
 import Link from 'next/link'
-import { ArrowRight, BookOpen, Calendar, Library, Star, Flame, Crown, ChevronRight } from 'lucide-react'
+import { ArrowRight, BookOpen, Calendar, Library, Star, Flame, Crown, ChevronRight, ShoppingBag } from 'lucide-react'
 import { HebrewDateDisplay } from '@/components/spiritual/HebrewDateDisplay'
 import { OmerCounter } from '@/components/spiritual/OmerCounter'
 import { ParashaWidget } from '@/components/spiritual/ParashaWidget'
@@ -84,6 +84,12 @@ const ecosystemCards = [
     description: 'Siddur, Machzor, Tehilim, comentários cabalísticos e obras do Rav.',
   },
   {
+    href: '/loja',
+    icon: ShoppingBag,
+    title: 'Acqua Rios',
+    description: 'Velas decorativas e artigos para o lar messianico. Loja da congregacao.',
+  },
+  {
     href: '/premium',
     icon: Star,
     title: 'Premium',
@@ -150,13 +156,20 @@ export default function HomePage() {
               )}
 
               {/* CTAs quietas — links, não botões */}
-              <div className="flex items-center gap-6 pt-1">
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-2 pt-1">
                 <Link
                   href="/studies"
                   className="text-sm font-inter font-medium text-petroleum-700 dark:text-petroleum-300 hover:text-gold-600 dark:hover:text-gold-400 transition-colors inline-flex items-center gap-1.5"
                 >
                   Estudos
                   <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                </Link>
+                <Link
+                  href="/loja"
+                  className="text-sm font-inter font-medium text-cyan-700 dark:text-cyan-400 hover:text-cyan-800 dark:hover:text-cyan-300 transition-colors inline-flex items-center gap-1.5"
+                >
+                  <ShoppingBag className="w-3.5 h-3.5" aria-hidden="true" />
+                  Acqua Rios
                 </Link>
                 <Link
                   href="/premium"
@@ -290,7 +303,7 @@ export default function HomePage() {
           <p className="section-subtitle mt-1">Tudo que você precisa para aprofundar sua caminhada</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
           {ecosystemCards.map(({ href, icon: Icon, title, description }) => (
             <Link
               key={href}
