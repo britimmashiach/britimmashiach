@@ -146,11 +146,11 @@ export default function PremiumPage() {
                   <CheckoutButton mode="pix-annual" />
                 </>
               )}
-              <p className="text-xs font-inter text-warmgray-500 text-center pt-1">
+              <p className="text-xs font-inter text-warmgray-500 text-center pt-1 leading-relaxed">
                 {mpReady && stripeReady
                   ? 'Mercado Pago: cartão recorrente mensal. Stripe Cartão: renovação automática. PIX: 12 meses prepagos.'
                   : mpReady
-                    ? 'Mercado Pago: cartão recorrente mensal (R$ 47/mês).'
+                    ? 'R$ 47/mês. Cobrança automática no cartão via Mercado Pago. Cancele quando quiser, sem multa.'
                     : 'Configure o gateway de pagamento para assinar online.'}
               </p>
             </div>
@@ -158,8 +158,10 @@ export default function PremiumPage() {
         </div>
 
         {/* Garantia */}
-        <p className="text-center text-sm font-inter text-warmgray-500 mt-8">
-          Cancele a qualquer momento. Sem fidelidade. Pagamento seguro via Mercado Pago
+        <p className="text-center text-sm font-inter text-warmgray-500 mt-8 leading-relaxed">
+          Cancele a qualquer momento. Sem fidelidade.
+          {mpReady && ' Valor fixo de R$ 47/mês debitado no cartão autorizado.'}
+          {' '}Pagamento seguro via Mercado Pago
           {stripeReady ? ' ou Stripe (cartão, PIX)' : ''}.
         </p>
       </section>
