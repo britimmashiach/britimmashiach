@@ -131,10 +131,11 @@ export default function PremiumPage() {
             </ul>
 
             <div className="space-y-2.5">
+              <CheckoutButton mode="mp-monthly" />
               <CheckoutButton />
               <CheckoutButton mode="pix-annual" />
               <p className="text-xs font-inter text-warmgray-500 text-center pt-1">
-                PIX: 12 meses prepagos. Cartão: renovação mensal automática.
+                Mercado Pago: cartão recorrente mensal. Stripe Cartão: renovação automática. PIX: 12 meses prepagos.
               </p>
             </div>
           </div>
@@ -142,7 +143,7 @@ export default function PremiumPage() {
 
         {/* Garantia */}
         <p className="text-center text-sm font-inter text-warmgray-500 mt-8">
-          Cancele a qualquer momento. Sem fidelidade. Pagamento seguro via Stripe (cartão, PIX).
+          Cancele a qualquer momento. Sem fidelidade. Pagamento seguro via Mercado Pago ou Stripe (cartão, PIX).
         </p>
       </section>
 

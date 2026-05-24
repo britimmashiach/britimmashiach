@@ -1,25 +1,30 @@
 'use client'
 
 import { useState } from 'react'
-import { Crown, Loader2, QrCode } from 'lucide-react'
+import { Crown, Loader2, QrCode, Wallet } from 'lucide-react'
 import { toast } from 'sonner'
 
-type Mode = 'monthly' | 'pix-annual'
+type Mode = 'monthly' | 'pix-annual' | 'mp-monthly'
 
 interface CheckoutButtonProps {
   mode?: Mode
 }
 
+const ENDPOINTS: Record<Mode, string> = {
+  monthly: '/api/stripe/create-checkout',
+  'pix-annual': '/api/stripe/create-checkout-pix',
+  'mp-monthly': '/api/mercadopago/create-subscription',
+}
+
+const LABELS: Record<Mode, { idle: string; loading: string }> = {
+  monthly: { idle: 'Assinar Premium', loading: 'Aguarde...' },
+  'pix-annual': { idle: 'Pagar 1 ano via PIX (R$ 470)', loading: 'Gerando PIX...' },
+  'mp-monthly': { idle: 'Assinar via Mercado Pago (R$ 47/mês)', loading: 'Conectando...' },
+}
+
 export function CheckoutButton({ mode = 'monthly' }: CheckoutButtonProps) {
   const [loading, setLoading] = useState(false)
-
-  const endpoint =
-    mode === 'pix-annual' ? '/api/stripe/create-checkout-pix' : '/api/stripe/create-checkout'
-
-  const labels = {
-    monthly: { idle: 'Assinar Premium', loading: 'Aguarde...' },
-    'pix-annual': { idle: 'Pagar 1 ano via PIX (R$ 470)', loading: 'Gerando PIX...' },
-  } as const
+  const endpoint = ENDPOINTS[mode]
 
   async function handleCheckout() {
     setLoading(true)
@@ -31,7 +36,7 @@ export function CheckoutButton({ mode = 'monthly' }: CheckoutButtonProps) {
         data = await res.json()
       } catch {
         toast.error('Resposta inválida do servidor', {
-          description: `Status ${res.status}. Verifique se STRIPE_SECRET_KEY e STRIPE_PRICE_ID_PREMIUM estão configuradas no Vercel.`,
+          description: `Status ${res.status}. Verifique as variáveis de ambiente no Vercel.`,
         })
         return
       }
@@ -63,25 +68,21 @@ export function CheckoutButton({ mode = 'monthly' }: CheckoutButtonProps) {
   }
 
   const isPix = mode === 'pix-annual'
+  const isMp = mode === 'mp-monthly'
+
+  const Icon = loading ? Loader2 : isPix ? QrCode : isMp ? Wallet : Crown
+
+  const className =
+    isMp
+      ? 'w-full py-3 rounded-lg bg-[#009ee3] hover:bg-[#007bb8] transition-colors flex items-center justify-center gap-2 text-sm font-inter font-semibold text-white disabled:opacity-60 disabled:cursor-not-allowed'
+      : isPix
+        ? 'w-full py-3 rounded-lg border-2 border-gold-500/50 bg-transparent hover:bg-gold-500/10 transition-colors flex items-center justify-center gap-2 text-sm font-inter font-semibold text-gold-700 dark:text-gold-400 disabled:opacity-60 disabled:cursor-not-allowed'
+        : 'w-full btn-gold py-3 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed'
 
   return (
-    <button
-      onClick={handleCheckout}
-      disabled={loading}
-      className={
-        isPix
-          ? 'w-full py-3 rounded-lg border-2 border-gold-500/50 bg-transparent hover:bg-gold-500/10 transition-colors flex items-center justify-center gap-2 text-sm font-inter font-semibold text-gold-700 dark:text-gold-400 disabled:opacity-60 disabled:cursor-not-allowed'
-          : 'w-full btn-gold py-3 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed'
-      }
-    >
-      {loading ? (
-        <Loader2 className="w-4 h-4 animate-spin" />
-      ) : isPix ? (
-        <QrCode className="w-4 h-4" />
-      ) : (
-        <Crown className="w-4 h-4" />
-      )}
-      {loading ? labels[mode].loading : labels[mode].idle}
+    <button onClick={handleCheckout} disabled={loading} className={className}>
+      <Icon className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+      {loading ? LABELS[mode].loading : LABELS[mode].idle}
     </button>
   )
 }

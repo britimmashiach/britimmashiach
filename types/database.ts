@@ -12,6 +12,7 @@ export interface Database {
           role: 'free' | 'premium' | 'admin'
           stripe_customer_id: string | null
           stripe_subscription_id: string | null
+          mp_subscription_id: string | null
           subscription_status: 'active' | 'canceled' | 'past_due' | null
           subscription_current_period_end: string | null
           created_at: string
@@ -25,6 +26,7 @@ export interface Database {
           role?: 'free' | 'premium' | 'admin'
           stripe_customer_id?: string | null
           stripe_subscription_id?: string | null
+          mp_subscription_id?: string | null
           subscription_status?: 'active' | 'canceled' | 'past_due' | null
           subscription_current_period_end?: string | null
           created_at?: string
@@ -38,6 +40,7 @@ export interface Database {
           role?: 'free' | 'premium' | 'admin'
           stripe_customer_id?: string | null
           stripe_subscription_id?: string | null
+          mp_subscription_id?: string | null
           subscription_status?: 'active' | 'canceled' | 'past_due' | null
           subscription_current_period_end?: string | null
           created_at?: string
