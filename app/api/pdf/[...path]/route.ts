@@ -1,5 +1,6 @@
 import { NextRequest } from 'next/server'
 import { createServerSupabaseClient, hasSupabaseServerEnv } from '@/lib/supabase-server'
+import { hasServiceRoleEnv } from '@/lib/supabase-admin'
 import { resolvePdfRequest, canAccessTier, getOrCreateWatermarkedPdf } from '@/lib/pdf-access'
 
 export const runtime = 'nodejs'
@@ -20,6 +21,7 @@ export async function GET(
   { params }: { params: Promise<{ path: string[] }> },
 ) {
   if (!hasSupabaseServerEnv()) return deny(503, 'Configuração do Supabase ausente')
+  if (!hasServiceRoleEnv()) return deny(503, 'Service role ausente — PDFs indisponíveis no servidor')
 
   // 1. Autenticação
   const supabase = await createServerSupabaseClient()

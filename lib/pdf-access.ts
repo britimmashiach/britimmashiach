@@ -64,26 +64,44 @@ export async function resolvePdfRequest(segments: string[]): Promise<ResolvedPdf
     const variant = rest[1] ?? 'free'
     const { data, error } = await admin
       .from('aliyot')
-      .select('id, aliyah_number, pdf_url, pdf_premium_url, pdf_kabbalah_url, parasha_id, parashot:parasha_id(is_premium)')
+      .select('id, aliyah_number, pdf_url, parasha_id')
       .eq('id', aliyahId)
       .single()
     if (error || !data) return null
 
-    if (variant === 'premium') {
-      if (!data.pdf_premium_url) return null
-      const p = pathOnly(data.pdf_premium_url)
-      return { bucket: PARASHOT_BUCKET, path: p, filename: basename(p), requiredTier: 'premium' }
+    let parashaPremium = false
+    if (data.parasha_id) {
+      const { data: parasha } = await admin
+        .from('parashot')
+        .select('is_premium')
+        .eq('id', data.parasha_id)
+        .single()
+      parashaPremium = parasha?.is_premium === true
     }
-    if (variant === 'kabbalah') {
-      if (!data.pdf_kabbalah_url) return null
-      const p = pathOnly(data.pdf_kabbalah_url)
-      return { bucket: PARASHOT_BUCKET, path: p, filename: basename(p), requiredTier: 'admin' }
+
+    if (variant === 'premium' || variant === 'kabbalah') {
+      // Colunas pdf_premium_url / pdf_kabbalah_url podem não existir no schema remoto.
+      const { data: extras, error: extrasErr } = await admin
+        .from('aliyot')
+        .select(variant === 'premium' ? 'pdf_premium_url' : 'pdf_kabbalah_url')
+        .eq('id', aliyahId)
+        .maybeSingle()
+      if (extrasErr || !extras) return null
+      const raw =
+        variant === 'premium'
+          ? (extras as { pdf_premium_url?: string | null }).pdf_premium_url
+          : (extras as { pdf_kabbalah_url?: string | null }).pdf_kabbalah_url
+      if (!raw) return null
+      const p = pathOnly(raw)
+      return {
+        bucket: PARASHOT_BUCKET,
+        path: p,
+        filename: basename(p),
+        requiredTier: variant === 'kabbalah' ? 'admin' : 'premium',
+      }
     }
     // Free / base
     if (!data.pdf_url) return null
-    const parashaPremium = Array.isArray(data.parashot)
-      ? data.parashot[0]?.is_premium === true
-      : (data.parashot as { is_premium?: boolean } | null)?.is_premium === true
     // Aliyah 1 sempre liberada se a parasha não é premium; senão exige premium
     const tier: AccessTier = data.aliyah_number === 1 && !parashaPremium ? 'free' : 'premium'
     const p = pathOnly(data.pdf_url)
