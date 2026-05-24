@@ -1,9 +1,12 @@
 import { createServerSupabaseClient, hasSupabaseServerEnv } from '@/lib/supabase-server'
 import { getSupabaseAdmin, hasServiceRoleEnv } from '@/lib/supabase-admin'
+import { profileHasLeaderAccess } from '@/lib/leader-access-policy'
+
+export { profileHasLeaderAccess } from '@/lib/leader-access-policy'
 
 /**
- * Lider aprovado manualmente (is_leader) ou administrador.
- * Independente de premium: pagar R$ 47 nao libera o portal de lideres.
+ * Líder aprovado manualmente (is_leader) ou administrador.
+ * Independente de premium: pagar R$ 47 não libera o portal de líderes.
  */
 export async function userHasLeaderAccess(): Promise<boolean> {
   if (!hasSupabaseServerEnv()) return false
@@ -15,25 +18,25 @@ export async function userHasLeaderAccess(): Promise<boolean> {
     } = await supabase.auth.getUser()
     if (!user) return false
 
-    if (hasServiceRoleEnv()) {
-      const admin = getSupabaseAdmin()
-      const { data } = await admin
-        .from('profiles')
-        .select('role, is_leader')
-        .eq('id', user.id)
-        .single()
-      if (data?.role === 'admin') return true
-      return Boolean(data?.is_leader)
-    }
+    const db = hasServiceRoleEnv() ? getSupabaseAdmin() : supabase
 
-    const { data } = await supabase
+    const { data: roleRow, error: roleErr } = await db
       .from('profiles')
-      .select('role, is_leader')
+      .select('role')
       .eq('id', user.id)
       .single()
 
-    if (data?.role === 'admin') return true
-    return Boolean(data?.is_leader)
+    if (roleErr || !roleRow) return false
+    if (roleRow.role === 'admin') return true
+
+    const { data: leaderRow, error: leaderErr } = await db
+      .from('profiles')
+      .select('is_leader')
+      .eq('id', user.id)
+      .maybeSingle()
+
+    if (leaderErr) return false
+    return Boolean(leaderRow?.is_leader)
   } catch {
     return false
   }

@@ -7,6 +7,7 @@ import { useAuthSnapshot } from '@/components/layout/AuthSessionProvider'
 import { createClient, supabaseConfigured } from '@/lib/supabase'
 import { buildSessionDisplay, type SessionDisplay } from '@/lib/session-display'
 import type { Profile } from '@/types'
+import { profileHasLeaderAccess } from '@/lib/leader-access-policy'
 
 export type { SessionDisplay }
 
@@ -82,7 +83,7 @@ export function useProfile() {
 
   const isPremium = profile?.role === 'premium' || profile?.role === 'admin'
   const isAdmin = profile?.role === 'admin'
-  const isLeader = Boolean(profile?.is_leader) || isAdmin
+  const isLeader = profileHasLeaderAccess(profile)
 
   return { user, profile, loading, sessionDisplay, isPremium, isAdmin, isLeader }
 }

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getAuthSnapshot } from '@/lib/auth-snapshot'
-import { userHasLeaderAccess } from '@/lib/leader-access'
+import { profileHasLeaderAccess } from '@/lib/leader-access-policy'
 import { LeaderGate } from '@/components/ui/LeaderGate'
 import { BookOpen, Calendar, FileText, MessageCircle, Crown } from 'lucide-react'
 
@@ -46,7 +46,7 @@ const resources = [
 export default async function LideresPainelPage() {
   const auth = await getAuthSnapshot()
   const isLoggedIn = Boolean(auth.user)
-  const hasLeader = isLoggedIn && (await userHasLeaderAccess())
+  const hasLeader = isLoggedIn && profileHasLeaderAccess(auth.profile)
 
   if (!isLoggedIn) {
     return (
