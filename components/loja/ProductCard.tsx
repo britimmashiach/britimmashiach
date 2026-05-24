@@ -1,11 +1,12 @@
 import Link from 'next/link'
-import { formatShopPrice, shopWhatsAppUrl, SHOP_NAME } from '@/lib/shop-brand'
+import { formatShopPrice, shopWhatsAppUrl, SHOP_NAME, SHOP_TAGLINE } from '@/lib/shop-brand'
 import type { ShopProduct } from '@/lib/shop-products'
+import { ShopLogo } from '@/components/loja/ShopLogo'
 import { Flame } from 'lucide-react'
 
 export function ProductCard({ product }: { product: ShopProduct }) {
   const wa = shopWhatsAppUrl(
-    `Shalom! Tenho interesse em: ${product.name} (${formatShopPrice(product.priceCents)}).`,
+    `${SHOP_NAME} — Shalom! Tenho interesse em: ${product.name} (${formatShopPrice(product.priceCents)}).`,
   )
 
   return (
@@ -60,19 +61,23 @@ export function ProductCard({ product }: { product: ShopProduct }) {
 export function ShopHero() {
   return (
     <section className="relative overflow-hidden border-b border-border/40">
-      <div className="absolute inset-0 bg-petroleum-gradient opacity-[0.04] dark:opacity-[0.15]" />
-      <div className="relative container mx-auto px-4 py-14 md:py-16 max-w-3xl text-center space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gold-500/12 border border-gold-500/25">
-          <Flame className="w-3.5 h-3.5 text-gold-600 dark:text-gold-400" aria-hidden />
-          <span className="text-xs font-inter font-semibold text-gold-700 dark:text-gold-400 uppercase tracking-widest">
-            {SHOP_NAME}
-          </span>
-        </div>
-        <h1 className="font-cinzel text-3xl md:text-4xl font-semibold text-petroleum-800 dark:text-parchment-100">
-          Lojinha da congregacao
+      <div
+        className="absolute inset-0 opacity-[0.07] dark:opacity-[0.14]"
+        style={{
+          background:
+            'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(34,211,238,0.45) 0%, rgba(14,116,144,0.2) 45%, transparent 70%)',
+        }}
+        aria-hidden="true"
+      />
+      <div className="relative container mx-auto px-4 py-12 md:py-16 max-w-3xl text-center space-y-5">
+        <h1 className="flex justify-center">
+          <ShopLogo priority />
         </h1>
-        <p className="font-cormorant text-lg text-warmgray-600 dark:text-warmgray-400 italic">
-          Velas decorativas e artigos para o lar. Logo e nome definitivos em breve.
+        <p className="font-cormorant text-lg md:text-xl text-warmgray-600 dark:text-warmgray-400 italic max-w-prose mx-auto leading-relaxed">
+          {SHOP_TAGLINE}
+        </p>
+        <p className="text-[11px] font-inter font-medium text-warmgray-500 dark:text-warmgray-500 uppercase tracking-[0.18em]">
+          Brit Im Mashiach · Franca SP
         </p>
       </div>
     </section>

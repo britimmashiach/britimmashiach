@@ -4,7 +4,7 @@ import { getShopCatalog } from '@/lib/shop-catalog'
 import { SHOP_NAME } from '@/lib/shop-brand'
 
 export const metadata: Metadata = {
-  title: 'Loja',
+  title: 'Acqua Rios',
   description: `${SHOP_NAME}: velas decorativas e artigos para o lar messianico da Brit Im Mashiach.`,
 }
 

@@ -45,7 +45,7 @@ const navLinks = [
   { href: '/studies', label: 'Estudos', icon: GraduationCap },
   { href: '/library', label: 'Biblioteca', icon: Library },
   { href: '/tanach', label: 'Tanach', icon: Languages },
-  { href: '/loja', label: 'Loja', icon: ShoppingBag },
+  { href: '/loja', label: 'Acqua Rios', icon: ShoppingBag },
   { href: '/lideres', label: 'Líderes', icon: Users },
   { href: '/premium', label: 'Premium', icon: Crown, highlight: true },
 ]

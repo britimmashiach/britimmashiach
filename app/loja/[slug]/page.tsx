@@ -23,7 +23,7 @@ export default async function LojaProdutoPage({ params }: Props) {
   if (!product) notFound()
 
   const wa = shopWhatsAppUrl(
-    `Shalom! Quero pedir: ${product.name} (${formatShopPrice(product.priceCents)}).`,
+    `${SHOP_NAME} — Shalom! Quero pedir: ${product.name} (${formatShopPrice(product.priceCents)}).`,
   )
 
   return (

@@ -57,7 +57,7 @@ export function Footer() {
             <ul className="space-y-2">
               {[
                 { href: '/premium', label: 'Plano Premium' },
-                { href: '/loja', label: 'Lojinha' },
+                { href: '/loja', label: 'Acqua Rios' },
                 { href: '/lideres', label: 'Área de Líderes' },
                 { href: '/profile', label: 'Meu Perfil' },
                 { href: '/auth', label: 'Entrar' },
