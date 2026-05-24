@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getShopProduct } from '@/lib/shop-catalog'
-import { formatShopPrice, shopWhatsAppUrl, SHOP_NAME } from '@/lib/shop-brand'
+import { shopWhatsAppUrl, SHOP_NAME, SHOP_AVAILABILITY_LABEL } from '@/lib/shop-brand'
 import { Flame, ArrowLeft } from 'lucide-react'
 
 type Props = { params: Promise<{ slug: string }> }
@@ -23,7 +23,7 @@ export default async function LojaProdutoPage({ params }: Props) {
   if (!product) notFound()
 
   const wa = shopWhatsAppUrl(
-    `${SHOP_NAME} — Shalom! Quero pedir: ${product.name} (${formatShopPrice(product.priceCents)}).`,
+    `${SHOP_NAME} — Shalom! Tenho interesse em: ${product.name}.`,
   )
 
   return (
@@ -55,8 +55,8 @@ export default async function LojaProdutoPage({ params }: Props) {
           <h1 className="font-cinzel text-3xl font-semibold text-petroleum-800 dark:text-parchment-100">
             {product.name}
           </h1>
-          <p className="font-cinzel text-2xl font-bold text-petroleum-800 dark:text-gold-400">
-            {formatShopPrice(product.priceCents)}
+          <p className="font-inter text-base font-medium text-cyan-800 dark:text-cyan-400 italic">
+            {SHOP_AVAILABILITY_LABEL}
           </p>
           <p className="text-base font-inter text-warmgray-700 dark:text-warmgray-300 leading-relaxed">
             {product.description}

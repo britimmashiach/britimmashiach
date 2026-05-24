@@ -19,7 +19,7 @@ export default async function LojaPage() {
 
       <section className="container mx-auto px-4 py-12 max-w-5xl">
         <p className="text-sm font-inter text-warmgray-600 dark:text-warmgray-400 text-center mb-8 max-w-2xl mx-auto">
-          Pedidos pelo WhatsApp por enquanto. Em breve checkout online integrado ao Mercado Pago.
+          Catálogo em preparação. Produtos em breve à disposição.
         </p>
         {products.length === 0 ? (
           <p className="text-center text-warmgray-500 font-inter">Catalogo em preparacao.</p>

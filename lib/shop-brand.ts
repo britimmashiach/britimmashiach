@@ -11,6 +11,9 @@ export const SHOP_LOGO_BG = '#fdfaf4'
 export const SHOP_TAGLINE =
   'Velas decorativas e artigos Kosher para o lar. Um rio de luz e shalom para sua casa.'
 
+/** Exibido no lugar do preço enquanto a loja nao abre vendas. */
+export const SHOP_AVAILABILITY_LABEL = 'Em breve à disposição'
+
 export const SHOP_WHATSAPP =
   process.env.NEXT_PUBLIC_SHOP_WHATSAPP?.trim().replace(/\D/g, '') || '5516996326446'
 

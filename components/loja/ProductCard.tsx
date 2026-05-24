@@ -1,12 +1,12 @@
 import Link from 'next/link'
-import { formatShopPrice, shopWhatsAppUrl, SHOP_NAME, SHOP_TAGLINE } from '@/lib/shop-brand'
+import { shopWhatsAppUrl, SHOP_NAME, SHOP_TAGLINE, SHOP_AVAILABILITY_LABEL } from '@/lib/shop-brand'
 import type { ShopProduct } from '@/lib/shop-products'
 import { ShopLogo } from '@/components/loja/ShopLogo'
 import { Flame } from 'lucide-react'
 
 export function ProductCard({ product }: { product: ShopProduct }) {
   const wa = shopWhatsAppUrl(
-    `${SHOP_NAME} — Shalom! Tenho interesse em: ${product.name} (${formatShopPrice(product.priceCents)}).`,
+    `${SHOP_NAME} — Shalom! Tenho interesse em: ${product.name}.`,
   )
 
   return (
@@ -34,8 +34,8 @@ export function ProductCard({ product }: { product: ShopProduct }) {
         <p className="text-sm font-inter text-warmgray-600 dark:text-warmgray-400 leading-relaxed flex-1 line-clamp-3">
           {product.description}
         </p>
-        <p className="font-cinzel text-xl font-bold text-petroleum-800 dark:text-parchment-100">
-          {formatShopPrice(product.priceCents)}
+        <p className="font-inter text-sm font-medium text-cyan-800 dark:text-cyan-400 italic">
+          {SHOP_AVAILABILITY_LABEL}
         </p>
         <div className="flex flex-col gap-2 pt-1">
           <Link
@@ -50,7 +50,7 @@ export function ProductCard({ product }: { product: ShopProduct }) {
             rel="noopener noreferrer"
             className="w-full text-center rounded-lg bg-[#25D366] hover:bg-[#1ebe5d] text-white py-2.5 text-sm font-inter font-semibold transition-colors"
           >
-            Pedir no WhatsApp
+            Tenho interesse
           </a>
         </div>
       </div>
