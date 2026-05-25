@@ -21,6 +21,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${origin}/calendar`, lastModified: now, changeFrequency: 'daily', priority: 0.9 },
     { url: `${origin}/parashot`, lastModified: now, changeFrequency: 'weekly', priority: 0.85 },
     { url: `${origin}/chagim`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
+    { url: `${origin}/chagim/shalosh-regalim`, lastModified: now, changeFrequency: 'monthly', priority: 0.82 },
     { url: `${origin}/studies`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${origin}/library`, lastModified: now, changeFrequency: 'weekly', priority: 0.7 },
     { url: `${origin}/tanach`, lastModified: now, changeFrequency: 'weekly', priority: 0.75 },

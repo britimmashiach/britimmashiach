@@ -35,6 +35,10 @@ export default async function ParashotPage() {
           <Link href="/metodo-pardes" className="text-gold-600 hover:underline dark:text-gold-400">
             Método PaRDeS
           </Link>
+          , a{' '}
+          <Link href="/judaismo-messianico" className="text-gold-600 hover:underline dark:text-gold-400">
+            identidade messiânica
+          </Link>
           {' '}ou consulte o{' '}
           <Link href="/faq" className="text-gold-600 hover:underline dark:text-gold-400">
             FAQ

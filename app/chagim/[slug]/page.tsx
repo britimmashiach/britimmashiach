@@ -23,6 +23,7 @@ import { ChagHero } from '@/components/chagim/ChagHero'
 import { getChagHeroProps } from '@/lib/chag-hero-props'
 import { getAuthSnapshot } from '@/lib/auth-snapshot'
 import { getChagFaqItems } from '@/lib/chag-seo-faq'
+import { ChagRelatedLinks } from '@/components/chagim/ChagRelatedLinks'
 
 type Props = { params: Promise<{ slug: string }> }
 
@@ -252,6 +253,8 @@ export default async function ChagDetailPage({ params }: Props) {
       )}
 
       <FaqSection items={faqItems} />
+
+      <ChagRelatedLinks slug={slug} category={chag.category} />
 
       {!isLoggedIn && (
         <SignupGate
