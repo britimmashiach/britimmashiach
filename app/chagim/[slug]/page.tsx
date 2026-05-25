@@ -10,10 +10,11 @@ import {
   resolveChagBySlugAdmin,
 } from '@/lib/chagim-supabase'
 import { getAllChagSlugsForSitemap } from '@/lib/chagim-placeholders'
-import { breadcrumbJsonLd, chagWebPageJsonLd } from '@/lib/json-ld'
+import { breadcrumbJsonLd, chagWebPageJsonLd, faqPageJsonLd } from '@/lib/json-ld'
 import { getPublicSiteOrigin } from '@/lib/public-site-url'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { Breadcrumbs } from '@/components/seo/Breadcrumbs'
+import { FaqSection } from '@/components/seo/FaqSection'
 import { userHasPremiumAccess } from '@/lib/premium-access'
 import { PremiumGate } from '@/components/ui/PremiumGate'
 import { SignupGate } from '@/components/ui/SignupGate'
@@ -21,6 +22,7 @@ import { RichMarkdown } from '@/components/ui/RichMarkdown'
 import { ChagHero } from '@/components/chagim/ChagHero'
 import { getChagHeroProps } from '@/lib/chag-hero-props'
 import { getAuthSnapshot } from '@/lib/auth-snapshot'
+import { getChagFaqItems } from '@/lib/chag-seo-faq'
 
 type Props = { params: Promise<{ slug: string }> }
 
@@ -44,18 +46,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const url = `${origin}/chagim/${slug}`
   const title = chag.name
   const description = chag.summary
-
-  if (chag.isPremium) {
-    const allowed = await userHasPremiumAccess()
-    if (!allowed) {
-      return {
-        title: `${chag.name} · Premium`,
-        description,
-        robots: { index: false, follow: true },
-        alternates: { canonical: url },
-      }
-    }
-  }
 
   return {
     title,
@@ -87,27 +77,15 @@ export default async function ChagDetailPage({ params }: Props) {
   const isLoggedIn = !!auth.user
   const hasPremium = await userHasPremiumAccess()
 
-  // Ordem dos gates: cadastro antes de assinatura. Visitantes anônimos
-  // sempre veem o hero + SignupGate inline; somente membros logados em
-  // Chag totalmente premium caem no PremiumGate fullscreen.
-  if (isLoggedIn && chag.isPremium && !hasPremium) {
-    return (
-      <PremiumGate
-        title={chag.name}
-        description="O estudo completo deste Chag (incluindo seções de Sod e materiais reservados) é exclusivo para assinantes Premium."
-        backHref="/chagim"
-        backLabel="Todos os Chagim"
-      />
-    )
-  }
-
   const heroProps = getChagHeroProps(slug)
   const allSections = await fetchChagSectionsByChagIdAdmin(chag.id)
-  const visibleSections = hasPremium ? allSections : allSections.filter((s) => !s.isPremium)
-  // Quando o hero cinematográfico está ativo, a seção order_num=1 (Capa Hero /
-  // boas-vindas) vira o bloco âncora dentro do hero — não repete no listing.
-  const sections = heroProps ? visibleSections.filter((s) => s.orderNum !== 1) : visibleSections
-  const lockedSectionsCount = allSections.length - visibleSections.length
+  const publicSections = allSections.filter((s) => !s.isPremium)
+  const displaySections = hasPremium ? allSections : publicSections
+  const sections = heroProps ? displaySections.filter((s) => s.orderNum !== 1) : displaySections
+  const lockedSectionsCount = hasPremium ? 0 : allSections.filter((s) => s.isPremium).length
+  const fullyPremiumLocked = chag.isPremium && !hasPremium
+  const faqItems = getChagFaqItems(chag.name, chag.isPremium)
+
   const crumbs = [
     { name: 'Início', path: '/' },
     { name: 'Chagim', path: '/chagim' },
@@ -125,6 +103,7 @@ export default async function ChagDetailPage({ params }: Props) {
             publishedAt: chag.publishedAt || undefined,
           }),
           breadcrumbJsonLd(crumbs),
+          faqPageJsonLd(faqItems),
         ]}
       />
       <Breadcrumbs items={crumbs} />
@@ -160,7 +139,7 @@ export default async function ChagDetailPage({ params }: Props) {
                 </span>
               )}
             </div>
-            {chag.pdfUrl && isLoggedIn && (
+            {chag.pdfUrl && isLoggedIn && hasPremium && (
               <PdfButton
                 url={chag.pdfUrl}
                 title={`${chag.name} — PDF`}
@@ -206,11 +185,11 @@ export default async function ChagDetailPage({ params }: Props) {
             <p className="font-cormorant text-xl italic text-warmgray-600 dark:text-warmgray-400 leading-relaxed">
               {chag.summary}
             </p>
-            {chag.pdfUrl && isLoggedIn && (
+            {chag.pdfUrl && isLoggedIn && hasPremium && (
               <PdfButton url={chag.pdfUrl} title={`${chag.name} — PDF`} label="Ler PDF do Chag" />
             )}
           </header>
-          {isLoggedIn && (
+          {chag.content && (
             <>
               <hr className="divider-gold" />
               <article className="max-w-none mt-8">
@@ -220,8 +199,8 @@ export default async function ChagDetailPage({ params }: Props) {
           )}
         </>
       )}
-      {!isLoggedIn && <SignupGate resourceName={chag.name} />}
-      {isLoggedIn && sections.length > 0 && (
+
+      {sections.length > 0 && (
         <section className="mt-12 space-y-8" aria-labelledby="chag-sections-heading">
           <h2
             id="chag-sections-heading"
@@ -239,7 +218,18 @@ export default async function ChagDetailPage({ params }: Props) {
           ))}
         </section>
       )}
-      {isLoggedIn && lockedSectionsCount > 0 && (
+
+      {fullyPremiumLocked && (
+        <PremiumGate
+          inline
+          title={`Estudo completo de ${chag.name}`}
+          description="O resumo e as seções públicas acima permanecem disponíveis para indexação. Kavannot, Sod, Tikun Leil e materiais kabalísticos avançados são exclusivos para assinantes Premium."
+          backHref="/chagim"
+          backLabel="Todos os Chagim"
+        />
+      )}
+
+      {!fullyPremiumLocked && lockedSectionsCount > 0 && (
         <section className="mt-8 glass-card p-5 border-gold-500/25 flex flex-col sm:flex-row items-start sm:items-center gap-4">
           <div className="flex-1 space-y-1">
             <p className="text-xs font-inter font-semibold text-gold-600 dark:text-gold-400 uppercase tracking-widest">
@@ -260,6 +250,16 @@ export default async function ChagDetailPage({ params }: Props) {
           </Link>
         </section>
       )}
+
+      <FaqSection items={faqItems} />
+
+      {!isLoggedIn && (
+        <SignupGate
+          resourceName={chag.name}
+          description="Cadastre-se gratuitamente para salvar progresso, acessar PDFs quando liberados e receber novidades da congregação. O conteúdo introdutório desta página já está público para estudo e busca."
+        />
+      )}
+
       <footer className="mt-10 glass-card p-4 flex items-center gap-3">
         <div className="w-10 h-10 rounded-full bg-petroleum-gradient flex items-center justify-center flex-shrink-0">
           <span className="font-hebrew text-sm text-gold-400">ר</span>

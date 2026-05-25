@@ -61,7 +61,7 @@ export function SignupGate({ resourceName, description }: SignupGateProps) {
       </div>
       <p className="text-[11px] font-inter text-warmgray-500 leading-relaxed pt-2 flex items-center justify-center gap-1">
         <Crown className="h-3 w-3 shrink-0" aria-hidden="true" />
-        Premium libera Kabala, Tikun Leil e PaRDeS aprofundados
+        Premium libera Kabalá, Tikun Leil e PaRDeS aprofundados
       </p>
     </section>
   )

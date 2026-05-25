@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { Landmark, Scale, BookMarked, Sparkles, HeartHandshake } from 'lucide-react'
 import { SITE_NAME_ALT, CONGREGATION } from '@/lib/site-brand'
 import { getPublicSiteOrigin } from '@/lib/public-site-url'
@@ -68,6 +69,11 @@ export default function QuemSomosPage() {
               <p>
                 Respeitamos os que assim crêem. Nossa base é o monoteísmo absoluto revelado nas Escrituras Sagradas{' '}
                 <strong className="font-semibold text-petroleum-900 dark:text-parchment-50">(ADO-NAI ECHAD)</strong>.
+                {' '}
+                <Link href="/judaismo-messianico" className="text-gold-700 dark:text-gold-400 font-medium hover:underline">
+                  Leia a página pilar sobre judaísmo messiânico não trinitário
+                </Link>
+                .
               </p>
             </div>
           </div>

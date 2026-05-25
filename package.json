@@ -12,6 +12,7 @@
     "sync:pdfs": "tsx --env-file=.env.local scripts/sync-aliyot-pdfs.ts",
     "sync:pardes": "tsx --env-file=.env.local scripts/sync-parasha-pardes.ts",
     "sync:aliyah1": "tsx --env-file=.env.local scripts/sync-aliyah1-content.ts",
+    "sync:seo": "npm run sync:pardes && npm run sync:aliyah1",
     "populate": "npm run seed:aliyot && npm run sync:pdfs"
   },
   "dependencies": {

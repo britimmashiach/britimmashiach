@@ -35,6 +35,7 @@ export function Footer() {
             <ul className="space-y-2">
               {[
                 { href: '/sobre', label: 'Quem somos' },
+                { href: '/judaismo-messianico', label: 'Judaísmo messiânico' },
                 { href: '/metodo-pardes', label: 'Método PaRDeS' },
                 { href: '/faq', label: 'Perguntas frequentes' },
                 { href: '/calendar', label: 'Calendário' },
