@@ -6,6 +6,7 @@ import { ManhigutSalutation } from '@/components/leaders/ManhigutSalutation'
 import { ManhigutAvailableNow } from '@/components/leaders/ManhigutAvailableNow'
 import { ManhigutCurriculumGrid } from '@/components/leaders/ManhigutCurriculumGrid'
 import { ManhigutPastoralNote, ManhigutStageProgress } from '@/components/leaders/ManhigutPastoralNote'
+import { ManhigutSequentialStudyCard } from '@/components/leaders/ManhigutSequentialStudyCard'
 import { getAuthSnapshot } from '@/lib/auth-snapshot'
 import { fetchManhigutModulesForLeader } from '@/lib/leader-modules-supabase'
 import { MANHIGUT_PROGRAM } from '@/lib/manhigut-curriculum'
@@ -62,6 +63,7 @@ async function FormacaoContent({ userId, firstName }: { userId: string | null; f
 
       <section className="container mx-auto px-4 py-10 max-w-4xl space-y-8">
         <ManhigutPastoralNote />
+        <ManhigutSequentialStudyCard />
         <ManhigutStageProgress availableCount={availableCount} />
         <ManhigutAvailableNow modules={modules} />
         <div className="space-y-2 pt-2">
