@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Crown, Loader2, QrCode, Wallet } from 'lucide-react'
 import { toast } from 'sonner'
+import { formatBrlCentavos, PREMIUM_ANNUAL_PIX } from '@/lib/stripe'
 
 type Mode = 'monthly' | 'pix-annual' | 'mp-monthly'
 
@@ -18,7 +19,10 @@ const ENDPOINTS: Record<Mode, string> = {
 
 const LABELS: Record<Mode, { idle: string; loading: string }> = {
   monthly: { idle: 'Assinar Premium', loading: 'Aguarde...' },
-  'pix-annual': { idle: 'Pagar 1 ano via PIX (R$ 470)', loading: 'Gerando PIX...' },
+  'pix-annual': {
+    idle: `Pagar 1 ano via PIX (${formatBrlCentavos(PREMIUM_ANNUAL_PIX.centavos)})`,
+    loading: 'Gerando PIX...',
+  },
   'mp-monthly': { idle: 'Assinar via Mercado Pago (R$ 47/mês)', loading: 'Conectando...' },
 }
 

@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server'
-import { getStripe } from '@/lib/stripe'
+import { getStripe, PREMIUM_ANNUAL_PIX } from '@/lib/stripe'
 import { createServerSupabaseClient, hasSupabaseServerEnv } from '@/lib/supabase-server'
 
-const ANNUAL_PRICE_CENTAVOS = 47000
+const ANNUAL_PRICE_CENTAVOS = PREMIUM_ANNUAL_PIX.centavos
 
 export async function POST() {
   if (!hasSupabaseServerEnv()) {

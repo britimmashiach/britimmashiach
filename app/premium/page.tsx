@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { Crown, Check, Star, Sparkles, BookOpen, Library, Layers } from 'lucide-react'
-import { PLANS, hasStripeEnv } from '@/lib/stripe'
+import { PLANS, hasStripeEnv, PREMIUM_ANNUAL_PIX, formatBrlCentavos } from '@/lib/stripe'
 import { hasMpEnv } from '@/lib/mercadopago'
 import { CheckoutButton } from '@/components/ui/CheckoutButton'
 
@@ -22,10 +22,9 @@ export default function PremiumPage() {
   const mpReady = hasMpEnv()
   const freePlan = PLANS.free
   const premiumPlan = PLANS.premium
-  const priceFormatted = new Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL',
-  }).format(premiumPlan.price / 100)
+  const priceFormatted = formatBrlCentavos(premiumPlan.price)
+  const annualPixFormatted = formatBrlCentavos(PREMIUM_ANNUAL_PIX.centavos)
+  const monthlyYearTotal = formatBrlCentavos(premiumPlan.price * 12)
 
   return (
     <div className="min-h-screen">
@@ -133,25 +132,33 @@ export default function PremiumPage() {
             </ul>
 
             <div className="space-y-2.5">
+              {stripeReady && (
+                <>
+                  <CheckoutButton mode="pix-annual" />
+                  <p className="text-xs font-inter text-gold-700 dark:text-gold-400 text-center leading-relaxed">
+                    PIX anual {annualPixFormatted} por 12 meses (equivalente a ~R$ 33/mês). Sem conta
+                    Mercado Pago: QR Code na página Stripe. Renovação manual ao fim do período.
+                  </p>
+                  <CheckoutButton />
+                </>
+              )}
               {mpReady ? (
                 <CheckoutButton mode="mp-monthly" />
               ) : (
-                <p className="text-xs font-inter text-warmgray-500 text-center py-2">
-                  Pagamento via Mercado Pago em breve.
-                </p>
-              )}
-              {stripeReady && (
-                <>
-                  <CheckoutButton />
-                  <CheckoutButton mode="pix-annual" />
-                </>
+                !stripeReady && (
+                  <p className="text-xs font-inter text-warmgray-500 text-center py-2">
+                    Pagamento via Mercado Pago em breve.
+                  </p>
+                )
               )}
               <p className="text-xs font-inter text-warmgray-500 text-center pt-1 leading-relaxed">
                 {mpReady && stripeReady
-                  ? 'Mercado Pago: cartão recorrente mensal. Stripe Cartão: renovação automática. PIX: 12 meses prepagos.'
+                  ? `Mensal no cartão: ${priceFormatted}/mês (MP ou Stripe). PIX: pagamento único de ${annualPixFormatted} (${monthlyYearTotal} no cartão mensal × 12).`
                   : mpReady
-                    ? 'R$ 47/mês. Cobrança automática no cartão via Mercado Pago. Cancele quando quiser, sem multa.'
-                    : 'Configure o gateway de pagamento para assinar online.'}
+                    ? `${priceFormatted}/mês no cartão via Mercado Pago. Cancele quando quiser, sem multa.`
+                    : stripeReady
+                      ? `Cartão ${priceFormatted}/mês ou PIX anual ${annualPixFormatted}.`
+                      : 'Configure o gateway de pagamento para assinar online.'}
               </p>
             </div>
           </div>

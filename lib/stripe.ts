@@ -36,7 +36,7 @@ export const PLANS = {
   premium: {
     name: 'Premium',
     description: 'Acesso completo ao ecossistema Brit Mashiach',
-    price: 4700, // R$ 47,00 em centavos
+    price: 4700, // R$ 47,00 em centavos (mensal)
     priceId: process.env.STRIPE_PRICE_ID_PREMIUM!,
     features: [
       'Tudo do plano Gratuito',
@@ -50,5 +50,17 @@ export const PLANS = {
     ],
   },
 } as const
+
+/** Plano anual prepago via PIX (Stripe Checkout, pagamento unico). */
+export const PREMIUM_ANNUAL_PIX = {
+  centavos: 40000, // R$ 400,00
+  months: 12,
+} as const
+
+export function formatBrlCentavos(centavos: number): string {
+  return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(
+    centavos / 100,
+  )
+}
 
 export type PlanKey = keyof typeof PLANS
