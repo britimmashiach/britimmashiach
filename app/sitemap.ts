@@ -23,6 +23,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${origin}/chagim`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${origin}/chagim/shalosh-regalim`, lastModified: now, changeFrequency: 'monthly', priority: 0.82 },
     { url: `${origin}/chagim/yamim-noraim`, lastModified: now, changeFrequency: 'monthly', priority: 0.82 },
+    { url: `${origin}/chagim/festividades`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${origin}/studies`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${origin}/library`, lastModified: now, changeFrequency: 'weekly', priority: 0.7 },
     { url: `${origin}/tanach`, lastModified: now, changeFrequency: 'weekly', priority: 0.75 },

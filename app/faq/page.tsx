@@ -66,6 +66,10 @@ export default function FaqPage() {
           Shalosh Regalim
         </Link>
         <span className="text-warmgray-400" aria-hidden="true">·</span>
+        <Link href="/chagim/festividades" className="text-gold-600 hover:text-gold-500 dark:text-gold-400">
+          Festividades menores
+        </Link>
+        <span className="text-warmgray-400" aria-hidden="true">·</span>
         <Link href="/metodo-pardes" className="text-gold-600 hover:text-gold-500 dark:text-gold-400">
           Método PaRDeS
         </Link>

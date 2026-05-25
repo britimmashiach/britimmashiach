@@ -46,9 +46,13 @@ export default async function ChagimPage() {
         <Link href="/chagim/shalosh-regalim" className="text-gold-600 hover:underline dark:text-gold-400">
           guia Shalosh Regalim
         </Link>
-        {' '}(Pesach, Shavuot, Sukkot), os{' '}
+        {' '}(Pesach, Shavuot, Sukkot)        , os{' '}
         <Link href="/chagim/yamim-noraim" className="text-gold-600 hover:underline dark:text-gold-400">
           Yamim Noraim
+        </Link>
+        , as{' '}
+        <Link href="/chagim/festividades" className="text-gold-600 hover:underline dark:text-gold-400">
+          festividades menores
         </Link>
         , o{' '}
         <Link href="/calendar" className="text-gold-600 hover:underline dark:text-gold-400">

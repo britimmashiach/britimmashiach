@@ -9,6 +9,7 @@ type ChagRelatedLinksProps = {
 const CLUSTER_BY_CATEGORY: Record<string, { href: string; label: string }> = {
   shalosh_regalim: { href: '/chagim/shalosh-regalim', label: 'Guia Shalosh Regalim' },
   yamim_noraim: { href: '/chagim/yamim-noraim', label: 'Guia Yamim Noraim' },
+  minor: { href: '/chagim/festividades', label: 'Festividades menores' },
 }
 
 const CHAG_SPECIFIC: Record<string, { href: string; label: string }[]> = {
@@ -19,6 +20,8 @@ const CHAG_SPECIFIC: Record<string, { href: string; label: string }[]> = {
     { href: '/chagim/yom-kippur', label: 'Yom Kippur' },
     { href: '/chagim/yamim-noraim', label: 'Guia Yamim Noraim' },
   ],
+  chanukah: [{ href: '/chagim/festividades', label: 'Guia festividades menores' }],
+  purim: [{ href: '/chagim/festividades', label: 'Guia festividades menores' }],
   'yom-kippur': [
     { href: '/chagim/rosh-hashanah', label: 'Rosh Hashanah' },
     { href: '/chagim/yamim-noraim', label: 'Guia Yamim Noraim' },

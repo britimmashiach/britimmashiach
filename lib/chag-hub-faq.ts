@@ -21,6 +21,10 @@ export const CHAG_HUB_FAQ: FaqItem[] = [
     question: 'Os estudos de Chagim exigem assinatura?',
     answer: 'Não necessariamente. Muitos Chagim possuem conteúdo público. Chagim marcados como Premium liberam material kabalístico avançado e PDFs exclusivos para assinantes.',
   },
+  {
+    question: 'O que são festividades menores como Chanukah e Purim?',
+    answer: 'São Moedim rabínicos ou de menor categoria bíblica, mas com grande peso comunitário: luzes, Meguiláh, alegria e mitzvot específicas. Veja o guia de festividades menores na seção Chagim.',
+  },
 ]
 
 export const SHALOSH_REGALIM_FAQ: FaqItem[] = [
@@ -50,5 +54,20 @@ export const YAMIM_NORAIM_FAQ: FaqItem[] = [
   {
     question: 'Como a Brit Im Mashiach estuda os Yamim Noraim?',
     answer: 'Cada Moed possui página pública com resumo e FAQ. Material kabalístico de Kavannot, Sod e PDFs aprofundados pode ser reservado ao plano Premium.',
+  },
+]
+
+export const MINOR_FESTIVALS_FAQ: FaqItem[] = [
+  {
+    question: 'Chanukah e Purim são Chagim bíblicos?',
+    answer: 'Purim tem base em Ester e halacháh rabínica; Chanukah celebra a dedicação do Beit HaMikdash. Ambos possuem mitzvot, liturgia e estudo próprios na vida judaica messiânica.',
+  },
+  {
+    question: 'Como estudar Chanukah na plataforma?',
+    answer: 'O estudo aborda o milagre das luzes, a ordem do acendimento, halacháh prática e dimensões de Remez e Sod sobre a continuidade da chama interior.',
+  },
+  {
+    question: 'O que torna Purim único entre os Moedim?',
+    answer: 'Purim revela a Providência oculta na história. Meguiláh, mishloach manot, matanot laevyonim e simcháh formam um ciclo de alegria responsável e memória coletiva.',
   },
 ]

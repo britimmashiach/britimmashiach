@@ -10,6 +10,14 @@ const DAY_NAMES = [
   { pt: 'Shabat', trans: '' },
 ]
 
+function teaser(text: string, max = 280): string {
+  const first = text.split('\n\n')[0]?.trim() ?? text.trim()
+  if (first.length <= max) return first
+  const cut = first.slice(0, max)
+  const lastSpace = cut.lastIndexOf(' ')
+  return `${(lastSpace > 180 ? cut.slice(0, lastSpace) : cut).trim()}…`
+}
+
 function renderParagraphs(text: string) {
   return text.split('\n').filter((line) => line.trim()).map((line, i) => (
     <p key={i} className="font-inter text-sm text-foreground leading-relaxed mb-3 last:mb-0">
@@ -25,7 +33,7 @@ type AliyotIndexableProps = {
 
 /**
  * Índice semanal renderizado no servidor para SEO e kavanáh litúrgica.
- * Aliyáh 1: texto completo (acesso público). Demais: título e resumo estrutural.
+ * Aliyáh 1: texto completo (acesso público). Demais: título e teaser indexável quando disponível.
  */
 export function AliyotIndexable({ parashaTitle, aliyot }: AliyotIndexableProps) {
   return (
@@ -78,10 +86,14 @@ export function AliyotIndexable({ parashaTitle, aliyot }: AliyotIndexableProps) 
                   {renderParagraphs(aliyah.content)}
                 </article>
               ) : aliyah?.content ? (
-                <p className="mt-3 text-xs font-inter text-warmgray-500 leading-relaxed">
-                  Estudo completo desta Aliyáh disponível na plataforma (assinantes Premium para
-                  aliyot 2 a 7). Use o painel interativo abaixo após entrar na conta.
-                </p>
+                <div className="mt-3 space-y-2">
+                  <p className="font-inter text-sm text-foreground/90 leading-relaxed">
+                    {teaser(aliyah.content)}
+                  </p>
+                  <p className="text-xs font-inter text-warmgray-500 leading-relaxed">
+                    Estudo completo com PDF e PaRDeS aprofundado reservado a assinantes Premium.
+                  </p>
+                </div>
               ) : (
                 <p className="mt-3 text-xs font-inter text-warmgray-500">
                   Conteúdo em preparação para este dia da semana.
