@@ -208,7 +208,11 @@ export async function setLeaderByEmailAction(
 
   const { error: updateErr } = await admin
     .from('profiles')
-    .update({ is_leader: isLeader, updated_at: new Date().toISOString() })
+    .update({
+      is_leader: isLeader,
+      leader_since: isLeader ? new Date().toISOString() : null,
+      updated_at: new Date().toISOString(),
+    })
     .eq('id', target.id)
 
   if (updateErr) return { ok: false, message: updateErr.message }
@@ -236,7 +240,11 @@ export async function setLeaderByIdAction(
 
   const { error: updateErr } = await admin
     .from('profiles')
-    .update({ is_leader: isLeader, updated_at: new Date().toISOString() })
+    .update({
+      is_leader: isLeader,
+      leader_since: isLeader ? new Date().toISOString() : null,
+      updated_at: new Date().toISOString(),
+    })
     .eq('id', userId)
 
   if (updateErr) return { ok: false, message: updateErr.message }

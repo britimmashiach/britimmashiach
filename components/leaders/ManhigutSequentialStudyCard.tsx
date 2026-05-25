@@ -68,6 +68,12 @@ export function ManhigutSequentialStudyCard() {
             módulo posterior: isso enfraquece o Tikun do Keli e desrespeita o método do Beit Midrash.
           </li>
           <li>
+            O portal acompanha automaticamente seu{' '}
+            <strong className="font-semibold text-foreground">mês civil no ciclo</strong> desde a data em que
+            você foi aprovado como líder. Se tentar abrir um módulo à frente do seu mês, verá um aviso e será
+            orientado de volta ao módulo atual.
+          </li>
+          <li>
             Reserve tempo para as <strong className="font-semibold text-foreground">She'elot le-Iyun</strong>{' '}
             e para o encontro ao vivo mensal, integrando leitura, reflexão e aplicação pastoral.
           </li>

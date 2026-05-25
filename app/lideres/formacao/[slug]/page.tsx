@@ -3,12 +3,14 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ArrowLeft, Clock, GraduationCap } from 'lucide-react'
 import { LeaderPortalGuard } from '@/components/leaders/LeaderPortalGuard'
+import { ManhigutModuleAheadGate } from '@/components/leaders/ManhigutModuleAheadGate'
 import { ManhigutSalutation } from '@/components/leaders/ManhigutSalutation'
 import { RichMarkdown } from '@/components/ui/RichMarkdown'
 import { getAuthSnapshot } from '@/lib/auth-snapshot'
 import { fetchManhigutModuleBySlug, fetchManhigutModuleSlugs } from '@/lib/leader-modules-supabase'
 import { prepareManhigutMarkdownForDisplay } from '@/lib/manhigut-content'
 import { getCurriculumBySlug } from '@/lib/manhigut-curriculum'
+import { getManhigutModuleAccess, getManhigutProgressFromProfile } from '@/lib/manhigut-progress'
 
 export const dynamic = 'force-dynamic'
 
@@ -41,7 +43,12 @@ export default async function ManhigutModulePage({ params }: { params: Promise<{
 
   return (
     <LeaderPortalGuard resourceName="este módulo de formação">
-      <ModuleReader slug={slug} userId={auth.user?.id ?? null} firstName={auth.sessionDisplay?.firstName ?? null} />
+      <ModuleReader
+        slug={slug}
+        userId={auth.user?.id ?? null}
+        firstName={auth.sessionDisplay?.firstName ?? null}
+        progress={getManhigutProgressFromProfile(auth.profile)}
+      />
     </LeaderPortalGuard>
   )
 }
@@ -50,10 +57,12 @@ async function ModuleReader({
   slug,
   userId,
   firstName,
+  progress,
 }: {
   slug: string
   userId: string | null
   firstName: string | null
+  progress: ReturnType<typeof getManhigutProgressFromProfile>
 }) {
   const mod = await fetchManhigutModuleBySlug(slug, userId)
   const displayContent = mod ? prepareManhigutMarkdownForDisplay(mod.content) : ''
@@ -80,6 +89,11 @@ async function ModuleReader({
         </div>
       </div>
     )
+  }
+
+  const access = getManhigutModuleAccess(mod.monthNum, true, progress)
+  if (access === 'ahead') {
+    return <ManhigutModuleAheadGate requestedMonth={mod.monthNum} progress={progress} />
   }
 
   return (

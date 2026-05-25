@@ -6,10 +6,13 @@ import { ManhigutSalutation } from '@/components/leaders/ManhigutSalutation'
 import { ManhigutAvailableNow } from '@/components/leaders/ManhigutAvailableNow'
 import { ManhigutCurriculumGrid } from '@/components/leaders/ManhigutCurriculumGrid'
 import { ManhigutPastoralNote, ManhigutStageProgress } from '@/components/leaders/ManhigutPastoralNote'
+import { ManhigutAdminInspectNote } from '@/components/leaders/ManhigutAdminInspectNote'
+import { ManhigutMonthStatus } from '@/components/leaders/ManhigutMonthStatus'
 import { ManhigutSequentialStudyCard } from '@/components/leaders/ManhigutSequentialStudyCard'
 import { getAuthSnapshot } from '@/lib/auth-snapshot'
 import { fetchManhigutModulesForLeader } from '@/lib/leader-modules-supabase'
 import { MANHIGUT_PROGRAM } from '@/lib/manhigut-curriculum'
+import { getManhigutProgressFromProfile } from '@/lib/manhigut-progress'
 
 export const metadata: Metadata = {
   title: 'Formação Manhigut',
@@ -23,15 +26,24 @@ export const dynamic = 'force-dynamic'
 export default async function LideresFormacaoPage() {
   const auth = await getAuthSnapshot()
   const firstName = await getLeaderFirstName()
+  const progress = getManhigutProgressFromProfile(auth.profile)
 
   return (
     <LeaderPortalGuard resourceName="a Formação Manhigut">
-      <FormacaoContent userId={auth.user?.id ?? null} firstName={firstName} />
+      <FormacaoContent userId={auth.user?.id ?? null} firstName={firstName} progress={progress} />
     </LeaderPortalGuard>
   )
 }
 
-async function FormacaoContent({ userId, firstName }: { userId: string | null; firstName: string }) {
+async function FormacaoContent({
+  userId,
+  firstName,
+  progress,
+}: {
+  userId: string | null
+  firstName: string
+  progress: ReturnType<typeof getManhigutProgressFromProfile>
+}) {
   const modules = await fetchManhigutModulesForLeader(userId)
   const availableCount = modules.filter((m) => m.status === 'available').length
 
@@ -63,19 +75,21 @@ async function FormacaoContent({ userId, firstName }: { userId: string | null; f
 
       <section className="container mx-auto px-4 py-10 max-w-4xl space-y-8">
         <ManhigutPastoralNote />
+        {progress.bypassMonthGate && <ManhigutAdminInspectNote />}
+        <ManhigutMonthStatus progress={progress} />
         <ManhigutSequentialStudyCard />
         <ManhigutStageProgress availableCount={availableCount} />
-        <ManhigutAvailableNow modules={modules} />
+        <ManhigutAvailableNow modules={modules} progress={progress} />
         <div className="space-y-2 pt-2">
           <h2 className="font-cinzel text-lg font-semibold text-petroleum-800 dark:text-parchment-100">
             Grade completa · 24 meses
           </h2>
           <p className="text-sm font-inter text-warmgray-500 dark:text-warmgray-400">
-            Visão do programa inteiro. Módulos ainda sem texto completo aparecem bloqueados até nova publicação
-            do Rav EBBY.
+            Visão do programa inteiro. Módulos à frente do seu mês civil aparecem com aviso; módulos ainda
+            sem texto completo permanecem bloqueados até nova publicação do Rav EBBY.
           </p>
         </div>
-        <ManhigutCurriculumGrid modules={modules} />
+        <ManhigutCurriculumGrid modules={modules} progress={progress} />
       </section>
     </div>
   )
