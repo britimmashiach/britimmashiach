@@ -8,6 +8,7 @@ import { createClient, supabaseConfigured } from '@/lib/supabase'
 import { buildSessionDisplay, type SessionDisplay } from '@/lib/session-display'
 import type { Profile } from '@/types'
 import { profileHasLeaderAccess } from '@/lib/leader-access-policy'
+import { profileHasActivePremium } from '@/lib/premium-subscription'
 
 export type { SessionDisplay }
 
@@ -81,7 +82,7 @@ export function useProfile() {
     [user, profile],
   )
 
-  const isPremium = profile?.role === 'premium' || profile?.role === 'admin'
+  const isPremium = profileHasActivePremium(profile)
   const isAdmin = profile?.role === 'admin'
   const isLeader = profileHasLeaderAccess(profile)
 

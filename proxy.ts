@@ -1,5 +1,6 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
+import { profileHasActivePremium } from '@/lib/premium-subscription'
 
 const PROTECTED_ROUTES = ['/profile', '/admin']
 const PREMIUM_ROUTES = ['/premium/content']
@@ -58,11 +59,11 @@ export async function proxy(request: NextRequest) {
   if (isPremiumRoute && user) {
     const { data: profile } = await supabase
       .from('profiles')
-      .select('role')
+      .select('role, subscription_status, subscription_current_period_end')
       .eq('id', user.id)
       .single()
 
-    if (!profile || !['premium', 'admin'].includes(profile.role)) {
+    if (!profileHasActivePremium(profile)) {
       return NextResponse.redirect(new URL('/premium', request.url))
     }
   }

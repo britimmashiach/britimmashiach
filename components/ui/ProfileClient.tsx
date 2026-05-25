@@ -6,6 +6,12 @@ import { toast } from 'sonner'
 import { createClient, supabaseConfigured } from '@/lib/supabase'
 import { cn } from '@/lib/utils'
 import type { Profile } from '@/types'
+import {
+  PREMIUM_PIX_GRACE_DAYS,
+  getPremiumAccessState,
+  profileHasActivePremium,
+} from '@/lib/premium-subscription'
+import { CheckoutButton } from '@/components/ui/CheckoutButton'
 
 interface ProfileClientProps {
   profile: Profile | null
@@ -59,7 +65,9 @@ export function ProfileClient({ profile, successPayment }: ProfileClientProps) {
     )
   }
 
-  const isPremium = profile.role === 'premium' || profile.role === 'admin'
+  const accessState = getPremiumAccessState(profile)
+  const isPremium = profileHasActivePremium(profile)
+  const isPixManual = !profile.stripe_subscription_id && !profile.mp_subscription_id
 
   return (
     <div className="space-y-6">
@@ -83,6 +91,11 @@ export function ProfileClient({ profile, successPayment }: ProfileClientProps) {
                 <span className="premium-badge flex-shrink-0">
                   <Crown className="w-3 h-3" />
                   Premium
+                </span>
+              )}
+              {!isPremium && profile.role === 'premium' && (
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-400 text-xs font-inter font-semibold">
+                  Renovar
                 </span>
               )}
             </div>
@@ -115,20 +128,27 @@ export function ProfileClient({ profile, successPayment }: ProfileClientProps) {
                 'bg-warmgray-400',
               )} />
               <p className="text-sm font-inter text-foreground">
-                {profile.subscription_status === 'active' ? 'Ativa' :
-                 profile.subscription_status === 'past_due' ? 'Pagamento pendente' :
-                 profile.subscription_status === 'canceled' ? 'Cancelada' :
-                 'Inativa'}
+                {accessState === 'grace'
+                  ? `Período de tolerância (${PREMIUM_PIX_GRACE_DAYS} dias)`
+                  : profile.subscription_status === 'active'
+                    ? 'Ativa'
+                    : profile.subscription_status === 'past_due'
+                      ? 'Pagamento pendente'
+                      : profile.subscription_status === 'canceled'
+                        ? 'Cancelada'
+                        : accessState === 'expired'
+                          ? 'Vencida'
+                          : 'Inativa'}
               </p>
             </div>
           </div>
         </div>
 
-        {profile.subscription_current_period_end && profile.subscription_status === 'active' && (
+        {profile.subscription_current_period_end && (
           <div className="flex items-center gap-2 pt-2 text-sm font-inter text-warmgray-600 dark:text-warmgray-400">
             <CalendarClock className="w-4 h-4 flex-shrink-0 text-gold-600 dark:text-gold-400" />
             <span>
-              Renova em{' '}
+              {accessState === 'grace' ? 'Renove até' : isPremium ? 'Válido até' : 'Venceu em'}{' '}
               <span className="font-medium text-foreground">
                 {new Date(profile.subscription_current_period_end).toLocaleDateString('pt-BR', {
                   day: '2-digit',
@@ -136,14 +156,33 @@ export function ProfileClient({ profile, successPayment }: ProfileClientProps) {
                   year: 'numeric',
                 })}
               </span>
+              {accessState === 'grace' && (
+                <span className="text-amber-700 dark:text-amber-400">
+                  {' '}
+                  (+ {PREMIUM_PIX_GRACE_DAYS} dias de tolerância)
+                </span>
+              )}
             </span>
           </div>
+        )}
+
+        {accessState === 'grace' && (
+          <p className="text-xs font-inter text-amber-700 dark:text-amber-400 leading-relaxed">
+            Seu PIX mensal venceu. Renove agora para manter o acesso. Após {PREMIUM_PIX_GRACE_DAYS} dias
+            do vencimento, o conteúdo Premium será bloqueado até novo pagamento.
+          </p>
+        )}
+
+        {accessState === 'expired' && profile.role === 'premium' && (
+          <p className="text-xs font-inter text-destructive leading-relaxed">
+            Assinatura vencida. O acesso Premium está bloqueado até você pagar um novo PIX mensal ou anual.
+          </p>
         )}
       </div>
 
       {/* Ações */}
       <div className="space-y-3">
-        {!isPremium && (
+        {!isPremium && profile.role !== 'premium' && (
           <a
             href="/premium"
             className="w-full btn-gold py-3 flex items-center justify-center gap-2"
@@ -153,7 +192,11 @@ export function ProfileClient({ profile, successPayment }: ProfileClientProps) {
           </a>
         )}
 
-        {isPremium && profile.stripe_customer_id && (
+        {isPixManual && profile.role === 'premium' && (
+          <CheckoutButton mode="pix-monthly" />
+        )}
+
+        {isPremium && profile.stripe_subscription_id && (
           <button
             onClick={handleBillingPortal}
             disabled={portalLoading}

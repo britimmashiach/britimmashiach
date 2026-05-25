@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getStripe } from '@/lib/stripe'
+import { extendPremiumPeriodMonths } from '@/lib/premium-subscription'
 import { createClient } from '@supabase/supabase-js'
 import type Stripe from 'stripe'
 
@@ -94,15 +95,29 @@ export async function POST(req: NextRequest) {
 
       case 'checkout.session.completed': {
         const session = event.data.object as Stripe.Checkout.Session
-        if (session.mode === 'payment' && session.metadata?.type === 'annual-pix') {
+        const pixType = session.metadata?.type
+        if (
+          session.mode === 'payment' &&
+          (pixType === 'annual-pix' || pixType === 'monthly-pix')
+        ) {
           const customerId = session.customer as string
-          const months = parseInt(session.metadata.months ?? '12', 10)
-          const periodEnd = new Date()
-          periodEnd.setMonth(periodEnd.getMonth() + months)
+          const months = parseInt(session.metadata?.months ?? '1', 10)
+
+          const { data: existing } = await getSupabaseAdmin()
+            .from('profiles')
+            .select('subscription_current_period_end')
+            .eq('stripe_customer_id', customerId)
+            .maybeSingle()
+
+          const periodEnd = extendPremiumPeriodMonths(
+            existing?.subscription_current_period_end,
+            months,
+          )
+
           await updateProfile(customerId, {
             role: 'premium',
             subscription_status: 'active',
-            subscription_current_period_end: periodEnd.toISOString(),
+            subscription_current_period_end: periodEnd,
           })
         }
         break

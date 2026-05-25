@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Crown, Check, Star, Sparkles, BookOpen, Library, Layers } from 'lucide-react'
 import { PLANS, hasStripeEnv, PREMIUM_ANNUAL_PIX, formatBrlCentavos } from '@/lib/stripe'
+import { PREMIUM_PIX_GRACE_DAYS } from '@/lib/premium-subscription'
 import { hasMpEnv } from '@/lib/mercadopago'
 import { CheckoutButton } from '@/components/ui/CheckoutButton'
 
@@ -24,7 +25,6 @@ export default function PremiumPage() {
   const premiumPlan = PLANS.premium
   const priceFormatted = formatBrlCentavos(premiumPlan.price)
   const annualPixFormatted = formatBrlCentavos(PREMIUM_ANNUAL_PIX.centavos)
-  const monthlyYearTotal = formatBrlCentavos(premiumPlan.price * 12)
 
   return (
     <div className="min-h-screen">
@@ -134,16 +134,26 @@ export default function PremiumPage() {
             <div className="space-y-2.5">
               {stripeReady && (
                 <>
-                  <CheckoutButton mode="pix-annual" />
+                  <CheckoutButton mode="pix-monthly" />
                   <p className="text-xs font-inter text-gold-700 dark:text-gold-400 text-center leading-relaxed">
-                    PIX anual {annualPixFormatted} por 12 meses (equivalente a ~R$ 33/mês). Sem conta
-                    Mercado Pago: QR Code na página Stripe. Renovação manual ao fim do período.
+                    PIX mensal {priceFormatted}: sem cartão, sem conta Mercado Pago. Renove todo mês pelo
+                    QR Code. Se atrasar, você tem {PREMIUM_PIX_GRACE_DAYS} dias extras antes do bloqueio.
+                  </p>
+                  <CheckoutButton mode="pix-annual" />
+                  <p className="text-xs font-inter text-warmgray-500 text-center leading-relaxed">
+                    PIX anual {annualPixFormatted} por 12 meses (~R$ 33/mês). Pagamento único, renovação
+                    manual ao fim do ano.
                   </p>
                   <CheckoutButton />
                 </>
               )}
               {mpReady ? (
-                <CheckoutButton mode="mp-monthly" />
+                <>
+                  <CheckoutButton mode="mp-monthly" />
+                  <p className="text-xs font-inter text-warmgray-500 text-center leading-relaxed">
+                    Somente cartão de crédito. Exige conta MP ou cadastro de cartão no checkout.
+                  </p>
+                </>
               ) : (
                 !stripeReady && (
                   <p className="text-xs font-inter text-warmgray-500 text-center py-2">
@@ -153,11 +163,11 @@ export default function PremiumPage() {
               )}
               <p className="text-xs font-inter text-warmgray-500 text-center pt-1 leading-relaxed">
                 {mpReady && stripeReady
-                  ? `Mensal no cartão: ${priceFormatted}/mês (MP ou Stripe). PIX: pagamento único de ${annualPixFormatted} (${monthlyYearTotal} no cartão mensal × 12).`
+                  ? `PIX mensual ou anual na Stripe. Cartão recorrente: ${priceFormatted}/mês (Stripe ou MP).`
                   : mpReady
-                    ? `${priceFormatted}/mês no cartão via Mercado Pago. Cancele quando quiser, sem multa.`
+                    ? `${priceFormatted}/mês no cartão via Mercado Pago.`
                     : stripeReady
-                      ? `Cartão ${priceFormatted}/mês ou PIX anual ${annualPixFormatted}.`
+                      ? `PIX ${priceFormatted}/mês ou ${annualPixFormatted}/ano, ou cartão ${priceFormatted}/mês.`
                       : 'Configure o gateway de pagamento para assinar online.'}
               </p>
             </div>

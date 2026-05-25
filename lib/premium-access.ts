@@ -1,5 +1,6 @@
 import { createServerSupabaseClient, hasSupabaseServerEnv } from '@/lib/supabase-server'
 import { getSupabaseAdmin, hasServiceRoleEnv } from '@/lib/supabase-admin'
+import { profileHasActivePremium, type PremiumProfileSlice } from '@/lib/premium-subscription'
 
 /** Membro premium ou admin tem acesso a qualquer conteúdo marcado como is_premium=true. */
 export async function userHasPremiumAccess(): Promise<boolean> {
@@ -17,22 +18,25 @@ export async function userHasPremiumOrAdminAccess(): Promise<boolean> {
     } = await supabase.auth.getUser()
     if (authError || !user) return false
 
-    const role = await readProfileRole(user.id, supabase)
-    return role === 'premium' || role === 'admin'
+    const profile = await readPremiumProfile(user.id, supabase)
+    return profileHasActivePremium(profile)
   } catch {
     return false
   }
 }
 
-async function readProfileRole(
+async function readPremiumProfile(
   userId: string,
   userClient: Awaited<ReturnType<typeof createServerSupabaseClient>>,
-): Promise<string | null> {
+): Promise<PremiumProfileSlice | null> {
+  const fields = 'role, subscription_status, subscription_current_period_end' as const
+
   if (hasServiceRoleEnv()) {
     const admin = getSupabaseAdmin()
-    const { data } = await admin.from('profiles').select('role').eq('id', userId).single()
-    if (data?.role) return data.role
+    const { data } = await admin.from('profiles').select(fields).eq('id', userId).single()
+    if (data) return data
   }
-  const { data } = await userClient.from('profiles').select('role').eq('id', userId).single()
-  return data?.role ?? null
+
+  const { data } = await userClient.from('profiles').select(fields).eq('id', userId).single()
+  return data ?? null
 }

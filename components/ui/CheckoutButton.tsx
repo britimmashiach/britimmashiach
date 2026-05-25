@@ -3,9 +3,10 @@
 import { useState } from 'react'
 import { Crown, Loader2, QrCode, Wallet } from 'lucide-react'
 import { toast } from 'sonner'
-import { formatBrlCentavos, PREMIUM_ANNUAL_PIX } from '@/lib/stripe'
+import { formatBrlCentavos, PLANS, PREMIUM_ANNUAL_PIX } from '@/lib/stripe'
+import { PREMIUM_PIX_GRACE_DAYS } from '@/lib/premium-subscription'
 
-type Mode = 'monthly' | 'pix-annual' | 'mp-monthly'
+type Mode = 'monthly' | 'pix-monthly' | 'pix-annual' | 'mp-monthly'
 
 interface CheckoutButtonProps {
   mode?: Mode
@@ -13,17 +14,22 @@ interface CheckoutButtonProps {
 
 const ENDPOINTS: Record<Mode, string> = {
   monthly: '/api/stripe/create-checkout',
+  'pix-monthly': '/api/stripe/create-checkout-pix-monthly',
   'pix-annual': '/api/stripe/create-checkout-pix',
   'mp-monthly': '/api/mercadopago/create-subscription',
 }
 
 const LABELS: Record<Mode, { idle: string; loading: string }> = {
   monthly: { idle: 'Assinar Premium', loading: 'Aguarde...' },
+  'pix-monthly': {
+    idle: `Pagar 1 mês via PIX (${formatBrlCentavos(PLANS.premium.price)})`,
+    loading: 'Gerando PIX...',
+  },
   'pix-annual': {
     idle: `Pagar 1 ano via PIX (${formatBrlCentavos(PREMIUM_ANNUAL_PIX.centavos)})`,
     loading: 'Gerando PIX...',
   },
-  'mp-monthly': { idle: 'Assinar via Mercado Pago (R$ 47/mês)', loading: 'Conectando...' },
+  'mp-monthly': { idle: 'Cartão recorrente via Mercado Pago', loading: 'Conectando...' },
 }
 
 export function CheckoutButton({ mode = 'monthly' }: CheckoutButtonProps) {
@@ -71,7 +77,7 @@ export function CheckoutButton({ mode = 'monthly' }: CheckoutButtonProps) {
     }
   }
 
-  const isPix = mode === 'pix-annual'
+  const isPix = mode === 'pix-annual' || mode === 'pix-monthly'
   const isMp = mode === 'mp-monthly'
 
   const Icon = loading ? Loader2 : isPix ? QrCode : isMp ? Wallet : Crown
