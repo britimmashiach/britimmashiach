@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { getAuthSnapshot } from '@/lib/auth-snapshot'
 import { profileHasLeaderAccess } from '@/lib/leader-access-policy'
 import { LeaderGate } from '@/components/ui/LeaderGate'
-import { BookOpen, Calendar, FileText, MessageCircle, Crown } from 'lucide-react'
+import { BookOpen, Calendar, FileText, MessageCircle, Crown, GraduationCap } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Painel de Líderes',
@@ -13,6 +13,14 @@ export const metadata: Metadata = {
 export const dynamic = 'force-dynamic'
 
 const resources = [
+  {
+    icon: GraduationCap,
+    title: 'Formação Manhigut',
+    text: 'Beit Midrash do Manhig: vinte e quatro módulos kabalísticos para líderes, com reverência à jornada evangélica e profundidade rabínica.',
+    href: '/lideres/formacao',
+    cta: 'Abrir formação',
+    featured: true,
+  },
   {
     icon: FileText,
     title: 'Roteiros de estudo',
@@ -80,16 +88,20 @@ export default async function LideresPainelPage() {
             Shalom, {firstName}
           </h1>
           <p className="text-sm font-inter text-warmgray-600 dark:text-warmgray-400 max-w-2xl">
-            Bem-vindo ao painel reservado a líderes aprovados. Novos módulos (PDFs exclusivos, checklist de
-            ministério, avisos do Rav) serão adicionados aqui.
+            Bem-vindo ao painel reservado a líderes aprovados. A Formação Manhigut já está disponível para
+            estudo pastoral. PDFs exclusivos, checklist de ministério e avisos do Rav serão acrescentados em
+            breve.
           </p>
         </div>
       </section>
 
       <section className="container mx-auto px-4 py-12 max-w-4xl space-y-8">
         <div className="grid gap-5 sm:grid-cols-2">
-          {resources.map(({ icon: Icon, title, text, href, cta }) => (
-            <div key={title} className="glass-card p-6 space-y-3 flex flex-col">
+          {resources.map(({ icon: Icon, title, text, href, cta, featured }) => (
+            <div
+              key={title}
+              className={`glass-card p-6 space-y-3 flex flex-col${featured ? ' ring-1 ring-gold-500/25 bg-gold-500/5' : ''}`}
+            >
               <Icon className="w-7 h-7 text-gold-600 dark:text-gold-400" aria-hidden />
               <h2 className="font-cinzel text-lg font-semibold text-petroleum-800 dark:text-parchment-100">{title}</h2>
               <p className="text-sm font-inter text-warmgray-600 dark:text-warmgray-400 leading-relaxed flex-1">{text}</p>

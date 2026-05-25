@@ -18,7 +18,7 @@ const pillars = [
   {
     icon: BookOpen,
     title: 'Formação contínua',
-    text: 'Materiais de ministério, roteiros de estudo e orientação alinhados ao Método Rav EBBY.',
+    text: 'Programa Manhigut (Beit Midrash do Manhig): formação kabalística para quem serve, com respeito pastoral a irmãos de origem evangélica.',
   },
   {
     icon: Shield,

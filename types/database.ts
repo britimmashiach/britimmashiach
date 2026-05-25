@@ -93,6 +93,57 @@ export interface Database {
         }
         Relationships: []
       }
+      leader_modules: {
+        Row: {
+          id: string
+          slug: string
+          month_num: number
+          stage: number
+          stage_label: string
+          title: string
+          subtitle: string | null
+          excerpt: string
+          content: string
+          is_published: boolean
+          reading_time_minutes: number
+          sort_order: number
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          slug: string
+          month_num: number
+          stage: number
+          stage_label: string
+          title: string
+          subtitle?: string | null
+          excerpt?: string
+          content?: string
+          is_published?: boolean
+          reading_time_minutes?: number
+          sort_order?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          slug?: string
+          month_num?: number
+          stage?: number
+          stage_label?: string
+          title?: string
+          subtitle?: string | null
+          excerpt?: string
+          content?: string
+          is_published?: boolean
+          reading_time_minutes?: number
+          sort_order?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       studies: {
         Row: {
           id: string
