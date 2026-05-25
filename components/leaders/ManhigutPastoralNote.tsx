@@ -44,7 +44,8 @@ export function ManhigutStageProgress({ availableCount, totalMonths = 24 }: Manh
             {MANHIGUT_PROGRAM.name}
           </p>
           <p className="text-sm font-inter text-warmgray-600 dark:text-warmgray-400">
-            Certificação {MANHIGUT_PROGRAM.certification} · {availableCount} de {totalMonths} módulos disponíveis
+            Certificação {MANHIGUT_PROGRAM.certification} · {availableCount} de {totalMonths} módulos com
+            texto completo publicado
           </p>
         </div>
       </div>

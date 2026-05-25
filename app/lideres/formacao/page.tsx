@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import { LeaderPortalGuard, getLeaderFirstName } from '@/components/leaders/LeaderPortalGuard'
+import { ManhigutAvailableNow } from '@/components/leaders/ManhigutAvailableNow'
 import { ManhigutCurriculumGrid } from '@/components/leaders/ManhigutCurriculumGrid'
 import { ManhigutPastoralNote, ManhigutStageProgress } from '@/components/leaders/ManhigutPastoralNote'
 import { getAuthSnapshot } from '@/lib/auth-snapshot'
@@ -60,6 +61,16 @@ async function FormacaoContent({ userId, firstName }: { userId: string | null; f
       <section className="container mx-auto px-4 py-10 max-w-4xl space-y-8">
         <ManhigutPastoralNote />
         <ManhigutStageProgress availableCount={availableCount} />
+        <ManhigutAvailableNow modules={modules} />
+        <div className="space-y-2 pt-2">
+          <h2 className="font-cinzel text-lg font-semibold text-petroleum-800 dark:text-parchment-100">
+            Grade completa · 24 meses
+          </h2>
+          <p className="text-sm font-inter text-warmgray-500 dark:text-warmgray-400">
+            Visão do programa inteiro. Módulos ainda sem texto completo aparecem bloqueados até nova publicação
+            do Rav EBBY.
+          </p>
+        </div>
         <ManhigutCurriculumGrid modules={modules} />
       </section>
     </div>

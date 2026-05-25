@@ -77,7 +77,9 @@ function ModuleCard({ module }: { module: ManhigutModule }) {
           Abrir módulo →
         </span>
       ) : (
-        <span className="text-xs font-inter text-warmgray-400 mt-auto pt-2">Em preparação pelo Rav EBBY</span>
+        <span className="text-xs font-inter text-warmgray-400 mt-auto pt-2">
+          {module.isCapstone ? 'Encerramento · aguardando publicação' : 'Entrega mensal em preparação'}
+        </span>
       )}
     </>
   )
