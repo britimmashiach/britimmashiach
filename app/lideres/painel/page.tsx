@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getAuthSnapshot } from '@/lib/auth-snapshot'
 import { profileHasLeaderAccess } from '@/lib/leader-access-policy'
+import { ManhigutSalutation } from '@/components/leaders/ManhigutSalutation'
 import { LeaderGate } from '@/components/ui/LeaderGate'
 import { BookOpen, Calendar, FileText, MessageCircle, Crown, GraduationCap } from 'lucide-react'
 
@@ -84,9 +85,7 @@ export default async function LideresPainelPage() {
           <p className="text-xs font-inter font-semibold uppercase tracking-widest text-gold-700 dark:text-gold-400">
             Portal de líderes
           </p>
-          <h1 className="font-cinzel text-3xl font-semibold text-petroleum-800 dark:text-parchment-100">
-            Shalom, {firstName}
-          </h1>
+          <ManhigutSalutation firstName={firstName} compact className="mb-1" />
           <p className="text-sm font-inter text-warmgray-600 dark:text-warmgray-400 max-w-2xl">
             Bem-vindo ao painel reservado a líderes aprovados. A Formação Manhigut já está disponível para
             estudo pastoral. PDFs exclusivos, checklist de ministério e avisos do Rav serão acrescentados em

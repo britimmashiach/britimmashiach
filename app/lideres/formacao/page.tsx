@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import { LeaderPortalGuard, getLeaderFirstName } from '@/components/leaders/LeaderPortalGuard'
+import { ManhigutSalutation } from '@/components/leaders/ManhigutSalutation'
 import { ManhigutAvailableNow } from '@/components/leaders/ManhigutAvailableNow'
 import { ManhigutCurriculumGrid } from '@/components/leaders/ManhigutCurriculumGrid'
 import { ManhigutPastoralNote, ManhigutStageProgress } from '@/components/leaders/ManhigutPastoralNote'
@@ -50,10 +51,11 @@ async function FormacaoContent({ userId, firstName }: { userId: string | null; f
           <h1 className="font-cinzel text-3xl font-semibold text-petroleum-800 dark:text-parchment-100">
             {MANHIGUT_PROGRAM.name}
           </h1>
+          <ManhigutSalutation firstName={firstName} className="pt-1" />
           <p className="text-sm font-inter text-warmgray-600 dark:text-warmgray-400 max-w-2xl leading-relaxed">
-            Shalom, {firstName}. Esta formação de vinte e quatro meses prepara o líder para ministrar com
-            profundidade kabalística autêntica, fidelidade à Toráh e reverência a Yeshua como Mashiach judaico,
-            sem desprezar quem ainda caminha entre tradições evangélicas e messiânicas.
+            Esta formação de vinte e quatro meses prepara o líder para ministrar com profundidade kabalística
+            autêntica, fidelidade à Toráh e reverência a Yeshua como Mashiach judaico, sem desprezar quem ainda
+            caminha entre tradições evangélicas e messiânicas.
           </p>
         </div>
       </section>

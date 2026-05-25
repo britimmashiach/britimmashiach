@@ -3,9 +3,11 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ArrowLeft, Clock, GraduationCap } from 'lucide-react'
 import { LeaderPortalGuard } from '@/components/leaders/LeaderPortalGuard'
+import { ManhigutSalutation } from '@/components/leaders/ManhigutSalutation'
 import { RichMarkdown } from '@/components/ui/RichMarkdown'
 import { getAuthSnapshot } from '@/lib/auth-snapshot'
 import { fetchManhigutModuleBySlug, fetchManhigutModuleSlugs } from '@/lib/leader-modules-supabase'
+import { prepareManhigutMarkdownForDisplay } from '@/lib/manhigut-content'
 import { getCurriculumBySlug } from '@/lib/manhigut-curriculum'
 
 export const dynamic = 'force-dynamic'
@@ -39,13 +41,22 @@ export default async function ManhigutModulePage({ params }: { params: Promise<{
 
   return (
     <LeaderPortalGuard resourceName="este módulo de formação">
-      <ModuleReader slug={slug} userId={auth.user?.id ?? null} />
+      <ModuleReader slug={slug} userId={auth.user?.id ?? null} firstName={auth.sessionDisplay?.firstName ?? null} />
     </LeaderPortalGuard>
   )
 }
 
-async function ModuleReader({ slug, userId }: { slug: string; userId: string | null }) {
+async function ModuleReader({
+  slug,
+  userId,
+  firstName,
+}: {
+  slug: string
+  userId: string | null
+  firstName: string | null
+}) {
   const mod = await fetchManhigutModuleBySlug(slug, userId)
+  const displayContent = mod ? prepareManhigutMarkdownForDisplay(mod.content) : ''
 
   if (!mod || mod.status !== 'available') {
     return (
@@ -112,10 +123,12 @@ async function ModuleReader({ slug, userId }: { slug: string; userId: string | n
         <p className="text-xs font-inter text-warmgray-400">Por rav EBBY · Programa Manhigut</p>
       </header>
 
-      <hr className="divider-gold mb-8" />
+      <hr className="divider-gold mb-6" />
+
+      <ManhigutSalutation firstName={firstName} className="mb-8" />
 
       <article className="prose prose-sm md:prose-base max-w-none dark:prose-invert">
-        <RichMarkdown text={mod.content} />
+        <RichMarkdown text={displayContent} />
       </article>
 
       <div className="mt-10 glass-card p-4 flex items-center gap-3">
