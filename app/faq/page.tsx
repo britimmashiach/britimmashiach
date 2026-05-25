@@ -58,6 +58,10 @@ export default function FaqPage() {
           Judaísmo messiânico
         </Link>
         <span className="text-warmgray-400" aria-hidden="true">·</span>
+        <Link href="/chagim/yamim-noraim" className="text-gold-600 hover:text-gold-500 dark:text-gold-400">
+          Yamim Noraim
+        </Link>
+        <span className="text-warmgray-400" aria-hidden="true">·</span>
         <Link href="/chagim/shalosh-regalim" className="text-gold-600 hover:text-gold-500 dark:text-gold-400">
           Shalosh Regalim
         </Link>

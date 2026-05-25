@@ -7,87 +7,77 @@ import { FaqSection } from '@/components/seo/FaqSection'
 import { breadcrumbJsonLd, faqPageJsonLd } from '@/lib/json-ld'
 import { getPublicSiteOrigin } from '@/lib/public-site-url'
 import { SITE_NAME_ALT } from '@/lib/site-brand'
-import { SHALOSH_REGALIM_FAQ } from '@/lib/chag-hub-faq'
+import { YAMIM_NORAIM_FAQ } from '@/lib/chag-hub-faq'
 
 const origin = getPublicSiteOrigin()
 
-const REGALIM = [
+const YAMIM = [
   {
-    slug: 'pesach',
-    name: 'Pesach',
-    hebrew: 'פֶּסַח',
-    summary: 'Libertação do Egito, Matsot e memória do pacto. O Seder abre o ciclo das peregrinações.',
+    slug: 'rosh-hashanah',
+    name: 'Rosh Hashanah',
+    hebrew: 'רֹאשׁ הַשָּׁנָה',
+    summary: 'Ano Novo judaico, Shofar, julgamento e Teshuváh. Início dos Dez Dias de Arrepentimento.',
   },
   {
-    slug: 'shavuot',
-    name: 'Shavuot',
-    hebrew: 'שָׁבוּעוֹת',
-    summary: 'Matan Toráh no Sinai, primícias do trigo e conclusão do Omer. Festa da revelação.',
-  },
-  {
-    slug: 'sukkot',
-    name: 'Sukkot',
-    hebrew: 'סֻכּוֹת',
-    summary: 'Tabernáculos, Arbaat Haminim e alegria plena. Confiança na Providência após o julgamento.',
+    slug: 'yom-kippur',
+    name: 'Yom Kippur',
+    hebrew: 'יוֹם כִּפּוּר',
+    summary: 'Dia do Perdão, jejum e oração. O dia mais sagrado do calendário, selando o julgamento.',
   },
 ]
 
 export const metadata: Metadata = {
-  title: 'Shalosh Regalim: Pesach, Shavuot e Sukkot',
+  title: 'Yamim Noraim: Rosh Hashanah e Yom Kippur',
   description:
-    'Guia das três peregrinações do calendário judaico: Pesach, Shavuot e Sukkot. Estudo PaRDeS na Brit Im Mashiach.',
-  alternates: { canonical: `${origin}/chagim/shalosh-regalim` },
+    'Guia dos Dias Santos: Rosh Hashanah, Yom Kippur, Teshuváh e Shofar. Estudo PaRDeS na Brit Im Mashiach.',
+  alternates: { canonical: `${origin}/chagim/yamim-noraim` },
   openGraph: {
-    url: `${origin}/chagim/shalosh-regalim`,
-    title: `Shalosh Regalim | ${SITE_NAME_ALT}`,
-    description: 'Cluster de estudo das três festas de peregrinação.',
+    url: `${origin}/chagim/yamim-noraim`,
+    title: `Yamim Noraim | ${SITE_NAME_ALT}`,
+    description: 'Cluster de estudo dos Dias Santos do calendário judaico.',
     locale: 'pt_BR',
   },
 }
 
-export default function ShaloshRegalimPage() {
+export default function YamimNoraimPage() {
   const crumbs = [
     { name: 'Início', path: '/' },
     { name: 'Chagim', path: '/chagim' },
-    { name: 'Shalosh Regalim', path: '/chagim/shalosh-regalim' },
+    { name: 'Yamim Noraim', path: '/chagim/yamim-noraim' },
   ]
 
   return (
     <div className="container mx-auto px-4 py-10 max-w-3xl">
-      <JsonLd data={[breadcrumbJsonLd(crumbs), faqPageJsonLd(SHALOSH_REGALIM_FAQ)]} />
+      <JsonLd data={[breadcrumbJsonLd(crumbs), faqPageJsonLd(YAMIM_NORAIM_FAQ)]} />
       <Breadcrumbs items={crumbs} />
 
       <div className="mb-10 space-y-3">
         <div className="flex items-center gap-2">
-          <Flame className="w-5 h-5 text-gold-500" aria-hidden="true" />
+          <Flame className="w-5 h-5 text-red-500" aria-hidden="true" />
           <span className="text-xs font-inter font-semibold text-warmgray-500 uppercase tracking-widest">
-            Shalosh Regalim · שָׁלוֹשׁ רְגָלִים
+            Yamim Noraim · יָמִים נוֹרָאִים
           </span>
         </div>
-        <h1 className="section-title">As três peregrinações</h1>
+        <h1 className="section-title">Os Dias Santos</h1>
         <p className="section-subtitle max-w-2xl">
-          Pesach, Shavuot e Sukkot estruturam o ano litúrgico de Israel: libertação, revelação e confiança.
-          Cada Moed possui estudo público indexável na plataforma, com aprofundamento Premium quando aplicável.
+          Rosh Hashanah e Yom Kippur concentram o trabalho espiritual de Teshuváh, Shofar e kedusháh.
+          O ciclo culmina na alegria de Sukkot, mas estes dias inauguram o ano com sobriedade e esperança.
         </p>
         <p className="text-sm font-inter text-warmgray-500 max-w-2xl leading-relaxed">
-          Volte ao{' '}
-          <Link href="/chagim" className="text-gold-600 hover:underline dark:text-gold-400">
-            índice de Chagim
+          Veja também{' '}
+          <Link href="/chagim/shalosh-regalim" className="text-gold-600 hover:underline dark:text-gold-400">
+            Shalosh Regalim
           </Link>
-          , veja os{' '}
-          <Link href="/chagim/yamim-noraim" className="text-gold-600 hover:underline dark:text-gold-400">
-            Yamim Noraim
-          </Link>
-          {' '}ou explore o{' '}
-          <Link href="/metodo-pardes" className="text-gold-600 hover:underline dark:text-gold-400">
-            Método PaRDeS
+          {' '}e o{' '}
+          <Link href="/calendar" className="text-gold-600 hover:underline dark:text-gold-400">
+            calendário hebraico
           </Link>
           .
         </p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-1">
-        {REGALIM.map((chag) => (
+      <div className="grid gap-4">
+        {YAMIM.map((chag) => (
           <Link
             key={chag.slug}
             href={`/chagim/${chag.slug}`}
@@ -113,23 +103,23 @@ export default function ShaloshRegalimPage() {
 
       <section className="mt-10 rounded-xl border border-border/50 bg-card/30 p-5 md:p-6 space-y-3">
         <h2 className="font-cinzel text-lg font-semibold text-petroleum-800 dark:text-parchment-100">
-          Shavuot no ciclo anual
+          Do julgamento à alegria
         </h2>
         <p className="font-inter text-sm text-warmgray-600 dark:text-warmgray-400 leading-relaxed">
-          Entre Pesach e Shavuot contamos o Omer: 49 dias de preparação interior. Shavuot celebra a entrega da Toráh,
-          a leitura de Rut e, na tradição kabalística, a Tikun Leil. Na Brit Im Mashiach, o estudo de Shavuot integra
-          Peshat dos mandamentos, Remez agrícola das primícias e Sod da revelação no Sinai.
+          Os Yamim Noraim preparam Israel para o ano novo com vidui, tefilah e emendamento. Após Yom Kippur,
+          o calendário avança para Sukkot, festa de confiança e hospitalidade. Na Brit Im Mashiach, estudamos
+          cada etapa em Peshat litúrgico, Remez profético e Sod kabalístico quando o material está disponível.
         </p>
         <Link
-          href="/chagim/shavuot"
+          href="/chagim/sukkot"
           className="inline-flex items-center gap-1.5 text-sm font-inter font-medium text-gold-600 hover:text-gold-500 dark:text-gold-400"
         >
-          Ir para o estudo de Shavuot
+          Continuar com Sukkot
           <ArrowRight className="w-4 h-4" aria-hidden="true" />
         </Link>
       </section>
 
-      <FaqSection items={SHALOSH_REGALIM_FAQ} title="Perguntas sobre as peregrinações" id="regalim-faq" />
+      <FaqSection items={YAMIM_NORAIM_FAQ} title="Perguntas sobre os Dias Santos" id="yamim-faq" />
     </div>
   )
 }

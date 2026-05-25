@@ -11,7 +11,11 @@ export const CHAG_HUB_FAQ: FaqItem[] = [
   },
   {
     question: 'O que são os Shalosh Regalim?',
-    answer: 'São as três peregrinações: Pesach, Shavuot e Sukkot. Representam libertação, revelação da Toráh e confiança na Providência. Veja o guia em /chagim/shalosh-regalim.',
+    answer: 'São as três peregrinações: Pesach, Shavuot e Sukkot. Representam libertação, revelação da Toráh e confiança na Providência. Veja o guia Shalosh Regalim na seção Chagim.',
+  },
+  {
+    question: 'O que são os Yamim Noraim?',
+    answer: 'São os Dias Santos entre Rosh Hashanah e Yom Kippur: tempo de Teshuváh, Shofar e julgamento espiritual. A plataforma reúne um guia dedicado com estudo de cada Moed.',
   },
   {
     question: 'Os estudos de Chagim exigem assinatura?',
@@ -31,5 +35,20 @@ export const SHALOSH_REGALIM_FAQ: FaqItem[] = [
   {
     question: 'Posso estudar cada Regel separadamente?',
     answer: 'Sim. Cada festa tem página própria com resumo, seções e FAQ. Este guia reúne os três Moedim para navegação em cluster e SEO temático.',
+  },
+]
+
+export const YAMIM_NORAIM_FAQ: FaqItem[] = [
+  {
+    question: 'O que significa Yamim Noraim?',
+    answer: 'Yamim Noraim são os Dias Santos ou Dias Temíveis: o período de Rosh Hashanah e Yom Kippur dedicado a Teshuváh, julgamento e renovação espiritual antes do ano judaico.',
+  },
+  {
+    question: 'Qual a diferença entre Rosh Hashanah e Yom Kippur?',
+    answer: 'Rosh Hashanah inaugura o ano com Shofar e introspecção. Yom Kippur, dez dias depois, é o Dia do Perdão com jejum total e liturgia de vidui, selando o julgamento.',
+  },
+  {
+    question: 'Como a Brit Im Mashiach estuda os Yamim Noraim?',
+    answer: 'Cada Moed possui página pública com resumo e FAQ. Material kabalístico de Kavannot, Sod e PDFs aprofundados pode ser reservado ao plano Premium.',
   },
 ]

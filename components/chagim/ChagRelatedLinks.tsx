@@ -8,14 +8,21 @@ type ChagRelatedLinksProps = {
 
 const CLUSTER_BY_CATEGORY: Record<string, { href: string; label: string }> = {
   shalosh_regalim: { href: '/chagim/shalosh-regalim', label: 'Guia Shalosh Regalim' },
+  yamim_noraim: { href: '/chagim/yamim-noraim', label: 'Guia Yamim Noraim' },
 }
 
 const CHAG_SPECIFIC: Record<string, { href: string; label: string }[]> = {
   pesach: [{ href: '/calendar', label: 'Calendário hebraico' }],
   shavuot: [{ href: '/metodo-pardes', label: 'Método PaRDeS' }],
   sukkot: [{ href: '/parashot', label: 'Parashot semanais' }],
-  'rosh-hashanah': [{ href: '/chagim/yom-kippur', label: 'Yom Kippur' }],
-  'yom-kippur': [{ href: '/chagim/rosh-hashanah', label: 'Rosh Hashanah' }],
+  'rosh-hashanah': [
+    { href: '/chagim/yom-kippur', label: 'Yom Kippur' },
+    { href: '/chagim/yamim-noraim', label: 'Guia Yamim Noraim' },
+  ],
+  'yom-kippur': [
+    { href: '/chagim/rosh-hashanah', label: 'Rosh Hashanah' },
+    { href: '/chagim/yamim-noraim', label: 'Guia Yamim Noraim' },
+  ],
 }
 
 export function ChagRelatedLinks({ slug, category }: ChagRelatedLinksProps) {
