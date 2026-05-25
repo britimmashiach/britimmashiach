@@ -8,11 +8,10 @@ import { fetchStudySlugs } from '@/lib/studies-supabase'
 import { getPublicSiteOrigin } from '@/lib/public-site-url'
 import { getShopCatalog } from '@/lib/shop-catalog'
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const origin = getPublicSiteOrigin()
-  const now = new Date()
+export const revalidate = 86400
 
-  const staticRoutes: MetadataRoute.Sitemap = [
+function staticRoutes(origin: string, now: Date): MetadataRoute.Sitemap {
+  return [
     { url: origin, lastModified: now, changeFrequency: 'daily', priority: 1 },
     { url: `${origin}/sobre`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${origin}/judaismo-messianico`, lastModified: now, changeFrequency: 'monthly', priority: 0.88 },
@@ -32,6 +31,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${origin}/loja`, lastModified: now, changeFrequency: 'weekly', priority: 0.55 },
     { url: `${origin}/lideres`, lastModified: now, changeFrequency: 'monthly', priority: 0.45 },
   ]
+}
+
+async function buildFullSitemap(): Promise<MetadataRoute.Sitemap> {
+  const origin = getPublicSiteOrigin()
+  const now = new Date()
 
   const [studySlugs, parashaDbSlugs, chagDbSlugs, shopProducts] = await Promise.all([
     fetchStudySlugs(),
@@ -39,6 +43,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     fetchChagimSlugs(),
     getShopCatalog(),
   ])
+
   const chagSlugs = new Set([
     ...getAllChagSlugsForSitemap().map((s) => s.slug),
     ...chagDbSlugs.map((s) => s.slug),
@@ -94,7 +99,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }))
 
   return [
-    ...staticRoutes,
+    ...staticRoutes(origin, now),
     ...parashaRoutes,
     ...studyRoutes,
     ...chagRoutes,
@@ -102,4 +107,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...tanachBookRoutes,
     ...tanachChapterRoutes,
   ]
+}
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  try {
+    return await buildFullSitemap()
+  } catch (err) {
+    console.error('[sitemap] falha ao gerar mapa completo:', err)
+    const origin = getPublicSiteOrigin()
+    return staticRoutes(origin, new Date())
+  }
 }

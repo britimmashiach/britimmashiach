@@ -1,4 +1,4 @@
-import { createServerSupabaseClient, hasSupabaseServerEnv } from '@/lib/supabase-server'
+import { createClient } from '@supabase/supabase-js'
 import { FALLBACK_SHOP_PRODUCTS, type ShopProduct } from '@/lib/shop-products'
 
 type DbRow = {
@@ -21,11 +21,19 @@ function mapRow(row: DbRow): ShopProduct {
   }
 }
 
+function createAnonSupabase() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL ?? ''
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ''
+  if (!url || !key) return null
+  return createClient(url, key)
+}
+
+/** Catálogo público via anon key (sem cookies — seguro para sitemap e SSG). */
 export async function getShopCatalog(): Promise<ShopProduct[]> {
-  if (!hasSupabaseServerEnv()) return FALLBACK_SHOP_PRODUCTS
+  const supabase = createAnonSupabase()
+  if (!supabase) return FALLBACK_SHOP_PRODUCTS
 
   try {
-    const supabase = await createServerSupabaseClient()
     const { data, error } = await supabase
       .from('shop_products')
       .select('slug, name, description, price_cents, category, image_url')
@@ -40,12 +48,11 @@ export async function getShopCatalog(): Promise<ShopProduct[]> {
 }
 
 export async function getShopProduct(slug: string): Promise<ShopProduct | null> {
-  if (!hasSupabaseServerEnv()) {
-    return FALLBACK_SHOP_PRODUCTS.find((p) => p.slug === slug) ?? null
-  }
+  const fallback = FALLBACK_SHOP_PRODUCTS.find((p) => p.slug === slug) ?? null
+  const supabase = createAnonSupabase()
+  if (!supabase) return fallback
 
   try {
-    const supabase = await createServerSupabaseClient()
     const { data, error } = await supabase
       .from('shop_products')
       .select('slug, name, description, price_cents, category, image_url')
@@ -53,11 +60,9 @@ export async function getShopProduct(slug: string): Promise<ShopProduct | null> 
       .eq('is_active', true)
       .maybeSingle()
 
-    if (error || !data) {
-      return FALLBACK_SHOP_PRODUCTS.find((p) => p.slug === slug) ?? null
-    }
+    if (error || !data) return fallback
     return mapRow(data)
   } catch {
-    return FALLBACK_SHOP_PRODUCTS.find((p) => p.slug === slug) ?? null
+    return fallback
   }
 }

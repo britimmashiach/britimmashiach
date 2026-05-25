@@ -14,6 +14,9 @@
     "sync:aliyot": "tsx --env-file=.env.local scripts/sync-aliyot-content.ts",
     "sync:aliyah1": "tsx --env-file=.env.local scripts/sync-aliyah1-content.ts",
     "sync:seo": "npm run sync:pardes && npm run sync:aliyot",
+    "check:sitemap": "tsx --env-file=.env.local scripts/check-sitemap.ts",
+    "check:auth": "tsx --env-file=.env.local scripts/check-auth-config.ts",
+    "auth:recovery": "tsx --env-file=.env.local scripts/send-password-recovery.ts",
     "populate": "npm run seed:aliyot && npm run sync:pdfs"
   },
   "dependencies": {
