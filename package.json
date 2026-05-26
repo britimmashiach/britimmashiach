@@ -18,6 +18,8 @@
     "check:sitemap": "tsx --env-file=.env.local scripts/check-sitemap.ts",
     "check:auth": "tsx --env-file=.env.local scripts/check-auth-config.ts",
     "auth:recovery": "tsx --env-file=.env.local scripts/send-password-recovery.ts",
+    "check:asaas-migration": "tsx --env-file=.env.local scripts/check-asaas-migration.mjs",
+    "apply:asaas-migration": "tsx --env-file=.env.local scripts/apply-asaas-migration.mjs",
     "populate": "npm run seed:aliyot && npm run sync:pdfs"
   },
   "dependencies": {
@@ -58,6 +60,7 @@
     "autoprefixer": "^10.4.20",
     "eslint": "^9.18.0",
     "eslint-config-next": "^16.2.6",
+    "pg": "^8.21.0",
     "postcss": "^8.5.1",
     "supabase": "^2.98.2",
     "tailwindcss": "^3.4.17",

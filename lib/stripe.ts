@@ -9,6 +9,13 @@ export function hasStripeEnv(): boolean {
   )
 }
 
+/** Exibir checkout Stripe na UI (oculto quando Asaas está ativo, salvo override). */
+export function showStripePremium(): boolean {
+  if (process.env.NEXT_PUBLIC_PREMIUM_STRIPE_ENABLED === 'true') return hasStripeEnv()
+  if (process.env.ASAAS_API_KEY?.trim()) return false
+  return hasStripeEnv()
+}
+
 export function getStripe(): Stripe {
   if (!_stripe) {
     _stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {

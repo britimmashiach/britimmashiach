@@ -38,6 +38,7 @@ export function Footer() {
                 { href: '/judaismo-messianico', label: 'Judaísmo messiânico' },
                 { href: '/metodo-pardes', label: 'Método PaRDeS' },
                 { href: '/faq', label: 'Perguntas frequentes' },
+                { href: '/ouvidoria', label: 'Ouvidoria' },
                 { href: '/calendar', label: 'Calendário' },
                 { href: '/parashot', label: 'Parashot' },
                 { href: '/chagim', label: 'Chagim' },

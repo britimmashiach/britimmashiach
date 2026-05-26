@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 import { Crown, Check, Star, Sparkles, BookOpen, Library, Layers } from 'lucide-react'
-import { PLANS, hasStripeEnv, PREMIUM_ANNUAL_PIX, formatBrlCentavos } from '@/lib/stripe'
+import { PLANS, PREMIUM_ANNUAL_PIX, formatBrlCentavos, showStripePremium } from '@/lib/stripe'
 import { PREMIUM_PIX_GRACE_DAYS } from '@/lib/premium-subscription'
 import { hasMpEnv } from '@/lib/mercadopago'
+import { hasAsaasEnv } from '@/lib/asaas'
 import { CheckoutButton } from '@/components/ui/CheckoutButton'
 
 export const metadata: Metadata = {
@@ -19,7 +20,8 @@ const features = [
 ]
 
 export default function PremiumPage() {
-  const stripeReady = hasStripeEnv()
+  const stripeReady = showStripePremium()
+  const asaasReady = hasAsaasEnv()
   const mpReady = hasMpEnv()
   const freePlan = PLANS.free
   const premiumPlan = PLANS.premium
@@ -132,43 +134,51 @@ export default function PremiumPage() {
             </ul>
 
             <div className="space-y-2.5">
-              {stripeReady && (
+              {asaasReady && (
                 <>
-                  <CheckoutButton mode="pix-monthly" />
+                  <CheckoutButton mode="asaas-pix-monthly" />
                   <p className="text-xs font-inter text-gold-700 dark:text-gold-400 text-center leading-relaxed">
-                    PIX mensal {priceFormatted}: sem cartão, sem conta Mercado Pago. Renove todo mês pelo
-                    QR Code. Se atrasar, você tem {PREMIUM_PIX_GRACE_DAYS} dias extras antes do bloqueio.
+                    PIX mensal {priceFormatted}: pague o QR Code todo mês. Sem cartão.
+                    Tolerância de {PREMIUM_PIX_GRACE_DAYS} dias antes do bloqueio.
+                    Quando o Asaas liberar Pix Automático, o débito passará a ser automático.
                   </p>
-                  <CheckoutButton mode="pix-annual" />
+                  <CheckoutButton mode="asaas-pix-annual" />
                   <p className="text-xs font-inter text-warmgray-500 text-center leading-relaxed">
-                    PIX anual {annualPixFormatted} por 12 meses (~R$ 33/mês). Pagamento único, renovação
-                    manual ao fim do ano.
+                    PIX anual {annualPixFormatted} por 12 meses (~R$ 33/mês). Pagamento único,
+                    renovação manual ao fim do ano.
                   </p>
-                  <CheckoutButton />
                 </>
               )}
-              {mpReady ? (
+              {mpReady && (
                 <>
                   <CheckoutButton mode="mp-monthly" />
                   <p className="text-xs font-inter text-warmgray-500 text-center leading-relaxed">
                     Somente cartão de crédito. Exige conta MP ou cadastro de cartão no checkout.
                   </p>
                 </>
-              ) : (
-                !stripeReady && (
-                  <p className="text-xs font-inter text-warmgray-500 text-center py-2">
-                    Pagamento via Mercado Pago em breve.
-                  </p>
-                )
+              )}
+              {stripeReady && (
+                <>
+                  <CheckoutButton mode="pix-monthly" />
+                  <CheckoutButton mode="pix-annual" />
+                  <CheckoutButton />
+                </>
+              )}
+              {!asaasReady && !mpReady && !stripeReady && (
+                <p className="text-xs font-inter text-warmgray-500 text-center py-2">
+                  Configure o gateway de pagamento para assinar online.
+                </p>
               )}
               <p className="text-xs font-inter text-warmgray-500 text-center pt-1 leading-relaxed">
-                {mpReady && stripeReady
-                  ? `PIX mensual ou anual na Stripe. Cartão recorrente: ${priceFormatted}/mês (Stripe ou MP).`
-                  : mpReady
-                    ? `${priceFormatted}/mês no cartão via Mercado Pago.`
-                    : stripeReady
-                      ? `PIX ${priceFormatted}/mês ou ${annualPixFormatted}/ano, ou cartão ${priceFormatted}/mês.`
-                      : 'Configure o gateway de pagamento para assinar online.'}
+                {asaasReady && mpReady
+                  ? `PIX mensal ou anual via Asaas. Cartão ${priceFormatted}/mês via Mercado Pago.`
+                  : asaasReady
+                    ? `PIX mensal ou anual via Asaas.`
+                    : mpReady
+                      ? `${priceFormatted}/mês no cartão via Mercado Pago.`
+                      : stripeReady
+                        ? `PIX ou cartão via Stripe.`
+                        : 'Pagamentos em configuração.'}
               </p>
             </div>
           </div>
@@ -178,8 +188,11 @@ export default function PremiumPage() {
         <p className="text-center text-sm font-inter text-warmgray-500 mt-8 leading-relaxed">
           Cancele a qualquer momento. Sem fidelidade.
           {mpReady && ' Valor fixo de R$ 47/mês debitado no cartão autorizado.'}
-          {' '}Pagamento seguro via Mercado Pago
-          {stripeReady ? ' ou Stripe (cartão, PIX)' : ''}.
+          {asaasReady && ' PIX mensal via QR Code (renovação manual até Pix Automático ser liberado).'}
+          {' '}Pagamento seguro
+          {asaasReady ? ' via Asaas' : ''}
+          {mpReady ? `${asaasReady ? ' e' : ' via'} Mercado Pago` : ''}
+          {stripeReady ? ' ou Stripe' : ''}.
         </p>
       </section>
 
@@ -191,7 +204,7 @@ export default function PremiumPage() {
             <Star className="w-6 h-6 text-gold-400 fill-gold-400" />
           </div>
           <blockquote className="font-cormorant text-2xl italic text-petroleum-800 dark:text-parchment-100 leading-relaxed">
-            &ldquo;O ensino da Toráh é árbol de vida para os que a seguem, e quem a ela se agarra é afortunado.&rdquo;
+            &ldquo;O ensino da Toráh é árvore de vida para os que a seguem, e quem a ela se agarra é afortunado.&rdquo;
           </blockquote>
           <p className="text-sm font-inter text-warmgray-500">
             Mishle 3:18

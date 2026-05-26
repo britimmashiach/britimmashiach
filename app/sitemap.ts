@@ -16,6 +16,7 @@ function staticRoutes(origin: string, now: Date): MetadataRoute.Sitemap {
     { url: `${origin}/sobre`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${origin}/judaismo-messianico`, lastModified: now, changeFrequency: 'monthly', priority: 0.88 },
     { url: `${origin}/faq`, lastModified: now, changeFrequency: 'monthly', priority: 0.75 },
+    { url: `${origin}/ouvidoria`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${origin}/metodo-pardes`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${origin}/calendar`, lastModified: now, changeFrequency: 'daily', priority: 0.9 },
     { url: `${origin}/parashot`, lastModified: now, changeFrequency: 'weekly', priority: 0.85 },

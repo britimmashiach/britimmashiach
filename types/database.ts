@@ -15,6 +15,10 @@ export interface Database {
           stripe_customer_id: string | null
           stripe_subscription_id: string | null
           mp_subscription_id: string | null
+          asaas_customer_id: string | null
+          asaas_pix_authorization_id: string | null
+          asaas_subscription_id: string | null
+          cpf_cnpj: string | null
           subscription_status: 'active' | 'canceled' | 'past_due' | null
           subscription_current_period_end: string | null
           created_at: string
@@ -31,6 +35,10 @@ export interface Database {
           stripe_customer_id?: string | null
           stripe_subscription_id?: string | null
           mp_subscription_id?: string | null
+          asaas_customer_id?: string | null
+          asaas_pix_authorization_id?: string | null
+          asaas_subscription_id?: string | null
+          cpf_cnpj?: string | null
           subscription_status?: 'active' | 'canceled' | 'past_due' | null
           subscription_current_period_end?: string | null
           created_at?: string
@@ -47,6 +55,10 @@ export interface Database {
           stripe_customer_id?: string | null
           stripe_subscription_id?: string | null
           mp_subscription_id?: string | null
+          asaas_customer_id?: string | null
+          asaas_pix_authorization_id?: string | null
+          asaas_subscription_id?: string | null
+          cpf_cnpj?: string | null
           subscription_status?: 'active' | 'canceled' | 'past_due' | null
           subscription_current_period_end?: string | null
           created_at?: string

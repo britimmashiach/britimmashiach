@@ -16,9 +16,10 @@ import { CheckoutButton } from '@/components/ui/CheckoutButton'
 interface ProfileClientProps {
   profile: Profile | null
   successPayment: boolean
+  asaasReady?: boolean
 }
 
-export function ProfileClient({ profile, successPayment }: ProfileClientProps) {
+export function ProfileClient({ profile, successPayment, asaasReady = false }: ProfileClientProps) {
   const [portalLoading, setPortalLoading] = useState(false)
 
   useEffect(() => {
@@ -67,7 +68,11 @@ export function ProfileClient({ profile, successPayment }: ProfileClientProps) {
 
   const accessState = getPremiumAccessState(profile)
   const isPremium = profileHasActivePremium(profile)
-  const isPixManual = !profile.stripe_subscription_id && !profile.mp_subscription_id
+  const hasRecurringBilling =
+    !!profile.stripe_subscription_id ||
+    !!profile.mp_subscription_id ||
+    !!profile.asaas_pix_authorization_id
+  const isPixManual = !hasRecurringBilling
 
   return (
     <div className="space-y-6">
@@ -193,7 +198,22 @@ export function ProfileClient({ profile, successPayment }: ProfileClientProps) {
         )}
 
         {isPixManual && profile.role === 'premium' && (
-          <CheckoutButton mode="pix-monthly" />
+          <>
+            {asaasReady ? (
+              <>
+                <CheckoutButton mode="asaas-pix-monthly" />
+                <CheckoutButton mode="asaas-pix-annual" />
+              </>
+            ) : (
+              <CheckoutButton mode="pix-monthly" />
+            )}
+          </>
+        )}
+
+        {hasRecurringBilling && profile.asaas_pix_authorization_id && (
+          <p className="text-xs font-inter text-warmgray-500 text-center leading-relaxed">
+            PIX automático ativo via Asaas. O débito mensal ocorre no banco autorizado.
+          </p>
         )}
 
         {isPremium && profile.stripe_subscription_id && (

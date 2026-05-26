@@ -1,22 +1,35 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Crown, Loader2, QrCode, Wallet } from 'lucide-react'
 import { toast } from 'sonner'
 import { formatBrlCentavos, PLANS, PREMIUM_ANNUAL_PIX } from '@/lib/stripe'
-import { PREMIUM_PIX_GRACE_DAYS } from '@/lib/premium-subscription'
 
-type Mode = 'monthly' | 'pix-monthly' | 'pix-annual' | 'mp-monthly'
+type Mode =
+  | 'monthly'
+  | 'pix-monthly'
+  | 'pix-annual'
+  | 'mp-monthly'
+  | 'asaas-pix-monthly'
+  | 'asaas-pix-recurring'
+  | 'asaas-pix-annual'
 
 interface CheckoutButtonProps {
   mode?: Mode
 }
 
-const ENDPOINTS: Record<Mode, string> = {
+const API_ENDPOINTS: Partial<Record<Mode, string>> = {
   monthly: '/api/stripe/create-checkout',
   'pix-monthly': '/api/stripe/create-checkout-pix-monthly',
   'pix-annual': '/api/stripe/create-checkout-pix',
   'mp-monthly': '/api/mercadopago/create-subscription',
+}
+
+const NAV_ROUTES: Partial<Record<Mode, string>> = {
+  'asaas-pix-monthly': '/premium/pix?mode=monthly',
+  'asaas-pix-recurring': '/premium/pix?mode=recurring',
+  'asaas-pix-annual': '/premium/pix?mode=annual',
 }
 
 const LABELS: Record<Mode, { idle: string; loading: string }> = {
@@ -30,13 +43,37 @@ const LABELS: Record<Mode, { idle: string; loading: string }> = {
     loading: 'Gerando PIX...',
   },
   'mp-monthly': { idle: 'Cartão recorrente via Mercado Pago', loading: 'Conectando...' },
+  'asaas-pix-monthly': {
+    idle: `PIX mensal ${formatBrlCentavos(PLANS.premium.price)}`,
+    loading: 'Abrindo...',
+  },
+  'asaas-pix-recurring': {
+    idle: `PIX automático ${formatBrlCentavos(PLANS.premium.price)}/mês`,
+    loading: 'Abrindo...',
+  },
+  'asaas-pix-annual': {
+    idle: `PIX anual ${formatBrlCentavos(PREMIUM_ANNUAL_PIX.centavos)}`,
+    loading: 'Abrindo...',
+  },
 }
 
 export function CheckoutButton({ mode = 'monthly' }: CheckoutButtonProps) {
+  const router = useRouter()
   const [loading, setLoading] = useState(false)
-  const endpoint = ENDPOINTS[mode]
+  const navRoute = NAV_ROUTES[mode]
+  const endpoint = API_ENDPOINTS[mode]
 
   async function handleCheckout() {
+    if (navRoute) {
+      router.push(navRoute)
+      return
+    }
+
+    if (!endpoint) {
+      toast.error('Modo de checkout inválido')
+      return
+    }
+
     setLoading(true)
     try {
       const res = await fetch(endpoint, { method: 'POST' })
@@ -77,7 +114,12 @@ export function CheckoutButton({ mode = 'monthly' }: CheckoutButtonProps) {
     }
   }
 
-  const isPix = mode === 'pix-annual' || mode === 'pix-monthly'
+  const isPix =
+    mode === 'pix-annual' ||
+    mode === 'pix-monthly' ||
+    mode === 'asaas-pix-monthly' ||
+    mode === 'asaas-pix-recurring' ||
+    mode === 'asaas-pix-annual'
   const isMp = mode === 'mp-monthly'
 
   const Icon = loading ? Loader2 : isPix ? QrCode : isMp ? Wallet : Crown

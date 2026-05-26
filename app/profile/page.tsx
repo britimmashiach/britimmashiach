@@ -3,6 +3,7 @@ import { connection } from 'next/server'
 import { redirect } from 'next/navigation'
 import { createServerSupabaseClient, hasSupabaseServerEnv } from '@/lib/supabase-server'
 import { ProfileClient } from '@/components/ui/ProfileClient'
+import { hasAsaasEnv } from '@/lib/asaas'
 
 export const dynamic = 'force-dynamic'
 
@@ -39,7 +40,11 @@ export default async function ProfilePage({
 
   return (
     <div className="container mx-auto px-4 py-10 max-w-2xl">
-      <ProfileClient profile={profile} successPayment={successPayment} />
+      <ProfileClient
+        profile={profile}
+        successPayment={successPayment}
+        asaasReady={hasAsaasEnv()}
+      />
     </div>
   )
 }
