@@ -71,6 +71,32 @@ export function breadcrumbJsonLd(items: BreadcrumbItem[]) {
   }
 }
 
+export function personJsonLd(input: {
+  name: string
+  url: string
+  description: string
+  jobTitle?: string
+}) {
+  const origin = getPublicSiteOrigin()
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: input.name,
+    url: input.url,
+    description: input.description,
+    jobTitle: input.jobTitle ?? 'Rav',
+    worksFor: { '@type': 'Organization', name: CONGREGATION, url: origin },
+    knowsAbout: [
+      'Toráh',
+      'Kabaláh Luriana',
+      'PaRDeS',
+      'Modelo Netivot',
+      'Judaísmo messiânico',
+      'Halacháh',
+    ],
+  }
+}
+
 export function studyArticleJsonLd(input: {
   slug: string
   title: string
@@ -86,18 +112,12 @@ export function studyArticleJsonLd(input: {
     headline: input.title,
     description: input.excerpt,
     url,
-    mainEntityOfPage: { '@type': 'WebPage', '@id': url },
     datePublished: input.publishedAt,
-    author: { '@type': 'Person', name: RAV_NAME },
-    publisher: {
-      '@type': 'Organization',
-      name: SITE_NAME,
-      url: origin,
-    },
     inLanguage: 'pt-BR',
+    author: { '@type': 'Person', name: RAV_NAME },
+    publisher: { '@type': 'Organization', name: SITE_NAME, url: origin },
     articleSection: input.category,
-    isAccessibleForFree: true,
-    about: { '@type': 'Thing', name: 'Estudos de Toráh e Kabaláh' },
+    isPartOf: { '@type': 'WebSite', name: SITE_NAME, url: origin },
   }
 }
 

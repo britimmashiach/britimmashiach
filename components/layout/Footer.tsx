@@ -35,6 +35,8 @@ export function Footer() {
             <ul className="space-y-2">
               {[
                 { href: '/sobre', label: 'Quem somos' },
+                { href: '/rav', label: 'O Rav' },
+                { href: '/ensinos', label: 'Ensinos e guias' },
                 { href: '/judaismo-messianico', label: 'Judaísmo messiânico' },
                 { href: '/metodo-pardes', label: 'Método PaRDeS' },
                 { href: '/faq', label: 'Perguntas frequentes' },
@@ -61,7 +63,8 @@ export function Footer() {
             </h4>
             <ul className="space-y-2">
               {[
-                { href: '/premium', label: 'Plano Premium' },
+                { href: '/comunidade', label: 'Comunidade viva' },
+                { href: '/premium', label: 'Portões internos' },
                 { href: '/loja', label: 'Acqua Rios' },
                 { href: '/lideres', label: 'Área de Líderes' },
                 { href: '/profile', label: 'Meu Perfil' },

@@ -419,6 +419,150 @@ export interface Database {
           }
         ]
       }
+      kehilah_events: {
+        Row: {
+          id: string
+          title: string
+          description: string
+          event_type: string
+          starts_at: string
+          ends_at: string | null
+          location: string
+          live_url: string | null
+          is_public: boolean
+          sort_order: number
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          title: string
+          description?: string
+          event_type?: string
+          starts_at: string
+          ends_at?: string | null
+          location?: string
+          live_url?: string | null
+          is_public?: boolean
+          sort_order?: number
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          title?: string
+          description?: string
+          event_type?: string
+          starts_at?: string
+          ends_at?: string | null
+          location?: string
+          live_url?: string | null
+          is_public?: boolean
+          sort_order?: number
+          created_at?: string
+        }
+        Relationships: []
+      }
+      prayer_requests: {
+        Row: {
+          id: string
+          user_id: string | null
+          contact_name: string | null
+          contact_email: string | null
+          message: string
+          is_anonymous: boolean
+          status: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          user_id?: string | null
+          contact_name?: string | null
+          contact_email?: string | null
+          message: string
+          is_anonymous?: boolean
+          status?: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string | null
+          contact_name?: string | null
+          contact_email?: string | null
+          message?: string
+          is_anonymous?: boolean
+          status?: string
+          created_at?: string
+        }
+        Relationships: []
+      }
+      kehilah_testimonials: {
+        Row: {
+          id: string
+          author_display_name: string
+          body: string
+          city: string | null
+          is_approved: boolean
+          is_featured: boolean
+          sort_order: number
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          author_display_name: string
+          body: string
+          city?: string | null
+          is_approved?: boolean
+          is_featured?: boolean
+          sort_order?: number
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          author_display_name?: string
+          body?: string
+          city?: string | null
+          is_approved?: boolean
+          is_featured?: boolean
+          sort_order?: number
+          created_at?: string
+        }
+        Relationships: []
+      }
+      site_feedback: {
+        Row: {
+          id: string
+          user_id: string | null
+          category: string
+          subject: string
+          message: string
+          contact_name: string | null
+          contact_email: string | null
+          status: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          user_id?: string | null
+          category: string
+          subject?: string
+          message: string
+          contact_name?: string | null
+          contact_email?: string | null
+          status?: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string | null
+          category?: string
+          subject?: string
+          message?: string
+          contact_name?: string | null
+          contact_email?: string | null
+          status?: string
+          created_at?: string
+        }
+        Relationships: []
+      }
       library_books: {
         Row: {
           id: string

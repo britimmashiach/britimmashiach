@@ -7,6 +7,7 @@ import { fetchParashaSlugs } from '@/lib/parashot-supabase'
 import { fetchStudySlugs } from '@/lib/studies-supabase'
 import { getPublicSiteOrigin } from '@/lib/public-site-url'
 import { getShopCatalog } from '@/lib/shop-catalog'
+import { getAllEnsinosSlugs } from '@/lib/ensinos-pillars'
 
 export const revalidate = 86400
 
@@ -14,6 +15,9 @@ function staticRoutes(origin: string, now: Date): MetadataRoute.Sitemap {
   return [
     { url: origin, lastModified: now, changeFrequency: 'daily', priority: 1 },
     { url: `${origin}/sobre`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${origin}/rav`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${origin}/ensinos`, lastModified: now, changeFrequency: 'weekly', priority: 0.86 },
+    { url: `${origin}/comunidade`, lastModified: now, changeFrequency: 'weekly', priority: 0.87 },
     { url: `${origin}/judaismo-messianico`, lastModified: now, changeFrequency: 'monthly', priority: 0.88 },
     { url: `${origin}/faq`, lastModified: now, changeFrequency: 'monthly', priority: 0.75 },
     { url: `${origin}/ouvidoria`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
@@ -92,6 +96,13 @@ async function buildFullSitemap(): Promise<MetadataRoute.Sitemap> {
     })),
   )
 
+  const ensinosRoutes: MetadataRoute.Sitemap = getAllEnsinosSlugs().map((slug) => ({
+    url: `${origin}/ensinos/${slug}`,
+    lastModified: now,
+    changeFrequency: 'monthly' as const,
+    priority: 0.84,
+  }))
+
   const shopRoutes: MetadataRoute.Sitemap = shopProducts.map((p) => ({
     url: `${origin}/loja/${p.slug}`,
     lastModified: now,
@@ -101,6 +112,7 @@ async function buildFullSitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     ...staticRoutes(origin, now),
+    ...ensinosRoutes,
     ...parashaRoutes,
     ...studyRoutes,
     ...chagRoutes,

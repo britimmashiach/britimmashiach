@@ -142,7 +142,8 @@ export default function MetodoPardesPage() {
           <ul className="space-y-2 font-inter text-sm text-foreground leading-relaxed list-disc pl-5">
             <li>Leia a Parasháh da semana em <Link href="/parashot" className="text-gold-600 hover:underline">Parashot</Link></li>
             <li>Acompanhe o calendário litúrgico em <Link href="/calendar" className="text-gold-600 hover:underline">Calendário</Link></li>
-            <li>Aprofunde com estudos kabalísticos em <Link href="/studies" className="text-gold-600 hover:underline">Estudos</Link></li>
+            <li>Conheça o <Link href="/rav" className="text-gold-600 hover:underline">Rav Eliahu Barzilay</Link> e o método aplicado nas Aliyot</li>
+            <li>Leia os guias em <Link href="/ensinos" className="text-gold-600 hover:underline">Ensinos</Link> e aprofunde em <Link href="/studies" className="text-gold-600 hover:underline">Estudos</Link></li>
             <li>Assinantes Premium acessam PDFs completos das sete Aliyot com PaRDeS integral</li>
           </ul>
         </section>

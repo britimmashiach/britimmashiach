@@ -29,6 +29,7 @@ import {
   Languages,
   Landmark,
   ShoppingBag,
+  HeartHandshake,
 } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { cn } from '@/lib/utils'
@@ -46,6 +47,7 @@ type NavItem = {
 
 const mainNavLinks: NavItem[] = [
   { href: '/sobre', label: 'Quem somos', icon: Landmark },
+  { href: '/comunidade', label: 'Comunidade', icon: HeartHandshake },
   { href: '/calendar', label: 'Calendário', icon: Calendar },
   { href: '/parashot', label: 'Parashot', icon: BookOpen },
   { href: '/chagim', label: 'Chagim', icon: Flame },

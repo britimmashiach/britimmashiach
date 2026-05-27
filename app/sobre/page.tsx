@@ -89,6 +89,18 @@ export default function QuemSomosPage() {
           </p>
         </section>
 
+        <section className="rounded-xl border border-gold-500/20 bg-gold-500/[0.03] p-6 md:p-8 space-y-3">
+          <h2 className="font-cinzel text-xl font-semibold text-petroleum-800 dark:text-parchment-100">
+            O Rav da congregação
+          </h2>
+          <p className="font-inter text-base md:text-[17px] leading-relaxed text-foreground/95">
+            Os ensinos, as Aliyot semanais e o Modelo Netivot seguem a orientação do Rav Eliahu Barzilay ben Yehoshua.
+          </p>
+          <Link href="/rav" className="text-sm font-inter font-medium text-gold-700 dark:text-gold-400 hover:underline">
+            Página oficial do Rav — metodologia, linha do tempo e manifesto
+          </Link>
+        </section>
+
         <section className="space-y-4">
           <div className="flex items-center gap-2 text-petroleum-800 dark:text-parchment-100">
             <BookMarked className="w-5 h-5 text-petroleum-600 shrink-0" aria-hidden />

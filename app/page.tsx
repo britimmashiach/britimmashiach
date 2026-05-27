@@ -1,6 +1,7 @@
 import { Suspense } from 'react'
 import Link from 'next/link'
-import { ArrowRight, BookOpen, Calendar, Library, Star, Flame, Crown, ChevronRight, ShoppingBag } from 'lucide-react'
+import { ArrowRight, BookOpen, Calendar, Library, Star, Flame, Crown, ChevronRight, ShoppingBag, DoorOpen, Sparkles, Users } from 'lucide-react'
+import { RAV_NAME } from '@/lib/site-brand'
 import { HebrewDateDisplay } from '@/components/spiritual/HebrewDateDisplay'
 import { OmerCounter } from '@/components/spiritual/OmerCounter'
 import { ParashaWidget } from '@/components/spiritual/ParashaWidget'
@@ -92,8 +93,8 @@ const ecosystemCards = [
   {
     href: '/premium',
     icon: Star,
-    title: 'Premium',
-    description: 'Kabaláh Luriana, Modelo Netivot, 49 Portões da Alma e todos os cursos.',
+    title: 'Portões do Sod',
+    description: 'Aliyot completas, Netivot, 49 Portões da Alma e os níveis profundos do caminho.',
   },
 ]
 
@@ -105,32 +106,34 @@ export default function HomePage() {
     <div className="min-h-screen">
 
       {/* Hero — portal de entrada no ciclo espiritual */}
-      <section className="relative overflow-hidden border-b border-border/30 bg-parchment-50 dark:bg-petroleum-950">
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{ background: 'radial-gradient(ellipse 80% 50% at 85% 0%, rgba(201,168,76,0.05) 0%, transparent 70%)' }}
-          aria-hidden="true"
-        />
-
+      <section className="relative overflow-hidden border-b border-border/30 bg-spiritual-depth bg-kabbalah-texture">
         <div className="relative container mx-auto px-4 py-14 md:py-20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
 
-            {/* Esquerda: contexto espiritual do momento */}
+            {/* Esquerda: portal iniciático */}
             <div className="space-y-7">
+              <p className="portal-eyebrow">
+                <DoorOpen className="w-3 h-3" aria-hidden="true" />
+                Portal de entrada
+              </p>
+
               <Suspense fallback={<HebrewDateSkeleton />}>
                 <HebrewDateDisplay />
               </Suspense>
 
-              <div className="space-y-3">
-                <h1 className="font-cormorant text-5xl md:text-6xl font-light text-petroleum-800 dark:text-parchment-100 leading-tight text-balance">
-                  Que a luz de Toráh{' '}
+              <div className="space-y-4">
+                <h1 className="font-cormorant text-4xl md:text-[2.75rem] font-light text-petroleum-800 dark:text-parchment-100 leading-[1.15] text-balance">
+                  Você está entrando em um ecossistema de{' '}
                   <em className="font-semibold text-gold-600 dark:text-gold-400 not-italic">
-                    ilumine
-                  </em>{' '}
-                  seu caminho
+                    Toráh
+                  </em>
+                  , Kabaláh e transformação da alma
                 </h1>
-                <p className="font-inter text-sm text-warmgray-500 dark:text-warmgray-400 leading-relaxed max-w-sm">
-                  Estudos aprofundados, Kabaláh Luriana e o calendário hebraico vivo.
+                <p className="font-cormorant text-lg md:text-xl italic text-warmgray-600 dark:text-warmgray-400 leading-relaxed max-w-md">
+                  Não é apenas informação: é um caminho vivo. Cada semana abre uma Aliyáh; cada estudo aprofunda Peshat, Remez, Drash e Sod.
+                </p>
+                <p className="font-inter text-sm text-warmgray-500 dark:text-warmgray-400 leading-relaxed max-w-md">
+                  Brit Im Mashiach — sinagoga e Beit Midrash digital sob a orientação do {RAV_NAME}.
                 </p>
               </div>
 
@@ -173,10 +176,10 @@ export default function HomePage() {
                 </Link>
                 <Link
                   href="/premium"
-                  className="text-sm font-inter text-warmgray-500 hover:text-foreground transition-colors inline-flex items-center gap-1.5"
+                  className="text-sm font-inter font-medium text-gold-700 dark:text-gold-400 hover:text-gold-800 dark:hover:text-gold-300 transition-colors inline-flex items-center gap-1.5"
                 >
-                  <Crown className="w-3.5 h-3.5 text-gold-500/70" aria-hidden="true" />
-                  Premium
+                  <Crown className="w-3.5 h-3.5" aria-hidden="true" />
+                  Portões internos
                 </Link>
               </div>
             </div>
@@ -214,8 +217,7 @@ export default function HomePage() {
                 {hebrewInfo.parasha ?? 'Parashá'}
               </h2>
               <p className="font-inter text-sm text-warmgray-600 dark:text-warmgray-400 leading-relaxed max-w-md">
-                Siga o ciclo anual da Toráh. Cada dia da semana corresponde a uma Aliyáh,
-                do Domingo ao Shabat. A primeira Aliyáh está disponível a todos.
+                A primeira Aliyáh é aberta a todos. Os portões das Aliyot seguintes, do Sod e dos PDFs completos pertencem a quem entra no caminho com profundidade.
               </p>
             </div>
             <div className="flex flex-row md:flex-col items-center md:items-end gap-3 flex-shrink-0">
@@ -224,10 +226,10 @@ export default function HomePage() {
               </Link>
               <Link
                 href="/premium"
-                className="text-xs font-inter text-warmgray-500 hover:text-foreground transition-colors inline-flex items-center gap-1"
+                className="text-xs font-inter text-gold-700 dark:text-gold-400 hover:text-gold-800 dark:hover:text-gold-300 transition-colors inline-flex items-center gap-1"
               >
-                <Crown className="w-3 h-3 text-gold-500/70" aria-hidden="true" />
-                Acesso completo com Premium
+                <Crown className="w-3 h-3" aria-hidden="true" />
+                Continuar para os portões internos
               </Link>
             </div>
           </div>
@@ -294,6 +296,32 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Autoridade do Rav — ponte para legitimidade */}
+      <section className="container mx-auto px-4 pb-4 md:pb-6" aria-labelledby="rav-titulo">
+        <div className="glass-card p-6 md:p-8 border-petroleum-800/10 dark:border-gold-500/15 flex flex-col md:flex-row gap-6 md:items-center">
+          <div className="flex-1 space-y-3">
+            <p className="text-[10px] font-inter font-semibold text-warmgray-400 uppercase tracking-widest">
+              Orientação espiritual
+            </p>
+            <h2 id="rav-titulo" className="font-cinzel text-xl md:text-2xl font-semibold text-petroleum-800 dark:text-parchment-100">
+              {RAV_NAME}
+            </h2>
+            <p className="font-inter text-sm text-warmgray-600 dark:text-warmgray-400 leading-relaxed max-w-xl">
+              Método PaRDeS, Kabaláh Luriana e o Modelo Netivot proprietário. O ensino une Toráh, Halacháh, comentários clássicos e a visão da kehilah messiânica em Franca.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-3 shrink-0">
+            <Link href="/metodo-pardes" className="btn-ghost text-sm border border-border/60">
+              Método PaRDeS
+            </Link>
+            <Link href="/rav" className="btn-gold text-sm inline-flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5" aria-hidden="true" />
+              Página oficial do Rav
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <hr className="divider-gold container mx-auto px-4" />
 
       {/* Ecossistema */}
@@ -332,32 +360,59 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Convite Premium */}
-      <section className="relative overflow-hidden bg-petroleum-800 dark:bg-petroleum-950" aria-label="Plano Premium">
+      {/* Comunidade viva */}
+      <section className="container mx-auto px-4 py-14 md:py-16" aria-labelledby="comunidade-titulo">
+        <div className="glass-card p-6 md:p-8 border-petroleum-800/10 flex flex-col md:flex-row gap-6 md:items-center">
+          <div className="flex-1 space-y-3">
+            <p className="text-[10px] font-inter font-semibold text-warmgray-400 uppercase tracking-widest">
+              Kehilah em movimento
+            </p>
+            <h2 id="comunidade-titulo" className="font-cinzel text-2xl font-semibold text-petroleum-800 dark:text-parchment-100">
+              Comunidade viva em Franca
+            </h2>
+            <p className="font-inter text-sm text-warmgray-600 dark:text-warmgray-400 leading-relaxed max-w-xl">
+              Cultos de Shabat, estudos da Parashá, pedidos de oração e testemunhos. A plataforma serve a kehilah, não a substitui.
+            </p>
+          </div>
+          <Link href="/comunidade" className="btn-gold text-sm inline-flex items-center gap-1.5 shrink-0">
+            <Users className="w-4 h-4" aria-hidden="true" />
+            Agenda e oração
+          </Link>
+        </div>
+      </section>
+
+      {/* Continuação natural — portões do Sod */}
+      <section className="relative overflow-hidden bg-petroleum-800 dark:bg-petroleum-950 bg-kabbalah-texture" aria-label="Portões internos do caminho">
         <div
           className="absolute inset-0 pointer-events-none"
-          style={{ background: 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,168,76,0.08), transparent 70%)' }}
+          style={{
+            background:
+              'radial-gradient(ellipse 75% 55% at 50% 0%, rgba(201,168,76,0.14), transparent 65%), radial-gradient(ellipse 50% 40% at 0% 80%, rgba(56,120,160,0.12), transparent 55%)',
+          }}
           aria-hidden="true"
         />
 
         <div className="relative container mx-auto px-4 py-16 text-center space-y-5">
+          <p className="text-[10px] font-inter font-semibold text-gold-400/90 uppercase tracking-[0.25em]">
+            Continuação do caminho
+          </p>
           <h2 className="font-cinzel text-3xl md:text-4xl font-semibold text-parchment-100 max-w-2xl mx-auto leading-tight text-balance">
-            Acesso completo ao ecossistema Brit Mashiach
+            A primeira Aliyáh é aberta. Os portões internos pertencem aos que entram no caminho
           </h2>
 
-          <p className="font-cormorant text-xl text-parchment-300/80 italic max-w-xl mx-auto">
-            Kabaláh Luriana, Modelo Netivot, 49 Portões da Alma, Siddur completo e todos os cursos do Rav EBBY.
+          <p className="font-cormorant text-xl text-parchment-300/85 italic max-w-xl mx-auto leading-relaxed">
+            Sod, Netivot, 49 Portões da Alma, biblioteca completa e o ensino reservado do Rav — não como assinatura avulsa, mas como aprofundamento inevitável de quem já caminha na Toráh.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-5 pt-2">
             <Link href="/premium" className="btn-gold text-sm px-7 py-3">
-              Assinar por R$ 47/mês
+              Entrar nos portões internos
             </Link>
             <Link
-              href="/studies"
+              href="/parashot"
               className="text-parchment-400 hover:text-parchment-100 text-sm font-inter transition-colors inline-flex items-center gap-1.5"
             >
-              Ver conteúdo gratuito
+              Começar pela Aliyáh aberta
               <ArrowRight className="w-4 h-4" aria-hidden="true" />
             </Link>
           </div>

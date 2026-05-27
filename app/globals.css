@@ -195,6 +195,48 @@
   }
 }
 
+@layer components {
+  /* Fundo com profundidade: dourado + azul petróleo, textura sutil */
+  .bg-spiritual-depth {
+    background-color: hsl(var(--background));
+    background-image:
+      radial-gradient(ellipse 90% 55% at 88% -5%, rgba(201, 168, 76, 0.09) 0%, transparent 58%),
+      radial-gradient(ellipse 70% 45% at 8% 100%, rgba(27, 58, 75, 0.07) 0%, transparent 52%),
+      linear-gradient(165deg, hsl(var(--background)) 0%, hsl(var(--muted) / 0.35) 100%);
+  }
+
+  .dark .bg-spiritual-depth {
+    background-image:
+      radial-gradient(ellipse 90% 55% at 88% -5%, rgba(201, 168, 76, 0.12) 0%, transparent 58%),
+      radial-gradient(ellipse 70% 45% at 8% 100%, rgba(56, 120, 160, 0.14) 0%, transparent 52%),
+      linear-gradient(165deg, hsl(var(--background)) 0%, hsl(207 43% 8%) 100%);
+  }
+
+  /* Textura kabalística discreta (grade + ruído) */
+  .bg-kabbalah-texture::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.35;
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M30 0 L60 30 L30 60 L0 30 Z' fill='none' stroke='%23c9a84c' stroke-width='0.35' opacity='0.12'/%3E%3C/svg%3E"),
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    background-size: 60px 60px, 200px 200px;
+  }
+
+  .dark .bg-kabbalah-texture::before {
+    opacity: 0.22;
+  }
+
+  .portal-eyebrow {
+    @apply inline-flex items-center gap-2 px-3 py-1 rounded-full
+           border border-gold-500/25 bg-gold-500/8
+           text-[10px] font-inter font-semibold uppercase tracking-[0.2em]
+           text-gold-700 dark:text-gold-400;
+  }
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

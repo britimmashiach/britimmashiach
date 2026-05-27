@@ -126,6 +126,8 @@ export default function JudaismoMessianicoPage() {
               { href: '/metodo-pardes', label: 'Método PaRDeS', desc: 'os quatro níveis de estudo da Toráh' },
               { href: '/parashot', label: 'Parashot semanais', desc: 'Aliyot diárias com introdução pública e estudo Premium' },
               { href: '/chagim', label: 'Chagim e Moedim', desc: 'festas bíblicas com kavanáh e tradição' },
+              { href: '/rav', label: 'O Rav', desc: 'metodologia, Netivot e manifesto doutrinário' },
+              { href: '/ensinos', label: 'Ensinos e guias', desc: 'artigos SEO sobre Toráh e Kabaláh' },
               { href: '/sobre', label: 'Quem somos', desc: 'história e missão da congregação' },
               { href: '/faq', label: 'Perguntas frequentes', desc: 'Premium, estudo gratuito e identidade' },
             ].map(({ href, label, desc }) => (

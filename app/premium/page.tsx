@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
-import { Crown, Check, Star, Sparkles, BookOpen, Library, Layers } from 'lucide-react'
+import Link from 'next/link'
+import { Crown, Check, Star, Sparkles, BookOpen, Library, Layers, DoorClosed, ArrowRight } from 'lucide-react'
+import { RAV_NAME } from '@/lib/site-brand'
 import { PLANS, PREMIUM_ANNUAL_PIX, formatBrlCentavos, showStripePremium } from '@/lib/stripe'
 import { PREMIUM_PIX_GRACE_DAYS } from '@/lib/premium-subscription'
 import { hasMpEnv } from '@/lib/mercadopago'
@@ -7,16 +9,29 @@ import { hasAsaasEnv } from '@/lib/asaas'
 import { CheckoutButton } from '@/components/ui/CheckoutButton'
 
 export const metadata: Metadata = {
-  title: 'Premium',
-  description: 'Acesso completo ao ecossistema Brit Mashiach: Kabaláh Luriana, Modelo Netivot, cursos e biblioteca completa.',
+  title: 'Portões internos — Sod e caminho profundo',
+  description:
+    'A primeira Aliyáh é aberta. Aliyot completas, Sod, Modelo Netivot, 49 Portões da Alma e biblioteca do Rav Eliahu Barzilay — continuação natural do estudo na Brit Im Mashiach.',
 }
 
 const features = [
-  { icon: BookOpen, title: 'Estudos ilimitados', desc: 'Acesso completo a todos os ensinos do Rav EBBY sem restrição.' },
-  { icon: Library, title: 'Biblioteca completa', desc: 'Download de todos os títulos: Siddur, Machzor, Netivot, 49 Portões.' },
-  { icon: Layers, title: 'Modelo Netivot', desc: 'Os 32 caminhos proprietários do Rav EBBY com análise kabalística profunda.' },
-  { icon: Star, title: 'Kabaláh Luriana', desc: 'Etz Chaim, Olamot, Sefirot, Tzimtzum - o sistema completo do Arizal.' },
-  { icon: Crown, title: 'Cursos exclusivos', desc: 'Acesso antecipado a novos cursos e conteúdo do Rav antes do lançamento.' },
+  { icon: BookOpen, title: 'Aliyot e estudos completos', desc: 'Do Peshat ao Sod: PDFs das sete Aliyot semanais e todo o acervo publicado do Rav EBBY.' },
+  { icon: Library, title: 'Biblioteca dos portões', desc: 'Siddur, Machzor, Netivot, 49 Portões da Alma e obras reservadas para quem aprofunda o caminho.' },
+  { icon: Layers, title: 'Modelo Netivot', desc: 'Os 32 caminhos proprietários do Rav com análise sefirótica — diferencial doutrinário da plataforma.' },
+  { icon: Star, title: 'Sod e Kabaláh Luriana', desc: 'Etz Chaim, Olamot, Sefirot e Tzimtzum: o nível místico que não se expõe na primeira Aliyáh.' },
+  { icon: Crown, title: 'Novos ensinamentos primeiro', desc: 'Quem entra no caminho recebe o material novo antes da divulgação ampla na kehilah.' },
+]
+
+const portoesAbertos = [
+  'Introdução e 1ª Aliyáh de cada Parashá',
+  'Calendário, Chagim públicos e estudos de entrada',
+  'Método PaRDeS e páginas doutrinárias',
+]
+
+const portoesInternos = [
+  'Aliyot 2 a 7 com PDF completo PaRDeS',
+  'Seções Sod, Netivot e kavanot avançadas',
+  'Biblioteca completa e cursos em lançamento',
 ]
 
 export default function PremiumPage() {
@@ -31,26 +46,62 @@ export default function PremiumPage() {
   return (
     <div className="min-h-screen">
 
-      {/* Hero */}
-      <section className="relative overflow-hidden border-b border-border/40">
-        <div className="absolute inset-0 bg-petroleum-gradient opacity-[0.04] dark:opacity-[0.18]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,theme(colors.gold.500/10),transparent_60%)]" />
+      {/* Hero — continuação do caminho, não “plano” */}
+      <section className="relative overflow-hidden border-b border-border/40 bg-spiritual-depth bg-kabbalah-texture">
+        <div className="relative container mx-auto px-4 py-16 text-center space-y-5 max-w-3xl">
+          <p className="portal-eyebrow mx-auto">
+            <DoorClosed className="w-3 h-3" aria-hidden="true" />
+            Portões internos
+          </p>
 
-        <div className="relative container mx-auto px-4 py-16 text-center space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gold-500/12 border border-gold-500/25">
-            <Sparkles className="w-3.5 h-3.5 text-gold-600 dark:text-gold-400" />
-            <span className="text-xs font-inter font-semibold text-gold-700 dark:text-gold-400 uppercase tracking-widest">
-              Brit Mashiach Premium
-            </span>
-          </div>
-
-          <h1 className="font-cinzel text-4xl md:text-5xl font-semibold text-petroleum-800 dark:text-parchment-100 max-w-2xl mx-auto leading-tight">
-            Acesso completo ao ecossistema espiritual
+          <h1 className="font-cinzel text-4xl md:text-5xl font-semibold text-petroleum-800 dark:text-parchment-100 leading-tight text-balance">
+            A primeira Aliyáh é aberta. Os portões internos pertencem aos que entram no caminho
           </h1>
 
-          <p className="font-cormorant text-xl text-warmgray-600 dark:text-warmgray-400 italic max-w-xl mx-auto">
-            Kabaláh Luriana profunda, Modelo Netivot proprietário, biblioteca completa e orientação direta do Rav EBBY.
+          <p className="font-cormorant text-xl text-warmgray-600 dark:text-warmgray-400 italic leading-relaxed">
+            O que você já vê na Parashá semanal é o limiar. O Sod, as Aliyot seguintes e o Modelo Netivot do {RAV_NAME} são a continuação natural — não um produto à parte.
           </p>
+
+          <Link
+            href="/parashot"
+            className="inline-flex items-center gap-1.5 text-sm font-inter text-warmgray-500 hover:text-foreground transition-colors"
+          >
+            Estudar a Aliyáh aberta primeiro
+            <ArrowRight className="w-4 h-4" aria-hidden="true" />
+          </Link>
+        </div>
+      </section>
+
+      {/* O que está aberto vs. o que fecha o ciclo */}
+      <section className="container mx-auto px-4 pt-12 pb-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl mx-auto">
+          <div className="glass-card p-6 space-y-4">
+            <h2 className="font-cinzel text-lg font-semibold text-petroleum-800 dark:text-parchment-100">
+              Já aberto a todos
+            </h2>
+            <ul className="space-y-2">
+              {portoesAbertos.map((item) => (
+                <li key={item} className="flex items-start gap-2 text-sm font-inter text-warmgray-600 dark:text-warmgray-400">
+                  <Check className="w-4 h-4 text-green-600 dark:text-green-500 shrink-0 mt-0.5" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="rounded-xl border-2 border-gold-500/35 bg-gradient-to-br from-gold-500/5 to-petroleum-800/5 dark:from-gold-500/10 dark:to-petroleum-900/40 p-6 space-y-4">
+            <h2 className="font-cinzel text-lg font-semibold text-petroleum-800 dark:text-parchment-100 flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-gold-600 dark:text-gold-400" aria-hidden="true" />
+              Portões internos
+            </h2>
+            <ul className="space-y-2">
+              {portoesInternos.map((item) => (
+                <li key={item} className="flex items-start gap-2 text-sm font-inter text-warmgray-700 dark:text-warmgray-300">
+                  <Crown className="w-4 h-4 text-gold-500 shrink-0 mt-0.5" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </section>
 
@@ -106,7 +157,7 @@ export default function PremiumPage() {
             <div className="absolute -top-3 left-1/2 -translate-x-1/2">
               <span className="premium-badge px-4 py-1 text-xs">
                 <Crown className="w-3 h-3" />
-                Mais popular
+                Caminho profundo
               </span>
             </div>
 
@@ -184,8 +235,12 @@ export default function PremiumPage() {
           </div>
         </div>
 
+        <p className="text-center text-sm font-cormorant italic text-warmgray-600 dark:text-warmgray-400 max-w-lg mx-auto mt-6 leading-relaxed">
+          Entrar nos portões é sustentar o Beit Midrash digital da kehilah — Toráh, impressão dos PDFs e o trabalho contínuo do Rav na Brit Im Mashiach.
+        </p>
+
         {/* Garantia */}
-        <p className="text-center text-sm font-inter text-warmgray-500 mt-8 leading-relaxed">
+        <p className="text-center text-sm font-inter text-warmgray-500 mt-6 leading-relaxed">
           Cancele a qualquer momento. Sem fidelidade.
           {mpReady && ' Valor fixo de R$ 47/mês debitado no cartão autorizado.'}
           {asaasReady && ' PIX mensal via QR Code (renovação manual até Pix Automático ser liberado).'}
