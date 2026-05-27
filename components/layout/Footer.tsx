@@ -1,6 +1,6 @@
 import Link from 'next/link'
-import { MapPin, Star } from 'lucide-react'
-import { SITE_ADDRESS_FULL, SITE_MAPS_URL } from '@/lib/site-brand'
+import { MapPin, Phone, Star } from 'lucide-react'
+import { SITE_ADDRESS_FULL, SITE_MAPS_URL, SITE_PHONE_DISPLAY, SITE_PHONE_TEL, SITE_WHATSAPP_URL } from '@/lib/site-brand'
 
 export function Footer() {
   const year = new Date().getFullYear()
@@ -32,6 +32,21 @@ export function Footer() {
                 className="hover:text-gold-700 dark:hover:text-gold-400 transition-colors"
               >
                 {SITE_ADDRESS_FULL}
+              </a>
+            </p>
+            <p className="text-sm font-inter text-warmgray-600 dark:text-warmgray-400 flex items-center gap-2">
+              <Phone className="w-4 h-4 shrink-0 text-gold-600 dark:text-gold-400" aria-hidden="true" />
+              <a href={`tel:${SITE_PHONE_TEL}`} className="hover:text-gold-700 dark:hover:text-gold-400 transition-colors">
+                {SITE_PHONE_DISPLAY}
+              </a>
+              <span className="text-warmgray-400" aria-hidden="true">·</span>
+              <a
+                href={SITE_WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-gold-700 dark:hover:text-gold-400 transition-colors"
+              >
+                WhatsApp
               </a>
             </p>
             <p className="text-xs font-hebrew text-warmgray-500 dark:text-warmgray-500 text-right" dir="rtl">

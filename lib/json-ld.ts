@@ -5,6 +5,7 @@ import {
   SITE_ADDRESS_FULL,
   SITE_NAME,
   SITE_NAME_ALT,
+  SITE_PHONE_TEL,
   SITE_TAGLINE,
   sitePostalAddress,
 } from '@/lib/site-brand'
@@ -27,6 +28,7 @@ export function rootJsonLdGraph() {
       description: SITE_TAGLINE,
       url: origin,
       founder: { '@type': 'Person', name: RAV_NAME },
+      telephone: SITE_PHONE_TEL,
       address: sitePostalAddress(),
     },
     {
@@ -35,6 +37,7 @@ export function rootJsonLdGraph() {
       name: 'Sinagoga Brit Im Mashiach',
       alternateName: SITE_NAME_ALT,
       url: origin,
+      telephone: SITE_PHONE_TEL,
       description:
         `Sinagoga judaico-messiânica em ${SITE_ADDRESS_FULL}. Toráh, Shabat, Moedim e estudo kabalístico.`,
       address: sitePostalAddress(),

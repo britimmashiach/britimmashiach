@@ -30,6 +30,12 @@ export const SITE_EVENT_LOCATION = `Sinagoga Brit Im Mashiach — ${SITE_ADDRESS
 export const SITE_MAPS_URL =
   'https://www.google.com/maps/search/?api=1&query=Rua+General+Carneiro+749+Franca+SP+Brasil'
 
+/** DDD 16 — Franca, SP. */
+export const SITE_PHONE_E164 = '5516996326446'
+export const SITE_PHONE_DISPLAY = '(16) 99632-6446'
+export const SITE_PHONE_TEL = '+5516996326446'
+export const SITE_WHATSAPP_URL = `https://wa.me/${SITE_PHONE_E164}`
+
 /** Endereço postal para schema.org (Organization / Synagogue). */
 export function sitePostalAddress() {
   return {

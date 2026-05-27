@@ -5,6 +5,9 @@ import {
   SITE_ADDRESS_FULL,
   SITE_MAPS_URL,
   SITE_NAME_ALT,
+  SITE_PHONE_DISPLAY,
+  SITE_PHONE_TEL,
+  SITE_WHATSAPP_URL,
   CONGREGATION,
 } from '@/lib/site-brand'
 import { getPublicSiteOrigin } from '@/lib/public-site-url'
@@ -106,6 +109,20 @@ export default function QuemSomosPage() {
           </p>
           <p className="font-inter text-base font-medium text-petroleum-800 dark:text-parchment-100">
             {SITE_ADDRESS_FULL}
+          </p>
+          <p className="font-inter text-base text-petroleum-800 dark:text-parchment-100">
+            <a href={`tel:${SITE_PHONE_TEL}`} className="text-gold-700 dark:text-gold-400 font-medium hover:underline">
+              {SITE_PHONE_DISPLAY}
+            </a>
+            {' · '}
+            <a
+              href={SITE_WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gold-700 dark:text-gold-400 font-medium hover:underline"
+            >
+              WhatsApp
+            </a>
           </p>
           <a
             href={SITE_MAPS_URL}

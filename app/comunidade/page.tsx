@@ -7,7 +7,15 @@ import { KehilahAgenda } from '@/components/community/KehilahAgenda'
 import { PrayerRequestForm } from '@/components/community/PrayerRequestForm'
 import { TestimonialsList } from '@/components/community/TestimonialsList'
 import { fetchKehilahEvents, fetchKehilahTestimonials } from '@/lib/community-supabase'
-import { CONGREGATION, SITE_ADDRESS_FULL, SITE_MAPS_URL, SITE_NAME_ALT } from '@/lib/site-brand'
+import {
+  CONGREGATION,
+  SITE_ADDRESS_FULL,
+  SITE_MAPS_URL,
+  SITE_NAME_ALT,
+  SITE_PHONE_DISPLAY,
+  SITE_PHONE_TEL,
+  SITE_WHATSAPP_URL,
+} from '@/lib/site-brand'
 import { getPublicSiteOrigin } from '@/lib/public-site-url'
 import { breadcrumbJsonLd } from '@/lib/json-ld'
 import { getAuthSnapshot } from '@/lib/auth-snapshot'
@@ -113,6 +121,20 @@ export default async function ComunidadePage() {
             </p>
             <p className="text-sm font-inter font-medium text-petroleum-800 dark:text-parchment-100">
               {SITE_ADDRESS_FULL}
+            </p>
+            <p className="text-sm font-inter text-warmgray-600 dark:text-warmgray-400">
+              <a href={`tel:${SITE_PHONE_TEL}`} className="text-gold-700 dark:text-gold-400 font-medium hover:underline">
+                {SITE_PHONE_DISPLAY}
+              </a>
+              {' · '}
+              <a
+                href={SITE_WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gold-700 dark:text-gold-400 font-medium hover:underline"
+              >
+                WhatsApp
+              </a>
             </p>
             <a
               href={SITE_MAPS_URL}
