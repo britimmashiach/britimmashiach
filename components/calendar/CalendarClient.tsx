@@ -484,9 +484,9 @@ export function CalendarClient({
 
             {todayInfo.parsha && (() => {
               const match = findParashaByName(todayInfo.parsha)
-              const href = match ? `/parashot/${match.slug}` : '/parashot'
+              const href = match ? `/parashot?select=${match.slug}` : '/parashot'
               const ctaLabel = match
-                ? `Abrir ${match.title} →`
+                ? `Ver ${match.title} na lista →`
                 : 'Ver Parashot →'
               return (
                 <div className="glass-card p-3.5 border-gold-500/20 bg-gold-500/5 mt-3">

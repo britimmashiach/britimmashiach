@@ -163,7 +163,7 @@ export function DayDetailDrawer({ info, open, onClose }: DayDetailDrawerProps) {
         {/* Parasháh — link explícito para a página na plataforma (slug automático ou lista) */}
         {info.parsha && (() => {
           const match = findParashaByName(info.parsha)
-          const parashaHref = match ? `/parashot/${match.slug}` : '/parashot'
+          const parashaHref = match ? `/parashot?select=${match.slug}` : '/parashot'
           const tanachHref = match ? tanachHrefForOfficialParasha(match) : null
           const showStudyLink = match ? hasCanonicalParshaStudy(match.slug) : false
           const studySlug = match ? canonicalStudySlugForParshaRegistrySlug(match.slug) : ''
@@ -201,7 +201,7 @@ export function DayDetailDrawer({ info, open, onClose }: DayDetailDrawerProps) {
                       : 'border border-border bg-muted/50 text-foreground hover:bg-muted',
                   )}
                 >
-                  {match ? 'Abrir esta Parasháh na plataforma' : 'Ver Parashot na plataforma'}
+                  {match ? 'Ver esta Parasháh na lista' : 'Ver Parashot na plataforma'}
                   <ChevronRight className="h-4 w-4 shrink-0" aria-hidden="true" />
                 </Link>
                 {match && tanachHref && (
