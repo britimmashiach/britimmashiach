@@ -1,5 +1,14 @@
 import { getPublicSiteOrigin } from '@/lib/public-site-url'
-import { CONGREGATION, RAV_NAME, SITE_NAME, SITE_NAME_ALT, SITE_TAGLINE } from '@/lib/site-brand'
+import {
+  CONGREGATION,
+  RAV_NAME,
+  SITE_COUNTRY,
+  SITE_LOCALITY,
+  SITE_NAME,
+  SITE_NAME_ALT,
+  SITE_REGION,
+  SITE_TAGLINE,
+} from '@/lib/site-brand'
 
 export type BreadcrumbItem = { name: string; path: string }
 
@@ -10,16 +19,42 @@ export function rootJsonLdGraph() {
       '@type': 'Organization',
       '@id': `${origin}/#organization`,
       name: SITE_NAME,
-      alternateName: SITE_NAME_ALT,
+      alternateName: [
+        SITE_NAME_ALT,
+        'Sinagoga Brit Im Mashiach',
+        'Brit Im Mashiach Franca',
+        'Congregação Brit Im Mashiach',
+      ],
       description: SITE_TAGLINE,
       url: origin,
       founder: { '@type': 'Person', name: RAV_NAME },
       address: {
         '@type': 'PostalAddress',
-        addressLocality: 'Franca',
-        addressRegion: 'São Paulo',
-        addressCountry: 'BR',
+        addressLocality: SITE_LOCALITY,
+        addressRegion: SITE_REGION,
+        addressCountry: SITE_COUNTRY,
       },
+    },
+    {
+      '@type': 'Synagogue',
+      '@id': `${origin}/#synagogue`,
+      name: 'Sinagoga Brit Im Mashiach',
+      alternateName: SITE_NAME_ALT,
+      url: origin,
+      description:
+        'Sinagoga judaico-messiânica em Franca, São Paulo, Brasil. Toráh, Shabat, Moedim e estudo kabalístico.',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: SITE_LOCALITY,
+        addressRegion: SITE_REGION,
+        addressCountry: SITE_COUNTRY,
+      },
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: -20.5386,
+        longitude: -47.4008,
+      },
+      parentOrganization: { '@id': `${origin}/#organization` },
     },
     {
       '@type': 'WebSite',

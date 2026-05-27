@@ -11,6 +11,9 @@ import { getAllEnsinosSlugs } from '@/lib/ensinos-pillars'
 
 export const revalidate = 86400
 
+/** Capítulos do Tanach ficam fora do sitemap principal (evita timeout/500 com ~900 URLs). */
+const INCLUDE_TANACH_CHAPTERS = false
+
 function staticRoutes(origin: string, now: Date): MetadataRoute.Sitemap {
   return [
     { url: origin, lastModified: now, changeFrequency: 'daily', priority: 1 },
@@ -38,15 +41,24 @@ function staticRoutes(origin: string, now: Date): MetadataRoute.Sitemap {
   ]
 }
 
+async function safe<T>(label: string, fn: () => Promise<T>, fallback: T): Promise<T> {
+  try {
+    return await fn()
+  } catch (err) {
+    console.error(`[sitemap] ${label}:`, err)
+    return fallback
+  }
+}
+
 async function buildFullSitemap(): Promise<MetadataRoute.Sitemap> {
   const origin = getPublicSiteOrigin()
   const now = new Date()
 
   const [studySlugs, parashaDbSlugs, chagDbSlugs, shopProducts] = await Promise.all([
-    fetchStudySlugs(),
-    fetchParashaSlugs(),
-    fetchChagimSlugs(),
-    getShopCatalog(),
+    safe('fetchStudySlugs', fetchStudySlugs, []),
+    safe('fetchParashaSlugs', fetchParashaSlugs, []),
+    safe('fetchChagimSlugs', fetchChagimSlugs, []),
+    safe('getShopCatalog', getShopCatalog, []),
   ])
 
   const chagSlugs = new Set([
@@ -87,14 +99,16 @@ async function buildFullSitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.55,
   }))
 
-  const tanachChapterRoutes: MetadataRoute.Sitemap = TANACH_BOOKS.flatMap((b) =>
-    Array.from({ length: b.chapters }, (_, i) => ({
-      url: `${origin}/tanach/${b.slug}/${i + 1}`,
-      lastModified: now,
-      changeFrequency: 'yearly' as const,
-      priority: 0.45,
-    })),
-  )
+  const tanachChapterRoutes: MetadataRoute.Sitemap = INCLUDE_TANACH_CHAPTERS
+    ? TANACH_BOOKS.flatMap((b) =>
+        Array.from({ length: b.chapters }, (_, i) => ({
+          url: `${origin}/tanach/${b.slug}/${i + 1}`,
+          lastModified: now,
+          changeFrequency: 'yearly' as const,
+          priority: 0.45,
+        })),
+      )
+    : []
 
   const ensinosRoutes: MetadataRoute.Sitemap = getAllEnsinosSlugs().map((slug) => ({
     url: `${origin}/ensinos/${slug}`,

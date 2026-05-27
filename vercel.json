@@ -4,6 +4,20 @@
   "outputDirectory": ".next",
   "installCommand": "npm install",
   "regions": ["gru1"],
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.britimmashiach.com" }],
+      "destination": "https://britimmashiach.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "britimmashiach.vercel.app" }],
+      "destination": "https://britimmashiach.com/:path*",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/tehilim/(.*)",

@@ -12,7 +12,14 @@ import { Toaster } from 'sonner'
 import './globals.css'
 import { getPublicSiteOrigin } from '@/lib/public-site-url'
 import { rootJsonLdGraph } from '@/lib/json-ld'
-import { SITE_NAME, SITE_TAGLINE, RAV_NAME } from '@/lib/site-brand'
+import {
+  SEO_HOME_DESCRIPTION,
+  SEO_HOME_TITLE,
+  SITE_NAME,
+  SITE_NAME_ALT,
+  SITE_TAGLINE,
+  RAV_NAME,
+} from '@/lib/site-brand'
 
 const cinzel = Cinzel({
   subsets: ['latin'],
@@ -37,29 +44,33 @@ const inter = Inter({
 
 const APP_URL = getPublicSiteOrigin()
 
+const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION?.trim()
+
 export const metadata: Metadata = {
   metadataBase: new URL(APP_URL),
   title: {
-    default: `${SITE_NAME} — Plataforma Judaico-Messiânica`,
-    template: `%s | ${SITE_NAME}`,
+    default: SEO_HOME_TITLE,
+    template: `%s | ${SITE_NAME_ALT}`,
   },
-  description: `${SITE_TAGLINE} Sob a orientação do ${RAV_NAME}.`,
+  description: SEO_HOME_DESCRIPTION,
   keywords: [
-    'judaísmo messiânico',
+    'sinagoga brit im mashiach',
+    'brit im mashiach franca',
+    'judaísmo messiânico franca sp',
+    'congregação brit im mashiach',
+    'rav eliahu barzilay',
     'kabaláh luriana',
     'toráh',
     'parashá',
     'calendário hebraico',
-    'tanach',
-    'chagim',
-    'brit im mashiach',
-    'rav eliahu barzilay',
-    'kabaláh luriana',
+    'sinagoga franca são paulo',
     'sefirat haomer',
     'netivot',
-    'parashá da semana',
     'modelo netivot',
   ],
+  ...(googleVerification
+    ? { verification: { google: googleVerification } }
+    : {}),
   authors: [{ name: RAV_NAME, url: APP_URL }],
   creator: 'Congregação Brit Im Mashiach',
   publisher: SITE_NAME,
@@ -68,8 +79,8 @@ export const metadata: Metadata = {
     locale: 'pt_BR',
     url: APP_URL,
     siteName: SITE_NAME,
-    title: `${SITE_NAME} — Plataforma Judaico-Messiânica`,
-    description: SITE_TAGLINE,
+    title: SEO_HOME_TITLE,
+    description: SEO_HOME_DESCRIPTION,
     images: [
       {
         url: '/og-image.png',

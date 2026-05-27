@@ -1,7 +1,24 @@
+import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import Link from 'next/link'
 import { ArrowRight, BookOpen, Calendar, Library, Star, Flame, Crown, ChevronRight, ShoppingBag, DoorOpen, Sparkles, Users } from 'lucide-react'
-import { RAV_NAME } from '@/lib/site-brand'
+import { RAV_NAME, SEO_HOME_DESCRIPTION, SEO_HOME_TITLE, SITE_NAME_ALT } from '@/lib/site-brand'
+import { getPublicSiteOrigin } from '@/lib/public-site-url'
+
+const APP_URL = getPublicSiteOrigin()
+
+export const metadata: Metadata = {
+  title: SEO_HOME_TITLE,
+  description: SEO_HOME_DESCRIPTION,
+  alternates: { canonical: APP_URL },
+  openGraph: {
+    url: APP_URL,
+    title: SEO_HOME_TITLE,
+    description: SEO_HOME_DESCRIPTION,
+    locale: 'pt_BR',
+    siteName: SITE_NAME_ALT,
+  },
+}
 import { HebrewDateDisplay } from '@/components/spiritual/HebrewDateDisplay'
 import { OmerCounter } from '@/components/spiritual/OmerCounter'
 import { ParashaWidget } from '@/components/spiritual/ParashaWidget'
