@@ -2,12 +2,11 @@ import { getPublicSiteOrigin } from '@/lib/public-site-url'
 import {
   CONGREGATION,
   RAV_NAME,
-  SITE_COUNTRY,
-  SITE_LOCALITY,
+  SITE_ADDRESS_FULL,
   SITE_NAME,
   SITE_NAME_ALT,
-  SITE_REGION,
   SITE_TAGLINE,
+  sitePostalAddress,
 } from '@/lib/site-brand'
 
 export type BreadcrumbItem = { name: string; path: string }
@@ -28,12 +27,7 @@ export function rootJsonLdGraph() {
       description: SITE_TAGLINE,
       url: origin,
       founder: { '@type': 'Person', name: RAV_NAME },
-      address: {
-        '@type': 'PostalAddress',
-        addressLocality: SITE_LOCALITY,
-        addressRegion: SITE_REGION,
-        addressCountry: SITE_COUNTRY,
-      },
+      address: sitePostalAddress(),
     },
     {
       '@type': 'Synagogue',
@@ -42,13 +36,8 @@ export function rootJsonLdGraph() {
       alternateName: SITE_NAME_ALT,
       url: origin,
       description:
-        'Sinagoga judaico-messiânica em Franca, São Paulo, Brasil. Toráh, Shabat, Moedim e estudo kabalístico.',
-      address: {
-        '@type': 'PostalAddress',
-        addressLocality: SITE_LOCALITY,
-        addressRegion: SITE_REGION,
-        addressCountry: SITE_COUNTRY,
-      },
+        `Sinagoga judaico-messiânica em ${SITE_ADDRESS_FULL}. Toráh, Shabat, Moedim e estudo kabalístico.`,
+      address: sitePostalAddress(),
       geo: {
         '@type': 'GeoCoordinates',
         latitude: -20.5386,

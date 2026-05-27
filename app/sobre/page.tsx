@@ -1,7 +1,12 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { Landmark, Scale, BookMarked, Sparkles, HeartHandshake } from 'lucide-react'
-import { SITE_NAME_ALT, CONGREGATION } from '@/lib/site-brand'
+import { Landmark, Scale, BookMarked, Sparkles, HeartHandshake, MapPin } from 'lucide-react'
+import {
+  SITE_ADDRESS_FULL,
+  SITE_MAPS_URL,
+  SITE_NAME_ALT,
+  CONGREGATION,
+} from '@/lib/site-brand'
 import { getPublicSiteOrigin } from '@/lib/public-site-url'
 import { JsonLd } from '@/components/seo/JsonLd'
 
@@ -10,7 +15,7 @@ const APP_URL = getPublicSiteOrigin()
 export const metadata: Metadata = {
   title: 'Quem somos',
   description:
-    `${SITE_NAME_ALT}: sinagoga judaico-messiânica em Franca (SP), Toráh, Halacháh, PaRDeS e fé em Yeshua HaMashiach sem trindade.`,
+    `${SITE_NAME_ALT}: sinagoga judaico-messiânica em Franca (SP), Rua General Carneiro 749. Toráh, Halacháh, PaRDeS e fé em Yeshua HaMashiach.`,
   alternates: { canonical: `${APP_URL}/sobre` },
   openGraph: {
     url: `${APP_URL}/sobre`,
@@ -87,6 +92,30 @@ export default function QuemSomosPage() {
           <p className="font-inter text-base md:text-[17px] leading-relaxed text-foreground/95">
             Buscamos viver uma prática judaica fundamentada na Toráh, na Halacháh, nas tradições de Israel e nos ensinamentos dos Sábios, buscando unir fidelidade bíblica, profundidade espiritual e vida comunitária. Guardamos o Shabat, os Chagim bíblicos, as mitzvot e o ciclo sagrado estabelecido pela Toráh, compreendendo que cada mandamento possui dimensões espirituais, proféticas e restauradoras.
           </p>
+        </section>
+
+        <section className="rounded-xl border border-border/50 bg-background/80 dark:bg-petroleum-950/40 p-6 md:p-8 space-y-3">
+          <div className="flex items-center gap-2">
+            <MapPin className="w-5 h-5 text-gold-600 shrink-0" aria-hidden="true" />
+            <h2 className="font-cinzel text-xl font-semibold text-petroleum-800 dark:text-parchment-100">
+              Onde estamos — Franca, SP
+            </h2>
+          </div>
+          <p className="font-inter text-base md:text-[17px] leading-relaxed text-foreground/95">
+            Cultos, estudos e encontros da kehilah acontecem na sinagoga:
+          </p>
+          <p className="font-inter text-base font-medium text-petroleum-800 dark:text-parchment-100">
+            {SITE_ADDRESS_FULL}
+          </p>
+          <a
+            href={SITE_MAPS_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm font-inter text-gold-700 dark:text-gold-400 font-medium hover:underline inline-flex items-center gap-1"
+          >
+            Abrir no Google Maps
+            <MapPin className="w-3.5 h-3.5" aria-hidden="true" />
+          </a>
         </section>
 
         <section className="rounded-xl border border-gold-500/20 bg-gold-500/[0.03] p-6 md:p-8 space-y-3">

@@ -1,4 +1,5 @@
 import type { KehilahEvent, KehilahTestimonial } from '@/lib/community-types'
+import { SITE_EVENT_LOCATION } from '@/lib/site-brand'
 
 function nextShabatAt(): Date {
   const now = new Date()
@@ -43,7 +44,7 @@ export function getFallbackEvents(): KehilahEvent[] {
       eventType: 'culto',
       startsAt: shabatStart.toISOString(),
       endsAt: shabatEnd.toISOString(),
-      location: 'Sinagoga Brit Im Mashiach — Franca, SP',
+      location: SITE_EVENT_LOCATION,
       liveUrl: null,
     },
     {
@@ -53,7 +54,7 @@ export function getFallbackEvents(): KehilahEvent[] {
       eventType: 'estudo',
       startsAt: studyStart.toISOString(),
       endsAt: studyEnd.toISOString(),
-      location: 'Sinagoga Brit Im Mashiach — Franca, SP',
+      location: SITE_EVENT_LOCATION,
       liveUrl: null,
     },
     {

@@ -7,7 +7,7 @@ import { KehilahAgenda } from '@/components/community/KehilahAgenda'
 import { PrayerRequestForm } from '@/components/community/PrayerRequestForm'
 import { TestimonialsList } from '@/components/community/TestimonialsList'
 import { fetchKehilahEvents, fetchKehilahTestimonials } from '@/lib/community-supabase'
-import { CONGREGATION, SITE_NAME_ALT } from '@/lib/site-brand'
+import { CONGREGATION, SITE_ADDRESS_FULL, SITE_MAPS_URL, SITE_NAME_ALT } from '@/lib/site-brand'
 import { getPublicSiteOrigin } from '@/lib/public-site-url'
 import { breadcrumbJsonLd } from '@/lib/json-ld'
 import { getAuthSnapshot } from '@/lib/auth-snapshot'
@@ -109,9 +109,19 @@ export default async function ComunidadePage() {
               Participe presencialmente
             </h2>
             <p className="text-sm font-inter text-warmgray-600 dark:text-warmgray-400 leading-relaxed">
-              Shabat, estudos e Moedim acontecem na sinagoga em Franca. A plataforma estende o Beit Midrash; a mesa
-              comunitária permanece no lugar físico da kehilah.
+              Shabat, estudos e Moedim na sinagoga:
             </p>
+            <p className="text-sm font-inter font-medium text-petroleum-800 dark:text-parchment-100">
+              {SITE_ADDRESS_FULL}
+            </p>
+            <a
+              href={SITE_MAPS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-inter text-gold-700 dark:text-gold-400 font-medium hover:underline"
+            >
+              Ver no Google Maps
+            </a>
             <ul className="space-y-2 text-sm font-inter">
               <li>
                 <Link href="/calendar" className="text-gold-700 dark:text-gold-400 font-medium hover:underline inline-flex items-center gap-1">

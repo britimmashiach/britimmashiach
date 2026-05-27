@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import { Star } from 'lucide-react'
+import { MapPin, Star } from 'lucide-react'
+import { SITE_ADDRESS_FULL, SITE_MAPS_URL } from '@/lib/site-brand'
 
 export function Footer() {
   const year = new Date().getFullYear()
@@ -21,6 +22,17 @@ export function Footer() {
             </div>
             <p className="text-sm font-inter text-warmgray-600 dark:text-warmgray-400 leading-relaxed max-w-xs">
               Plataforma de estudos judaico-messiânicos, Kabaláh Luriana e espiritualidade profunda sob a orientação do Rav Eliahu Barzilay ben Yehoshua.
+            </p>
+            <p className="text-sm font-inter text-warmgray-600 dark:text-warmgray-400 leading-relaxed max-w-xs flex items-start gap-2">
+              <MapPin className="w-4 h-4 shrink-0 text-gold-600 dark:text-gold-400 mt-0.5" aria-hidden="true" />
+              <a
+                href={SITE_MAPS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-gold-700 dark:hover:text-gold-400 transition-colors"
+              >
+                {SITE_ADDRESS_FULL}
+              </a>
             </p>
             <p className="text-xs font-hebrew text-warmgray-500 dark:text-warmgray-500 text-right" dir="rtl">
               ברית עם המשיח

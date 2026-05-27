@@ -8,7 +8,7 @@ values
     'culto',
     (date_trunc('week', now() at time zone 'America/Sao_Paulo') + interval '6 days' + time '09:30') at time zone 'America/Sao_Paulo',
     (date_trunc('week', now() at time zone 'America/Sao_Paulo') + interval '6 days' + time '12:30') at time zone 'America/Sao_Paulo',
-    'Sinagoga Brit Im Mashiach — Franca, SP',
+    'Sinagoga Brit Im Mashiach — Rua General Carneiro, 749 — Estação, Franca — SP',
     null,
     true,
     10
@@ -19,7 +19,7 @@ values
     'estudo',
     (date_trunc('week', now() at time zone 'America/Sao_Paulo') + interval '3 days' + time '19:30') at time zone 'America/Sao_Paulo',
     (date_trunc('week', now() at time zone 'America/Sao_Paulo') + interval '3 days' + time '21:00') at time zone 'America/Sao_Paulo',
-    'Sinagoga Brit Im Mashiach — Franca, SP',
+    'Sinagoga Brit Im Mashiach — Rua General Carneiro, 749 — Estação, Franca — SP',
     null,
     true,
     20
