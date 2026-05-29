@@ -328,6 +328,9 @@ export default function HomePage() {
             </p>
           </div>
           <div className="flex flex-wrap gap-3 shrink-0">
+            <Link href="/manifesto" className="btn-ghost text-sm border border-border/60">
+              Manifesto
+            </Link>
             <Link href="/metodo-pardes" className="btn-ghost text-sm border border-border/60">
               Método PaRDeS
             </Link>

@@ -138,6 +138,13 @@ export default function RavPage() {
               A Brit Im Mashiach existe para formar discípulos que guardam Shabat e Moedim, honram os Sábios, praticam
               Mussar e entram nos portões internos do conhecimento quando estão prontos para sustentar o caminho.
             </p>
+            <Link
+              href="/manifesto"
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-gold-700 dark:text-gold-400 hover:underline"
+            >
+              Ler o manifesto completo da kehilah
+              <ArrowRight className="w-4 h-4" aria-hidden="true" />
+            </Link>
           </div>
         </section>
 

@@ -162,6 +162,56 @@ export const ENSINOS_PILLARS: EnsinosPillar[] = [
     ],
   },
   {
+    slug: 'sefirot',
+    title: 'As dez Sefirot',
+    metaTitle: 'Sefirot — as dez emanações na Kabaláh Luriana',
+    description:
+      'Keter, Chochmah, Binah, Chesed, Gevurah, Tiferet, Netzach, Hod, Yessod e Malchut. Introdução às Sefirot no estudo da Brit Im Mashiach.',
+    eyebrow: 'Etz Chaim',
+    subtitle: 'As dez emanações que estruturam a criação e o mapa interior do estudo kabalístico.',
+    sections: [
+      {
+        id: 'o-que',
+        title: 'O que são as Sefirot',
+        paragraphs: [
+          'As Sefirot (emanações) são os dez atributos pelos quais o Ein Sof revela a criação no Etz Chaim: da coroa (Keter) ao reino (Malchut). Não são deuses separados — são modos de ação divina percebidos na Toráh, na alma e no mundo.',
+          'Na tradição Luriana, as Sefirot se relacionam pelos 32 Netivot (caminhos das letras). Cada Parasháh e cada dia do Omer ativam combinações específicas de Chesed, Gevurah, Tiferet e assim por diante.',
+        ],
+      },
+      {
+        id: 'dez',
+        title: 'As dez emanações',
+        paragraphs: [
+          'Keter (coroa), Chochmah (sabedoria) e Binah (entendimento) formam a triade superior. Chesed (bondade), Gevurah (severidade) e Tiferet (beleza) o coração. Netzach (vitória), Hod (esplendor) e Yessod (fundamento) a base. Malchut (reino) recebe e manifesta a luz nos mundos.',
+          'Nas Aliyot semanais do Rav EBBY, a seção Sefirot Relacionadas indica quais emanações o texto da porção ilumina, sempre após Peshat, Remez e Drash firmados.',
+        ],
+      },
+      {
+        id: 'estudo',
+        title: 'Como estudar na plataforma',
+        paragraphs: [
+          'Comece pela Kabaláh Luriana e pelo Modelo Netivot. O calendário e o Omer mostram combinações sefiróticas no tempo. O Sod completo das Aliyot está nos portões internos.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        question: 'Sefirot é politeísmo?',
+        answer: 'Não. É linguagem mística monoteísta: modos de revelação do Ein Sof, como ensinam Zohar, Luria e a tradição rabínica responsável.',
+      },
+      {
+        question: 'Qual a diferença entre Sefirot e Netivot?',
+        answer: 'Sefirot são os dez pontos do Etz Chaim; Netivot são os 32 caminhos que os conectam pelas letras hebraicas.',
+      },
+    ],
+    relatedHrefs: [
+      { href: '/ensinos/kabalah-luriana', label: 'Kabaláh Luriana' },
+      { href: '/ensinos/netivot', label: 'Modelo Netivot' },
+      { href: '/ensinos/sefirat-haomer', label: 'Sefirat haOmer' },
+      { href: '/metodo-pardes', label: 'Método PaRDeS' },
+    ],
+  },
+  {
     slug: 'netivot',
     title: 'Modelo Netivot',
     metaTitle: 'Netivot — os 32 caminhos do Etz Chaim',

@@ -1,6 +1,20 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      { source: '/kabalah-luriana', destination: '/ensinos/kabalah-luriana', permanent: true },
+      {
+        source: '/yeshua-no-judaismo-messianico',
+        destination: '/ensinos/yeshua-judaismo-messianico',
+        permanent: true,
+      },
+      { source: '/sefirot', destination: '/ensinos/sefirot', permanent: true },
+      { source: '/omer', destination: '/ensinos/sefirat-haomer', permanent: true },
+      { source: '/parasha', destination: '/ensinos/parasha-da-semana', permanent: true },
+      { source: '/netivot', destination: '/ensinos/netivot', permanent: true },
+    ]
+  },
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [

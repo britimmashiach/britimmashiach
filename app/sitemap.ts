@@ -9,7 +9,8 @@ import { getPublicSiteOrigin } from '@/lib/public-site-url'
 import { getShopCatalog } from '@/lib/shop-catalog'
 import { getAllEnsinosSlugs } from '@/lib/ensinos-pillars'
 
-export const revalidate = 86400
+/** Sitemap gerado no build — evita timeout em runtime na Vercel. */
+export const dynamic = 'force-static'
 
 /** Capítulos do Tanach ficam fora do sitemap principal (evita timeout/500 com ~900 URLs). */
 const INCLUDE_TANACH_CHAPTERS = false
@@ -19,6 +20,7 @@ function staticRoutes(origin: string, now: Date): MetadataRoute.Sitemap {
     { url: origin, lastModified: now, changeFrequency: 'daily', priority: 1 },
     { url: `${origin}/sobre`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${origin}/rav`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${origin}/manifesto`, lastModified: now, changeFrequency: 'monthly', priority: 0.92 },
     { url: `${origin}/ensinos`, lastModified: now, changeFrequency: 'weekly', priority: 0.86 },
     { url: `${origin}/comunidade`, lastModified: now, changeFrequency: 'weekly', priority: 0.87 },
     { url: `${origin}/judaismo-messianico`, lastModified: now, changeFrequency: 'monthly', priority: 0.88 },

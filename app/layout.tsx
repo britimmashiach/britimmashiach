@@ -48,6 +48,11 @@ const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION?.tri
 
 export const metadata: Metadata = {
   metadataBase: new URL(APP_URL),
+  applicationName: SITE_NAME_ALT,
+  icons: {
+    icon: [{ url: '/icon', type: 'image/png' }],
+    apple: [{ url: '/apple-icon', type: 'image/png' }],
+  },
   title: {
     default: SEO_HOME_TITLE,
     template: `%s | ${SITE_NAME_ALT}`,

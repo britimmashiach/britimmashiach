@@ -62,6 +62,7 @@ export function Footer() {
             <ul className="space-y-2">
               {[
                 { href: '/sobre', label: 'Quem somos' },
+                { href: '/manifesto', label: 'Manifesto' },
                 { href: '/rav', label: 'O Rav' },
                 { href: '/ensinos', label: 'Ensinos e guias' },
                 { href: '/judaismo-messianico', label: 'Judaísmo messiânico' },

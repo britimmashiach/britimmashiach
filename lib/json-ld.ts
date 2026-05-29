@@ -75,10 +75,13 @@ export function rootJsonLdGraph() {
       knowsAbout: [
         'Toráh',
         'Kabaláh Luriana',
+        'Sefirot',
+        'Modelo Netivot',
         'Parashot',
         'Calendário hebraico',
         'Tanach',
         'Moedim',
+        'Judaísmo messiânico',
       ],
     },
   ]
