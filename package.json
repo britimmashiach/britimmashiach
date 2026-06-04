@@ -26,7 +26,11 @@
     "chag:pardes:export": "node scripts/export-chag-pardes-fallback.mjs",
     "chag:pardes:seed": "node scripts/build-chag-pardes.mjs --all",
     "chag:pardes": "npm run chag:pardes:aggregate && npm run chag:pardes:export && npm run chag:pardes:seed",
-    "chag:pardes:deploy": "tsx --env-file=.env.local scripts/deploy-chag-pardes.ts --all"
+    "chag:pardes:deploy": "tsx --env-file=.env.local scripts/deploy-chag-pardes.ts --all",
+    "chag:pardes:migrate": "node --env-file=.env.local scripts/apply-chag-pardes-migration.mjs",
+    "chag:pardes:prod": "npm run chag:pardes:migrate && npm run chag:pardes:deploy",
+    "chag:pardes:check": "tsx --env-file=.env.local scripts/check-chag-pardes-migration.mjs",
+    "chag:pardes:sql-all": "node scripts/build-chag-pardes-all-sql.mjs"
   },
   "dependencies": {
     "@hebcal/core": "^5.9.0",
