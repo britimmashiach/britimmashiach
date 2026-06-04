@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils'
 import { getTanachBook, type TanachSection } from '@/lib/tanach-books'
 import { saveTanachLastRead, saveTanachViewPref, loadTanachViewPref } from '@/lib/tanach-reading-prefs'
 import type { TanachChapterPayload } from '@/lib/sefaria-tanach'
-import { TorahChapterAudioPlayer } from '@/components/tanach/TorahChapterAudioPlayer'
+import { TanachChapterAudioPlayer } from '@/components/tanach/TanachChapterAudioPlayer'
 
 export type TanachViewMode = 'both' | 'he' | 'pt'
 
@@ -203,8 +203,8 @@ function TanachReaderInner({
         ))}
       </div>
 
-      {section === 'torah' && !loading && !error && data && (
-        <TorahChapterAudioPlayer
+      {!loading && !error && data && (
+        <TanachChapterAudioPlayer
           apiBook={apiBook}
           chapter={chapter}
           verseCount={data.he.length}

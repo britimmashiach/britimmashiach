@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
 import { getPlaceholderChagBySlug } from '@/lib/chagim-placeholders'
+import { mergeChagPardesFromRepo } from '@/lib/chag-pardes-fallback.server'
 import type { Database } from '@/types/database'
 import { getSupabaseAdmin, hasServiceRoleEnv } from '@/lib/supabase-admin'
 import { chagPdfUrl, chagSectionPdfUrl } from '@/lib/pdf-urls'
@@ -18,6 +19,10 @@ export interface Chag {
   durationDays: number
   summary: string
   content: string
+  peshat: string
+  remez: string
+  drash: string
+  sod: string
   levelPardes: string[]
   isPremium: boolean
   pdfUrl: string | null
@@ -49,6 +54,10 @@ function normalizeChag(row: ChagRow): Chag {
     durationDays: row.duration_days,
     summary: row.summary,
     content: row.content,
+    peshat: row.peshat ?? '',
+    remez: row.remez ?? '',
+    drash: row.drash ?? '',
+    sod: row.sod ?? '',
     levelPardes: row.level_pardes ?? [],
     isPremium: row.is_premium,
     pdfUrl: chagPdfUrl(row.id, row.pdf_url, ''),
@@ -162,8 +171,8 @@ export async function fetchChagSectionsByChagId(chagId: string): Promise<ChagSec
 /** Resolve Chag do banco ou placeholder editorial (build/SEO sem Supabase). */
 export async function resolveChagBySlug(slug: string): Promise<Chag | null> {
   const fromDb = await fetchChagBySlug(slug)
-  if (fromDb) return fromDb
-  return getPlaceholderChagBySlug(slug)
+  const chag = fromDb ?? getPlaceholderChagBySlug(slug)
+  return chag ? mergeChagPardesFromRepo(chag) : null
 }
 
 /**
@@ -191,8 +200,8 @@ export async function fetchChagBySlugAdmin(slug: string): Promise<Chag | null> {
 /** Resolve Chag via admin client, com fallback para placeholder editorial. */
 export async function resolveChagBySlugAdmin(slug: string): Promise<Chag | null> {
   const fromDb = await fetchChagBySlugAdmin(slug)
-  if (fromDb) return fromDb
-  return getPlaceholderChagBySlug(slug)
+  const chag = fromDb ?? getPlaceholderChagBySlug(slug)
+  return chag ? mergeChagPardesFromRepo(chag) : null
 }
 
 /** Lê as seções de um chag via service-role, bypassando RLS. */

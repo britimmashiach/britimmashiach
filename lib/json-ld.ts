@@ -156,21 +156,54 @@ export function chagWebPageJsonLd(input: {
   name: string
   summary: string
   publishedAt?: string
+  peshat?: string
+  remez?: string
+  drash?: string
+  sod?: string
 }) {
   const origin = getPublicSiteOrigin()
   const url = `${origin}/chagim/${input.slug}`
+  const parts: Record<string, unknown>[] = []
+
+  const addPart = (level: string, text: string | undefined, isAccessibleForFree: boolean) => {
+    const t = text?.trim()
+    if (!t) return
+    parts.push({
+      '@type': 'LearningResource',
+      name: `${level} — ${input.name}`,
+      description: t.slice(0, 240),
+      url: `${url}#panel-chag-${level.toLowerCase()}`,
+      inLanguage: 'pt-BR',
+      learningResourceType: level,
+      isAccessibleForFree,
+      author: { '@type': 'Person', name: RAV_NAME },
+    })
+  }
+
+  addPart('Peshat', input.peshat, true)
+  addPart('Remez', input.remez, true)
+  addPart('Drash', input.drash, false)
+  addPart('Sod', input.sod, false)
+
+  const keywords = ['PaRDeS', 'Chagim', input.name, 'Toráh', 'Brit Im Mashiach']
+  if (input.peshat?.trim()) keywords.push('Peshat')
+  if (input.remez?.trim()) keywords.push('Remez')
+
   return {
     '@context': 'https://schema.org',
-    '@type': 'WebPage',
+    '@type': ['WebPage', 'Article'],
     name: input.name,
+    headline: `${input.name} — estudo PaRDeS`,
     description: input.summary,
     url,
     inLanguage: 'pt-BR',
+    keywords,
     ...(input.publishedAt ? { datePublished: input.publishedAt } : {}),
     isPartOf: { '@type': 'WebSite', name: SITE_NAME, url: origin },
     author: { '@type': 'Person', name: RAV_NAME },
     publisher: { '@type': 'Organization', name: SITE_NAME, url: origin },
     about: { '@type': 'Event', name: input.name },
+    ...(parts.length > 0 ? { hasPart: parts } : {}),
   }
 }
 

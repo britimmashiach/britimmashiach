@@ -2,12 +2,13 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ScrollText } from 'lucide-react'
 import { TanachContinueReading } from '@/components/tanach/TanachContinueReading'
+import { TanachAudioIndicator } from '@/components/tanach/TanachAudioIndicator'
 import { TANACH_BOOKS, TANACH_SECTION_LABELS, type TanachSection } from '@/lib/tanach-books'
 
 export const metadata: Metadata = {
   title: 'Tanach — leitura bilíngue',
   description:
-    'Tanach completo em hebraico massorético com tradução (português quando disponível no Sefaria; caso contrário inglês alinhado), via Sefaria.',
+    'Tanach completo em hebraico massorético com tradução e leitura em áudio: Toráh com sincronização por versículo (PocketTorah/Sefaria); Neviim e Ketuvim em hebraico por capítulo (Mechon Mamre).',
 }
 
 const SECTION_ORDER: TanachSection[] = ['torah', 'neviim', 'ketuvim']
@@ -26,7 +27,10 @@ export default function TanachIndexPage() {
           <strong className="font-medium text-petroleum-800 dark:text-parchment-100">hebraico com nikud</strong> e coluna
           de tradução alinhada ao versículo. Quando o Sefaria não dispõe de português para um livro, a coluna mostra a
           tradução padrão do site (em geral inglês JPS), sempre em paralelo com o massoreto. Ambiente de estudo com
-          estética cabalística luriana; transliteração e comentários no próprio Sefaria.
+          estética cabalística luriana; transliteração e comentários no próprio Sefaria. Em cada capítulo, use{' '}
+          <strong className="font-medium text-petroleum-800 dark:text-parchment-100">Ouvir leitura em áudio</strong>:
+          na Toráh, com destaque versículo a versículo; no restante do Tanach, leitura clara do capítulo inteiro em
+          hebraico.
         </p>
       </div>
 
@@ -59,6 +63,7 @@ export default function TanachIndexPage() {
                           <p className="font-hebrew text-xl text-warmgray-500 dark:text-warmgray-400 mt-1" dir="rtl" lang="he">
                             {b.titleHe}
                           </p>
+                          <TanachAudioIndicator section={b.section} className="mt-2" showLabel={false} />
                         </div>
                         <span className="text-[10px] font-inter uppercase tracking-wider text-warmgray-400 shrink-0">
                           {b.chapters} cap.

@@ -1,10 +1,11 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { Headphones, Loader2, Pause, Play, X } from 'lucide-react'
+import { Headphones, Loader2, Pause, Play, RotateCcw, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { notifyTorahAudioPlay, notifyTorahAudioStop } from '@/lib/ambient-audio-bus'
-import type { TorahChapterMedia } from '@/lib/sefaria-media'
+import { formatAudioTimestamp } from '@/lib/format-audio-time'
+import type { TanachChapterMedia } from '@/lib/tanach-chapter-media'
 
 const SPEEDS = [0.75, 1, 1.25] as const
 type Speed = (typeof SPEEDS)[number]
@@ -16,16 +17,22 @@ type Props = {
   onActiveVerseChange?: (verse: number | null) => void
 }
 
-export function TorahChapterAudioPlayer({ apiBook, chapter, verseCount, onActiveVerseChange }: Props) {
+export function TanachChapterAudioPlayer({ apiBook, chapter, verseCount, onActiveVerseChange }: Props) {
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const [open, setOpen] = useState(false)
-  const [media, setMedia] = useState<TorahChapterMedia | null>(null)
+  const [media, setMedia] = useState<TanachChapterMedia | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [playing, setPlaying] = useState(false)
   const [speed, setSpeed] = useState<Speed>(1)
   const [activeVerse, setActiveVerse] = useState<number | null>(null)
-  const torahActiveRef = useRef(false)
+  const [duration, setDuration] = useState(0)
+  const [currentTime, setCurrentTime] = useState(0)
+  const tanachActiveRef = useRef(false)
+
+  const verseSync = media?.mode === 'chapter-sync' && (media.verses.length ?? 0) > 0
+  const modeLabel =
+    media?.mode === 'chapter-sync' ? 'Sincronizado por versículo' : 'Leitura do capítulo inteiro'
 
   const updateActiveVerse = useCallback(
     (verse: number | null) => {
@@ -35,9 +42,9 @@ export function TorahChapterAudioPlayer({ apiBook, chapter, verseCount, onActive
     [onActiveVerseChange],
   )
 
-  const stopTorahAmbient = useCallback(() => {
-    if (!torahActiveRef.current) return
-    torahActiveRef.current = false
+  const stopTanachAmbient = useCallback(() => {
+    if (!tanachActiveRef.current) return
+    tanachActiveRef.current = false
     notifyTorahAudioStop()
   }, [])
 
@@ -49,8 +56,8 @@ export function TorahChapterAudioPlayer({ apiBook, chapter, verseCount, onActive
     }
     setPlaying(false)
     updateActiveVerse(null)
-    stopTorahAmbient()
-  }, [stopTorahAmbient, updateActiveVerse])
+    stopTanachAmbient()
+  }, [stopTanachAmbient, updateActiveVerse])
 
   const loadMedia = useCallback(async () => {
     setLoading(true)
@@ -59,7 +66,7 @@ export function TorahChapterAudioPlayer({ apiBook, chapter, verseCount, onActive
       const res = await fetch(
         `/api/tanach/media?book=${encodeURIComponent(apiBook)}&chapter=${encodeURIComponent(String(chapter))}`,
       )
-      const json = (await res.json()) as TorahChapterMedia & { error?: string }
+      const json = (await res.json()) as TanachChapterMedia & { error?: string }
       if (!res.ok) throw new Error(json.error || 'Áudio indisponível.')
       setMedia(json)
     } catch (e) {
@@ -76,6 +83,8 @@ export function TorahChapterAudioPlayer({ apiBook, chapter, verseCount, onActive
   }, [open, loadMedia])
 
   useEffect(() => {
+    setDuration(0)
+    setCurrentTime(0)
     return () => {
       endPlayback()
     }
@@ -97,20 +106,38 @@ export function TorahChapterAudioPlayer({ apiBook, chapter, verseCount, onActive
   const onTimeUpdate = useCallback(() => {
     const el = audioRef.current
     if (!el || !media) return
-    updateActiveVerse(findVerseAtTime(el.currentTime))
-    const last = media.verses[media.verses.length - 1]
-    if (last && el.currentTime >= last.endTime - 0.05) {
-      endPlayback()
+    setCurrentTime(el.currentTime)
+    if (verseSync) {
+      updateActiveVerse(findVerseAtTime(el.currentTime))
+      const last = media.verses[media.verses.length - 1]
+      if (last && el.currentTime >= last.endTime - 0.05) {
+        endPlayback()
+      }
     }
-  }, [media, findVerseAtTime, updateActiveVerse, endPlayback])
+  }, [media, verseSync, findVerseAtTime, updateActiveVerse, endPlayback])
+
+  const onLoadedMetadata = useCallback(() => {
+    const el = audioRef.current
+    if (!el) return
+    setDuration(Number.isFinite(el.duration) ? el.duration : 0)
+  }, [])
+
+  const seekTo = useCallback((t: number) => {
+    const el = audioRef.current
+    if (!el || !media) return
+    const clamped = Math.max(0, Math.min(t, duration || el.duration || t))
+    el.currentTime = clamped
+    setCurrentTime(clamped)
+    if (verseSync) updateActiveVerse(findVerseAtTime(clamped))
+  }, [media, duration, verseSync, findVerseAtTime, updateActiveVerse])
 
   const playFrom = useCallback(
     (startTime: number, endTime?: number) => {
       const el = audioRef.current
       if (!el || !media) return
 
-      if (!torahActiveRef.current) {
-        torahActiveRef.current = true
+      if (!tanachActiveRef.current) {
+        tanachActiveRef.current = true
         notifyTorahAudioPlay()
       }
 
@@ -126,7 +153,7 @@ export function TorahChapterAudioPlayer({ apiBook, chapter, verseCount, onActive
       }
       setPlaying(true)
 
-      if (endTime != null) {
+      if (endTime != null && verseSync) {
         const checkEnd = () => {
           if (!audioRef.current) return
           if (audioRef.current.currentTime >= endTime - 0.05) {
@@ -137,14 +164,14 @@ export function TorahChapterAudioPlayer({ apiBook, chapter, verseCount, onActive
               el.pause()
               setPlaying(false)
               updateActiveVerse(null)
-              stopTorahAmbient()
+              stopTanachAmbient()
             }
           }
         }
         el.addEventListener('timeupdate', checkEnd)
       }
     },
-    [media, speed, endPlayback, updateActiveVerse, stopTorahAmbient],
+    [media, speed, verseSync, endPlayback, updateActiveVerse, stopTanachAmbient],
   )
 
   const togglePlay = useCallback(() => {
@@ -154,23 +181,23 @@ export function TorahChapterAudioPlayer({ apiBook, chapter, verseCount, onActive
     if (playing) {
       el.pause()
       setPlaying(false)
-      stopTorahAmbient()
+      stopTanachAmbient()
       return
     }
 
     const first = media.verses[0]
-    const start = first?.startTime ?? 0
+    const start = verseSync && first ? first.startTime : 0
     playFrom(start)
-  }, [media, playing, playFrom, stopTorahAmbient])
+  }, [media, playing, verseSync, playFrom, stopTanachAmbient])
 
   const playVerse = useCallback(
     (verse: number) => {
-      if (!media) return
+      if (!media || !verseSync) return
       const seg = media.verses.find((v) => v.verse === verse)
       if (!seg) return
       playFrom(seg.startTime, seg.endTime)
     },
-    [media, playFrom],
+    [media, verseSync, playFrom],
   )
 
   const closePanel = useCallback(() => {
@@ -204,16 +231,30 @@ export function TorahChapterAudioPlayer({ apiBook, chapter, verseCount, onActive
         'shadow-[inset_0_1px_0_rgba(201,168,76,0.08)]',
       )}
       role="region"
-      aria-label="Leitor de áudio da Toráh"
+      aria-label="Leitor de áudio do Tanach"
     >
       <div className="flex items-start justify-between gap-3">
-        <div>
-          <p className="text-[10px] font-inter font-semibold uppercase tracking-wider text-gold-600/90 dark:text-gold-400/90">
-            Áudio do capítulo
+        <div className="min-w-0 space-y-1">
+          <div className="flex flex-wrap items-center gap-2">
+            <p className="text-[10px] font-inter font-semibold uppercase tracking-wider text-gold-600/90 dark:text-gold-400/90">
+              Áudio do capítulo
+            </p>
+            {media && (
+              <span className="rounded-md border border-gold-500/30 bg-gold-500/10 px-1.5 py-0.5 text-[9px] font-inter font-medium text-gold-800 dark:text-gold-200">
+                {modeLabel}
+              </span>
+            )}
+          </div>
+          <p className="text-xs font-inter text-warmgray-600 dark:text-warmgray-300">
+            {verseSync
+              ? 'Toque em reproduzir ou num versículo. A música de fundo pausa automaticamente.'
+              : 'Leitura clara do capítulo inteiro em hebraico. A música de fundo pausa automaticamente.'}
           </p>
-          <p className="text-xs font-inter text-warmgray-600 dark:text-warmgray-300 mt-0.5">
-            Toque em reproduzir quando quiser ouvir. A música de fundo pausa automaticamente.
-          </p>
+          {media?.playbackNote && (
+            <p className="text-[11px] font-inter text-warmgray-500 dark:text-warmgray-400 leading-snug">
+              {media.playbackNote}
+            </p>
+          )}
         </div>
         <button
           type="button"
@@ -233,9 +274,17 @@ export function TorahChapterAudioPlayer({ apiBook, chapter, verseCount, onActive
       )}
 
       {error && (
-        <p className="text-xs font-inter text-red-600 dark:text-red-400" role="alert">
-          {error}
-        </p>
+        <div className="flex flex-wrap items-center gap-2" role="alert">
+          <p className="text-xs font-inter text-red-600 dark:text-red-400">{error}</p>
+          <button
+            type="button"
+            onClick={() => void loadMedia()}
+            className="inline-flex items-center gap-1 rounded-md border border-red-500/30 px-2 py-1 text-[10px] font-inter font-medium text-red-700 dark:text-red-300 hover:bg-red-500/10 transition-colors"
+          >
+            <RotateCcw className="w-3 h-3" aria-hidden="true" />
+            Tentar novamente
+          </button>
+        </div>
       )}
 
       {media && !loading && (
@@ -245,14 +294,37 @@ export function TorahChapterAudioPlayer({ apiBook, chapter, verseCount, onActive
             src={media.mediaUrl}
             preload="metadata"
             className="hidden"
+            onLoadedMetadata={onLoadedMetadata}
             onTimeUpdate={onTimeUpdate}
             onPause={() => {
               if (audioRef.current?.ended) return
               setPlaying(false)
-              stopTorahAmbient()
+              stopTanachAmbient()
             }}
             onEnded={endPlayback}
           />
+
+          {duration > 0 && (
+            <div className="space-y-1">
+              <input
+                type="range"
+                min={0}
+                max={duration}
+                step={0.1}
+                value={Math.min(currentTime, duration)}
+                onChange={(e) => seekTo(Number.parseFloat(e.target.value))}
+                className="w-full h-1.5 accent-gold-600 cursor-pointer"
+                aria-label="Posição na leitura"
+                aria-valuemin={0}
+                aria-valuemax={duration}
+                aria-valuenow={currentTime}
+              />
+              <div className="flex justify-between text-[10px] font-inter tabular-nums text-warmgray-500 dark:text-warmgray-400">
+                <span>{formatAudioTimestamp(currentTime)}</span>
+                <span>{formatAudioTimestamp(duration)}</span>
+              </div>
+            </div>
+          )}
 
           <div className="flex flex-wrap items-center gap-2">
             <button
@@ -300,7 +372,7 @@ export function TorahChapterAudioPlayer({ apiBook, chapter, verseCount, onActive
             </div>
           </div>
 
-          {media.verses.length > 0 && (
+          {verseSync && (
             <div className="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto" role="list" aria-label="Versículos">
               {Array.from({ length: verseCount }, (_, i) => i + 1).map((n) => (
                 <button
@@ -327,17 +399,21 @@ export function TorahChapterAudioPlayer({ apiBook, chapter, verseCount, onActive
           <p className="text-[10px] font-inter text-warmgray-500 dark:text-warmgray-400 leading-relaxed">
             Áudio:{' '}
             <a
-              href="https://github.com/rneher/PocketTorah"
+              href={media.attribution.href}
               target="_blank"
               rel="noopener noreferrer"
               className="text-gold-600 dark:text-gold-400 hover:underline"
             >
-              PocketTorah
+              {media.attribution.label}
             </a>{' '}
-            ({media.license}) via Sefaria.
+            ({media.license})
+            {media.provider === 'sefaria' ? ' via Sefaria.' : '.'}
           </p>
         </>
       )}
     </div>
   )
 }
+
+/** @deprecated Use TanachChapterAudioPlayer */
+export const TorahChapterAudioPlayer = TanachChapterAudioPlayer

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getTanachBook } from '@/lib/tanach-books'
+import { tanachAudioSummaryForSeo } from '@/lib/tanach-audio-catalog'
 import { fetchTanachChapter } from '@/lib/sefaria-tanach'
 import { breadcrumbJsonLd, tanachChapterWebPageJsonLd } from '@/lib/json-ld'
 import { Breadcrumbs } from '@/components/seo/Breadcrumbs'
@@ -22,7 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const origin = getPublicSiteOrigin()
   const url = `${origin}/tanach/${meta.slug}/${ch}`
   const title = `${meta.titlePt} ${ch} — Tanach bilíngue`
-  const description = `Leitura bilíngue de ${meta.titleHe} capítulo ${ch}: hebraico massorético e tradução alinhada (Sefaria).`
+  const description = `Leitura bilíngue de ${meta.titleHe} capítulo ${ch}: hebraico massorético, tradução alinhada (Sefaria) e ${tanachAudioSummaryForSeo(meta.section).toLowerCase()}`
 
   return {
     title,

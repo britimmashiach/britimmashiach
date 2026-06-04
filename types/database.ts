@@ -331,6 +331,10 @@ export interface Database {
           duration_days: number
           summary: string
           content: string
+          peshat: string
+          remez: string
+          drash: string
+          sod: string
           level_pardes: string[] | null
           is_premium: boolean
           pdf_url: string | null
@@ -349,6 +353,10 @@ export interface Database {
           duration_days?: number
           summary: string
           content?: string
+          peshat?: string
+          remez?: string
+          drash?: string
+          sod?: string
           level_pardes?: string[] | null
           is_premium?: boolean
           pdf_url?: string | null
@@ -367,6 +375,10 @@ export interface Database {
           duration_days?: number
           summary?: string
           content?: string
+          peshat?: string
+          remez?: string
+          drash?: string
+          sod?: string
           level_pardes?: string[] | null
           is_premium?: boolean
           pdf_url?: string | null

@@ -16,11 +16,17 @@
     "sync:seo": "npm run sync:pardes && npm run sync:aliyot",
     "sync:manhigut": "tsx --env-file=.env.local scripts/sync-manhigut-modules.ts",
     "check:sitemap": "tsx --env-file=.env.local scripts/check-sitemap.ts",
+    "check:tanach-audio": "tsx scripts/validate-mechon-coverage.ts",
     "check:auth": "tsx --env-file=.env.local scripts/check-auth-config.ts",
     "auth:recovery": "tsx --env-file=.env.local scripts/send-password-recovery.ts",
     "check:asaas-migration": "tsx --env-file=.env.local scripts/check-asaas-migration.mjs",
     "apply:asaas-migration": "tsx --env-file=.env.local scripts/apply-asaas-migration.mjs",
-    "populate": "npm run seed:aliyot && npm run sync:pdfs"
+    "populate": "npm run seed:aliyot && npm run sync:pdfs",
+    "chag:pardes:aggregate": "node scripts/aggregate-chag-pardes.mjs --all",
+    "chag:pardes:export": "node scripts/export-chag-pardes-fallback.mjs",
+    "chag:pardes:seed": "node scripts/build-chag-pardes.mjs --all",
+    "chag:pardes": "npm run chag:pardes:aggregate && npm run chag:pardes:export && npm run chag:pardes:seed",
+    "chag:pardes:deploy": "tsx --env-file=.env.local scripts/deploy-chag-pardes.ts --all"
   },
   "dependencies": {
     "@hebcal/core": "^5.9.0",

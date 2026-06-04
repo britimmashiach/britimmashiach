@@ -3,7 +3,6 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, Crown } from 'lucide-react'
 import { PdfButton } from '@/components/ui/PdfButton'
-import { cn } from '@/lib/utils'
 import {
   fetchChagSectionsByChagIdAdmin,
   fetchChagimSlugs,
@@ -24,6 +23,8 @@ import { getChagHeroProps } from '@/lib/chag-hero-props'
 import { getAuthSnapshot } from '@/lib/auth-snapshot'
 import { getChagFaqItems } from '@/lib/chag-seo-faq'
 import { ChagRelatedLinks } from '@/components/chagim/ChagRelatedLinks'
+import { ChagPardesTabs } from '@/components/chagim/ChagPardesTabs'
+import { buildChagPardesPanels, chagHasPardesContent } from '@/lib/chag-pardes'
 
 type Props = { params: Promise<{ slug: string }> }
 
@@ -62,13 +63,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-const PARDES_COLORS: Record<string, string> = {
-  peshat: 'bg-blue-500/10 text-blue-700 dark:text-blue-400',
-  remez: 'bg-green-500/10 text-green-700 dark:text-green-400',
-  drash: 'bg-gold-500/10 text-gold-700 dark:text-gold-400',
-  sod: 'bg-purple-500/10 text-purple-700 dark:text-purple-400',
-}
-
 export default async function ChagDetailPage({ params }: Props) {
   const { slug } = await params
   const chag = await resolveChagBySlugAdmin(slug)
@@ -86,6 +80,8 @@ export default async function ChagDetailPage({ params }: Props) {
   const lockedSectionsCount = hasPremium ? 0 : allSections.filter((s) => s.isPremium).length
   const fullyPremiumLocked = chag.isPremium && !hasPremium
   const faqItems = getChagFaqItems(chag.name, chag.isPremium)
+  const pardesPanels = buildChagPardesPanels(chag, hasPremium)
+  const showPardes = chagHasPardesContent(chag)
 
   const crumbs = [
     { name: 'Início', path: '/' },
@@ -102,6 +98,10 @@ export default async function ChagDetailPage({ params }: Props) {
             name: chag.name,
             summary: chag.summary,
             publishedAt: chag.publishedAt || undefined,
+            peshat: chag.peshat,
+            remez: chag.remez,
+            drash: hasPremium ? chag.drash : undefined,
+            sod: hasPremium ? chag.sod : undefined,
           }),
           breadcrumbJsonLd(crumbs),
           faqPageJsonLd(faqItems),
@@ -120,26 +120,13 @@ export default async function ChagDetailPage({ params }: Props) {
       {heroProps ? (
         <>
           <ChagHero {...heroProps} />
-          <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
-            <div className="flex flex-wrap items-center gap-2">
-              {chag.levelPardes.map((lvl) => (
-                <span
-                  key={lvl}
-                  className={cn(
-                    'text-xs font-inter font-medium px-2.5 py-0.5 rounded-full capitalize',
-                    PARDES_COLORS[lvl] ?? 'bg-muted text-warmgray-500',
-                  )}
-                >
-                  {lvl}
-                </span>
-              ))}
-              {chag.isPremium && (
-                <span className="premium-badge">
-                  <Crown className="w-3 h-3" aria-hidden="true" />
-                  Premium
-                </span>
-              )}
-            </div>
+          <div className="mt-6 flex flex-wrap items-center justify-end gap-3">
+            {chag.isPremium && (
+              <span className="premium-badge">
+                <Crown className="w-3 h-3" aria-hidden="true" />
+                Premium
+              </span>
+            )}
             {chag.pdfUrl && isLoggedIn && hasPremium && (
               <PdfButton
                 url={chag.pdfUrl}
@@ -152,25 +139,14 @@ export default async function ChagDetailPage({ params }: Props) {
       ) : (
         <>
           <header className="space-y-4 mb-8">
-            <div className="flex flex-wrap items-center gap-2">
-              {chag.levelPardes.map((lvl) => (
-                <span
-                  key={lvl}
-                  className={cn(
-                    'text-xs font-inter font-medium px-2.5 py-0.5 rounded-full capitalize',
-                    PARDES_COLORS[lvl] ?? 'bg-muted text-warmgray-500',
-                  )}
-                >
-                  {lvl}
-                </span>
-              ))}
-              {chag.isPremium && (
+            {chag.isPremium && (
+              <div className="flex flex-wrap items-center gap-2">
                 <span className="premium-badge">
                   <Crown className="w-3 h-3" aria-hidden="true" />
                   Premium
                 </span>
-              )}
-            </div>
+              </div>
+            )}
             <div className="flex items-start justify-between gap-4">
               <h1 className="font-cinzel text-3xl md:text-4xl font-semibold text-petroleum-800 dark:text-parchment-100">
                 {chag.name}
@@ -200,6 +176,8 @@ export default async function ChagDetailPage({ params }: Props) {
           )}
         </>
       )}
+
+      {showPardes && <ChagPardesTabs chagName={chag.name} panels={pardesPanels} />}
 
       {sections.length > 0 && (
         <section className="mt-12 space-y-8" aria-labelledby="chag-sections-heading">

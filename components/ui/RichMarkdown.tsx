@@ -43,6 +43,16 @@ function parseInline(text: string, baseKey: string) {
   return nodes
 }
 
+function splitRow(line: string): string[] {
+  const cells = line.trim().replace(/^\|/, '').replace(/\|$/, '').split('|')
+  return cells.map((c) => c.trim())
+}
+
+function isTableSeparator(line: string): boolean {
+  const t = line.trim()
+  return /^\|?[\s:|-]+\|?$/.test(t) && t.includes('-') && t.includes('|')
+}
+
 export function RichMarkdown({ text, className }: Props) {
   const lines = text.replace(/\r\n/g, '\n').split('\n')
   const blocks: React.ReactNode[] = []
@@ -68,12 +78,63 @@ export function RichMarkdown({ text, className }: Props) {
     )
   }
 
-  for (const raw of lines) {
+  for (let li = 0; li < lines.length; li++) {
+    const raw = lines[li]
     const line = raw.trimEnd()
     const trimmed = line.trim()
 
     if (trimmed === '') {
       flushBullets()
+      continue
+    }
+
+    // Tabela markdown: linha com | seguida de linha separadora |---|
+    if (
+      trimmed.startsWith('|') &&
+      li + 1 < lines.length &&
+      isTableSeparator(lines[li + 1])
+    ) {
+      flushBullets()
+      const header = splitRow(trimmed)
+      const rows: string[][] = []
+      let j = li + 2
+      while (j < lines.length && lines[j].trim().startsWith('|')) {
+        rows.push(splitRow(lines[j]))
+        j++
+      }
+      blocks.push(
+        <div key={`tbl${key++}`} className="my-4 overflow-x-auto">
+          <table className="w-full text-sm border-collapse">
+            <thead>
+              <tr className="border-b border-gold-500/30">
+                {header.map((h, hi) => (
+                  <th
+                    key={hi}
+                    className="text-left font-cinzel font-semibold text-petroleum-800 dark:text-parchment-100 px-3 py-2"
+                  >
+                    {parseInline(h, `th${key}-${hi}`)}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((r, ri) => (
+                <tr key={ri} className="border-b border-border/30 last:border-0">
+                  {r.map((c, ci) => (
+                    <td
+                      key={ci}
+                      className="align-top px-3 py-2 font-inter text-foreground/90 leading-relaxed"
+                    >
+                      {parseInline(c, `td${key}-${ri}-${ci}`)}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>,
+      )
+      li = j - 1
       continue
     }
 

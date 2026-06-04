@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getTanachBook } from '@/lib/tanach-books'
+import { TanachAudioIndicator } from '@/components/tanach/TanachAudioIndicator'
 import { cn } from '@/lib/utils'
 
 type Props = {
@@ -20,7 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!meta) return { title: 'Tanach' }
   return {
     title: `${meta.titlePt} — capítulos`,
-    description: `Escolha um capítulo de ${meta.titlePt} (${meta.titleHe}) para leitura bilíngue.`,
+    description: `Escolha um capítulo de ${meta.titlePt} (${meta.titleHe}) para leitura bilíngue com áudio em hebraico.`,
   }
 }
 
@@ -46,7 +47,8 @@ export default async function TanachBookPage({ params, searchParams }: Props) {
         <p className="font-hebrew text-2xl text-warmgray-500 dark:text-warmgray-400" dir="rtl" lang="he">
           {meta.titleHe}
         </p>
-        <p className="section-subtitle">Selecione o capítulo.</p>
+        <p className="section-subtitle">Selecione o capítulo. Cada capítulo inclui leitura em áudio em hebraico.</p>
+        <TanachAudioIndicator section={meta.section} className="mt-1" />
       </header>
 
       <ol className="grid grid-cols-5 sm:grid-cols-8 md:grid-cols-10 gap-2 list-none m-0 p-0">
