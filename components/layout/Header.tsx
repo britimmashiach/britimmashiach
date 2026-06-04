@@ -188,35 +188,6 @@ export function Header() {
             </div>
           </Link>
 
-          <nav
-            className="hidden lg:flex items-center justify-center flex-1 min-w-0 overflow-x-auto scrollbar-none"
-            aria-label="Navegação principal"
-          >
-            {mainNavLinks.map(({ href, label, icon: Icon, accent }) => {
-              const isActive = pathname === href || pathname.startsWith(href + '/')
-              return (
-                <Link
-                  key={href}
-                  href={href}
-                  className={cn(
-                    'whitespace-nowrap shrink-0 py-2 text-[13px] xl:text-sm font-inter transition-colors duration-150 relative inline-flex items-center gap-1 px-2 lg:px-2.5 xl:px-3',
-                    navLinkClass(accent, isActive),
-                  )}
-                  aria-current={isActive ? 'page' : undefined}
-                >
-                  <Icon className="w-3.5 h-3.5 shrink-0 opacity-90" aria-hidden="true" />
-                  {label}
-                  {isActive && !accent && (
-                    <span
-                      className="absolute bottom-0.5 left-2 right-2 xl:left-3 xl:right-3 h-px bg-gold-500/50 rounded-full"
-                      aria-hidden="true"
-                    />
-                  )}
-                </Link>
-              )
-            })}
-          </nav>
-
           <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             <nav
               className="hidden md:flex items-center gap-0.5 sm:gap-1 pr-1 border-r border-border/40 mr-0.5"
@@ -376,6 +347,35 @@ export function Header() {
             </button>
           </div>
         </div>
+
+        <nav
+          className="hidden lg:flex items-center justify-center flex-wrap gap-x-1 border-t border-border/40 py-1.5"
+          aria-label="Navegação principal"
+        >
+          {mainNavLinks.map(({ href, label, icon: Icon, accent }) => {
+            const isActive = pathname === href || pathname.startsWith(href + '/')
+            return (
+              <Link
+                key={href}
+                href={href}
+                className={cn(
+                  'whitespace-nowrap shrink-0 py-2 text-[13px] xl:text-sm font-inter transition-colors duration-150 relative inline-flex items-center gap-1 px-2 lg:px-2.5 xl:px-3',
+                  navLinkClass(accent, isActive),
+                )}
+                aria-current={isActive ? 'page' : undefined}
+              >
+                <Icon className="w-3.5 h-3.5 shrink-0 opacity-90" aria-hidden="true" />
+                {label}
+                {isActive && !accent && (
+                  <span
+                    className="absolute bottom-0.5 left-2 right-2 xl:left-3 xl:right-3 h-px bg-gold-500/50 rounded-full"
+                    aria-hidden="true"
+                  />
+                )}
+              </Link>
+            )
+          })}
+        </nav>
 
         {mobileOpen && (
           <nav
