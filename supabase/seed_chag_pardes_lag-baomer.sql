@@ -2,13 +2,13 @@
 -- Idempotente: atualiza apenas colunas peshat/remez/drash/sod
 BEGIN;
 UPDATE chagim SET
-  peshat = 'Lag baOmer tem **três camadas históricas** que se entrelaçam: os discípulos de Rabi Akiva, a vida e morte de Rabi Shimon bar Yochai, e a institucionalização cabalística da hilulá em Tzefat.
+  peshat = $pardes_lag_baomer_peshat$Lag baOmer tem **três camadas históricas** que se entrelaçam: os discípulos de Rabi Akiva, a vida e morte de Rabi Shimon bar Yochai, e a institucionalização cabalística da hilulá em Tzefat.
 
 ### Os discípulos de Rabi Akiva (séc. II d.C.)
 
 **Rabi Akiva ben Yossef** (~50-135 d.C.) foi um dos maiores sábios do Talmud, mestre de uma geração inteira. Segundo Talmud Bavli (Yevamot 62b):
 
-*Shneyim asar elef zugim talmidim hayu lo leRabi Akiva mi-Gevat ve''ad Antiparas, vechulam metu beperek echad, mipnei shelo nahagu kavod zeh bazeh.*
+*Shneyim asar elef zugim talmidim hayu lo leRabi Akiva mi-Gevat ve'ad Antiparas, vechulam metu beperek echad, mipnei shelo nahagu kavod zeh bazeh.*
 
 Doze mil pares de discípulos tinha Rabi Akiva, de Gevat até Antiparas, e todos morreram em um único período, porque não trataram com respeito uns aos outros.
 
@@ -67,12 +67,12 @@ Texto completo no Sidur cabalístico.
 
 A Brit Im Mashiach, em Franca, pode organizar Seudá comunitária de Lag baOmer com elementos chassídico-cabalísticos: pequena fogueira (com segurança), estudo do Zohar, cantos.
 
-### A Tzava''at Rashbi
+### A Tzava'at Rashbi
 
-A **Tzava''at Rashbi** (Testamento do Rashbi) é texto cabalístico atribuído ao próprio Rashbi, contendo ensinamentos finais a seus discípulos antes da morte. Tradição forte de **estudá-lo em Lag baOmer**. Texto não muito longo (10-15 páginas), disponível em traduções modernas.
+A **Tzava'at Rashbi** (Testamento do Rashbi) é texto cabalístico atribuído ao próprio Rashbi, contendo ensinamentos finais a seus discípulos antes da morte. Tradição forte de **estudá-lo em Lag baOmer**. Texto não muito longo (10-15 páginas), disponível em traduções modernas.
 
-**Fonte:** Talmud Bavli, Yevamot 62b, Shabat 33b (sobre a caverna); Zohar, Idra Rabá e Idra Zutá; Tikkunei Zohar (introdução); Sefer Pri Etz Hadar do Arizal; Tzava''at Rashbi.',
-  remez = 'Lag baOmer carrega **três significados espirituais** que convergem:
+**Fonte:** Talmud Bavli, Yevamot 62b, Shabat 33b (sobre a caverna); Zohar, Idra Rabá e Idra Zutá; Tikkunei Zohar (introdução); Sefer Pri Etz Hadar do Arizal; Tzava'at Rashbi.$pardes_lag_baomer_peshat$,
+  remez = $pardes_lag_baomer_remez$Lag baOmer carrega **três significados espirituais** que convergem:
 
 ▸ Recuperação após perda (fim do luto dos discípulos de Rabi Akiva).
 ▸ Celebração da Kabaláh revelada (hilulá de Rashbi).
@@ -158,8 +158,8 @@ A tradição (Pri Etz Hadar) sugere meditação simples para Lag baOmer:
 
 Esta prática, mesmo solitária, conecta à hilulá cósmica de Rashbi.
 
-**Fonte:** Talmud Bavli, Yevamot 62b, Shabat 33b; Idra Rabá e Idra Zutá; Tikkunei Zohar; Pri Etz Hadar; Bar Yochai (piyut atribuído ao Arizal).',
-  drash = '### Peshat — o sentido literal
+**Fonte:** Talmud Bavli, Yevamot 62b, Shabat 33b; Idra Rabá e Idra Zutá; Tikkunei Zohar; Pri Etz Hadar; Bar Yochai (piyut atribuído ao Arizal).$pardes_lag_baomer_remez$,
+  drash = $pardes_lag_baomer_drash$### Peshat — o sentido literal
 
 Lag baOmer, no Peshat, é o 33° dia da Sefirat haOmer (18 de Iyar). Marca:
 
@@ -241,8 +241,8 @@ Quando uma árvore perde galhos (24.000), o tronco fortalece-se. **A perda é do
 
 A Brit Im Mashiach vive Lag baOmer nos quatro níveis simultâneos. Reconhece em Rashbi e no Zohar **canal autêntico** de revelação cabalística que, segundo a própria tradição, contribuirá para a redenção messiânica final.
 
-**Fonte:** Talmud Bavli, Yevamot 62b, Shabat 33b; Zohar Idra Rabá e Idra Zutá; Tikkunei Zohar; Pri Etz Hadar; Malachi 3:19; Shemot 3:2; Bar Yochai (piyut do Arizal).',
-  sod = 'Lag baOmer é, sem dúvida, o **Chag mais cabalisticamente denso** do calendário. Rashbi é a figura central da Kabaláh; o Zohar é seu legado; Lag baOmer é sua hilulá. O Chag inteiro opera no nível do Sod.
+**Fonte:** Talmud Bavli, Yevamot 62b, Shabat 33b; Zohar Idra Rabá e Idra Zutá; Tikkunei Zohar; Pri Etz Hadar; Malachi 3:19; Shemot 3:2; Bar Yochai (piyut do Arizal).$pardes_lag_baomer_drash$,
+  sod = $pardes_lag_baomer_sod$Lag baOmer é, sem dúvida, o **Chag mais cabalisticamente denso** do calendário. Rashbi é a figura central da Kabaláh; o Zohar é seu legado; Lag baOmer é sua hilulá. O Chag inteiro opera no nível do Sod.
 
 ### Rashbi como canal único
 
@@ -340,6 +340,6 @@ Lag baOmer marca **o ponto de viragem** na jornada da libertação à recepção
 
 Quem celebra Lag baOmer com kavaná consciente desta posição entende: **estamos a meio caminho da plenitude espiritual anual**. O esforço da Sefirat haOmer continua, mas com renovado vigor.
 
-**Fonte:** Zohar, Idra Rabá e Idra Zutá; Tikkunei Zohar (introdução); Pri Etz Hadar do Arizal; Bar Yochai (piyut); Talmud Bavli, Shabat 33b sobre a caverna; Tzava''at Rashbi.'
-WHERE slug = 'lag-baomer';
+**Fonte:** Zohar, Idra Rabá e Idra Zutá; Tikkunei Zohar (introdução); Pri Etz Hadar do Arizal; Bar Yochai (piyut); Talmud Bavli, Shabat 33b sobre a caverna; Tzava'at Rashbi.$pardes_lag_baomer_sod$
+WHERE slug = $pardes_lag_baomer_slug$lag-baomer$pardes_lag_baomer_slug$;
 COMMIT;

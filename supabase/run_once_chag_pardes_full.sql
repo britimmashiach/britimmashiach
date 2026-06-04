@@ -12,7 +12,7 @@ ALTER TABLE chagim
 -- Idempotente: atualiza apenas colunas peshat/remez/drash/sod
 BEGIN;
 UPDATE chagim SET
-  peshat = 'Chanukáh comemora eventos do **período do Segundo Templo**, ocorridos entre 175 e 165 a.C. (séc. II antes da era comum), durante o domínio do império grego selêucida sobre a Terra de Israel.
+  peshat = $pardes_chanukah_peshat$Chanukáh comemora eventos do **período do Segundo Templo**, ocorridos entre 175 e 165 a.C. (séc. II antes da era comum), durante o domínio do império grego selêucida sobre a Terra de Israel.
 
 ### Contexto histórico
 
@@ -33,7 +33,7 @@ Antíoco erigiu uma estátua de Zeus no Kodesh haKodashim, profanou o azeite rit
 
 ### A revolta dos Macabeus
 
-A revolta começou em **Modi''in**, vila a noroeste de Yerushalaim, quando o sacerdote idoso **Matatias ben Yochanan haKohen** recusou-se a sacrificar a Zeus. Quando um judeu helenizado tentou fazer o sacrifício em seu lugar, Matatias matou-o e ao oficial grego presente, gritando *mi laAdonai elai*. Quem é por HaShem, comigo. (Eco de Shemot 32:26.)
+A revolta começou em **Modi'in**, vila a noroeste de Yerushalaim, quando o sacerdote idoso **Matatias ben Yochanan haKohen** recusou-se a sacrificar a Zeus. Quando um judeu helenizado tentou fazer o sacrifício em seu lugar, Matatias matou-o e ao oficial grego presente, gritando *mi laAdonai elai*. Quem é por HaShem, comigo. (Eco de Shemot 32:26.)
 
 Matatias e seus cinco filhos (Yehuda haMacabi, Yonatan, Shimon, Elazar, Yochanan) fugiram para as montanhas e iniciaram guerrilha contra os selêucidas. Durante três anos, uma força muito menor venceu o exército mais poderoso de seu tempo. *Rabim beyad meatim*, muitos na mão de poucos — frase central da liturgia de Chanukáh.
 
@@ -67,8 +67,8 @@ Os Chashmonaim governaram Israel por cerca de um século (165-63 a.C.) como dina
 
 A Brit Im Mashiach reconhece tanto a grandeza do início heroico quanto a tragédia do declínio, lendo a história sem idealizações.
 
-**Fonte:** I Macabeus 1-4; II Macabeus 6-10; Talmud Bavli, Shabat 21b; Megilat Antiochus; Mishné Toráh, Hilchot Chanukáh 3.',
-  remez = 'Chanukáh é o Chag da **luz que vence a escuridão**. Não no sentido cósmico apenas — também no sentido cultural e espiritual. A revolta dos Macabeus não foi apenas militar; foi uma resistência espiritual contra a **helenização**, que ameaçava extinguir a identidade judaica não pela violência direta, mas pela **assimilação**.
+**Fonte:** I Macabeus 1-4; II Macabeus 6-10; Talmud Bavli, Shabat 21b; Megilat Antiochus; Mishné Toráh, Hilchot Chanukáh 3.$pardes_chanukah_peshat$,
+  remez = $pardes_chanukah_remez$Chanukáh é o Chag da **luz que vence a escuridão**. Não no sentido cósmico apenas — também no sentido cultural e espiritual. A revolta dos Macabeus não foi apenas militar; foi uma resistência espiritual contra a **helenização**, que ameaçava extinguir a identidade judaica não pela violência direta, mas pela **assimilação**.
 
 ### Os dois inimigos: violência e assimilação
 
@@ -114,8 +114,8 @@ Há uma dimensão que Chazal deixaram intencionalmente velada. Quando os Macabeu
 
 A Brit Im Mashiach lê isto com nuance: Chanukáh celebra a vitória sobre a assimilação, mas **não foi a restauração messiânica**. Aquela ainda virá, com **Mashiach ben David** restaurando a realeza para Yehudá e o sacerdócio para Aharon, sem confusão entre as duas funções. Cada acendimento de Chanukiá é, em camada profunda, espera pela restauração completa.
 
-**Fonte:** Talmud Bavli, Shabat 21b; Bereshit 49:10; Rambam, Mishné Toráh, Hilchot Chanukáh 3:1; Maharal, Ner Mitzvá; Bnei Yissachar (Rav Tzvi Elimelech de Dynów).',
-  drash = '### Peshat — o sentido literal
+**Fonte:** Talmud Bavli, Shabat 21b; Bereshit 49:10; Rambam, Mishné Toráh, Hilchot Chanukáh 3:1; Maharal, Ner Mitzvá; Bnei Yissachar (Rav Tzvi Elimelech de Dynów).$pardes_chanukah_remez$,
+  drash = $pardes_chanukah_drash$### Peshat — o sentido literal
 
 Chanukáh, no Peshat, é Chag rabínico de oito dias, instituído pelos sábios após a vitória dos Macabeus em 165 a.C. e o milagre do óleo que durou oito dias. Não há base direta na Toráh; está em livros pós-bíblicos (Macabeus) e codificado no Talmud (Shabat 21b). As práticas: acender a Chanukiá oito noites, recitar Hallel completo, dizer Al haNissim, comer fritos e lácteos.
 
@@ -166,8 +166,8 @@ Os quatro níveis juntos:
 
 A Brit Im Mashiach vive Chanukáh nos quatro níveis simultâneos. Cada chama acesa é, ao mesmo tempo, vela física, símbolo de coragem identitária, luz cósmica descendo, e ensaio da Or haGanuz desocultada que iluminará o Olam Habá com Mashiach ben David.
 
-**Fonte:** Talmud Bavli, Shabat 21b; Maharal, Ner Mitzvá; Bnei Yissachar; Pri Etz Chaim, Shaar Chanukáh; Ari haKadosh, Shaar haKavvanot, Derush Chanukáh.',
-  sod = 'Chanukáh, no Sod, é o Chag da **Or haGanuz** (Luz Oculta), a luz primordial dos primeiros dias da Criação que foi escondida por HaShem para os justos no Olam Habá. A pequena chama da Chanukiá, ensina a tradição luriânica, é faísca direta dessa Luz Oculta descendo ao mundo manifesto.
+**Fonte:** Talmud Bavli, Shabat 21b; Maharal, Ner Mitzvá; Bnei Yissachar; Pri Etz Chaim, Shaar Chanukáh; Ari haKadosh, Shaar haKavvanot, Derush Chanukáh.$pardes_chanukah_drash$,
+  sod = $pardes_chanukah_sod$Chanukáh, no Sod, é o Chag da **Or haGanuz** (Luz Oculta), a luz primordial dos primeiros dias da Criação que foi escondida por HaShem para os justos no Olam Habá. A pequena chama da Chanukiá, ensina a tradição luriânica, é faísca direta dessa Luz Oculta descendo ao mundo manifesto.
 
 ### A Or haGanuz
 
@@ -221,20 +221,20 @@ Lendo como acróstico: a transcendência do oito (Chet) atravessa a queda/perpet
 
 A tradição messiânica espera o Terceiro Beit haMikdash. Quando vier, **a Menorá será reacesa**, e o óleo virá milagrosamente — como em Chanukáh, mas em escala universal. Cada acendimento de Chanukiá hoje é ensaio para aquele acendimento final.
 
-**Fonte:** Bereshit Rabá 3:6; Talmud Bavli, Shabat 21b; Maharal, Ner Mitzvá; Bnei Yissachar; Ari haKadosh, Shaar haKavvanot, Derush Chanukáh; Pri Etz Chaim, Shaar Chanukáh.'
-WHERE slug = 'chanukah';
+**Fonte:** Bereshit Rabá 3:6; Talmud Bavli, Shabat 21b; Maharal, Ner Mitzvá; Bnei Yissachar; Ari haKadosh, Shaar haKavvanot, Derush Chanukáh; Pri Etz Chaim, Shaar Chanukáh.$pardes_chanukah_sod$
+WHERE slug = $pardes_chanukah_slug$chanukah$pardes_chanukah_slug$;
 COMMIT;
 -- PaRDeS do Chag: lag-baomer
 -- Idempotente: atualiza apenas colunas peshat/remez/drash/sod
 BEGIN;
 UPDATE chagim SET
-  peshat = 'Lag baOmer tem **três camadas históricas** que se entrelaçam: os discípulos de Rabi Akiva, a vida e morte de Rabi Shimon bar Yochai, e a institucionalização cabalística da hilulá em Tzefat.
+  peshat = $pardes_lag_baomer_peshat$Lag baOmer tem **três camadas históricas** que se entrelaçam: os discípulos de Rabi Akiva, a vida e morte de Rabi Shimon bar Yochai, e a institucionalização cabalística da hilulá em Tzefat.
 
 ### Os discípulos de Rabi Akiva (séc. II d.C.)
 
 **Rabi Akiva ben Yossef** (~50-135 d.C.) foi um dos maiores sábios do Talmud, mestre de uma geração inteira. Segundo Talmud Bavli (Yevamot 62b):
 
-*Shneyim asar elef zugim talmidim hayu lo leRabi Akiva mi-Gevat ve''ad Antiparas, vechulam metu beperek echad, mipnei shelo nahagu kavod zeh bazeh.*
+*Shneyim asar elef zugim talmidim hayu lo leRabi Akiva mi-Gevat ve'ad Antiparas, vechulam metu beperek echad, mipnei shelo nahagu kavod zeh bazeh.*
 
 Doze mil pares de discípulos tinha Rabi Akiva, de Gevat até Antiparas, e todos morreram em um único período, porque não trataram com respeito uns aos outros.
 
@@ -293,12 +293,12 @@ Texto completo no Sidur cabalístico.
 
 A Brit Im Mashiach, em Franca, pode organizar Seudá comunitária de Lag baOmer com elementos chassídico-cabalísticos: pequena fogueira (com segurança), estudo do Zohar, cantos.
 
-### A Tzava''at Rashbi
+### A Tzava'at Rashbi
 
-A **Tzava''at Rashbi** (Testamento do Rashbi) é texto cabalístico atribuído ao próprio Rashbi, contendo ensinamentos finais a seus discípulos antes da morte. Tradição forte de **estudá-lo em Lag baOmer**. Texto não muito longo (10-15 páginas), disponível em traduções modernas.
+A **Tzava'at Rashbi** (Testamento do Rashbi) é texto cabalístico atribuído ao próprio Rashbi, contendo ensinamentos finais a seus discípulos antes da morte. Tradição forte de **estudá-lo em Lag baOmer**. Texto não muito longo (10-15 páginas), disponível em traduções modernas.
 
-**Fonte:** Talmud Bavli, Yevamot 62b, Shabat 33b (sobre a caverna); Zohar, Idra Rabá e Idra Zutá; Tikkunei Zohar (introdução); Sefer Pri Etz Hadar do Arizal; Tzava''at Rashbi.',
-  remez = 'Lag baOmer carrega **três significados espirituais** que convergem:
+**Fonte:** Talmud Bavli, Yevamot 62b, Shabat 33b (sobre a caverna); Zohar, Idra Rabá e Idra Zutá; Tikkunei Zohar (introdução); Sefer Pri Etz Hadar do Arizal; Tzava'at Rashbi.$pardes_lag_baomer_peshat$,
+  remez = $pardes_lag_baomer_remez$Lag baOmer carrega **três significados espirituais** que convergem:
 
 ▸ Recuperação após perda (fim do luto dos discípulos de Rabi Akiva).
 ▸ Celebração da Kabaláh revelada (hilulá de Rashbi).
@@ -384,8 +384,8 @@ A tradição (Pri Etz Hadar) sugere meditação simples para Lag baOmer:
 
 Esta prática, mesmo solitária, conecta à hilulá cósmica de Rashbi.
 
-**Fonte:** Talmud Bavli, Yevamot 62b, Shabat 33b; Idra Rabá e Idra Zutá; Tikkunei Zohar; Pri Etz Hadar; Bar Yochai (piyut atribuído ao Arizal).',
-  drash = '### Peshat — o sentido literal
+**Fonte:** Talmud Bavli, Yevamot 62b, Shabat 33b; Idra Rabá e Idra Zutá; Tikkunei Zohar; Pri Etz Hadar; Bar Yochai (piyut atribuído ao Arizal).$pardes_lag_baomer_remez$,
+  drash = $pardes_lag_baomer_drash$### Peshat — o sentido literal
 
 Lag baOmer, no Peshat, é o 33° dia da Sefirat haOmer (18 de Iyar). Marca:
 
@@ -467,8 +467,8 @@ Quando uma árvore perde galhos (24.000), o tronco fortalece-se. **A perda é do
 
 A Brit Im Mashiach vive Lag baOmer nos quatro níveis simultâneos. Reconhece em Rashbi e no Zohar **canal autêntico** de revelação cabalística que, segundo a própria tradição, contribuirá para a redenção messiânica final.
 
-**Fonte:** Talmud Bavli, Yevamot 62b, Shabat 33b; Zohar Idra Rabá e Idra Zutá; Tikkunei Zohar; Pri Etz Hadar; Malachi 3:19; Shemot 3:2; Bar Yochai (piyut do Arizal).',
-  sod = 'Lag baOmer é, sem dúvida, o **Chag mais cabalisticamente denso** do calendário. Rashbi é a figura central da Kabaláh; o Zohar é seu legado; Lag baOmer é sua hilulá. O Chag inteiro opera no nível do Sod.
+**Fonte:** Talmud Bavli, Yevamot 62b, Shabat 33b; Zohar Idra Rabá e Idra Zutá; Tikkunei Zohar; Pri Etz Hadar; Malachi 3:19; Shemot 3:2; Bar Yochai (piyut do Arizal).$pardes_lag_baomer_drash$,
+  sod = $pardes_lag_baomer_sod$Lag baOmer é, sem dúvida, o **Chag mais cabalisticamente denso** do calendário. Rashbi é a figura central da Kabaláh; o Zohar é seu legado; Lag baOmer é sua hilulá. O Chag inteiro opera no nível do Sod.
 
 ### Rashbi como canal único
 
@@ -566,14 +566,14 @@ Lag baOmer marca **o ponto de viragem** na jornada da libertação à recepção
 
 Quem celebra Lag baOmer com kavaná consciente desta posição entende: **estamos a meio caminho da plenitude espiritual anual**. O esforço da Sefirat haOmer continua, mas com renovado vigor.
 
-**Fonte:** Zohar, Idra Rabá e Idra Zutá; Tikkunei Zohar (introdução); Pri Etz Hadar do Arizal; Bar Yochai (piyut); Talmud Bavli, Shabat 33b sobre a caverna; Tzava''at Rashbi.'
-WHERE slug = 'lag-baomer';
+**Fonte:** Zohar, Idra Rabá e Idra Zutá; Tikkunei Zohar (introdução); Pri Etz Hadar do Arizal; Bar Yochai (piyut); Talmud Bavli, Shabat 33b sobre a caverna; Tzava'at Rashbi.$pardes_lag_baomer_sod$
+WHERE slug = $pardes_lag_baomer_slug$lag-baomer$pardes_lag_baomer_slug$;
 COMMIT;
 -- PaRDeS do Chag: pessach
 -- Idempotente: atualiza apenas colunas peshat/remez/drash/sod
 BEGIN;
 UPDATE chagim SET
-  peshat = 'Pessach é o Chag mais densamente descrito na Toráh. Cinco passagens centrais o fundam, com camadas se complementando.
+  peshat = $pardes_pessach_peshat$Pessach é o Chag mais densamente descrito na Toráh. Cinco passagens centrais o fundam, com camadas se complementando.
 
 ### Shemot 12 — A Instituição Original
 
@@ -626,7 +626,7 @@ Quando Moshé repete os mandamentos antes de Israel entrar na Terra, recita as i
 
 ▸ **Yeshua bin Nun 5:10-12**: Israel celebra o **primeiro Pessach na Terra**, na planície de Yericho. O maná cessa neste momento; Israel começa a comer dos frutos da Terra.
 
-▸ **2 Melachim 23:21-23**: o Rei Yoshiyahu restaura a celebração de Pessach na sua geração — *ki lo na''asá chaPessach hazê mimei haShoftim* (não se celebrou tal Pessach desde os dias dos Juízes). Indica que houve épocas em que Pessach foi negligenciado.
+▸ **2 Melachim 23:21-23**: o Rei Yoshiyahu restaura a celebração de Pessach na sua geração — *ki lo na'asá chaPessach hazê mimei haShoftim* (não se celebrou tal Pessach desde os dias dos Juízes). Indica que houve épocas em que Pessach foi negligenciado.
 
 ▸ **Ezrá 6:19-22**: Israel, após o retorno do exílio babilônico, celebra Pessach restaurado no Segundo Beit haMikdash.
 
@@ -636,14 +636,14 @@ Quando Moshé repete os mandamentos antes de Israel entrar na Terra, recita as i
 
 Yechezkel, descrevendo o Beit haMikdash messiânico, prescreve oferendas para Pessach:
 
-*BaRishon, bearba''á asar yom lachodesh, yihyeh lachem haPessach, chag shvuot yamim matzot yeachel.*
+*BaRishon, bearba'á asar yom lachodesh, yihyeh lachem haPessach, chag shvuot yamim matzot yeachel.*
 
 No primeiro mês, no 14° dia do mês, será para vós o Pessach, festa de sete dias, em que matsot serão comidas.
 
 A profecia confirma: **Pessach permanecerá no reino messiânico**, com Beit haMikdash restaurado e oferendas restauradas.
 
-**Fonte:** Shemot 12-13; Vayikra 23:5-8; Bamidbar 9:1-14, 28:16-25; Devarim 16:1-8; Yehoshua 5:10-12; 2 Melachim 23:21-23; Ezrá 6:19-22; 2 Divrei haYamim 30; Yechezkel 45:21-25.',
-  remez = 'Pessach é o Chag em que Israel **nasce como povo**. Antes do êxodo, eram família crescida de Yaakov; após o êxodo, são *am* — povo livre, com missão histórica. Cada Pessach reativa esta consciência fundadora.
+**Fonte:** Shemot 12-13; Vayikra 23:5-8; Bamidbar 9:1-14, 28:16-25; Devarim 16:1-8; Yehoshua 5:10-12; 2 Melachim 23:21-23; Ezrá 6:19-22; 2 Divrei haYamim 30; Yechezkel 45:21-25.$pardes_pessach_peshat$,
+  remez = $pardes_pessach_remez$Pessach é o Chag em que Israel **nasce como povo**. Antes do êxodo, eram família crescida de Yaakov; após o êxodo, são *am* — povo livre, com missão histórica. Cada Pessach reativa esta consciência fundadora.
 
 ### A libertação como condição da Toráh
 
@@ -655,7 +655,7 @@ Aplicação prática: qualquer libertação interna (de vícios, padrões, opres
 
 ### O chametz como simbolismo profundo
 
-A proibição total de **chametz** durante Pessach (8 dias) é uma das mitzvot mais severas do calendário. O chametz não pode ser apenas "evitado" — deve ser **eliminado** (*bi''ur chametz*), **vendido** ao não-judeu, **buscado** em toda a casa (*bedikat chametz*). O esforço é considerável.
+A proibição total de **chametz** durante Pessach (8 dias) é uma das mitzvot mais severas do calendário. O chametz não pode ser apenas "evitado" — deve ser **eliminado** (*bi'ur chametz*), **vendido** ao não-judeu, **buscado** em toda a casa (*bedikat chametz*). O esforço é considerável.
 
 Por quê? O **chametz** é fermento — massa que **inflou**. Inflar-se é, na linguagem rabínica, o pecado fundamental do **ego inflado**. Quem se eleva acima do que é, quem se torna "maior que sua verdade", está com chametz na alma.
 
@@ -711,8 +711,8 @@ Pessach não é apenas memória de evento antigo. É **template da libertação 
 
 A Brit Im Mashiach lê esta dimensão com seriedade: o ano que se passou trouxe escravidões novas? O ano que se inicia oferece novas libertações? Pessach é o momento anual para fazer este balanço e empurrar para fora aquilo que ainda escraviza.
 
-**Fonte:** Shemot 12-15; Mishná Pessachim 10; Talmud Bavli, Pessachim 115b-118a; Mishné Toráh, Hilchot Chametz uMatzá 7-8; Hagadá de Pessach com comentários clássicos; Maharal, Gevurot HaShem.',
-  drash = '### Peshat — o sentido literal
+**Fonte:** Shemot 12-15; Mishná Pessachim 10; Talmud Bavli, Pessachim 115b-118a; Mishné Toráh, Hilchot Chametz uMatzá 7-8; Hagadá de Pessach com comentários clássicos; Maharal, Gevurot HaShem.$pardes_pessach_remez$,
+  drash = $pardes_pessach_drash$### Peshat — o sentido literal
 
 Pessach, no Peshat, é o Chag que comemora a libertação histórica do Mitzraim. Shemot 12-15 narra os eventos: a noite das pragas dos primogênitos, a saída precipitada, a perseguição egípcia, a travessia do Yam Suf. A Toráh prescreve 7 dias (ou 8 na diáspora) de Chag haMatzot, com proibição de chametz, eliminação prévia, e celebração ritual.
 
@@ -732,9 +732,9 @@ E o **chametz como inflar do ego** (já tratado em 04) é alusão profunda: por 
 
 ### Drash — o ensino homilético
 
-O **Mishná Pessachim 10:5** estabelece a regra de ouro: *bechol dor vador chayav adam lir''ot et atzmó keilu hu yatzá miMitzraim*. Em cada geração, cada pessoa é obrigada a ver-se como se ela mesma houvesse saído do Mitzraim.
+O **Mishná Pessachim 10:5** estabelece a regra de ouro: *bechol dor vador chayav adam lir'ot et atzmó keilu hu yatzá miMitzraim*. Em cada geração, cada pessoa é obrigada a ver-se como se ela mesma houvesse saído do Mitzraim.
 
-A frase é precisamente formulada. Não diz "lembrar" (זכר, *zachor*) — diz **"ver-se"** (לראות, *lir''ot*). Ver é mais que lembrar. Lembrar é cognitivo; ver é experiencial. **O Seder é dispositivo para fazer ver, não apenas lembrar**.
+A frase é precisamente formulada. Não diz "lembrar" (זכר, *zachor*) — diz **"ver-se"** (לראות, *lir'ot*). Ver é mais que lembrar. Lembrar é cognitivo; ver é experiencial. **O Seder é dispositivo para fazer ver, não apenas lembrar**.
 
 Por isto:
 
@@ -791,8 +791,8 @@ Os quatro níveis:
 
 A Brit Im Mashiach vive Pessach nos quatro níveis simultâneos. Reconhece em cada Seder não apenas memória de evento antigo, mas vivência da **libertação contínua** — a histórica que foi, a presente que opera, e a futura messiânica que vem. O Kos shel Eliyahu cheio sobre a mesa testemunha: ainda há liberdade a vir, e Pessach aguarda.
 
-**Fonte:** Mishná Pessachim 10:5; Talmud Bavli, Pessachim 116a; Shemot 12-15; Ari haKadosh, Pri Etz Chaim, Shaar Chag haMatzot; Shaar haKavvanot, Inyan haSeder; Zohar Beshalach 52a-55b; Maharal, Gevurot HaShem.',
-  sod = 'Pessach, no Sod, é o **nascimento cósmico de Israel** como povo. Toda a estrutura espiritual do Chag — Seder, Arba Kosot, matsá, maror, afikoman — opera no nível dos Olamot uma sequência precisa de tikun.
+**Fonte:** Mishná Pessachim 10:5; Talmud Bavli, Pessachim 116a; Shemot 12-15; Ari haKadosh, Pri Etz Chaim, Shaar Chag haMatzot; Shaar haKavvanot, Inyan haSeder; Zohar Beshalach 52a-55b; Maharal, Gevurot HaShem.$pardes_pessach_drash$,
+  sod = $pardes_pessach_sod$Pessach, no Sod, é o **nascimento cósmico de Israel** como povo. Toda a estrutura espiritual do Chag — Seder, Arba Kosot, matsá, maror, afikoman — opera no nível dos Olamot uma sequência precisa de tikun.
 
 ### As Arba Kosot e os quatro Olamot
 
@@ -818,7 +818,7 @@ As Arba Kosot derivam-se diretamente de **Shemot 6:6-7**, quatro verbos consecut
 
 Os quatro estágios da redenção: tirar, livrar, resgatar, tomar. Não são sinônimos — são fases progressivas. **Cada copo do Seder marca uma fase**.
 
-E o **quinto verbo** vem em Shemot 6:8: *vehevê''ti etchem el haarets* — vos trarei à Terra. Este verbo, segundo o Talmud Yerushalmi, fundamenta o Kos shel Eliyahu — porque a entrada na Terra de Israel em sua plenitude só ocorrerá com Mashiach. Por isto o copo aguarda.
+E o **quinto verbo** vem em Shemot 6:8: *vehevê'ti etchem el haarets* — vos trarei à Terra. Este verbo, segundo o Talmud Yerushalmi, fundamenta o Kos shel Eliyahu — porque a entrada na Terra de Israel em sua plenitude só ocorrerá com Mashiach. Por isto o copo aguarda.
 
 ### Matsá como Or descendente
 
@@ -870,14 +870,14 @@ Aquele que cumpre Pessach + Sefirat haOmer + Shavuot atravessa o ciclo completo 
 
 Quem celebra Pessach com kavaná consciente de todos esses níveis opera, no Sod, a própria estrutura cósmica do nascimento espiritual de Israel.
 
-**Fonte:** Ari haKadosh, Pri Etz Chaim, Shaar Chag haMatzot; Shemot 6:6-8; Shaar haKavvanot, Inyan haSeder; Zohar Bo 33b-44a; Maharal, Gevurot HaShem.'
-WHERE slug = 'pessach';
+**Fonte:** Ari haKadosh, Pri Etz Chaim, Shaar Chag haMatzot; Shemot 6:6-8; Shaar haKavvanot, Inyan haSeder; Zohar Bo 33b-44a; Maharal, Gevurot HaShem.$pardes_pessach_sod$
+WHERE slug = $pardes_pessach_slug$pessach$pardes_pessach_slug$;
 COMMIT;
 -- PaRDeS do Chag: purim
 -- Idempotente: atualiza apenas colunas peshat/remez/drash/sod
 BEGIN;
 UPDATE chagim SET
-  peshat = 'Purim tem sua fonte na **Megilat Esther**, livro completo do Tanach (Ketuvim), com 10 capítulos. É o único Chag pós-êxodo que tem fundação direta em livro canônico do Tanach.
+  peshat = $pardes_purim_peshat$Purim tem sua fonte na **Megilat Esther**, livro completo do Tanach (Ketuvim), com 10 capítulos. É o único Chag pós-êxodo que tem fundação direta em livro canônico do Tanach.
 
 ### A Megilá em sete capítulos-chave
 
@@ -930,8 +930,8 @@ A obrigação de destruir Amalek (Devarim 25:17-19) é mitzvá eterna. Purim é 
 
 Os eventos da Megilá ocorreram aproximadamente em 480 a.C., durante o reinado de Xerxes I. Foram codificados como Chag por Mordechai e Esther logo após (Esther 9:20-32). A celebração foi continuamente observada desde então — uma das mais antigas práticas judaicas ininterruptas.
 
-**Fonte:** Megilat Esther completa (10 capítulos); Talmud Bavli, Megilá 7a-19a, especialmente 13b sobre Amalek; Devarim 25:17-19; 1 Shmuel 15; Mishné Toráh, Hilchot Megilá uChanukáh 1.',
-  remez = 'Purim é o Chag do **HaShem oculto que opera sem se nomear**. Em todos os outros Chagim, HaShem aparece declaradamente: criou em Bereshit (Shabat), entregou a Toráh no Sinai (Shavuot), libertou do Mitzraim (Pessach), perdoa em Yom Kippur. Em Purim, **Seu Nome não está escrito**. Mas Sua mão está em cada virada da história.
+**Fonte:** Megilat Esther completa (10 capítulos); Talmud Bavli, Megilá 7a-19a, especialmente 13b sobre Amalek; Devarim 25:17-19; 1 Shmuel 15; Mishné Toráh, Hilchot Megilá uChanukáh 1.$pardes_purim_peshat$,
+  remez = $pardes_purim_remez$Purim é o Chag do **HaShem oculto que opera sem se nomear**. Em todos os outros Chagim, HaShem aparece declaradamente: criou em Bereshit (Shabat), entregou a Toráh no Sinai (Shavuot), libertou do Mitzraim (Pessach), perdoa em Yom Kippur. Em Purim, **Seu Nome não está escrito**. Mas Sua mão está em cada virada da história.
 
 ### A teologia do Hester Panim
 
@@ -939,7 +939,7 @@ Os eventos da Megilá ocorreram aproximadamente em 480 a.C., durante o reinado d
 
 A lição é poderosa para a vida cotidiana. Há momentos em que oramos e parece que ninguém ouve. Há períodos em que pedimos sinais e nada vem. **Purim ensina que mesmo nessas horas, HaShem está agindo**. Apenas, está agindo sob a face oculta, através de eventos que só posteriormente revelam sua coerência.
 
-Esther é exemplo. Quando aparece pela primeira vez na Megilá (capítulo 2), parece apenas uma jovem órfã sortuda. Apenas posteriormente entende-se que ela foi colocada na posição de rainha **exatamente para salvar Israel** — *mi yodea im le''et kazot higaat lamalchut* (quem sabe se para um momento como este chegaste à realeza, Esther 4:14).
+Esther é exemplo. Quando aparece pela primeira vez na Megilá (capítulo 2), parece apenas uma jovem órfã sortuda. Apenas posteriormente entende-se que ela foi colocada na posição de rainha **exatamente para salvar Israel** — *mi yodea im le'et kazot higaat lamalchut* (quem sabe se para um momento como este chegaste à realeza, Esther 4:14).
 
 ### Cinco qualidades refinadas em Purim
 
@@ -949,7 +949,7 @@ Esther é exemplo. Quando aparece pela primeira vez na Megilá (capítulo 2), pa
 
 ▸ **Jejum corporativo**: três dias de jejum coletivo (Esther 4:16) precedem a ação de Esther. Israel sabe que sem oração, a coragem humana é insuficiente. Purim ensina que ação precisa de oração prévia.
 
-▸ **Generosidade dirigida**: matanot la''evyonim (presentes aos pobres) é mitzvá central. Esther salvou Israel; agora Israel salva o pobre. Compaixão é o cumprimento ético do milagre.
+▸ **Generosidade dirigida**: matanot la'evyonim (presentes aos pobres) é mitzvá central. Esther salvou Israel; agora Israel salva o pobre. Compaixão é o cumprimento ético do milagre.
 
 ▸ **Alegria celebrativa**: *yemei mishtê vesimchá* (dias de banquete e alegria) é mandamento explícito. Purim sem alegria autêntica falha em cumprir-se. A alegria não é decoração; é mitzvá.
 
@@ -982,12 +982,12 @@ Purim aponta, no Drash messiânico, para a **inversão final dos tempos**. Quand
 
 A Brit Im Mashiach lê Purim com esta esperança: cada *venahafoch hu* local que vemos hoje na história é ensaio do *venahafoch hu* universal que vem.
 
-**Fonte:** Megilat Esther; Talmud Bavli, Megilá 7a-19a; Talmud Bavli, Eruvin 65a; Mishné Toráh, Hilchot Megilá uChanukáh; Maharal, Or Chadash sobre Esther.',
-  drash = '### Peshat — o sentido literal
+**Fonte:** Megilat Esther; Talmud Bavli, Megilá 7a-19a; Talmud Bavli, Eruvin 65a; Mishné Toráh, Hilchot Megilá uChanukáh; Maharal, Or Chadash sobre Esther.$pardes_purim_remez$,
+  drash = $pardes_purim_drash$### Peshat — o sentido literal
 
 Purim, no Peshat, comemora a salvação dos judeus do Império Persa em ~480 a.C., conforme narrado em Megilat Esther. Os judeus, ameaçados de extermínio pelo decreto de Haman, foram salvos pela coragem de Esther e Mordechai. Em 14 de Adar (15 nas cidades muradas), Israel celebra a vitória.
 
-As quatro mitzvot: leitura da Megilá, mishloach manot, matanot la''evyonim, seudat Purim. Mais o jejum prévio (Ta''anit Esther, 13 de Adar) e o anúncio "*mishenichnas Adar marbim besimchá*" (com a entrada de Adar, aumenta-se a alegria).
+As quatro mitzvot: leitura da Megilá, mishloach manot, matanot la'evyonim, seudat Purim. Mais o jejum prévio (Ta'anit Esther, 13 de Adar) e o anúncio "*mishenichnas Adar marbim besimchá*" (com a entrada de Adar, aumenta-se a alegria).
 
 ### Remez — a alusão velada
 
@@ -1038,8 +1038,8 @@ Os quatro níveis juntos:
 
 A Brit Im Mashiach vive Purim nos quatro níveis simultâneos. Reconhece nele o ensaio anual da **inversão messiânica final**, em que toda forma histórica de Haman será definitivamente derrotada, e *venahafoch hu* será cumprido em escala cósmica universal.
 
-**Fonte:** Megilat Esther; Talmud Bavli, Megilá 4a-22a, especialmente 7b; Maharal, Or Chadash; Ari haKadosh, Shaar haKavvanot, Inyan Purim; Bnei Yissachar, Maamarei Adar.',
-  sod = 'Purim, no Sod, é o Chag em que **Malchut** (a Shechiná no exílio) opera salvação sob disfarce. Toda a estrutura espiritual do Chag é codificada em uma única expressão: *hester panim* — o ocultamento da face divina que paradoxalmente revela a Presença mais profunda.
+**Fonte:** Megilat Esther; Talmud Bavli, Megilá 4a-22a, especialmente 7b; Maharal, Or Chadash; Ari haKadosh, Shaar haKavvanot, Inyan Purim; Bnei Yissachar, Maamarei Adar.$pardes_purim_drash$,
+  sod = $pardes_purim_sod$Purim, no Sod, é o Chag em que **Malchut** (a Shechiná no exílio) opera salvação sob disfarce. Toda a estrutura espiritual do Chag é codificada em uma única expressão: *hester panim* — o ocultamento da face divina que paradoxalmente revela a Presença mais profunda.
 
 ### Esther como Malchut em exílio
 
@@ -1047,7 +1047,7 @@ O nome **Esther** (אסתר) tem raiz em *seter* (סתר), ocultamento. Ela é M
 
 E ainda assim, no momento decisivo, Malchut age. **Esther salva Israel não apesar do exílio, mas através do exílio**. A posição que parecia perdição se revela ser exatamente a posição necessária para salvar o povo. Esta é a estrutura do Sod de Purim.
 
-A tradição luriânica ensina que cada exílio de Israel tem este padrão. Malchut está oculta em meio às nações, parecendo perdida, mas está ali para realizar tikun cósmico do qual nem ela mesma sabe completamente. Apenas no momento certo (*le''et kazot*), a Malchut age e tudo se reverte.
+A tradição luriânica ensina que cada exílio de Israel tem este padrão. Malchut está oculta em meio às nações, parecendo perdida, mas está ali para realizar tikun cósmico do qual nem ela mesma sabe completamente. Apenas no momento certo (*le'et kazot*), a Malchut age e tudo se reverte.
 
 ### Mordechai como Tiferet
 
@@ -1067,7 +1067,7 @@ Por isto Haman lança *pur* (sorte). Crê que o destino é resultado de dados. M
 
 Esther proclama três dias de jejum antes de se apresentar ao rei (Esther 4:16). Estes três dias correspondem, no Sod, ao **purificação dos três níveis emocionais inferiores** (Netzach, Hod, Yessod) antes que Malchut suba.
 
-A tradição estabeleceu também o **Ta''anit Esther** (Jejum de Esther) no 13 de Adar, dia anterior a Purim. Marca o jejum original. Quem jejua, opera tikun preparatório para a alegria do dia seguinte.
+A tradição estabeleceu também o **Ta'anit Esther** (Jejum de Esther) no 13 de Adar, dia anterior a Purim. Marca o jejum original. Quem jejua, opera tikun preparatório para a alegria do dia seguinte.
 
 ### A guematria de Amalek
 
@@ -1097,18 +1097,18 @@ A tradição (Yalkut Shimoni, Mishlei 944) ensina que **todos os Chagim cessarã
 
 Esther como Malchut em exílio, Mordechai como Tiferet conectando, Haman como Amalek/Klipá/Dúvida, *venahafoch hu* como inversão sefirótica, *hester panim* como teologia da Providência oculta — todos juntos compõem o mapa do Sod de Purim. Quem celebra Purim com kavaná consciente opera no próprio mecanismo cósmico da salvação.
 
-**Fonte:** Talmud Bavli, Megilá 13b; Yalkut Shimoni, Mishlei 944; Maharal, Or Chadash sobre Esther; Ari haKadosh, Shaar haKavvanot, Inyan Purim; Pri Etz Chaim, Shaar Purim.'
-WHERE slug = 'purim';
+**Fonte:** Talmud Bavli, Megilá 13b; Yalkut Shimoni, Mishlei 944; Maharal, Or Chadash sobre Esther; Ari haKadosh, Shaar haKavvanot, Inyan Purim; Pri Etz Chaim, Shaar Purim.$pardes_purim_sod$
+WHERE slug = $pardes_purim_slug$purim$pardes_purim_slug$;
 COMMIT;
 -- PaRDeS do Chag: rosh-hashana
 -- Idempotente: atualiza apenas colunas peshat/remez/drash/sod
 BEGIN;
 UPDATE chagim SET
-  peshat = 'A Toráh menciona Rosh Hashanáh em duas passagens principais e os profetas iluminam seu sentido em outras tantas.
+  peshat = $pardes_rosh_hashana_peshat$A Toráh menciona Rosh Hashanáh em duas passagens principais e os profetas iluminam seu sentido em outras tantas.
 
-Em **Vayikra 23:23-25**: *bachodesh hash''vi''i be''echad lachodesh yihyé lachem Shabaton, zichron teruáh mikra kodesh*. No sétimo mês, no primeiro do mês, sereis em descanso solene, lembrança do toque do shofar, convocação santa. A Toráh chama Tishrei de *chodesh hash''vi''i*, sétimo mês, contado a partir de Nissan (mês da libertação). Mas a tradição rabínica reconhece Tishrei como **rosh hashanáh**, cabeça do ano, no sentido de início do ciclo civil e do julgamento.
+Em **Vayikra 23:23-25**: *bachodesh hash'vi'i be'echad lachodesh yihyé lachem Shabaton, zichron teruáh mikra kodesh*. No sétimo mês, no primeiro do mês, sereis em descanso solene, lembrança do toque do shofar, convocação santa. A Toráh chama Tishrei de *chodesh hash'vi'i*, sétimo mês, contado a partir de Nissan (mês da libertação). Mas a tradição rabínica reconhece Tishrei como **rosh hashanáh**, cabeça do ano, no sentido de início do ciclo civil e do julgamento.
 
-Em **Bamidbar 29:1-6**: *uvachodesh hash''vi''i be''echad lachodesh mikra kodesh yihyé lachem, kol melechet avodá lo taasu, yom teruáh yihyé lachem*. No sétimo mês, no primeiro do mês, convocação santa será para vós, nenhum trabalho de servidão fareis, dia de toque do shofar será para vós. Aqui aparece explicitamente *Yom Teruáh*, com a oferenda específica do dia.
+Em **Bamidbar 29:1-6**: *uvachodesh hash'vi'i be'echad lachodesh mikra kodesh yihyé lachem, kol melechet avodá lo taasu, yom teruáh yihyé lachem*. No sétimo mês, no primeiro do mês, convocação santa será para vós, nenhum trabalho de servidão fareis, dia de toque do shofar será para vós. Aqui aparece explicitamente *Yom Teruáh*, com a oferenda específica do dia.
 
 O profeta Yoel (2:15) ecoa o mandamento em chamado público: *tiku shofar beTzion, kadshu tzom, kireu atzaráh*. Tocai o shofar em Tzion, santificai jejum, convocai assembleia.
 
@@ -1116,8 +1116,8 @@ E Tehilim 81:4-5 oferece a chave litúrgica do dia: *tiku vachodesh shofar, bake
 
 Por fim, **Yirmiyahu 4:19** e **Tsefaniá 1:14-16** descrevem o som do shofar como aviso profético: a alma é chamada a despertar antes que o Dia do Julgamento chegue em sua plenitude. Para Israel, este Dia chega antecipadamente, todo 1 de Tishrei, como ensaio de redenção pessoal e coletiva.
 
-**Fonte:** Vayikra 23:23-25; Bamidbar 29:1-6; Tehilim 81:1-5; Yoel 2:15-17; Yirmiyahu 4:19; Tsefaniá 1:14-16; Talmud Bavli, Rosh Hashanáh 16a.',
-  remez = 'Rosh Hashanáh opera em três planos simultâneos: pessoal, comunitário e cósmico.
+**Fonte:** Vayikra 23:23-25; Bamidbar 29:1-6; Tehilim 81:1-5; Yoel 2:15-17; Yirmiyahu 4:19; Tsefaniá 1:14-16; Talmud Bavli, Rosh Hashanáh 16a.$pardes_rosh_hashana_peshat$,
+  remez = $pardes_rosh_hashana_remez$Rosh Hashanáh opera em três planos simultâneos: pessoal, comunitário e cósmico.
 
 No **plano pessoal**, cada alma é julgada. Não no sentido de punição arbitrária, mas no sentido de balanço espiritual: o que se fez no ano que passou, o que se omitiu, o que se promete fazer no ano que vem. O **Talmud Bavli, Rosh Hashanáh 16b** ensina que três livros são abertos em Rosh Hashanáh: o dos completamente justos (inscritos imediatamente para a vida), o dos completamente ímpios (inscritos para o oposto) e o dos intermediários (que pendem até Yom Kippur). A maioria de Israel se encontra no terceiro livro, e por isto os Dez Dias entre Rosh Hashanáh e Yom Kippur são vividos com intensidade.
 
@@ -1131,14 +1131,14 @@ No **plano cósmico**, Rosh Hashanáh é o dia em que HaShem é coroado como Rei
 
 Rosh Hashanáh refina cinco qualidades específicas da alma:
 
-▸ **Reverência** (*yir''á*), porque a coroação exige postura interior diante do Rei.
+▸ **Reverência** (*yir'á*), porque a coroação exige postura interior diante do Rei.
 ▸ **Honestidade**, porque o julgamento autêntico começa por se ver com clareza.
 ▸ **Esperança**, porque cada Rosh Hashanáh é nova chance, mesmo após anos de erro.
 ▸ **Memória ativa**, porque pedir que HaShem lembre exige primeiro que nós lembremos.
 ▸ **Despertar**, que é o efeito direto do shofar sobre o coração que ouve.
 
-**Fonte:** Talmud Bavli, Rosh Hashanáh 16a-b, 17a; Mishné Toráh, Hilchot Teshuváh 3:3-4; Machzor de Rosh Hashanáh; Ari haKadosh, Shaar haKavvanot, Derush Tekiat Shofar.',
-  drash = 'Apresentamos Rosh Hashanáh nos quatro níveis hermenêuticos da tradição.
+**Fonte:** Talmud Bavli, Rosh Hashanáh 16a-b, 17a; Mishné Toráh, Hilchot Teshuváh 3:3-4; Machzor de Rosh Hashanáh; Ari haKadosh, Shaar haKavvanot, Derush Tekiat Shofar.$pardes_rosh_hashana_remez$,
+  drash = $pardes_rosh_hashana_drash$Apresentamos Rosh Hashanáh nos quatro níveis hermenêuticos da tradição.
 
 ### Peshat — o sentido literal
 
@@ -1174,8 +1174,8 @@ Os quatro níveis juntos compõem Rosh Hashanáh completo. No Peshat, é mitzvá
 
 A Brit Im Mashiach vive Rosh Hashanáh nos quatro níveis simultâneos, com kavaná messiânica adicional: cada toque ensaia o shofar grande do Mashiach, e cada coroação do Eterno como Rei prepara o reino que virá em plenitude.
 
-**Fonte:** Vayikra 23:23-25; Yechezkel 18:32, 40:1; Tehilim 34:19; Talmud Bavli, Rosh Hashanáh 16a-b; Zohar III, 99b-100b; Ari haKadosh, Shaar haKavvanot, Derush Rosh haShanáh.',
-  sod = 'A tradição luriânica ensina que em Rosh Hashanáh ocorre o renascimento do *Zeir Anpin*, a configuração sefirótica que rege o mundo. Durante o ano que passou, esta configuração se gasta espiritualmente. Em Tishrei, a Mãe celestial, *Bináh*, gera novamente o *Zeir Anpin* para o próximo ciclo. Tudo o que acontece em Rosh Hashanáh, no nível do Sod, é parte deste parto cósmico.
+**Fonte:** Vayikra 23:23-25; Yechezkel 18:32, 40:1; Tehilim 34:19; Talmud Bavli, Rosh Hashanáh 16a-b; Zohar III, 99b-100b; Ari haKadosh, Shaar haKavvanot, Derush Rosh haShanáh.$pardes_rosh_hashana_drash$,
+  sod = $pardes_rosh_hashana_sod$A tradição luriânica ensina que em Rosh Hashanáh ocorre o renascimento do *Zeir Anpin*, a configuração sefirótica que rege o mundo. Durante o ano que passou, esta configuração se gasta espiritualmente. Em Tishrei, a Mãe celestial, *Bináh*, gera novamente o *Zeir Anpin* para o próximo ciclo. Tudo o que acontece em Rosh Hashanáh, no nível do Sod, é parte deste parto cósmico.
 
 O shofar, na compreensão luriânica, opera diretamente sobre os mundos superiores. Cada um dos três sons tem função específica:
 
@@ -1195,14 +1195,14 @@ As **três bênçãos do Musaf** (Malchuyot, Zichronot, Shofarot) correspondem �
 ▸ **Zichronot** corresponde a *Chochmáh*, a Sabedoria, porque lembrar é o ato primordial da mente divina.
 ▸ **Shofarot** corresponde a *Bináh*, a Compreensão, porque o som do shofar é o canal pelo qual Bináh desce ao mundo manifesto.
 
-**Fonte:** Ari haKadosh, Shaar haKavvanot, Derush Tekiat Shofar e Derush Rosh haShanáh; Etz Chaim, Shaar haShofarot; Pri Etz Chaim, Shaar Rosh haShanáh; Zohar III, 99b-100b; Zohar Pinchas 231a.'
-WHERE slug = 'rosh-hashana';
+**Fonte:** Ari haKadosh, Shaar haKavvanot, Derush Tekiat Shofar e Derush Rosh haShanáh; Etz Chaim, Shaar haShofarot; Pri Etz Chaim, Shaar Rosh haShanáh; Zohar III, 99b-100b; Zohar Pinchas 231a.$pardes_rosh_hashana_sod$
+WHERE slug = $pardes_rosh_hashana_slug$rosh-hashana$pardes_rosh_hashana_slug$;
 COMMIT;
 -- PaRDeS do Chag: shabat
 -- Idempotente: atualiza apenas colunas peshat/remez/drash/sod
 BEGIN;
 UPDATE chagim SET
-  peshat = 'A Toráh menciona Shabat mais de cem vezes, mais que qualquer outro Moed. Três passagens centrais sustentam a observância.
+  peshat = $pardes_shabat_peshat$A Toráh menciona Shabat mais de cem vezes, mais que qualquer outro Moed. Três passagens centrais sustentam a observância.
 
 Na **Criação** (Bereshit 2:1-3), HaShem cessa no sétimo dia, abençoa e santifica. Shabat pertence à ordem do cosmos, anterior a qualquer revelação posterior.
 
@@ -1210,10 +1210,10 @@ No **Decálogo de Shemot 20:8**, ouvimos *zachor*, lembra. Mitzvá positiva: san
 
 Em **Shemot 31:13-17**, Shabat é declarado *brit olam*, aliança eterna, e *ot beini uveinechem*, sinal entre Mim e vós. Não é simples observância, é o emblema constitutivo do povo eleito.
 
-E o profeta Yesha''yahu (58:13) revela a chave do Shabat profundo: *vekarata laShabat oneg*, chamarás ao Shabat deleite. Guardar com tristeza é guardar pela metade. *Oneg Shabat* é a marca do cumprimento autêntico.
+E o profeta Yesha'yahu (58:13) revela a chave do Shabat profundo: *vekarata laShabat oneg*, chamarás ao Shabat deleite. Guardar com tristeza é guardar pela metade. *Oneg Shabat* é a marca do cumprimento autêntico.
 
-**Fonte:** Bereshit 2:1-3; Shemot 20:8-11, 31:13-17; Devarim 5:12-15; Yesha''yahu 58:13-14; Talmud Bavli, Shevuot 20b.',
-  remez = 'Em Shabat, cada filho de Israel recebe a *neshamáh yeterá*, alma adicional, conforme o Talmud Bavli, Beitzá 16a. Esta alma se acopla à alma comum durante as vinte e cinco horas do dia e parte ao final, na Havdaláh. Por isto cheiramos especiarias na separação: para consolar a alma comum pela perda.
+**Fonte:** Bereshit 2:1-3; Shemot 20:8-11, 31:13-17; Devarim 5:12-15; Yesha'yahu 58:13-14; Talmud Bavli, Shevuot 20b.$pardes_shabat_peshat$,
+  remez = $pardes_shabat_remez$Em Shabat, cada filho de Israel recebe a *neshamáh yeterá*, alma adicional, conforme o Talmud Bavli, Beitzá 16a. Esta alma se acopla à alma comum durante as vinte e cinco horas do dia e parte ao final, na Havdaláh. Por isto cheiramos especiarias na separação: para consolar a alma comum pela perda.
 
 Shabat refina cinco qualidades específicas da alma:
 
@@ -1221,12 +1221,12 @@ Shabat refina cinco qualidades específicas da alma:
 ▸ **Humildade**, ao perceber que o mundo continua girando sem nossa intervenção.
 ▸ **Gratidão**, ao contemplar com calma o que se atravessa correndo durante a semana.
 ▸ **Bitachón** (confiança), ao entregar um dia inteiro a HaShem.
-▸ **Simchá** (alegria), porque Yesha''yahu chama Shabat de *oneg*, deleite.
+▸ **Simchá** (alegria), porque Yesha'yahu chama Shabat de *oneg*, deleite.
 
-E Shabat é também *me''ein Olam Habá*, uma sexagésima parte do mundo vindouro (Talmud Bavli, Berachot 57b). Cada Shabat é janela aberta para o **Yom Shekuló Shabat**, o Dia que é Todo Shabat. Aquele que guarda com kavaná já prova, agora, da realidade que está vindo.
+E Shabat é também *me'ein Olam Habá*, uma sexagésima parte do mundo vindouro (Talmud Bavli, Berachot 57b). Cada Shabat é janela aberta para o **Yom Shekuló Shabat**, o Dia que é Todo Shabat. Aquele que guarda com kavaná já prova, agora, da realidade que está vindo.
 
-**Fonte:** Talmud Bavli, Beitzá 16a; Berachot 57b; Shabat 119b; Yesha''yahu 58:13-14.',
-  drash = 'O Zohar III, 152a ensina que a Toráh tem **corpo** (Peshat), **vestes** (Remez), **alma** (Drash) e **alma da alma** (Sod). Apresentamos o Shabat nos quatro níveis.
+**Fonte:** Talmud Bavli, Beitzá 16a; Berachot 57b; Shabat 119b; Yesha'yahu 58:13-14.$pardes_shabat_remez$,
+  drash = $pardes_shabat_drash$O Zohar III, 152a ensina que a Toráh tem **corpo** (Peshat), **vestes** (Remez), **alma** (Drash) e **alma da alma** (Sod). Apresentamos o Shabat nos quatro níveis.
 
 ### Peshat — o sentido literal
 
@@ -1248,8 +1248,8 @@ A Shechiná (*Malchut*) sobe pelos quatro Olamot durante o Kabalat Shabat e se u
 
 Os quatro níveis juntos compõem o Shabat completo. Ninguém vive Shabat por inteiro sem começar a perceber os quatro simultâneos. A percepção não vem de uma vez, vem ao longo dos anos.
 
-**Fonte:** Zohar III, 152a; Talmud Bavli, Shabat 118b-119a, Sanhedrin 97a, Berachot 57b; Ari haKadosh, Shaar haKavvanot, Derush Kabalat Shabat.',
-  sod = 'A tradição luriânica, transmitida pelo Arizal em Tzefat no século XVI, revela o que de fato ocorre cosmicamente na entrada do Shabat.
+**Fonte:** Zohar III, 152a; Talmud Bavli, Shabat 118b-119a, Sanhedrin 97a, Berachot 57b; Ari haKadosh, Shaar haKavvanot, Derush Kabalat Shabat.$pardes_shabat_drash$,
+  sod = $pardes_shabat_sod$A tradição luriânica, transmitida pelo Arizal em Tzefat no século XVI, revela o que de fato ocorre cosmicamente na entrada do Shabat.
 
 Durante os seis dias da semana, *Malchut*, a décima Sefiráh, encontra-se em descida pelos mundos inferiores, resgatando *nitzotzot*, faíscas santas, dispersas em toda matéria. Cada bracháh dita com kavaná eleva uma faísca. Cada mitzvá cumprida, idem.
 
@@ -1259,16 +1259,16 @@ Por isto chamamos Shabat de **Shabat HaMalká** (Shabat a Rainha) e cantamos *Bo
 
 As três refeições operam tikun nas três Sefirot emocionais centrais: a primeira (sexta à noite) em **Chesed**, a segunda (almoço) em **Gevurá**, e a *Seudá Shelishit* em **Tiferet**. Quem cumpre as três equilibra a tríade interior para a semana seguinte.
 
-**Fonte:** Zohar, Bereshit 48a; Vayakhel 204b; Ari haKadosh, Shaar haKavvanot, Derush Kabalat Shabat; Etz Chaim, Shaar haShabat.'
-WHERE slug = 'shabat';
+**Fonte:** Zohar, Bereshit 48a; Vayakhel 204b; Ari haKadosh, Shaar haKavvanot, Derush Kabalat Shabat; Etz Chaim, Shaar haShabat.$pardes_shabat_sod$
+WHERE slug = $pardes_shabat_slug$shabat$pardes_shabat_slug$;
 COMMIT;
 -- PaRDeS do Chag: shavuot
 -- Idempotente: atualiza apenas colunas peshat/remez/drash/sod
 BEGIN;
 UPDATE chagim SET
-  peshat = 'A Toráh menciona Shavuot em quatro passagens centrais, cada uma acrescentando uma camada.
+  peshat = $pardes_shavuot_peshat$A Toráh menciona Shavuot em quatro passagens centrais, cada uma acrescentando uma camada.
 
-Em **Vayikra 23:15-21**, encontramos a contagem dos cinquenta dias e a oferenda das duas chalot de trigo: *usfartem lachem mimochorat haShabat... ad mimochorat haShabat hash''vi''it tisperu chamishim yom*. Contareis para vós, a partir do dia seguinte ao Shabat... até o dia seguinte ao sétimo Shabat, contareis cinquenta dias. O sétimo Shabat aqui é metafórico, refere-se ao sétimo ciclo da contagem do Omer.
+Em **Vayikra 23:15-21**, encontramos a contagem dos cinquenta dias e a oferenda das duas chalot de trigo: *usfartem lachem mimochorat haShabat... ad mimochorat haShabat hash'vi'it tisperu chamishim yom*. Contareis para vós, a partir do dia seguinte ao Shabat... até o dia seguinte ao sétimo Shabat, contareis cinquenta dias. O sétimo Shabat aqui é metafórico, refere-se ao sétimo ciclo da contagem do Omer.
 
 Em **Devarim 16:9-12**, Moshé conecta a festa à libertação do Mitzraim: *vezacharta ki eved hayita beMitzraim*. E recordarás que servo foste no Mitzraim. Shavuot, portanto, não é apenas memória da entrega da Toráh, é memória da libertação que tornou possível receber a Toráh como povo livre.
 
@@ -1276,10 +1276,10 @@ Em **Shemot 19-20** está o relato direto do Sinai. Israel acampa diante do mont
 
 Em **Shemot 23:16 e 34:22**, a festa aparece como *Chag haKatzir* (Festa da Colheita) e *Chag haShavuot* (Festa das Semanas), confirmando suas dimensões agrícola e calendárica.
 
-E os profetas iluminam o destino último da Toráh. Yirmiyahu 31:33 anuncia: *natati et Torati bekirbam ve''al libam echtavena*. Porei Minha Toráh no íntimo deles e sobre seus corações a escreverei. A Brit Im Mashiach lê este versículo como a promessa cuja semente foi plantada no Sinai e cuja plenitude se desdobra através do Mashiach.
+E os profetas iluminam o destino último da Toráh. Yirmiyahu 31:33 anuncia: *natati et Torati bekirbam ve'al libam echtavena*. Porei Minha Toráh no íntimo deles e sobre seus corações a escreverei. A Brit Im Mashiach lê este versículo como a promessa cuja semente foi plantada no Sinai e cuja plenitude se desdobra através do Mashiach.
 
-**Fonte:** Vayikra 23:15-21; Devarim 16:9-12; Shemot 19-20, 23:16, 34:22; Yirmiyahu 31:31-34; Talmud Bavli, Shabat 88a.',
-  remez = 'Shavuot é o coroamento espiritual de Pessach. Na Páscoa, Israel saiu fisicamente do Mitzraim, do estreitamento. Em Shavuot, Israel sai espiritualmente, ao receber a Toráh. Sem Shavuot, Pessach seria libertação sem destino. A liberdade pela liberdade não basta, ensina o Maharal de Praga: liberdade autêntica só existe quando se serve algo maior que a própria vontade. Servir a Toráh é a expressão suprema desta liberdade.
+**Fonte:** Vayikra 23:15-21; Devarim 16:9-12; Shemot 19-20, 23:16, 34:22; Yirmiyahu 31:31-34; Talmud Bavli, Shabat 88a.$pardes_shavuot_peshat$,
+  remez = $pardes_shavuot_remez$Shavuot é o coroamento espiritual de Pessach. Na Páscoa, Israel saiu fisicamente do Mitzraim, do estreitamento. Em Shavuot, Israel sai espiritualmente, ao receber a Toráh. Sem Shavuot, Pessach seria libertação sem destino. A liberdade pela liberdade não basta, ensina o Maharal de Praga: liberdade autêntica só existe quando se serve algo maior que a própria vontade. Servir a Toráh é a expressão suprema desta liberdade.
 
 Por isto Chazal contam, no **Pirkei Avot 6:2**, que as tábuas estavam *charut*, gravadas, e leem ao mesmo tempo *cherut*, liberdade. Quem se grava na Toráh torna-se livre. Quem se imagina livre de toda obrigação torna-se escravo de seus próprios impulsos.
 
@@ -1295,8 +1295,8 @@ Shavuot refina cinco qualidades específicas da alma:
 ▸ **Gratidão**, expressa nas duas chalot de trigo da nova safra.
 ▸ **Renovação da aliança**, vivida como se cada um estivesse pessoalmente diante do Sinai.
 
-**Fonte:** Pirkei Avot 6:2; Shemot 24:7; Maharal, Tiferet Yisrael cap. 22; Talmud Bavli, Shabat 88a-89a.',
-  drash = 'Apresentamos Shavuot nos quatro níveis hermenêuticos da tradição.
+**Fonte:** Pirkei Avot 6:2; Shemot 24:7; Maharal, Tiferet Yisrael cap. 22; Talmud Bavli, Shabat 88a-89a.$pardes_shavuot_remez$,
+  drash = $pardes_shavuot_drash$Apresentamos Shavuot nos quatro níveis hermenêuticos da tradição.
 
 ### Peshat — o sentido literal
 
@@ -1304,7 +1304,7 @@ Vayikra 23:15-21 estabelece a contagem de cinquenta dias a partir do segundo dia
 
 ### Remez — a alusão velada
 
-O número cinquenta aponta para *Yovel*, o jubileu. Cinquenta dias entre Pessach e Shavuot, cinquenta anos entre dois Yovelim. Em ambos, há libertação: no Yovel, dos servos e da terra; em Shavuot, da escravidão do não-saber. A Toráh é a verdadeira ge''ulá, a verdadeira redenção. As **duas chalot** da oferenda aludem ao duplo aspecto da Toráh (escrita e oral, externa e interna), e antecipam a promessa de Yirmiyahu 31:33: do externo das tábuas ao interno do coração.
+O número cinquenta aponta para *Yovel*, o jubileu. Cinquenta dias entre Pessach e Shavuot, cinquenta anos entre dois Yovelim. Em ambos, há libertação: no Yovel, dos servos e da terra; em Shavuot, da escravidão do não-saber. A Toráh é a verdadeira ge'ulá, a verdadeira redenção. As **duas chalot** da oferenda aludem ao duplo aspecto da Toráh (escrita e oral, externa e interna), e antecipam a promessa de Yirmiyahu 31:33: do externo das tábuas ao interno do coração.
 
 ### Drash — o ensino homilético
 
@@ -1312,12 +1312,12 @@ Chazal contam, no **Talmud Bavli, Shabat 88a**, que HaShem suspendeu o monte sob
 
 ### Sod — o segredo kabalístico
 
-A Sefirat haOmer refina as sete Sefirot inferiores. No quinquagésimo dia, a alma transcende as sete e toca *Bináh*, a Mãe celestial. Bináh é a Sefiráh donde toda a Toráh emana. Por isto Shavuot não tem mitzvá ritual de *Asiáh* (matsá, sucá, shofar): não opera no mundo da ação, opera no mundo da compreensão. As três coroas que descem em Shavuot (Zohar III, 96b) são *Chochmáh, Bináh, Da''at*: a tríade superior inteira posando sobre o estudioso que vela.
+A Sefirat haOmer refina as sete Sefirot inferiores. No quinquagésimo dia, a alma transcende as sete e toca *Bináh*, a Mãe celestial. Bináh é a Sefiráh donde toda a Toráh emana. Por isto Shavuot não tem mitzvá ritual de *Asiáh* (matsá, sucá, shofar): não opera no mundo da ação, opera no mundo da compreensão. As três coroas que descem em Shavuot (Zohar III, 96b) são *Chochmáh, Bináh, Da'at*: a tríade superior inteira posando sobre o estudioso que vela.
 
 O segredo final: *HaShem, Israel veHaToráh chad hu*, HaShem, Israel e a Toráh são um só (Zohar III, 73a). Em todo outro dia, este *yichud* é parcial. Em Shavuot, é total. Por isto a noite inteira em estudo, por isto a Brit Im Mashiach reconhece nesta union a raiz da promessa de Yirmiyahu: a Toráh dentro do coração é a expressão mais íntima e definitiva da união entre HaShem e Seu povo.
 
-**Fonte:** Vayikra 23:15-21; Shemot 19-20; Yirmiyahu 31:33; Talmud Bavli, Shabat 88a, Avodá Zará 2b; Zohar III, 73a, 96b; Maharal, Tiferet Yisrael cap. 32.',
-  sod = 'A tradição luriânica vê o Sinai como o ato cósmico de *yichud*, união, entre HaShem, Israel e a Toráh. Estes três, ensina o Zohar III, 73a, são *chad*, um só. Em Shavuot, este vínculo é reativado em cada alma que recebe a Toráh com kavaná consciente.
+**Fonte:** Vayikra 23:15-21; Shemot 19-20; Yirmiyahu 31:33; Talmud Bavli, Shabat 88a, Avodá Zará 2b; Zohar III, 73a, 96b; Maharal, Tiferet Yisrael cap. 32.$pardes_shavuot_drash$,
+  sod = $pardes_shavuot_sod$A tradição luriânica vê o Sinai como o ato cósmico de *yichud*, união, entre HaShem, Israel e a Toráh. Estes três, ensina o Zohar III, 73a, são *chad*, um só. Em Shavuot, este vínculo é reativado em cada alma que recebe a Toráh com kavaná consciente.
 
 Durante a Sefirat haOmer, a alma de Israel sobe degrau a degrau pelas sete Sefirot inferiores, do *Chesed* puro do oitavo dia de Pessach até o *Malchut* perfeito da véspera de Shavuot. No quinquagésimo dia, a alma atravessa o limite das sete inferiores e toca *Bináh*, a Mãe celestial. Bináh é a Sefiráh donde a Toráh emana, e por isto é também chamada *Yovel*, jubileu (cujo ciclo é de cinquenta anos, paralelo aos cinquenta dias do Omer).
 
@@ -1325,20 +1325,20 @@ Por isto Shavuot não tem mitzvá ritual específica como matsá ou sucá. As mi
 
 O Arizal ensina, em **Shaar haKavvanot, Derush Chag haShavuot**, que ficar acordado a noite inteira do Shavuot (Tikun Leil Shavuot) opera um tikun específico. Israel, no Sinai original, dormiu na véspera da entrega. Moshé teve que despertá-los. A tradição mística vê neste sono uma falha. Quem fica acordado em estudo no Leil Shavuot retifica este sono ancestral, e na manhã chega ao serviço como se estivesse pela primeira vez ao pé do monte.
 
-As **três coroas** que descem em Shavuot, segundo o Zohar III, 96b, correspondem a *Chochmáh* (sabedoria), *Bináh* (compreensão) e *Da''at* (conhecimento). A Toráh inteira é veículo desta tríade superior, e Shavuot é o único dia do ano em que a tríade desce inteira sobre cada estudioso que está acordado.
+As **três coroas** que descem em Shavuot, segundo o Zohar III, 96b, correspondem a *Chochmáh* (sabedoria), *Bináh* (compreensão) e *Da'at* (conhecimento). A Toráh inteira é veículo desta tríade superior, e Shavuot é o único dia do ano em que a tríade desce inteira sobre cada estudioso que está acordado.
 
-**Fonte:** Zohar III, 73a, 96b; Ari haKadosh, Shaar haKavvanot, Derush Chag haShavuot; Etz Chaim, Shaar Pesach uShavuot; Pri Etz Chaim, Shaar Sefirat haOmer.'
-WHERE slug = 'shavuot';
+**Fonte:** Zohar III, 73a, 96b; Ari haKadosh, Shaar haKavvanot, Derush Chag haShavuot; Etz Chaim, Shaar Pesach uShavuot; Pri Etz Chaim, Shaar Sefirat haOmer.$pardes_shavuot_sod$
+WHERE slug = $pardes_shavuot_slug$shavuot$pardes_shavuot_slug$;
 COMMIT;
 -- PaRDeS do Chag: shemini-atzeret
 -- Idempotente: atualiza apenas colunas peshat/remez/drash/sod
 BEGIN;
 UPDATE chagim SET
-  peshat = 'A Toráh menciona Shemini Atzeret em três passagens centrais, cada uma com um ângulo distinto.
+  peshat = $pardes_shemini_atzeret_peshat$A Toráh menciona Shemini Atzeret em três passagens centrais, cada uma com um ângulo distinto.
 
 ### Vayikra 23:36
 
-*Shivat yamim takrivu ishé laHaShem, bayom hash''mini mikra kodesh yihyé lachem, vehikravtem ishé laHaShem, atzeret hi, kol melechet avodá lo taasu.*
+*Shivat yamim takrivu ishé laHaShem, bayom hash'mini mikra kodesh yihyé lachem, vehikravtem ishé laHaShem, atzeret hi, kol melechet avodá lo taasu.*
 
 Sete dias oferecereis oferenda a HaShem, no oitavo dia convocação santa será para vós, e oferecereis oferenda a HaShem, *atzeret* é, todo trabalho de servidão não fareis.
 
@@ -1368,8 +1368,8 @@ Este versículo, integrado a Tefilat Geshem, fundamenta a oração: a chuva vem 
 
 Yechezkel critica os profetas que prometem chuva sem autoridade divina. Esta crítica também ressoa em Shemini Atzeret: a chuva não vem por mágica nem por previsão; vem por *yichud* entre Israel e HaShem.
 
-**Fonte:** Vayikra 23:36; Bamidbar 29:35-38; Devarim 16:8; Yirmiyahu 14:22; Yechezkel 13; Talmud Bavli, Taanit 2a-3a; Bamidbar Rabá 21:24.',
-  remez = 'Shemini Atzeret é o Chag da **intimidade após a celebração pública**. Sukkot teve 70 oferendas pelas 70 nações; Shemini Atzeret tem uma oferenda — só por Israel, só com HaShem. É o momento em que a festa universal cede lugar ao encontro privado.
+**Fonte:** Vayikra 23:36; Bamidbar 29:35-38; Devarim 16:8; Yirmiyahu 14:22; Yechezkel 13; Talmud Bavli, Taanit 2a-3a; Bamidbar Rabá 21:24.$pardes_shemini_atzeret_peshat$,
+  remez = $pardes_shemini_atzeret_remez$Shemini Atzeret é o Chag da **intimidade após a celebração pública**. Sukkot teve 70 oferendas pelas 70 nações; Shemini Atzeret tem uma oferenda — só por Israel, só com HaShem. É o momento em que a festa universal cede lugar ao encontro privado.
 
 O Midrash de Rashi captura a essência: *kasheh alai peridatchem*. É difícil para Mim a vossa partida. HaShem detém Israel porque a despedida dói. Esta é uma das passagens mais comoventes da relação Israel-Eterno: HaShem como amigo que prolonga a visita porque não quer ver o convidado partir.
 
@@ -1401,8 +1401,8 @@ Yizkor (lembrança dos falecidos) é recitado em apenas quatro dias do ano: Yom 
 
 Resposta tradicional: porque Shemini Atzeret é o Chag da **intimidade reflexiva**, em que se pode parar e lembrar quem não está mais. Em Sukkot, a alegria é muito ativa e exterior; não cabe o silêncio do Yizkor. Em Simchat Toráh, a dança e o canto também são exteriorizados. Shemini Atzeret tem o tom recolhido apropriado.
 
-**Fonte:** Vayikra 23:36; Bamidbar 29:35; Talmud Bavli, Sucá 48a, Taanit 2a-7a; Mishné Toráh, Hilchot Yom Tov 6:2; Bamidbar Rabá 21:24; Rashi sobre Bamidbar 29:36.',
-  drash = 'Apresentamos Shemini Atzeret nos quatro níveis hermenêuticos.
+**Fonte:** Vayikra 23:36; Bamidbar 29:35; Talmud Bavli, Sucá 48a, Taanit 2a-7a; Mishné Toráh, Hilchot Yom Tov 6:2; Bamidbar Rabá 21:24; Rashi sobre Bamidbar 29:36.$pardes_shemini_atzeret_remez$,
+  drash = $pardes_shemini_atzeret_drash$Apresentamos Shemini Atzeret nos quatro níveis hermenêuticos.
 
 ### Peshat — o sentido literal
 
@@ -1447,8 +1447,8 @@ Os quatro níveis juntos compõem Shemini Atzeret completo:
 
 A Brit Im Mashiach vive Shemini Atzeret nos quatro níveis simultâneos. Reconhece nele o ensaio do **reino messiânico íntimo**, em que HaShem e Israel não terão mais necessidade de se despedir — porque *kasheh alai peridatchem* se tornará, para sempre, *kasheh aleichem peridati* (é difícil para vós a Minha partida), e a partida não ocorrerá mais.
 
-**Fonte:** Vayikra 23:36; Bamidbar 29:35-36; Talmud Bavli, Sucá 47a-48a, 55b; Ari haKadosh, Pri Etz Chaim, Shaar Shemini Atzeret; Zohar III, 104a-b; Tikkunei Zohar, Tikkun 6.',
-  sod = 'Shemini Atzeret é, no Sod, o dia em que toda a Or (luz) acumulada nos Chagim de Tishrei é integrada à alma de Israel para o ano que se inicia.
+**Fonte:** Vayikra 23:36; Bamidbar 29:35-36; Talmud Bavli, Sucá 47a-48a, 55b; Ari haKadosh, Pri Etz Chaim, Shaar Shemini Atzeret; Zohar III, 104a-b; Tikkunei Zohar, Tikkun 6.$pardes_shemini_atzeret_drash$,
+  sod = $pardes_shemini_atzeret_sod$Shemini Atzeret é, no Sod, o dia em que toda a Or (luz) acumulada nos Chagim de Tishrei é integrada à alma de Israel para o ano que se inicia.
 
 ### O oitavo dia como transcendência do sete
 
@@ -1491,14 +1491,14 @@ Quem recebe sem dançar perde a alegria. Quem dança sem receber dança sem subs
 
 Em Israel, ambos se condensam em um único dia, mas a estrutura espiritual interna mantém os dois movimentos sobrepostos.
 
-**Fonte:** Ari haKadosh, Shaar haKavvanot, Derush Shemini Atzeret; Pri Etz Chaim, Shaar Shemini Atzeret; Zohar III, 104a-b; Talmud Bavli, Sucá 48a; Tikkunei Zohar Tikkun 6.'
-WHERE slug = 'shemini-atzeret';
+**Fonte:** Ari haKadosh, Shaar haKavvanot, Derush Shemini Atzeret; Pri Etz Chaim, Shaar Shemini Atzeret; Zohar III, 104a-b; Talmud Bavli, Sucá 48a; Tikkunei Zohar Tikkun 6.$pardes_shemini_atzeret_sod$
+WHERE slug = $pardes_shemini_atzeret_slug$shemini-atzeret$pardes_shemini_atzeret_slug$;
 COMMIT;
 -- PaRDeS do Chag: simchat-torah
 -- Idempotente: atualiza apenas colunas peshat/remez/drash/sod
 BEGIN;
 UPDATE chagim SET
-  peshat = 'Simchat Toráh não tem fundação direta na Toráh. É **Chag rabínico**, mas com raízes bíblicas profundas que se manifestaram historicamente em forma de celebração.
+  peshat = $pardes_simchat_torah_peshat$Simchat Toráh não tem fundação direta na Toráh. É **Chag rabínico**, mas com raízes bíblicas profundas que se manifestaram historicamente em forma de celebração.
 
 ### Fundação histórica
 
@@ -1533,7 +1533,7 @@ E o **reinício imediato** em Bereshit 1:1 expressa princípio profundo: a Torá
 ### O nome do Chag
 
 ▸ **Simchat Toráh**: nome ashkenazi e moderno padrão. "Alegria da Toráh."
-▸ **Yom haShevi''i shel Atzeret**: nome talmúdico literal — "Sétimo dia da Atzeret" (contando Sukkot+Atzeret=8, e este é o 8 dentro da contagem).
+▸ **Yom haShevi'i shel Atzeret**: nome talmúdico literal — "Sétimo dia da Atzeret" (contando Sukkot+Atzeret=8, e este é o 8 dentro da contagem).
 ▸ Em algumas tradições sefarditas: *Atzeret II* — "segundo dia de Atzeret".
 ▸ **Brit Im Mashiach** segue padrão moderno: Simchat Toráh.
 
@@ -1543,8 +1543,8 @@ A celebração ser rabínica e não escrita não diminui sua importância. Pelo 
 
 A Brit Im Mashiach reconhece Simchat Toráh como Chag legítimo da tradição rabínica, profundamente alinhado ao espírito bíblico, mesmo sem prescrição explícita.
 
-**Fonte:** Talmud Bavli, Megilá 29b-31a; Devarim 33:4; Tehilim 19:9, 119:111; Yirmiyahu 31:11-12; Sefer haRokeach 219; Mishné Toráh, Hilchot Tefilá 13.',
-  remez = 'Simchat Toráh é o Chag em que o judeu **dança com a Toráh**, não estuda apenas. É o reconhecimento de que a relação com a Toráh não é apenas intelectual ou mesmo ritual — é amorosa, corporal, exuberante. Por isto Simchat Toráh tem dança, e dança é incomum no calendário litúrgico judaico.
+**Fonte:** Talmud Bavli, Megilá 29b-31a; Devarim 33:4; Tehilim 19:9, 119:111; Yirmiyahu 31:11-12; Sefer haRokeach 219; Mishné Toráh, Hilchot Tefilá 13.$pardes_simchat_torah_peshat$,
+  remez = $pardes_simchat_torah_remez$Simchat Toráh é o Chag em que o judeu **dança com a Toráh**, não estuda apenas. É o reconhecimento de que a relação com a Toráh não é apenas intelectual ou mesmo ritual — é amorosa, corporal, exuberante. Por isto Simchat Toráh tem dança, e dança é incomum no calendário litúrgico judaico.
 
 ### O casamento entre Israel e a Toráh
 
@@ -1570,7 +1570,7 @@ A repetição cíclica também ensina **persistência**. Nenhum aprendizado real
 
 A Toráh termina (Devarim 34:12) com a palavra **ישראל** (Israel), última palavra. A Toráh começa (Bereshit 1:1) com a palavra **בראשית** (Bereshit, "no princípio"). A tradição (Pri Etz Chaim) ensina:
 
-▸ A **última letra** de Devarim 34:12 é **lamed** (ל), de *Yisra''el*.
+▸ A **última letra** de Devarim 34:12 é **lamed** (ל), de *Yisra'el*.
 ▸ A **primeira letra** de Bereshit 1:1 é **bet** (ב), de *Bereshit*.
 ▸ Juntas formam **לב** (*lev*, coração).
 
@@ -1582,8 +1582,8 @@ A Toráh ordena alegria três vezes em Sukkot (Devarim 16:14-15: *vesamachta bec
 
 Aquele que não se alegra em Simchat Toráh perde uma das mitzvot mais bonitas do calendário. Não importa o cansaço, a tristeza pessoal, a complicação do ano: por algumas horas, **dança-se com a Toráh**, e a alegria precede a vontade. O corpo dança e arrasta a alma.
 
-**Fonte:** Talmud Bavli, Eiruvin 54a, Megilá 31a; Devarim 16:14-15, 33:4; Tehilim 19:9; Mishné Toráh, Hilchot Tefilá 13; Ari haKadosh, Pri Etz Chaim, Shaar Simchat Torá.',
-  drash = 'Apresentamos Simchat Toráh nos quatro níveis hermenêuticos.
+**Fonte:** Talmud Bavli, Eiruvin 54a, Megilá 31a; Devarim 16:14-15, 33:4; Tehilim 19:9; Mishné Toráh, Hilchot Tefilá 13; Ari haKadosh, Pri Etz Chaim, Shaar Simchat Torá.$pardes_simchat_torah_remez$,
+  drash = $pardes_simchat_torah_drash$Apresentamos Simchat Toráh nos quatro níveis hermenêuticos.
 
 ### Peshat — o sentido literal
 
@@ -1597,7 +1597,7 @@ A imagem central do dia — Israel dançando com a Toráh — alude a duas profe
 
 ▸ **Yirmiyahu 31:13**: *az tismach betulá bemachol, uvachurim uzkenim yachdav*. Então alegrar-se-á a virgem em dança, e jovens e velhos juntos. A dança em Simchat Toráh é antegosto da dança messiânica.
 
-▸ **Yesha''yahu 35:10**: *ufdueyé HaShem yeshuvun uvau leTzion berinah*. E os redimidos de HaShem voltarão e virão a Tzion em alegria. A alegria que retorna a Tzion no fim dos dias é a mesma alegria das Hakafot.
+▸ **Yesha'yahu 35:10**: *ufdueyé HaShem yeshuvun uvau leTzion berinah*. E os redimidos de HaShem voltarão e virão a Tzion em alegria. A alegria que retorna a Tzion no fim dos dias é a mesma alegria das Hakafot.
 
 E o **número sete** das Hakafot alude aos sete dias da Criação. Cada Hakafá é dia recriado. As sete Hakafot juntas recriam o cosmos com a Toráh no centro.
 
@@ -1632,8 +1632,8 @@ Os quatro níveis juntos compõem Simchat Toráh completo:
 
 A Brit Im Mashiach vive Simchat Toráh nos quatro níveis simultâneos. Reconhece nele o ensaio do **reino messiânico** em que toda a humanidade dançará em torno da Toráh — Israel no centro, as nações ao redor — formando os sete círculos visíveis de Yerushalaim eterna.
 
-**Fonte:** Devarim 34:12; Bereshit 1:1; Yirmiyahu 31:13; Yesha''yahu 35:10; Talmud Bavli, Megilá 31a; Shir haShirim Rabá 1:2; Zohar Vayikra 73a; Sefer Yetziráh 1:1 (sobre os 32 caminhos); Ari haKadosh, Pri Etz Chaim, Shaar Simchat Torá.',
-  sod = 'Simchat Toráh é, no Sod, o dia em que a alma de Israel é **unida à Toráh em yichud nupcial completo**, e essa união se torna a semente espiritual de todo o ano que se inicia.
+**Fonte:** Devarim 34:12; Bereshit 1:1; Yirmiyahu 31:13; Yesha'yahu 35:10; Talmud Bavli, Megilá 31a; Shir haShirim Rabá 1:2; Zohar Vayikra 73a; Sefer Yetziráh 1:1 (sobre os 32 caminhos); Ari haKadosh, Pri Etz Chaim, Shaar Simchat Torá.$pardes_simchat_torah_drash$,
+  sod = $pardes_simchat_torah_sod$Simchat Toráh é, no Sod, o dia em que a alma de Israel é **unida à Toráh em yichud nupcial completo**, e essa união se torna a semente espiritual de todo o ano que se inicia.
 
 ### O Yichud entre Israel e a Toráh
 
@@ -1665,9 +1665,9 @@ Cada Sefer Toráh, no Sod, é manifestação física de **Malchut**. As letras e
 
 Em Simchat Toráh, ao dançar com o Sefer nos braços, o judeu não dança apenas com um objeto sagrado. Está dançando com a própria *Shechiná* corporificada. Esta é a única ocasião litúrgica do ano em que isto acontece publicamente.
 
-### A última palavra: Yisra''el
+### A última palavra: Yisra'el
 
-A Toráh termina em Devarim 34:12 com a palavra **לְעֵינֵי כׇּל יִשְׂרָאֵל** (lifnei einei kol Yisra''el), diante dos olhos de todo Israel. **Israel é a última palavra**.
+A Toráh termina em Devarim 34:12 com a palavra **לְעֵינֵי כׇּל יִשְׂרָאֵל** (lifnei einei kol Yisra'el), diante dos olhos de todo Israel. **Israel é a última palavra**.
 
 No Sod, isto significa: o destino e o ápice de toda a Toráh é Israel mesmo. Não há Toráh sem Israel para recebê-la, internalizá-la, dançá-la. A Toráh chega à sua completude no povo que a vive.
 
@@ -1685,20 +1685,20 @@ A dança das sete Hakafot, a leitura final, o reinício imediato, a aliyá de *K
 
 Quem participa de Simchat Toráh com kavaná consciente participa, no Sod, da reciclagem cósmica da Or pela qual o mundo é sustentado por mais um ano.
 
-**Fonte:** Zohar III, 73a; Mishlei 8:22; Devarim 34:12; Bereshit 1:1; Ari haKadosh, Pri Etz Chaim, Shaar Simchat Torá; Etz Chaim, Shaar haRishon; Tikkunei Zohar, Tikkun 70 (sobre Bereshit como Chochmáh).'
-WHERE slug = 'simchat-torah';
+**Fonte:** Zohar III, 73a; Mishlei 8:22; Devarim 34:12; Bereshit 1:1; Ari haKadosh, Pri Etz Chaim, Shaar Simchat Torá; Etz Chaim, Shaar haRishon; Tikkunei Zohar, Tikkun 70 (sobre Bereshit como Chochmáh).$pardes_simchat_torah_sod$
+WHERE slug = $pardes_simchat_torah_slug$simchat-torah$pardes_simchat_torah_slug$;
 COMMIT;
 -- PaRDeS do Chag: sukkot
 -- Idempotente: atualiza apenas colunas peshat/remez/drash/sod
 BEGIN;
 UPDATE chagim SET
-  peshat = 'A Toráh dedica uma das passagens mais densas a Sukkot, em **Vayikra 23:33-43**, e as referências se multiplicam em Devarim, Bamidbar e nos profetas.
+  peshat = $pardes_sukkot_peshat$A Toráh dedica uma das passagens mais densas a Sukkot, em **Vayikra 23:33-43**, e as referências se multiplicam em Devarim, Bamidbar e nos profetas.
 
 ### Vayikra 23:33-43 — A Fundação
 
 A Toráh estabelece sete dias de festa, começando em 15 de Tishrei, com *mikra kodesh* (convocação santa) no primeiro dia, Shemini Atzeret no oitavo, e a ordem das Arba Minim em 23:40: *ulekachtem lachem bayom harishon pri etz hadar, kapot temarim, vaanaf etz avot, vearvei nachal*. E tomareis para vós no primeiro dia fruto de árvore formosa (etrog), folhas de palmeira (lulav), ramo de árvore frondosa (hadassim) e salgueiros do riacho (aravot).
 
-Em **23:42-43** vem o mandamento da Sucá com sua razão histórica: *basukot teshvu shivat yamim, kol haezrach beYisrael yeshvu basukot, lemaan yedu doroteichem ki vasukot hoshavti et benei Yisrael behotzi''i otam meerets Mitzraim*. Em sucot habitareis sete dias, todo o nativo em Israel habitará em sucot, para que saibam vossas gerações que em sucot fiz habitar os filhos de Israel ao tirá-los da terra do Mitzraim.
+Em **23:42-43** vem o mandamento da Sucá com sua razão histórica: *basukot teshvu shivat yamim, kol haezrach beYisrael yeshvu basukot, lemaan yedu doroteichem ki vasukot hoshavti et benei Yisrael behotzi'i otam meerets Mitzraim*. Em sucot habitareis sete dias, todo o nativo em Israel habitará em sucot, para que saibam vossas gerações que em sucot fiz habitar os filhos de Israel ao tirá-los da terra do Mitzraim.
 
 ### Devarim 16:13-15 — A Alegria Ordenada
 
@@ -1716,14 +1716,14 @@ No reino messiânico, segundo Zechariáh, todas as nações subirão a Yerushala
 
 ### Tehilim 27:5 — A Sucá como Proteção
 
-*Ki yitzpenéni besukó beyom ra''á, yastireni beseter aholó*. Pois Ele me esconderá em Sua sucá no dia mal, me ocultará no segredo da Sua tenda. David usa a imagem da sucá divina para falar de proteção: a frágil cabana terrena é símbolo da sólida proteção celestial. O versículo abre o Salmo 27, lido durante todo Elul e Aseret Yemei Teshuváh.
+*Ki yitzpenéni besukó beyom ra'á, yastireni beseter aholó*. Pois Ele me esconderá em Sua sucá no dia mal, me ocultará no segredo da Sua tenda. David usa a imagem da sucá divina para falar de proteção: a frágil cabana terrena é símbolo da sólida proteção celestial. O versículo abre o Salmo 27, lido durante todo Elul e Aseret Yemei Teshuváh.
 
 ### Nechemiá 8:13-18 — A Restauração Histórica
 
 Após o retorno do exílio babilônico, Ezrá e Nechemiá restauraram a observância de Sukkot. *Velô assu mimei Yeshua bin Nun kén benei Yisrael ad hayom hahu, vatehí simchá gedolá meod*. Os filhos de Israel não fizeram assim desde os dias de Yehoshua filho de Nun, e houve grande alegria.
 
-**Fonte:** Vayikra 23:33-43; Devarim 16:13-15; Bamidbar 29:12-34; Tehilim 27:5; Zechariáh 14:16-19; Nechemiá 8:13-18.',
-  remez = 'Sukkot é o Chag da **transição entre seguranças**. Sair da casa permanente, com paredes sólidas e teto firme, e morar sete dias numa cabana frágil, com schach pelo qual se vê o céu. Esta troca não é sacrifício; é revelação. A Sucá ensina que a segurança real nunca esteve na casa permanente. Esteve sempre na proteção do Eterno.
+**Fonte:** Vayikra 23:33-43; Devarim 16:13-15; Bamidbar 29:12-34; Tehilim 27:5; Zechariáh 14:16-19; Nechemiá 8:13-18.$pardes_sukkot_peshat$,
+  remez = $pardes_sukkot_remez$Sukkot é o Chag da **transição entre seguranças**. Sair da casa permanente, com paredes sólidas e teto firme, e morar sete dias numa cabana frágil, com schach pelo qual se vê o céu. Esta troca não é sacrifício; é revelação. A Sucá ensina que a segurança real nunca esteve na casa permanente. Esteve sempre na proteção do Eterno.
 
 Por isto Sukkot vem logo após Yom Kippur. Em Yom Kippur, a alma é purificada. Em Sukkot, a alma purificada é convidada a confiar de novo. Confiar não na casa, no salário, no plano, na previsibilidade. Confiar na Presença que cobre Israel desde os 40 anos do deserto, e continua cobrindo onde quer que Israel se reúna em sucá.
 
@@ -1736,7 +1736,7 @@ A tradição (Talmud Bavli, Sucá 11b) ensina que as sucot do deserto não eram 
 ▸ **Confiança radical** (*bitachón*): morar onde o céu se vê pelo schach.
 ▸ **Hospitalidade** (*hachnasat orchim*): a Sucá é, por sua natureza, espaço de hóspedes; sete deles celestiais (Ushpizin), e tantos quantos couberem terrenos.
 ▸ **Simplicidade material**: a Sucá tem o mínimo necessário; descobre-se que basta.
-▸ **Alegria autêntica**: ordenada três vezes em Devarim 16, *Z''man Simchateinu*.
+▸ **Alegria autêntica**: ordenada três vezes em Devarim 16, *Z'man Simchateinu*.
 ▸ **Universalidade**: as 70 oferendas pelas 70 nações expandem a oração para fora de Israel; Sukkot abre a porta do humanismo bíblico.
 
 ### As Arba Minim como tipos de almas
@@ -1754,8 +1754,8 @@ Mas as quatro são amarradas juntas e agitadas como uma unidade. Lição: nenhum
 
 Em outros Chagim, a alegria é consequência natural da observância. Em Sukkot, a alegria é mitzvá explícita. Quem não consegue se alegrar deve trabalhar conscientemente nisto: cantar, dançar com lulav, comer com gosto, receber convidados. A *Simchat Beit haShoeva* (Alegria do Bombeamento de Água), realizada no Beit haMikdash durante Sukkot, era a celebração mais espetacular do ano (Talmud Bavli, Sucá 51a). Hoje, sem Templo, a alegria toma outras formas: Nigunim na Sucá, danças no Hoshaná Rabá, hospitalidade exuberante.
 
-**Fonte:** Talmud Bavli, Sucá 11b, 51a; Midrash Vayikra Rabá 30:12; Devarim 16:14-15; Mishné Toráh, Hilchot Sucá; Sefer haChinuch, mitzvot 324-326.',
-  drash = 'Apresentamos Sukkot nos quatro níveis hermenêuticos.
+**Fonte:** Talmud Bavli, Sucá 11b, 51a; Midrash Vayikra Rabá 30:12; Devarim 16:14-15; Mishné Toráh, Hilchot Sucá; Sefer haChinuch, mitzvot 324-326.$pardes_sukkot_remez$,
+  drash = $pardes_sukkot_drash$Apresentamos Sukkot nos quatro níveis hermenêuticos.
 
 ### Peshat — o sentido literal
 
@@ -1800,8 +1800,8 @@ Os quatro níveis juntos compõem Sukkot completo:
 
 A Brit Im Mashiach vive Sukkot nos quatro níveis simultâneos. Cada Sucá é antecipação da **Sucá universal** que cobrirá Israel e as nações no reino messiânico, conforme Zechariáh 14:16. Cada agitação do lulav é proclamação que o Mashiach é Senhor das seis direções e do centro.
 
-**Fonte:** Vayikra 23:33-43; Talmud Bavli, Sucá 11b, 51a; Midrash Vayikra Rabá 30:12-14; Zohar III, Emor 103a-104b; Zohar Vayechi 220a; Ari haKadosh, Shaar haKavvanot, Derush Sukkot.',
-  sod = 'Em Sukkot, a alma de Israel sai da casa permanente e entra na *Sucá*, e este movimento físico corresponde, no Sod, a uma reconfiguração sefirótica completa.
+**Fonte:** Vayikra 23:33-43; Talmud Bavli, Sucá 11b, 51a; Midrash Vayikra Rabá 30:12-14; Zohar III, Emor 103a-104b; Zohar Vayechi 220a; Ari haKadosh, Shaar haKavvanot, Derush Sukkot.$pardes_sukkot_drash$,
+  sod = $pardes_sukkot_sod$Em Sukkot, a alma de Israel sai da casa permanente e entra na *Sucá*, e este movimento físico corresponde, no Sod, a uma reconfiguração sefirótica completa.
 
 ### A Sucá como Bináh
 
@@ -1844,14 +1844,14 @@ A tradição luriânica diz que na Hoshaná Rabá, os anjos chamados *malachei h
 
 Os Chagim que seguem Sukkot (tratados em portais próprios) completam o ciclo: *Shemini Atzeret* é o "oitavo dia" em que HaShem detém Israel para um último momento de intimidade, e *Simchat Toráh* fecha e reinicia o ciclo da Toráh. Os três juntos formam o **período de Tishrei** completo, do despertar do shofar em Rosh Hashanáh à reaberatura da Toráh em Simchat Toráh.
 
-**Fonte:** Ari haKadosh, Shaar haKavvanot, Derush Sukkot; Pri Etz Chaim, Shaar Sukkot; Zohar III, 101b-104b; Zohar Emor 103a-b; Sefer haBahir parágrafos sobre Sucá.'
-WHERE slug = 'sukkot';
+**Fonte:** Ari haKadosh, Shaar haKavvanot, Derush Sukkot; Pri Etz Chaim, Shaar Sukkot; Zohar III, 101b-104b; Zohar Emor 103a-b; Sefer haBahir parágrafos sobre Sucá.$pardes_sukkot_sod$
+WHERE slug = $pardes_sukkot_slug$sukkot$pardes_sukkot_slug$;
 COMMIT;
 -- PaRDeS do Chag: tisha-beav
 -- Idempotente: atualiza apenas colunas peshat/remez/drash/sod
 BEGIN;
 UPDATE chagim SET
-  peshat = 'Tisha B''Av tem múltiplas camadas históricas, da Toráh aos tempos modernos. Cada catástrofe acrescenta peso à data.
+  peshat = $pardes_tisha_beav_peshat$Tisha B'Av tem múltiplas camadas históricas, da Toráh aos tempos modernos. Cada catástrofe acrescenta peso à data.
 
 ### O pecado dos espias (Bamidbar 13-14)
 
@@ -1905,34 +1905,34 @@ Em **22 de julho de 1942** (que foi **9 de Av**), os nazistas começaram a depor
 
 A tradição (Talmud Bavli, Taanit 29a) ensina que o decreto do **choro injustificado** em Bamidbar 13-14 estabeleceu **energia espiritual de luto** sobre esta data. As catástrofes posteriores **se encaixaram** nesta energia, em ciclo doloroso.
 
-Aplicação espiritual: as datas do calendário **carregam carga energética** acumulada. Tisha B''Av carrega carga de catástrofe; Yom Kippur carrega carga de expiação; Shavuot carrega carga de revelação. Quem reza no dia certo, opera nas correntes do dia.
+Aplicação espiritual: as datas do calendário **carregam carga energética** acumulada. Tisha B'Av carrega carga de catástrofe; Yom Kippur carrega carga de expiação; Shavuot carrega carga de revelação. Quem reza no dia certo, opera nas correntes do dia.
 
 ### A reversão futura
 
 O profeta **Yirmiyahu** prediz a reversão em **31:15-16**:
 
-*Kol berama nishmá, nehí, bechi tamrurim, Rachel mevaká al baneyha... menei kolech mibechi ve''enayich midim''á, ki yesh sachar lifulatech, ne''um Adonai, veshavu mei''eretz oyev.*
+*Kol berama nishmá, nehí, bechi tamrurim, Rachel mevaká al baneyha... menei kolech mibechi ve'enayich midim'á, ki yesh sachar lifulatech, ne'um Adonai, veshavu mei'eretz oyev.*
 
 Voz em Ramá ouve-se: lamento, pranto amargo, Rachel chorando seus filhos... Cessa tua voz de pranto e teus olhos de lágrimas, pois há recompensa para teu trabalho, diz HaShem, e voltarão da terra do inimigo.
 
-O choro de Tisha B''Av eventualmente terminará. Os filhos de Israel voltarão. O Beit haMikdash será reconstruído. Este é o **núcleo messiânico** do dia mais triste.
+O choro de Tisha B'Av eventualmente terminará. Os filhos de Israel voltarão. O Beit haMikdash será reconstruído. Este é o **núcleo messiânico** do dia mais triste.
 
-**Fonte:** Mishná Taanit 4:6; Talmud Bavli, Taanit 26b-31a; Megilat Eichá; Bamidbar 13-14; Yirmiyahu 31:15-16; Historiografia documentada das catástrofes posteriores (cf. Cecil Roth, Israel Yuval).',
-  remez = 'Tisha B''Av é o Chag em que Israel **chora coletivamente** por séculos de catástrofes. Mas o luto não é sem sentido. Carrega função espiritual específica.
+**Fonte:** Mishná Taanit 4:6; Talmud Bavli, Taanit 26b-31a; Megilat Eichá; Bamidbar 13-14; Yirmiyahu 31:15-16; Historiografia documentada das catástrofes posteriores (cf. Cecil Roth, Israel Yuval).$pardes_tisha_beav_peshat$,
+  remez = $pardes_tisha_beav_remez$Tisha B'Av é o Chag em que Israel **chora coletivamente** por séculos de catástrofes. Mas o luto não é sem sentido. Carrega função espiritual específica.
 
 ### O luto como teshuváh
 
 A tradição rabínica (Mishné Toráh, Hilchot Taaniyot 5:1) ensina que **jejuns públicos** são instrumentos de **teshuváh coletiva**. Não são autopunição arbitrária; são chamada à mudança real.
 
-Tisha B''Av pergunta: **o que ainda não consertamos** desde a destruição do Beit haMikdash? **Por que ainda estamos no exílio**? **O que cada um de nós contribui hoje** para a continuação do exílio que se prolonga há quase dois milênios?
+Tisha B'Av pergunta: **o que ainda não consertamos** desde a destruição do Beit haMikdash? **Por que ainda estamos no exílio**? **O que cada um de nós contribui hoje** para a continuação do exílio que se prolonga há quase dois milênios?
 
 A tradição (Talmud Bavli, Yoma 9b) responde **uma das causas**: *sinat chinam* (ódio gratuito) entre judeus. O Segundo Beit haMikdash, particularmente, foi destruído por causa do ódio mútuo entre as facções judaicas (zelotes vs moderados vs sacerdotes corrompidos vs pacifistas).
 
 A lição: **a próxima Beit haMikdash será construída por amor gratuito** (*ahavat chinam*). Sem isto, mesmo se o Templo físico fosse reerguido, seria destruído novamente.
 
-Tisha B''Av é o dia anual em que esta lição é internalizada.
+Tisha B'Av é o dia anual em que esta lição é internalizada.
 
-### Cinco qualidades refinadas em Tisha B''Av
+### Cinco qualidades refinadas em Tisha B'Av
 
 ▸ **Honestidade histórica**: olhar para as catástrofes sem negar nem minimizar. O sofrimento foi real; os mártires foram reais.
 
@@ -1944,23 +1944,23 @@ Tisha B''Av é o dia anual em que esta lição é internalizada.
 
 ▸ **Esperança radical**: mesmo no dia da maior tristeza, manter a expectativa do Mashiach. *Hashivenu Adonai elecha venashuva*.
 
-### A diferença entre Yom Kippur e Tisha B''Av
+### A diferença entre Yom Kippur e Tisha B'Av
 
 Ambos são jejuns de 25 horas com cinco aflições. Mas:
 
 ▸ **Yom Kippur**: jejum de **expiação dos pecados pessoais**. Termina em alegria (perdão obtido). Veste-se **branco** (kittel).
 
-▸ **Tisha B''Av**: jejum de **luto coletivo histórico**. Não termina em alegria, mas em **expectativa**. Veste-se roupas **escuras ou simples**. Sentado em **banquinho baixo** ou no chão.
+▸ **Tisha B'Av**: jejum de **luto coletivo histórico**. Não termina em alegria, mas em **expectativa**. Veste-se roupas **escuras ou simples**. Sentado em **banquinho baixo** ou no chão.
 
-Yom Kippur é cura individual; Tisha B''Av é luto coletivo. Os dois são necessários ao ciclo espiritual anual completo.
+Yom Kippur é cura individual; Tisha B'Av é luto coletivo. Os dois são necessários ao ciclo espiritual anual completo.
 
 ### A presença do consolo no luto
 
 Mesmo no dia mais triste, há **sementes de consolo**. Quatro indicadores:
 
-▸ Não se diz **Tachanun** em Tisha B''Av (paradoxalmente, dia de luto não tem orações penitenciais). Por quê? Porque Tachanun é súplica por misericórdia que pressupõe que a misericórdia pode falhar. Em Tisha B''Av, a tradição afirma que **a misericórdia divina já está garantida na sua chegada futura**.
+▸ Não se diz **Tachanun** em Tisha B'Av (paradoxalmente, dia de luto não tem orações penitenciais). Por quê? Porque Tachanun é súplica por misericórdia que pressupõe que a misericórdia pode falhar. Em Tisha B'Av, a tradição afirma que **a misericórdia divina já está garantida na sua chegada futura**.
 
-▸ **Mashiach nasce em Tisha B''Av à tarde** (segundo Talmud Bavli, Taanit 30b e Midrash Eichá Rabá 1:51). O dia da destruição é também o dia do nascimento do consolador. **Venahafoch hu** em escala cósmica.
+▸ **Mashiach nasce em Tisha B'Av à tarde** (segundo Talmud Bavli, Taanit 30b e Midrash Eichá Rabá 1:51). O dia da destruição é também o dia do nascimento do consolador. **Venahafoch hu** em escala cósmica.
 
 ▸ A última frase de Eichá é **plea por retorno**: *hashivenu Adonai elecha venashuva*. Mesmo o livro de lamentações **termina em pedido de reconstrução**.
 
@@ -1968,9 +1968,9 @@ Mesmo no dia mais triste, há **sementes de consolo**. Quatro indicadores:
 
 ### A solidariedade comunitária
 
-Tisha B''Av é dia em que **toda comunidade jejua junto, lê Eichá junto, ouve kinot junto**. Não é luto privado. É **luto coletivo**, com presença mútua reforçada.
+Tisha B'Av é dia em que **toda comunidade jejua junto, lê Eichá junto, ouve kinot junto**. Não é luto privado. É **luto coletivo**, com presença mútua reforçada.
 
-Quem jejua sozinho cumpre, mas perde a dimensão essencial. **Comunidade lutando juntas torna o luto suportável**. Por isto a Brit Im Mashiach se reúne em Tisha B''Av para os serviços.
+Quem jejua sozinho cumpre, mas perde a dimensão essencial. **Comunidade lutando juntas torna o luto suportável**. Por isto a Brit Im Mashiach se reúne em Tisha B'Av para os serviços.
 
 ### A pergunta sobre relevância moderna
 
@@ -1986,30 +1986,30 @@ A resposta tradicional, intensificada para a Brit Im Mashiach:
 
 ▸ **Antissemitismo persiste**. Em todas as gerações, há aqueles que tentam destruir Israel. A violência continua.
 
-**Enquanto Mashiach não vier, Tisha B''Av permanece relevante**. Quando vier, o dia se tornará festa (Yirmiyahu 31:13).
+**Enquanto Mashiach não vier, Tisha B'Av permanece relevante**. Quando vier, o dia se tornará festa (Yirmiyahu 31:13).
 
 ### O choro como semente
 
-A tradição (Eichá Rabá 1:23, baseada em Tehilim 126:5-6) ensina: *hazor''im bedimá berinah yiktzoru* — os que semeiam com lágrimas, em alegria colherão. **Cada lágrima derramada em Tisha B''Av é semente plantada para a colheita messiânica**.
+A tradição (Eichá Rabá 1:23, baseada em Tehilim 126:5-6) ensina: *hazor'im bedimá berinah yiktzoru* — os que semeiam com lágrimas, em alegria colherão. **Cada lágrima derramada em Tisha B'Av é semente plantada para a colheita messiânica**.
 
-Não é fatalismo nem masoquismo. É **economia espiritual**: o luto autêntico tem **valor causal real** no plano da redenção. Quem chora em Tisha B''Av contribui, em camada profunda, para a construção do Terceiro Beit haMikdash.
+Não é fatalismo nem masoquismo. É **economia espiritual**: o luto autêntico tem **valor causal real** no plano da redenção. Quem chora em Tisha B'Av contribui, em camada profunda, para a construção do Terceiro Beit haMikdash.
 
-**Fonte:** Mishná Taanit 4:6; Talmud Bavli, Taanit 29b-30b, Yoma 9b; Megilat Eichá; Mishné Toráh, Hilchot Taaniyot 5; Midrash Eichá Rabá 1:51, 1:23; Tehilim 126:5-6; Yirmiyahu 31:13.',
-  drash = '### Peshat — o sentido literal
+**Fonte:** Mishná Taanit 4:6; Talmud Bavli, Taanit 29b-30b, Yoma 9b; Megilat Eichá; Mishné Toráh, Hilchot Taaniyot 5; Midrash Eichá Rabá 1:51, 1:23; Tehilim 126:5-6; Yirmiyahu 31:13.$pardes_tisha_beav_remez$,
+  drash = $pardes_tisha_beav_drash$### Peshat — o sentido literal
 
-Tisha B''Av, no Peshat, é jejum coletivo de 25 horas em memória da destruição dos dois Beit haMikdash e outras tragédias históricas concentradas nesta data. Estabelecido pelos profetas (Zechariáh 8:19 lista quatro jejuns relacionados à destruição). Cinco aflições corporais, leitura de Eichá e kinot, três semanas de luto crescente.
+Tisha B'Av, no Peshat, é jejum coletivo de 25 horas em memória da destruição dos dois Beit haMikdash e outras tragédias históricas concentradas nesta data. Estabelecido pelos profetas (Zechariáh 8:19 lista quatro jejuns relacionados à destruição). Cinco aflições corporais, leitura de Eichá e kinot, três semanas de luto crescente.
 
 ### Remez — a alusão velada
 
 O número **9** (de "Nove de Av") tem associações:
 
-▸ **9 meses** de gestação humana. Mashiach "nasce" em Tisha B''Av à tarde (Talmud Bavli, Taanit 30b) — fim do trabalho de parto de uma gestação cósmica.
+▸ **9 meses** de gestação humana. Mashiach "nasce" em Tisha B'Av à tarde (Talmud Bavli, Taanit 30b) — fim do trabalho de parto de uma gestação cósmica.
 ▸ **Nove dias** entre 1-9 Av: a culminância de luto crescente.
 ▸ **9 vezes mencionado o conceito de luto** em Eichá (por aproximação).
 
-O nome **Av** (אב) significa **pai**. O mês inteiro carrega tensão: é o mês da destruição (luto pelo Pai abandonado) e também (no fim, com Tu B''Av) da reconciliação.
+O nome **Av** (אב) significa **pai**. O mês inteiro carrega tensão: é o mês da destruição (luto pelo Pai abandonado) e também (no fim, com Tu B'Av) da reconciliação.
 
-A palavra **Eichá** (איכה, "como?") tem mesma raiz de **ayeka** (איכה, "onde estás?") — primeira pergunta dirigida por HaShem a Adam após o pecado (Bereshit 3:9). **A pergunta "onde estás?" e "como caíste assim?" são a mesma**. Tisha B''Av é o "ayeka" cósmico anual.
+A palavra **Eichá** (איכה, "como?") tem mesma raiz de **ayeka** (איכה, "onde estás?") — primeira pergunta dirigida por HaShem a Adam após o pecado (Bereshit 3:9). **A pergunta "onde estás?" e "como caíste assim?" são a mesma**. Tisha B'Av é o "ayeka" cósmico anual.
 
 ### Drash — o ensino homilético
 
@@ -2021,11 +2021,11 @@ Aplicação atual: **enquanto sinat chinam continuar entre judeus**, o Beit haMi
 
 Outro Drash: **Rabi Akiva ria nas ruínas**. Em famosa narrativa (Talmud Bavli, Makkot 24b), quatro sábios viam Yerushalaim destruída. Três choraram; Rabi Akiva sorriu. Quando perguntado por que ria, Akiva respondeu: vejo que **a profecia de destruição** (Yirmiyahu) **se cumpriu**; portanto, **a profecia de restauração** (Yeshayahu) **também se cumprirá**. A previsão do luto autenticou-se; a previsão do consolo também se autenticará.
 
-Esta lição é coração da Brit Im Mashiach: o luto presente é **garantia da redenção futura**. Quem chora autenticamente em Tisha B''Av afirma a estrutura profética que inclui também a restauração.
+Esta lição é coração da Brit Im Mashiach: o luto presente é **garantia da redenção futura**. Quem chora autenticamente em Tisha B'Av afirma a estrutura profética que inclui também a restauração.
 
 ### Sod — o segredo kabalístico
 
-Como tratado em 05, o Sod de Tisha B''Av envolve:
+Como tratado em 05, o Sod de Tisha B'Av envolve:
 
 ▸ Shechiná em exílio máximo.
 ▸ Inversão sefirótica (Israel desce até a Shechiná).
@@ -2036,7 +2036,7 @@ Como tratado em 05, o Sod de Tisha B''Av envolve:
 
 **A inversão paradoxal**: o dia da maior tristeza visível é também o dia da maior **alegria oculta**. O Mashiach está nascendo agora. O Terceiro Beit haMikdash está sendo construído cosmicamente. A redenção está em curso, mesmo invisível.
 
-A tradição (Pri Etz Chaim do Arizal): **as orações ditas com lágrimas autênticas em Tisha B''Av são particularmente atendidas**. As lágrimas tornam as orações *pesadas* — elas penetram os Olamot mais facilmente. Por isto **Tisha B''Av é dia de pedidos pessoais ousados** (com kavaná correta).
+A tradição (Pri Etz Chaim do Arizal): **as orações ditas com lágrimas autênticas em Tisha B'Av são particularmente atendidas**. As lágrimas tornam as orações *pesadas* — elas penetram os Olamot mais facilmente. Por isto **Tisha B'Av é dia de pedidos pessoais ousados** (com kavaná correta).
 
 ### A guematria de "Eichá"
 
@@ -2060,9 +2060,9 @@ A tradição (Talmud Bavli, Bava Batra 14b) coloca Yirmiyahu como **modelo do pr
 
 ### A noite mais escura
 
-A tradição diz que **a hora mais escura é antes do amanhecer**. Tisha B''Av é, em escala cósmica, **a hora mais escura da história judaica**. Mas o amanhecer está chegando: **o Mashiach nasce nesta tarde**.
+A tradição diz que **a hora mais escura é antes do amanhecer**. Tisha B'Av é, em escala cósmica, **a hora mais escura da história judaica**. Mas o amanhecer está chegando: **o Mashiach nasce nesta tarde**.
 
-Cada Tisha B''Av que passamos sem que o Mashiach chegue **não é falha** — é continuação do trabalho cósmico de parto. **A gestação ainda continua**. Quando completar-se, virá o nascimento.
+Cada Tisha B'Av que passamos sem que o Mashiach chegue **não é falha** — é continuação do trabalho cósmico de parto. **A gestação ainda continua**. Quando completar-se, virá o nascimento.
 
 A Brit Im Mashiach lê com paciência: estamos em **período de gestação messiânica**. Não sabemos quando o nascimento ocorrerá. Mas continuamos chorando, esperando, contribuindo com cada lágrima para a operação cósmica.
 
@@ -2073,20 +2073,20 @@ A Brit Im Mashiach lê com paciência: estamos em **período de gestação messi
 ▸ **Drash**: sinat chinam destruiu; ahavat chinam reconstruirá; Rabi Akiva ri nas ruínas porque o consolo é garantido.
 ▸ **Sod**: Shechiná em exílio máximo, Mashiach nascendo à tarde, choro com peso causal real, 36 = Eichá = 36 Lamedvavnikim.
 
-A Brit Im Mashiach vive Tisha B''Av nos quatro níveis simultâneos. O luto é real; a esperança é real. Os dois coexistem no mesmo dia, e ambos contribuem à mesma redenção em curso.
+A Brit Im Mashiach vive Tisha B'Av nos quatro níveis simultâneos. O luto é real; a esperança é real. Os dois coexistem no mesmo dia, e ambos contribuem à mesma redenção em curso.
 
-**Fonte:** Talmud Bavli, Taanit 26b-30b, Yoma 9b, Makkot 24b, Bava Batra 14b, Sucá 45b; Megilat Eichá; Ari haKadosh, Pri Etz Chaim, Shaar Tisha B''Av; Maharal, Netzach Yisrael.',
-  sod = 'Tisha B''Av, no Sod, é o **dia em que a Shechiná (Malchut) está mais distante de Tiferet**. Toda a estrutura cósmica do dia opera neste estado de exílio máximo, e simultaneamente prepara a reversão.
+**Fonte:** Talmud Bavli, Taanit 26b-30b, Yoma 9b, Makkot 24b, Bava Batra 14b, Sucá 45b; Megilat Eichá; Ari haKadosh, Pri Etz Chaim, Shaar Tisha B'Av; Maharal, Netzach Yisrael.$pardes_tisha_beav_drash$,
+  sod = $pardes_tisha_beav_sod$Tisha B'Av, no Sod, é o **dia em que a Shechiná (Malchut) está mais distante de Tiferet**. Toda a estrutura cósmica do dia opera neste estado de exílio máximo, e simultaneamente prepara a reversão.
 
 ### A Shechiná em exílio
 
-A tradição luriânica (Ari haKadosh, Shaar haKavvanot, Inyan Tisha B''Av) ensina: durante a destruição do Beit haMikdash, **a Shechiná foi exilada com Israel**. Onde Israel é levado, a Shechiná vai junto, lamentando.
+A tradição luriânica (Ari haKadosh, Shaar haKavvanot, Inyan Tisha B'Av) ensina: durante a destruição do Beit haMikdash, **a Shechiná foi exilada com Israel**. Onde Israel é levado, a Shechiná vai junto, lamentando.
 
-Tisha B''Av é o dia anual em que **o exílio da Shechiná é mais palpável**. Por isto Israel chora — não apenas por Yerushalaim física destruída, mas pela **Shechiná em exílio**, separada de seu *Chatán* (Noivo) celestial.
+Tisha B'Av é o dia anual em que **o exílio da Shechiná é mais palpável**. Por isto Israel chora — não apenas por Yerushalaim física destruída, mas pela **Shechiná em exílio**, separada de seu *Chatán* (Noivo) celestial.
 
 ### A inversão sefirótica do dia
 
-Em todos os outros dias, a meta é **elevar Malchut** até Tiferet. Em Tisha B''Av, paradoxalmente, **a meta é Israel descer até onde Malchut/Shechiná está**, no estado de luto. Acompanhamos a Shechiná no exílio, em vez de exigir que ela suba.
+Em todos os outros dias, a meta é **elevar Malchut** até Tiferet. Em Tisha B'Av, paradoxalmente, **a meta é Israel descer até onde Malchut/Shechiná está**, no estado de luto. Acompanhamos a Shechiná no exílio, em vez de exigir que ela suba.
 
 Esta solidariedade descendente é, no Sod, uma **operação de chesed**. Recusamos os confortos do "nosso lado", e descemos para estar com a Shechiná onde ela está.
 
@@ -2102,15 +2102,15 @@ A destruição dos dois primeiros foi necessária, no Sod, para que **os dois pr
 
 ### A Or Oculta
 
-A tradição luriânica (Pri Etz Chaim, Shaar Tisha B''Av) ensina que durante Tisha B''Av, a **Or divina manifesta** está oculta no mundo. Israel chora porque **a luz não está visível**.
+A tradição luriânica (Pri Etz Chaim, Shaar Tisha B'Av) ensina que durante Tisha B'Av, a **Or divina manifesta** está oculta no mundo. Israel chora porque **a luz não está visível**.
 
-Mas, paradoxalmente, **a Or oculta é mais intensa que a Or manifesta**. Quem chora em Tisha B''Av está, no Sod, **mais próximo da Or pura** (que é oculta) que em Chagim de alegria visível.
+Mas, paradoxalmente, **a Or oculta é mais intensa que a Or manifesta**. Quem chora em Tisha B'Av está, no Sod, **mais próximo da Or pura** (que é oculta) que em Chagim de alegria visível.
 
-Aplicação prática: o sofrimento autêntico tem **valor espiritual oculto** que pode exceder a alegria superficial. Não significa cultivar sofrimento; significa **respeitar o sofrimento que vem**, especialmente em Tisha B''Av.
+Aplicação prática: o sofrimento autêntico tem **valor espiritual oculto** que pode exceder a alegria superficial. Não significa cultivar sofrimento; significa **respeitar o sofrimento que vem**, especialmente em Tisha B'Av.
 
 ### Mashiach nasce no luto
 
-A tradição (Talmud Bavli, Taanit 30b; Eichá Rabá 1:51): *Mashiach nasce em Tisha B''Av*. Mais especificamente, **na tarde de Tisha B''Av**.
+A tradição (Talmud Bavli, Taanit 30b; Eichá Rabá 1:51): *Mashiach nasce em Tisha B'Av*. Mais especificamente, **na tarde de Tisha B'Av**.
 
 No Sod, isto significa: **a redenção surge no momento de máxima escuridão**. Não é apesar do luto; é **através do luto**. O luto autêntico é parteira do consolo. Como mulher em trabalho de parto sente dor antes da alegria do nascimento, Israel atravessa luto antes da redenção.
 
@@ -2126,15 +2126,15 @@ A relação 36-32 sugere: **Eichá** está 4 acima de **coração**. O número 4
 
 ### A Sefirá de Malchut em destruição
 
-Malchut, em geral, é a Sefirá da **realeza manifestada**. Em Tisha B''Av, Malchut é **realeza destruída**. O Beit haMikdash era a casa de Malchut na terra. Sua destruição é, no Sod, **dispersão de Malchut nos exílios**.
+Malchut, em geral, é a Sefirá da **realeza manifestada**. Em Tisha B'Av, Malchut é **realeza destruída**. O Beit haMikdash era a casa de Malchut na terra. Sua destruição é, no Sod, **dispersão de Malchut nos exílios**.
 
 Cada judeu na diáspora carrega, espiritualmente, **uma faísca da Malchut dispersa**. Quando voltarmos a Yerushalaim restaurada com Mashiach, todas as faíscas se reúnem em **Malchut restaurada plenamente**.
 
-Tisha B''Av é o dia anual em que **percebemos esta dispersão**. Sentimos a falta. Choramos pela Shechiná dispersa que ainda não pôde se reunir.
+Tisha B'Av é o dia anual em que **percebemos esta dispersão**. Sentimos a falta. Choramos pela Shechiná dispersa que ainda não pôde se reunir.
 
 ### O Sod do choro
 
-O choro autêntico, segundo o Zohar (Vayechi 220a), tem **poder cósmico real**. Não é apenas catarse emocional. As lágrimas de Israel em Tisha B''Av:
+O choro autêntico, segundo o Zohar (Vayechi 220a), tem **poder cósmico real**. Não é apenas catarse emocional. As lágrimas de Israel em Tisha B'Av:
 
 ▸ Atravessam os Olamot superiores.
 ▸ Despertam Misericórdia em **Bináh** (a Mãe celestial).
@@ -2142,11 +2142,11 @@ O choro autêntico, segundo o Zohar (Vayechi 220a), tem **poder cósmico real**.
 
 Por isto Yirmiyahu chora em Eichá: *eini eini yorda mayim* (meu olho, meu olho desce água, Eichá 1:16). Suas lágrimas têm peso causal.
 
-A tradição (Rashbi no Idra Zutá): cada lágrima de Israel é **coletada por HaShem** em frasco celestial. Tehilim 56:9: *nodi safarta atá, simá dim''ati venodecha*. Tu numeras meu vagar, põe minhas lágrimas no Teu frasco.
+A tradição (Rashbi no Idra Zutá): cada lágrima de Israel é **coletada por HaShem** em frasco celestial. Tehilim 56:9: *nodi safarta atá, simá dim'ati venodecha*. Tu numeras meu vagar, põe minhas lágrimas no Teu frasco.
 
 ### O Sod do banquinho baixo
 
-Em Tisha B''Av, sentamos no chão ou em **banquinho baixo** (durante a noite até o meio-dia). Por quê?
+Em Tisha B'Av, sentamos no chão ou em **banquinho baixo** (durante a noite até o meio-dia). Por quê?
 
 No Sod, descer fisicamente (sentar baixo) é **descer até onde Malchut está** no estado de exílio. Solidariedade postural com a Shechiná dispersa.
 
@@ -2154,7 +2154,7 @@ Quando, após o meio-dia, voltamos a sentar em cadeira normal, é sinal corporal
 
 ### A síntese
 
-Tisha B''Av, no Sod:
+Tisha B'Av, no Sod:
 
 ▸ Shechiná (Malchut) em exílio máximo, distante de Tiferet.
 ▸ Inversão sefirótica: Israel desce até a Shechiná, em vez de elevá-la.
@@ -2164,22 +2164,22 @@ Tisha B''Av, no Sod:
 ▸ Choro autêntico tem peso causal cósmico real.
 ▸ Banquinho baixo = solidariedade com Shechiná dispersa.
 
-A Brit Im Mashiach vive Tisha B''Av nos quatro níveis simultâneos. O luto é real, e a esperança é real. Os dois coexistem no mesmo dia. O Mashiach está nascendo agora, em algum lugar, no momento em que choramos. Esta é estrutura cósmica do dia.
+A Brit Im Mashiach vive Tisha B'Av nos quatro níveis simultâneos. O luto é real, e a esperança é real. Os dois coexistem no mesmo dia. O Mashiach está nascendo agora, em algum lugar, no momento em que choramos. Esta é estrutura cósmica do dia.
 
-**Fonte:** Ari haKadosh, Shaar haKavvanot, Inyan Tisha B''Av; Pri Etz Chaim, Shaar Tisha B''Av; Zohar Bereshit; Zohar Vayechi 220a; Talmud Bavli, Taanit 30b; Eichá Rabá 1:51; Tehilim 56:9.'
-WHERE slug = 'tisha-beav';
+**Fonte:** Ari haKadosh, Shaar haKavvanot, Inyan Tisha B'Av; Pri Etz Chaim, Shaar Tisha B'Av; Zohar Bereshit; Zohar Vayechi 220a; Talmud Bavli, Taanit 30b; Eichá Rabá 1:51; Tehilim 56:9.$pardes_tisha_beav_sod$
+WHERE slug = $pardes_tisha_beav_slug$tisha-beav$pardes_tisha_beav_slug$;
 COMMIT;
 -- PaRDeS do Chag: tu-beav
 -- Idempotente: atualiza apenas colunas peshat/remez/drash/sod
 BEGIN;
 UPDATE chagim SET
-  peshat = 'Tu B''Av tem sete origens históricas distintas, todas se acumulando neste único dia para formar **densidade de alegria histórica**.
+  peshat = $pardes_tu_beav_peshat$Tu B'Av tem sete origens históricas distintas, todas se acumulando neste único dia para formar **densidade de alegria histórica**.
 
 ### 1. Reabertura do casamento com Binyamin
 
 **Shoftim 19-21** narra um dos episódios mais sombrios do período pré-monárquico: a tribo de Binyamin abrigou perpetradores de violência sexual contra a concubina de um levita. As outras 11 tribos lutaram contra Binyamin, quase destruindo-a (600 sobreviventes).
 
-As tribos juraram não casar com Binyamin. Mas perceberam que isto extinguiria a tribo. O juramento foi limitado àquela geração; em **Tu B''Av**, foi declarado que a próxima geração poderia casar.
+As tribos juraram não casar com Binyamin. Mas perceberam que isto extinguiria a tribo. O juramento foi limitado àquela geração; em **Tu B'Av**, foi declarado que a próxima geração poderia casar.
 
 A reabertura é símbolo: **mesmo após violência irreparável, há caminho para reconciliação intertribal**.
 
@@ -2189,27 +2189,27 @@ A geração que pecou no caso dos espias (Bamidbar 13-14) foi condenada a morrer
 
 No **40° ano**, em 9 Av, esperaram a cota habitual — **mas ninguém morreu**. Pensaram inicialmente que era erro de calendário. Esperaram até 15 Av — luas cheias confirmaram a data correta, e ainda assim **ninguém havia morrido**. Compreenderam: **o decreto terminou**.
 
-Tu B''Av se torna **dia anual de comemoração do fim do decreto contra a geração do deserto**.
+Tu B'Av se torna **dia anual de comemoração do fim do decreto contra a geração do deserto**.
 
 ### 3. Permissão para enterrar os mortos de Betar
 
-Após a queda de Betar (135 d.C., já tratado em Tisha B''Av), Roma proibiu o enterro dos cadáveres. Por **15 anos**, os corpos ficaram sem sepultura.
+Após a queda de Betar (135 d.C., já tratado em Tisha B'Av), Roma proibiu o enterro dos cadáveres. Por **15 anos**, os corpos ficaram sem sepultura.
 
-Em **Tu B''Av**, o imperador romano finalmente permitiu o enterro. Tradição: os corpos **não tinham se decomposto** — sinal milagroso de honra divina aos mártires.
+Em **Tu B'Av**, o imperador romano finalmente permitiu o enterro. Tradição: os corpos **não tinham se decomposto** — sinal milagroso de honra divina aos mártires.
 
-Os sábios estabeleceram em Tu B''Av a bracháh **HaTov vehaMetiv** ("o que é bom e faz o bem"), última das quatro brachot da Birkat haMazon, em memória deste milagre.
+Os sábios estabeleceram em Tu B'Av a bracháh **HaTov vehaMetiv** ("o que é bom e faz o bem"), última das quatro brachot da Birkat haMazon, em memória deste milagre.
 
 ### 4. Cessação do bloqueio de Yerovam
 
 **Yerovam ben Nevat** (924 a.C.), após a divisão do reino de Israel em norte (Yerovam) e sul (Rechavam), criou bezerros de ouro em Beit El e Dan para impedir que os habitantes do norte fizessem peregrinação a Yerushalaim. Estabeleceu **bloqueios físicos** nos caminhos para Yerushalaim, impedindo passagem.
 
-Séculos depois, o rei do norte **Hoshea ben Elá** (732-722 a.C., último rei antes do exílio assírio) **removeu os bloqueios** em **Tu B''Av**. Israel do norte pôde novamente peregrinar.
+Séculos depois, o rei do norte **Hoshea ben Elá** (732-722 a.C., último rei antes do exílio assírio) **removeu os bloqueios** em **Tu B'Av**. Israel do norte pôde novamente peregrinar.
 
 Apesar do exílio assírio que veio em seguida, o ato de Hoshea ben Elá restaurou unidade espiritual brevemente.
 
 ### 5. Restituição das porções de terra
 
-Durante o período dos Juízes (Yehoshua-Shoftim), as porções de terra entre tribos foram **confirmadas em Tu B''Av**. A celebração consolidou a posse israelita da terra.
+Durante o período dos Juízes (Yehoshua-Shoftim), as porções de terra entre tribos foram **confirmadas em Tu B'Av**. A celebração consolidou a posse israelita da terra.
 
 (Esta tradição é menos detalhada nas fontes; aparece em Mishná Taanit 4:8 sem elaboração extensa.)
 
@@ -2217,7 +2217,7 @@ Durante o período dos Juízes (Yehoshua-Shoftim), as porções de terra entre t
 
 Durante o ano, comunidades específicas (em rotação) traziam **madeira para o altar do Beit haMikdash**. A madeira tinha que ser seca o suficiente para queimar bem.
 
-A partir de **Tu B''Av**, o calor do verão já não secava mais a madeira (segundo o clima da Terra de Israel). O corte cessava. Tu B''Av era marcado como **fim do trabalho anual de cortar madeira para o altar**.
+A partir de **Tu B'Av**, o calor do verão já não secava mais a madeira (segundo o clima da Terra de Israel). O corte cessava. Tu B'Av era marcado como **fim do trabalho anual de cortar madeira para o altar**.
 
 Esta razão é menos romântica que as outras, mas significativa: era marco do **ciclo agrícola-litúrgico**.
 
@@ -2231,7 +2231,7 @@ Esta tradição **continuou até a destruição do Segundo Beit haMikdash** (70 
 
 Em Israel contemporâneo, alguns grupos têm **reconstruído a dança literal**:
 
-▸ Casamentos em **vinhedos da Galileia**, especialmente em Tu B''Av.
+▸ Casamentos em **vinhedos da Galileia**, especialmente em Tu B'Av.
 ▸ Festivais comunitários em vinhedos com música tradicional.
 ▸ Eventos românticos comunitários inspirados no costume bíblico.
 
@@ -2241,68 +2241,68 @@ A Brit Im Mashiach valoriza estas reconstruções como **continuidade autêntica
 
 Por que **tantas razões diferentes** convergem em uma única data?
 
-A tradição (Maharal de Praga, Netzach Yisrael) ensina: o calendário tem **datas com carga espiritual específica**. Tu B''Av carrega **carga de reconciliação**. Por isto, ao longo dos séculos, **eventos de reconciliação tendem a coincidir com esta data**.
+A tradição (Maharal de Praga, Netzach Yisrael) ensina: o calendário tem **datas com carga espiritual específica**. Tu B'Av carrega **carga de reconciliação**. Por isto, ao longo dos séculos, **eventos de reconciliação tendem a coincidir com esta data**.
 
 Não é coincidência mecânica; é **convergência espiritual**. A energia de reconciliação atrai eventos de reconciliação a si.
 
-### A inversão de Tisha B''Av
+### A inversão de Tisha B'Av
 
-Tu B''Av (15 Av) é, simbolicamente, **a reversão de Tisha B''Av (9 Av)**. Apenas 6 dias separam o luto máximo da alegria máxima.
+Tu B'Av (15 Av) é, simbolicamente, **a reversão de Tisha B'Av (9 Av)**. Apenas 6 dias separam o luto máximo da alegria máxima.
 
 Esta proximidade não é estética; é estrutural. **O luto autêntico prepara a alegria autêntica**. Sem 9 Av, o 15 Av seria superficial. Com 9 Av, o 15 Av é catártico.
 
-A Brit Im Mashiach lê esta sequência como **estrutura messiânica em pequena escala**: a redenção final virá precisamente após o exílio mais profundo. Tisha B''Av-Tu B''Av é microcosmo anual do macrocosmo histórico.
+A Brit Im Mashiach lê esta sequência como **estrutura messiânica em pequena escala**: a redenção final virá precisamente após o exílio mais profundo. Tisha B'Av-Tu B'Av é microcosmo anual do macrocosmo histórico.
 
-**Fonte:** Mishná Taanit 4:8; Talmud Bavli, Taanit 30b-31a, Bava Batra 121a; Shoftim 19-21; Bamidbar 13-14; 2 Melachim 17; Maharal, Netzach Yisrael cap. 8.',
-  remez = 'Tu B''Av é o Chag do **amor restaurado** após o luto. Após Tisha B''Av (destruição), Israel ainda precisa **encontrar amor novamente** — amor entre tribos, amor entre cônjuges, amor entre indivíduos e HaShem. Tu B''Av é o portal anual deste reencontro.
+**Fonte:** Mishná Taanit 4:8; Talmud Bavli, Taanit 30b-31a, Bava Batra 121a; Shoftim 19-21; Bamidbar 13-14; 2 Melachim 17; Maharal, Netzach Yisrael cap. 8.$pardes_tu_beav_peshat$,
+  remez = $pardes_tu_beav_remez$Tu B'Av é o Chag do **amor restaurado** após o luto. Após Tisha B'Av (destruição), Israel ainda precisa **encontrar amor novamente** — amor entre tribos, amor entre cônjuges, amor entre indivíduos e HaShem. Tu B'Av é o portal anual deste reencontro.
 
 ### O amor como reconstrução
 
 Após qualquer perda séria, a tentação é **fechar o coração**. Quem perdeu confiança em alguém tende a desconfiar de todos. Quem foi traído tende a evitar relações. Quem perdeu pessoa querida tende a recusar novos vínculos.
 
-Tu B''Av é o **dia anual em que Israel decide recomeçar a amar**. Não porque o luto cessou (Tisha B''Av foi há 6 dias apenas), mas porque **a vida não pode continuar sem amor**. **Amar de novo é ato de fé**.
+Tu B'Av é o **dia anual em que Israel decide recomeçar a amar**. Não porque o luto cessou (Tisha B'Av foi há 6 dias apenas), mas porque **a vida não pode continuar sem amor**. **Amar de novo é ato de fé**.
 
-### Cinco qualidades refinadas em Tu B''Av
+### Cinco qualidades refinadas em Tu B'Av
 
-▸ **Reconciliação**: capacidade de perdoar e ser perdoado, restaurar relacionamentos quebrados. Tu B''Av honra a reabertura do casamento entre tribos após violência.
+▸ **Reconciliação**: capacidade de perdoar e ser perdoado, restaurar relacionamentos quebrados. Tu B'Av honra a reabertura do casamento entre tribos após violência.
 
 ▸ **Igualdade essencial**: as filhas de Yerushalaim em vestido branco emprestado igualizam rica e pobre. **A beleza interior** se torna critério, não a aparência social.
 
 ▸ **Escolha baseada em caráter**: "fixe seus olhos na família, não na beleza". Sabedoria pedagógica sobre o que importa em uma escolha de vida.
 
-▸ **Continuidade após catástrofe**: a vida continua mesmo após Tisha B''Av. **Casamentos novos**, **filhos novos**, **comunidades novas** — tudo isto floresce mesmo no rastro da destruição.
+▸ **Continuidade após catástrofe**: a vida continua mesmo após Tisha B'Av. **Casamentos novos**, **filhos novos**, **comunidades novas** — tudo isto floresce mesmo no rastro da destruição.
 
-▸ **Alegria proporcional à tristeza prévia**: a alegria de Tu B''Av tem profundidade precisamente porque vem após o luto. Sem Tisha B''Av, Tu B''Av seria superficial.
+▸ **Alegria proporcional à tristeza prévia**: a alegria de Tu B'Av tem profundidade precisamente porque vem após o luto. Sem Tisha B'Av, Tu B'Av seria superficial.
 
 ### O amor como mitzvá
 
 A Toráh ordena explicitamente o amor em três lugares:
 
 ▸ **Amor a HaShem**: *veahavtá et Adonai Elohecha bechol levavchá* (Devarim 6:5).
-▸ **Amor ao próximo**: *veahavtá lere''achá kamocha* (Vayikra 19:18).
+▸ **Amor ao próximo**: *veahavtá lere'achá kamocha* (Vayikra 19:18).
 ▸ **Amor ao estrangeiro**: *veahavtem et hager* (Devarim 10:19).
 
-Tu B''Av é o **dia de praticar conscientemente** estes três amores. Cada um pode ser cultivado:
+Tu B'Av é o **dia de praticar conscientemente** estes três amores. Cada um pode ser cultivado:
 
 ▸ Amor a HaShem: ouvir Shir haShirim como diálogo de amor; expressar gratidão.
 ▸ Amor ao próximo: gestos concretos de reconciliação com pessoas conhecidas.
 ▸ Amor ao estrangeiro: gestos de acolhimento, hospitalidade ampliada.
 
-### As três proibições suspensas em Tu B''Av
+### As três proibições suspensas em Tu B'Av
 
-Após Tisha B''Av, várias restrições continuam até **meio-dia de 10 Av**. Mas a partir desse ponto:
+Após Tisha B'Av, várias restrições continuam até **meio-dia de 10 Av**. Mas a partir desse ponto:
 
 ▸ **Carne e vinho permitidos** (após restrição dos Nove Dias).
 ▸ **Corte de cabelo e barba** permitidos.
 ▸ **Lavagem de roupa** permitida.
 
-Em **Tu B''Av**, todas estas restrições já se foram. **Casamentos** voltam plenamente. **Música festiva** retoma. **Vida normal** continua.
+Em **Tu B'Av**, todas estas restrições já se foram. **Casamentos** voltam plenamente. **Música festiva** retoma. **Vida normal** continua.
 
 ### A sabedoria das filhas de Yerushalaim
 
 O conselho que as moças davam aos rapazes (Talmud Bavli, Taanit 31a):
 
-*Bachur, sa eynecha — re''ê ma atá borer lecha. Al titen einecha bayofí, ten einecha bamishpacha.*
+*Bachur, sa eynecha — re'ê ma atá borer lecha. Al titen einecha bayofí, ten einecha bamishpacha.*
 
 Rapaz, levante seus olhos — veja o que vai escolher. Não fixe seus olhos na beleza; fixe seus olhos na família.
 
@@ -2312,39 +2312,39 @@ Esta sabedoria moça é, em camada profunda, **sabedoria etária**:
 ▸ **Caráter permanece**: quem é honesto aos 20 será honesto aos 80.
 ▸ **Família revela essência**: o ambiente em que alguém cresceu molda quem é hoje.
 
-Tu B''Av carrega esta sabedoria conjugal antiga, ainda relevante.
+Tu B'Av carrega esta sabedoria conjugal antiga, ainda relevante.
 
 ### O significado de "festa de noivado nacional"
 
-A dança em vinhedos não era apenas dança. Era **encontro matrimonial nacional**. Em sociedade onde casamento era arranjado por famílias, **Tu B''Av oferecia janela de escolha pessoal direta** (com limites apropriados). Moças e rapazes podiam se ver, conversar, escolher — antes que famílias intervissem com arranjos.
+A dança em vinhedos não era apenas dança. Era **encontro matrimonial nacional**. Em sociedade onde casamento era arranjado por famílias, **Tu B'Av oferecia janela de escolha pessoal direta** (com limites apropriados). Moças e rapazes podiam se ver, conversar, escolher — antes que famílias intervissem com arranjos.
 
-Lição moderna: **mesmo em sociedades modernas com escolha livre**, Tu B''Av honra a **importância da escolha de cônjuge baseada em caráter, não em pressões externas**.
+Lição moderna: **mesmo em sociedades modernas com escolha livre**, Tu B'Av honra a **importância da escolha de cônjuge baseada em caráter, não em pressões externas**.
 
 ### O paralelo com Yom Kippur
 
-A Mishná coloca **Tu B''Av e Yom Kippur** como "dois dias mais felizes". Por quê estas duas datas tão diferentes?
+A Mishná coloca **Tu B'Av e Yom Kippur** como "dois dias mais felizes". Por quê estas duas datas tão diferentes?
 
 ▸ **Yom Kippur**: alegria do **perdão obtido**. A alma se purifica e se reconcilia com HaShem.
-▸ **Tu B''Av**: alegria do **amor obtido**. As almas se reconciliam entre si, com cônjuges futuros, com a vida que continua.
+▸ **Tu B'Av**: alegria do **amor obtido**. As almas se reconciliam entre si, com cônjuges futuros, com a vida que continua.
 
-Os dois são complementares: **reconciliação vertical** (com HaShem em Yom Kippur) e **reconciliação horizontal** (com outros humanos em Tu B''Av).
+Os dois são complementares: **reconciliação vertical** (com HaShem em Yom Kippur) e **reconciliação horizontal** (com outros humanos em Tu B'Av).
 
 A Brit Im Mashiach reconhece esta complementaridade. O Chag mais feliz não é nenhum dos Yamim Tovim maiores (Pessach, Shavuot, Sukkot), mas dois dias menores que carregam **carga de reconciliação**.
 
 ### O brilho que vem do escuro
 
-A imagem central de Tu B''Av: **moças em branco dançando em vinhedos** sob a lua cheia de Av (Tu B''Av cai em lua cheia). É **a luz mais brilhante do mês de Av**, vindo apenas dias após o escuro mais profundo (Tisha B''Av).
+A imagem central de Tu B'Av: **moças em branco dançando em vinhedos** sob a lua cheia de Av (Tu B'Av cai em lua cheia). É **a luz mais brilhante do mês de Av**, vindo apenas dias após o escuro mais profundo (Tisha B'Av).
 
-A tradição (Maharal): **a alegria mais autêntica é aquela que vem do luto autêntico**. Quem não chora em Tisha B''Av também não pode se alegrar plenamente em Tu B''Av. Os dois Chagim formam **única unidade emocional**.
+A tradição (Maharal): **a alegria mais autêntica é aquela que vem do luto autêntico**. Quem não chora em Tisha B'Av também não pode se alegrar plenamente em Tu B'Av. Os dois Chagim formam **única unidade emocional**.
 
-Aplicação prática: a Brit Im Mashiach incentiva membros a **viver os dois Chagim juntos**. Não pular Tisha B''Av e celebrar apenas Tu B''Av (alegria superficial); nem pular Tu B''Av e ficar em Tisha B''Av (depressão crônica). **Ambos, na sequência correta**.
+Aplicação prática: a Brit Im Mashiach incentiva membros a **viver os dois Chagim juntos**. Não pular Tisha B'Av e celebrar apenas Tu B'Av (alegria superficial); nem pular Tu B'Av e ficar em Tisha B'Av (depressão crônica). **Ambos, na sequência correta**.
 
-**Fonte:** Mishná Taanit 4:8; Talmud Bavli, Taanit 31a; Devarim 6:5, 10:19; Vayikra 19:18; Maharal, Netzach Yisrael cap. 8.',
-  drash = '### Peshat — o sentido literal
+**Fonte:** Mishná Taanit 4:8; Talmud Bavli, Taanit 31a; Devarim 6:5, 10:19; Vayikra 19:18; Maharal, Netzach Yisrael cap. 8.$pardes_tu_beav_remez$,
+  drash = $pardes_tu_beav_drash$### Peshat — o sentido literal
 
-Tu B''Av, no Peshat, é o **15° dia de Av**, Chag rabínico classificado pela Mishná (Taanit 4:8) como **um dos dois dias mais felizes** do calendário (junto com Yom Kippur).
+Tu B'Av, no Peshat, é o **15° dia de Av**, Chag rabínico classificado pela Mishná (Taanit 4:8) como **um dos dois dias mais felizes** do calendário (junto com Yom Kippur).
 
-Seven eventos históricos felizes ocorreram em Tu B''Av:
+Seven eventos históricos felizes ocorreram em Tu B'Av:
 1. Reabertura do casamento entre tribos com Binyamin.
 2. Fim da morte no deserto.
 3. Restituição de porções territoriais.
@@ -2359,9 +2359,9 @@ Sem proibição de trabalho, sem liturgia complexa. **Tachanun omitido** como ú
 
 O número **15** alude a múltiplas dimensões:
 
-▸ **15 = YH** (Yah), abreviação do nome divino (já tratado em Tu B''Shvat e Pessach).
+▸ **15 = YH** (Yah), abreviação do nome divino (já tratado em Tu B'Shvat e Pessach).
 ▸ **15 = lua cheia**, com Malchut em plenitude refletindo Tiferet.
-▸ **15° dia do mês** quando Israel saiu do Mitzraim (Pessach é em 15 Nissan). Paralelo: Tu B''Av é dia de "saída" de outro tipo — de luto para alegria.
+▸ **15° dia do mês** quando Israel saiu do Mitzraim (Pessach é em 15 Nissan). Paralelo: Tu B'Av é dia de "saída" de outro tipo — de luto para alegria.
 
 A **dança em vinhedos** alude a múltiplas dimensões bíblicas:
 
@@ -2375,17 +2375,17 @@ Dança em vinhedo, no Remez, é **Israel renovando-se em sua identidade após o 
 
 A **Mishná Taanit 4:8** ensina sobre as filhas de Yerushalaim em vestes brancas **emprestadas**. Por que emprestadas?
 
-*Shelo levayesh et mi she''ein lo* — para não envergonhar quem não tem.
+*Shelo levayesh et mi she'ein lo* — para não envergonhar quem não tem.
 
 A sabedoria pedagógica: **uniformidade da aparência igualiza ricos e pobres**. Quando todas vestem o mesmo branco emprestado, o **caráter interno** se torna o critério visível. Esta é forma de **tzedaká estrutural** — não dando dinheiro, mas igualando condições para que a comparação econômica desapareça.
 
 Lição moderna: comunidades autênticas estruturam-se para que **a riqueza não seja vantagem visível** em ocasiões sagradas. Em casamentos, em refeições festivas comunitárias, em rituais — a igualdade pedagógica importa.
 
-Outro Drash: o conselho das moças aos rapazes (*al titen einecha bayofí, ten einecha bamishpacha*) é, em camada profunda, **manifesto contra superficialidade**. Na sociedade antiga (como na moderna), a tentação de escolher baseado em aparência é forte. **Tu B''Av estabelece o caráter como critério**.
+Outro Drash: o conselho das moças aos rapazes (*al titen einecha bayofí, ten einecha bamishpacha*) é, em camada profunda, **manifesto contra superficialidade**. Na sociedade antiga (como na moderna), a tentação de escolher baseado em aparência é forte. **Tu B'Av estabelece o caráter como critério**.
 
 ### Sod — o segredo kabalístico
 
-Como tratado em 05, Tu B''Av opera no Sod:
+Como tratado em 05, Tu B'Av opera no Sod:
 
 ▸ **Shechiná (Malchut) sobe a Tiferet** em movimento de reconciliação.
 ▸ **Lua cheia** = Malchut em plenitude refletindo Tiferet.
@@ -2393,18 +2393,18 @@ Como tratado em 05, Tu B''Av opera no Sod:
 ▸ **Casamento humano** = reflexo terreno do casamento cósmico.
 ▸ **HaTov vehaMetiv** (4ª bracháh) presente em cada Birkat haMazon do ano.
 
-Mais profundamente: Tu B''Av é o **dia anual em que HaShem renova o noivado com Israel**. Não conclui o casamento (isso é tarefa do Mashiach), mas **reafirma o vínculo eterno** mesmo após o luto de Tisha B''Av.
+Mais profundamente: Tu B'Av é o **dia anual em que HaShem renova o noivado com Israel**. Não conclui o casamento (isso é tarefa do Mashiach), mas **reafirma o vínculo eterno** mesmo após o luto de Tisha B'Av.
 
-A guematria de **Av** (אב) = 3. **Tu** (טו) = 15. **3 + 15 = 18 = Chai** (vida). Tu B''Av é o ponto em que **a vida emerge do mês de Av**.
+A guematria de **Av** (אב) = 3. **Tu** (טו) = 15. **3 + 15 = 18 = Chai** (vida). Tu B'Av é o ponto em que **a vida emerge do mês de Av**.
 
-### O paradoxo Tu B''Av-Yom Kippur
+### O paradoxo Tu B'Av-Yom Kippur
 
-A Mishná coloca os dois como **dias mais felizes**. Yom Kippur tem cinco aflições corporais e é dia de jejum total; Tu B''Av tem refeição festiva e dança. Como podem ser **igualmente felizes**?
+A Mishná coloca os dois como **dias mais felizes**. Yom Kippur tem cinco aflições corporais e é dia de jejum total; Tu B'Av tem refeição festiva e dança. Como podem ser **igualmente felizes**?
 
 A resposta tradicional (Maharal, Netzach Yisrael cap. 8):
 
 ▸ **Yom Kippur**: alegria do **perdão obtido**. A alma se reconcilia verticalmente com HaShem.
-▸ **Tu B''Av**: alegria do **amor restaurado**. As almas se reconciliam horizontalmente entre si.
+▸ **Tu B'Av**: alegria do **amor restaurado**. As almas se reconciliam horizontalmente entre si.
 
 Ambos são forma de **reconciliação completa**. Ambos terminam um período de tensão (Aseret Yemei Teshuváh / Bein haMetzarim). Ambos abrem caminho para um novo ciclo.
 
@@ -2418,14 +2418,14 @@ Ambos são forma de **reconciliação completa**. Ambos terminam um período de 
 
 **Ahavá = Echad** em guematria. Esta é coincidência matemática? Não, segundo a tradição. **Amor autêntico produz unidade**. Onde há ahavá, há echad. Onde há echad, há ahavá.
 
-Em Tu B''Av, ambos os números (13) se manifestam:
+Em Tu B'Av, ambos os números (13) se manifestam:
 
 ▸ **HaShem é Echad** (declaração central da Shemá).
 ▸ **HaShem ama Israel** (premissa da aliança).
 ▸ **Israel é convocada a unidade interna** (reconciliação intertribal).
 ▸ **Israel ama HaShem** (Devarim 6:5).
 
-O amor que une Israel ao Echad cósmico **é a essência de Tu B''Av**.
+O amor que une Israel ao Echad cósmico **é a essência de Tu B'Av**.
 
 ### O Sod do vinhedo
 
@@ -2437,49 +2437,49 @@ O amor que une Israel ao Echad cósmico **é a essência de Tu B''Av**.
 
 As filhas de Yerushalaim dançando em vinhedos são, no Sod, **Malchut tocando Tiferet diretamente**. Não através de mediação cósmica complexa — através do gesto físico simples de dançar no espaço onde Tiferet floresce.
 
-Esta é razão profunda pela qual Tu B''Av é especialmente auspicioso para casamentos: porque **o casamento humano** repete em microcosmo **o yichud Tiferet-Malchut** que ocorre no vinhedo cósmico.
+Esta é razão profunda pela qual Tu B'Av é especialmente auspicioso para casamentos: porque **o casamento humano** repete em microcosmo **o yichud Tiferet-Malchut** que ocorre no vinhedo cósmico.
 
 ### A síntese
 
-Tu B''Av, nos quatro níveis:
+Tu B'Av, nos quatro níveis:
 
 ▸ **Peshat**: 15 Av, dia mais feliz pela Mishná, com 7 eventos históricos felizes.
 ▸ **Remez**: número 15 = YH; lua cheia = Malchut plena; dança em vinhedo = renovação após catástrofe.
 ▸ **Drash**: igualdade pedagógica (vestes emprestadas); caráter sobre aparência; reconciliação intertribal como modelo.
 ▸ **Sod**: Shechiná-Malchut sobe a Tiferet; *ahavá* = *echad* (13); vinhedo como espaço de yichud direto.
 
-A Brit Im Mashiach vive Tu B''Av nos quatro níveis simultâneos. Reconhece no Chag não apenas dia de casamentos terrenos, mas **ensaio anual da reconciliação cósmica final** — quando HaShem e Israel completarão o casamento eterno através do Mashiach.
+A Brit Im Mashiach vive Tu B'Av nos quatro níveis simultâneos. Reconhece no Chag não apenas dia de casamentos terrenos, mas **ensaio anual da reconciliação cósmica final** — quando HaShem e Israel completarão o casamento eterno através do Mashiach.
 
-**Fonte:** Mishná Taanit 4:8, Yadayim 3:5; Talmud Bavli, Taanit 30b-31a; Maharal, Netzach Yisrael cap. 8; Ari haKadosh, Shaar haKavvanot, Inyan Tu B''Av; Shir haShirim 7-8; Yeshayahu 5; Devarim 6:5.',
-  sod = 'Tu B''Av, no Sod, é o **dia em que a Shechiná (Malchut) sobe a Tiferet** após o exílio de Tisha B''Av. Toda a estrutura espiritual do dia opera nesta **reconciliação cósmica**.
+**Fonte:** Mishná Taanit 4:8, Yadayim 3:5; Talmud Bavli, Taanit 30b-31a; Maharal, Netzach Yisrael cap. 8; Ari haKadosh, Shaar haKavvanot, Inyan Tu B'Av; Shir haShirim 7-8; Yeshayahu 5; Devarim 6:5.$pardes_tu_beav_drash$,
+  sod = $pardes_tu_beav_sod$Tu B'Av, no Sod, é o **dia em que a Shechiná (Malchut) sobe a Tiferet** após o exílio de Tisha B'Av. Toda a estrutura espiritual do dia opera nesta **reconciliação cósmica**.
 
 ### A reconciliação Tiferet-Malchut
 
-Como tratado em Tisha B''Av (seção 05), a Shechiná (Malchut) **desceu ao exílio** com Israel, separada de Tiferet. Tisha B''Av é o estado de **máxima separação**.
+Como tratado em Tisha B'Av (seção 05), a Shechiná (Malchut) **desceu ao exílio** com Israel, separada de Tiferet. Tisha B'Av é o estado de **máxima separação**.
 
-Em **Tu B''Av**, ocorre **o início do reencontro**. A Shechiná começa a subir de volta a Tiferet. Não conclui-se totalmente (isso virá apenas com o Mashiach), mas o **movimento de reconciliação se inicia**.
+Em **Tu B'Av**, ocorre **o início do reencontro**. A Shechiná começa a subir de volta a Tiferet. Não conclui-se totalmente (isso virá apenas com o Mashiach), mas o **movimento de reconciliação se inicia**.
 
-Por isto Tu B''Av é o **Chag do casamento**: porque cosmicamente, **HaShem e Israel estão renovando seu noivado**. As filhas de Yerushalaim dançando em vinhedos são, no Sod, **representação física da Shechiná-Israel reencontrando Tiferet-HaShem**.
+Por isto Tu B'Av é o **Chag do casamento**: porque cosmicamente, **HaShem e Israel estão renovando seu noivado**. As filhas de Yerushalaim dançando em vinhedos são, no Sod, **representação física da Shechiná-Israel reencontrando Tiferet-HaShem**.
 
 ### O número 15
 
-Tu B''Av cai em **15 Av**. Como em Tu B''Shvat, o número 15 é o valor da abreviação do nome divino **YH** (Yah). Israel escreve **טו** (Tu) em vez de **יה** (Yah) por respeito ao Nome divino.
+Tu B'Av cai em **15 Av**. Como em Tu B'Shvat, o número 15 é o valor da abreviação do nome divino **YH** (Yah). Israel escreve **טו** (Tu) em vez de **יה** (Yah) por respeito ao Nome divino.
 
-No Sod: Tu B''Av opera sob **influxo do nome YH**. Este Nome está associado a **Chochmáh e Bináh** (tríade superior do pensamento). Tu B''Av carrega, portanto, dimensão de **sabedoria reconciliadora** — não amor sentimental superficial, mas amor com **chochmáh** profunda.
+No Sod: Tu B'Av opera sob **influxo do nome YH**. Este Nome está associado a **Chochmáh e Bináh** (tríade superior do pensamento). Tu B'Av carrega, portanto, dimensão de **sabedoria reconciliadora** — não amor sentimental superficial, mas amor com **chochmáh** profunda.
 
 ### A lua cheia
 
-Tu B''Av cai em **lua cheia** (15° dia do mês lunar). A lua cheia tem significado cabalístico:
+Tu B'Av cai em **lua cheia** (15° dia do mês lunar). A lua cheia tem significado cabalístico:
 
 ▸ Símbolo de **Malchut** em sua plenitude.
 ▸ Reflexo perfeito do sol (sol = Tiferet, lua = Malchut).
 ▸ A Shechiná "iluminada" plenamente por Tiferet.
 
-Em Tisha B''Av (9 Av), a lua está **decrescente** (após cheia em meio do mês anterior). Em Tu B''Av (15 Av), a lua está **cheia**. Cosmicamente, a Shechiná sai do estado decrescente para o estado pleno.
+Em Tisha B'Av (9 Av), a lua está **decrescente** (após cheia em meio do mês anterior). Em Tu B'Av (15 Av), a lua está **cheia**. Cosmicamente, a Shechiná sai do estado decrescente para o estado pleno.
 
 ### Os Sete Eventos Históricos como Sete Sefirot
 
-A tradição luriânica pode ler os **sete eventos felizes** em Tu B''Av como correspondências sefiróticas:
+A tradição luriânica pode ler os **sete eventos felizes** em Tu B'Av como correspondências sefiróticas:
 
 ▸ **Reabertura do casamento com Binyamin** → *Chesed* (bondade reconciliadora).
 ▸ **Fim da morte no deserto** → *Gevurá* (rigor cessado, decreto terminado).
@@ -2489,17 +2489,17 @@ A tradição luriânica pode ler os **sete eventos felizes** em Tu B''Av como co
 ▸ **Cessação do corte de madeira** → *Yessod* (fundamento sazonal completo).
 ▸ **Dança em vinhedos** → *Malchut* (manifestação plena da reconciliação).
 
-Sete eventos → sete Sefirot inferiores. Tu B''Av ativa **toda a tríade emocional** simultaneamente.
+Sete eventos → sete Sefirot inferiores. Tu B'Av ativa **toda a tríade emocional** simultaneamente.
 
 ### O sentido cósmico do casamento
 
-No Sod, **casamento humano** é reflexo terreno do **casamento cósmico** entre HaShem e Israel. Por isto Tu B''Av é dia preferencial de casamentos:
+No Sod, **casamento humano** é reflexo terreno do **casamento cósmico** entre HaShem e Israel. Por isto Tu B'Av é dia preferencial de casamentos:
 
-▸ Cada casamento humano em Tu B''Av **ressoa** com o casamento cósmico em curso.
+▸ Cada casamento humano em Tu B'Av **ressoa** com o casamento cósmico em curso.
 ▸ A alegria do noivado terrestre **alimenta** a alegria do noivado celestial.
 ▸ As bênçãos sob a chupá são, no Sod, **invocação da Shechiná** sobre o casal.
 
-A Brit Im Mashiach, ao celebrar Tu B''Av, lê com seriedade: **cada casal feliz** contribui, em camada profunda, **à reconciliação cósmica em curso**.
+A Brit Im Mashiach, ao celebrar Tu B'Av, lê com seriedade: **cada casal feliz** contribui, em camada profunda, **à reconciliação cósmica em curso**.
 
 ### O brincar com "yofí"
 
@@ -2515,9 +2515,9 @@ No Sod: **yofí** é Or **superficial** (Or chitzoni); **mishpacha** é Or **int
 
 ### A bracháh HaTov vehaMetiv
 
-A tradição (Mishná Berachot 6:8) estabelece que a quarta bracháh da Birkat haMazon (**HaTov vehaMetiv**) foi instituída em **Tu B''Av**, em memória do milagre da preservação dos corpos de Betar.
+A tradição (Mishná Berachot 6:8) estabelece que a quarta bracháh da Birkat haMazon (**HaTov vehaMetiv**) foi instituída em **Tu B'Av**, em memória do milagre da preservação dos corpos de Betar.
 
-Esta bracháh é dita em **toda Birkat haMazon** do ano. Cada vez que um judeu agradece pela refeição, ele recita uma bracháh **instituída em Tu B''Av**. Cosmicamente, **Tu B''Av está presente em cada refeição diária do ano**.
+Esta bracháh é dita em **toda Birkat haMazon** do ano. Cada vez que um judeu agradece pela refeição, ele recita uma bracháh **instituída em Tu B'Av**. Cosmicamente, **Tu B'Av está presente em cada refeição diária do ano**.
 
 Esta dispersão cósmica é única: nenhum outro Chag tem **bracháh diária permanente** instituída nele.
 
@@ -2529,21 +2529,21 @@ Esta dispersão cósmica é única: nenhum outro Chag tem **bracháh diária per
 
 3 + 15 = **18** = *chai* (חי, vida).
 
-A guematria sugere: **Tu B''Av é a vida do mês de Av**. Em meio à tensão do mês (luto da primeira metade), a segunda metade traz **vida renovada**. Tu B''Av é o ponto onde **chai (vida)** emerge.
+A guematria sugere: **Tu B'Av é a vida do mês de Av**. Em meio à tensão do mês (luto da primeira metade), a segunda metade traz **vida renovada**. Tu B'Av é o ponto onde **chai (vida)** emerge.
 
 ### O retorno ao Gan Eden
 
-A tradição (Eichá Rabá; Maharal) ensina que Tu B''Av é **micro-retorno simbólico ao Gan Eden**. Razões:
+A tradição (Eichá Rabá; Maharal) ensina que Tu B'Av é **micro-retorno simbólico ao Gan Eden**. Razões:
 
-▸ Casamento de Adam e Eva foi prototypo do amor humano. Tu B''Av celebra continuidade desta tradição original.
-▸ Os vinhedos onde se dançava em Tu B''Av são, simbolicamente, **vinhedos do Gan Eden**.
-▸ A roupa branca emprestada lembra **as folhas com que Adam e Eva se cobriram após o pecado** — mas no Tu B''Av, a "cobertura" é **escolha consciente**, não vergonha.
+▸ Casamento de Adam e Eva foi prototypo do amor humano. Tu B'Av celebra continuidade desta tradição original.
+▸ Os vinhedos onde se dançava em Tu B'Av são, simbolicamente, **vinhedos do Gan Eden**.
+▸ A roupa branca emprestada lembra **as folhas com que Adam e Eva se cobriram após o pecado** — mas no Tu B'Av, a "cobertura" é **escolha consciente**, não vergonha.
 
-Cada Tu B''Av, Israel ensaia **o retorno ao Gan Eden** — o reino messiânico onde Adam-Eva, HaShem-Israel, Tiferet-Malchut estão em plenitude.
+Cada Tu B'Av, Israel ensaia **o retorno ao Gan Eden** — o reino messiânico onde Adam-Eva, HaShem-Israel, Tiferet-Malchut estão em plenitude.
 
 ### A síntese
 
-Tu B''Av, no Sod:
+Tu B'Av, no Sod:
 
 ▸ Shechiná-Malchut sobe a Tiferet em movimento de reconciliação.
 ▸ Influxo do nome YH (15° dia).
@@ -2554,34 +2554,34 @@ Tu B''Av, no Sod:
 ▸ Bracháh HaTov vehaMetiv presente em cada Birkat haMazon do ano.
 ▸ Micro-retorno ao Gan Eden.
 
-A Brit Im Mashiach vive Tu B''Av nos quatro níveis simultâneos. Reconhece no dia **ensaio anual da reconciliação messiânica final**, em que HaShem e Israel estarão em plenitude amorosa permanente, sem mais necessidade de luto.
+A Brit Im Mashiach vive Tu B'Av nos quatro níveis simultâneos. Reconhece no dia **ensaio anual da reconciliação messiânica final**, em que HaShem e Israel estarão em plenitude amorosa permanente, sem mais necessidade de luto.
 
-**Fonte:** Talmud Bavli, Taanit 31a, Bava Batra 121a, Berachot 48b; Maharal, Netzach Yisrael cap. 8; Ari haKadosh, Shaar haKavvanot, Inyan Tu B''Av; Eichá Rabá; Mishná Berachot 6:8.'
-WHERE slug = 'tu-beav';
+**Fonte:** Talmud Bavli, Taanit 31a, Bava Batra 121a, Berachot 48b; Maharal, Netzach Yisrael cap. 8; Ari haKadosh, Shaar haKavvanot, Inyan Tu B'Av; Eichá Rabá; Mishná Berachot 6:8.$pardes_tu_beav_sod$
+WHERE slug = $pardes_tu_beav_slug$tu-beav$pardes_tu_beav_slug$;
 COMMIT;
 -- PaRDeS do Chag: tu-bishvat
 -- Idempotente: atualiza apenas colunas peshat/remez/drash/sod
 BEGIN;
 UPDATE chagim SET
-  peshat = 'Tu B''Shvat tem dupla fundação: **legal-rabínica** (séculos antes da era comum) e **espiritual-cabalística** (século XVI).
+  peshat = $pardes_tu_bishvat_peshat$Tu B'Shvat tem dupla fundação: **legal-rabínica** (séculos antes da era comum) e **espiritual-cabalística** (século XVI).
 
 ### Fundação rabínica original
 
 A **Mishná** (Rosh haShaná 1:1) estabelece quatro Anos Novos no calendário, e cita explicitamente a discussão entre as duas escolas:
 
-*B''echad biShvat rosh haShaná laIlán kedivrei Beit Shamai. Beit Hilel omrim bachamisha-asar bo.*
+*B'echad biShvat rosh haShaná laIlán kedivrei Beit Shamai. Beit Hilel omrim bachamisha-asar bo.*
 
 No primeiro de Shvat é o Ano Novo da Árvore, segundo Beit Shamai. Beit Hilel diz: no décimo-quinto deste.
 
 A halacháh segue **Beit Hilel** — 15 de Shvat. A divergência tem fundamento botânico: Shamai considera o início do mês, Hilel considera o meio do mês quando o ciclo natural já é claramente novo.
 
-Por séculos após a Mishná, Tu B''Shvat permaneceu como **marco legal** apenas — sem festividade especial. Era simplesmente o dia técnico para começar a contar a idade das árvores em transações de orlá, ma''aser e neta revai.
+Por séculos após a Mishná, Tu B'Shvat permaneceu como **marco legal** apenas — sem festividade especial. Era simplesmente o dia técnico para começar a contar a idade das árvores em transações de orlá, ma'aser e neta revai.
 
 ### Tzefat e o nascimento do Seder
 
 No **século XVI**, em **Tzefat** (Galileia, na época sob domínio otomano), uma constelação de cabalistas se reuniu — incluindo Rav Itzchak Luria (Arizal), Rav Moshé Cordovero, Rav Chaim Vital, Rav Shlomo Alkabetz (autor do Lecha Dodi), Rav Yosef Caro (autor do Shulchan Aruch). Esta foi a geração mais espiritualmente intensa do judaísmo desde os geonim.
 
-Os cabalistas instituíram o **Seder de Tu B''Shvat** como ritual completo. **Rav Chaim Vital** compilou as kavanot luriânicas no texto *Pri Etz Hadar* (Fruto da Árvore Formosa), publicado posteriormente em **1729**.
+Os cabalistas instituíram o **Seder de Tu B'Shvat** como ritual completo. **Rav Chaim Vital** compilou as kavanot luriânicas no texto *Pri Etz Hadar* (Fruto da Árvore Formosa), publicado posteriormente em **1729**.
 
 ### Estrutura do Seder Cabalístico
 
@@ -2610,16 +2610,16 @@ A Brit Im Mashiach, com componente sefardita-cabalístico, observa o **Seder com
 
 ### Histórias e tradições
 
-Tradição cabalística (Pri Etz Hadar): comer frutos com kavaná consciente em Tu B''Shvat **opera tikun** sobre o pecado de Adam haRishon (que comeu fruto sem kavaná, na Árvore do Conhecimento). Cada fruto comido com bracháh correta é tikun parcial do erro primordial.
+Tradição cabalística (Pri Etz Hadar): comer frutos com kavaná consciente em Tu B'Shvat **opera tikun** sobre o pecado de Adam haRishon (que comeu fruto sem kavaná, na Árvore do Conhecimento). Cada fruto comido com bracháh correta é tikun parcial do erro primordial.
 
 ### Plantio de Árvores — tradição moderna
 
-Em Israel, a partir de finais do século XIX (Yishuv pré-Estado), Tu B''Shvat tornou-se ocasião para **plantar árvores**. Crianças em escolas plantam, famílias contribuem para organizações de reflorestamento. O **Keren Kayemet leYisrael** (Fundo Nacional Judaico) coordena esta atividade.
+Em Israel, a partir de finais do século XIX (Yishuv pré-Estado), Tu B'Shvat tornou-se ocasião para **plantar árvores**. Crianças em escolas plantam, famílias contribuem para organizações de reflorestamento. O **Keren Kayemet leYisrael** (Fundo Nacional Judaico) coordena esta atividade.
 
 A Brit Im Mashiach incentiva contribuir financeiramente para plantio em Israel como parte da observância — ainda que o ato físico de plantar fique impraticável fora de Israel.
 
-**Fonte:** Mishná Rosh haShaná 1:1; Talmud Bavli, Rosh haShaná 14a-15b; Pri Etz Hadar de Rabi Chaim Vital (publ. 1729); Rav Chaim Vital, Shaar haKavvanot, Inyan Tu B''Shvat.',
-  remez = 'Tu B''Shvat é o Chag em que **Israel honra a natureza**. Não como adoração da criação (proibido), mas como reconhecimento de que **a terra é sagrada porque foi dada por HaShem**. A árvore é símbolo central — paralelo entre vida vegetal e vida humana.
+**Fonte:** Mishná Rosh haShaná 1:1; Talmud Bavli, Rosh haShaná 14a-15b; Pri Etz Hadar de Rabi Chaim Vital (publ. 1729); Rav Chaim Vital, Shaar haKavvanot, Inyan Tu B'Shvat.$pardes_tu_bishvat_peshat$,
+  remez = $pardes_tu_bishvat_remez$Tu B'Shvat é o Chag em que **Israel honra a natureza**. Não como adoração da criação (proibido), mas como reconhecimento de que **a terra é sagrada porque foi dada por HaShem**. A árvore é símbolo central — paralelo entre vida vegetal e vida humana.
 
 ### A árvore como espelho humano
 
@@ -2629,15 +2629,15 @@ A frase, contextualizada no verso original, fala sobre **proibir destruir árvor
 
 Como a árvore precisa de tempo para crescer, o homem precisa de paciência. Como a árvore dá frutos apenas após anos, o homem produz seu "fruto" (legado, sabedoria, descendência) apenas após maturação. Como a árvore profunda resiste a tempestades, o homem com raízes profundas (em Toráh, em família, em comunidade) resiste a crises.
 
-### Cinco qualidades refinadas em Tu B''Shvat
+### Cinco qualidades refinadas em Tu B'Shvat
 
-▸ **Paciência cíclica**: a árvore não força seus frutos; aguarda seu tempo. Tu B''Shvat ensina paciência com processos lentos.
+▸ **Paciência cíclica**: a árvore não força seus frutos; aguarda seu tempo. Tu B'Shvat ensina paciência com processos lentos.
 
 ▸ **Gratidão pelos alimentos**: cada fruto comido com bracháh correta é reconhecimento de que a vida vem do solo, e o solo vem de HaShem.
 
-▸ **Conexão à Terra de Israel**: as Shiv''at haMinim conectam o judeu à geografia bíblica. Mesmo na diáspora, comer azeitona, tâmara ou figo em Tu B''Shvat é tocar a Terra prometida.
+▸ **Conexão à Terra de Israel**: as Shiv'at haMinim conectam o judeu à geografia bíblica. Mesmo na diáspora, comer azeitona, tâmara ou figo em Tu B'Shvat é tocar a Terra prometida.
 
-▸ **Cuidado ecológico**: a Toráh ordena *bal tashchit* (não destruir) — particularmente árvores frutíferas. Tu B''Shvat refina esta sensibilidade.
+▸ **Cuidado ecológico**: a Toráh ordena *bal tashchit* (não destruir) — particularmente árvores frutíferas. Tu B'Shvat refina esta sensibilidade.
 
 ▸ **Aprendizado das árvores**: contemplar como a natureza segue ordem perfeita ensina humildade. Não controlamos a árvore; cooperamos com ela.
 
@@ -2657,7 +2657,7 @@ Comer através das três categorias de fruto, em sequência ascendente, é **sub
 
 ### A Árvore do Gan Eden
 
-Os cabalistas leem Tu B''Shvat como **tikun parcial** do erro de Adam haRishon na Árvore do Conhecimento (Bereshit 2:17, 3:6). Adam comeu sem kavaná, fora do tempo, com fruta proibida. Em Tu B''Shvat, judeus comem **com kavaná, no tempo certo, com frutos permitidos e bênção apropriada**. Cada bracháh dita é micro-reparo do erro primordial.
+Os cabalistas leem Tu B'Shvat como **tikun parcial** do erro de Adam haRishon na Árvore do Conhecimento (Bereshit 2:17, 3:6). Adam comeu sem kavaná, fora do tempo, com fruta proibida. Em Tu B'Shvat, judeus comem **com kavaná, no tempo certo, com frutos permitidos e bênção apropriada**. Cada bracháh dita é micro-reparo do erro primordial.
 
 A Brit Im Mashiach lê esta dimensão com seriedade: o Chag não é apenas sobre **árvores físicas**; é sobre **a Árvore Original**, a relação fundadora entre humanidade, natureza e o Eterno.
 
@@ -2665,26 +2665,26 @@ A Brit Im Mashiach lê esta dimensão com seriedade: o Chag não é apenas sobre
 
 Em janeiro-fevereiro (Shvat), a Terra de Israel está em fase de **chuvas finais e brotamento**. Pessach virá em abril (Nissan). Sefirat haOmer entre Pessach e Shavuot trará o ciclo agrícola completo.
 
-Tu B''Shvat é o **primeiro marco do ano agrícola-litúrgico**. Antes de Pessach (libertação), Shavuot (Toráh), Sukkot (colheita), há **Tu B''Shvat (renovação das árvores)**. O ciclo todo começa aqui.
+Tu B'Shvat é o **primeiro marco do ano agrícola-litúrgico**. Antes de Pessach (libertação), Shavuot (Toráh), Sukkot (colheita), há **Tu B'Shvat (renovação das árvores)**. O ciclo todo começa aqui.
 
 ### A árvore messiânica
 
 Yeshayahu 11:1 fala do Mashiach como **rebento** (*choter*) que sairá do tronco de Yishai. Imagem botânica direta. O Mashiach é **árvore messiânica** crescendo da raiz davídica.
 
-Tu B''Shvat, então, é o Chag em que celebramos **a árvore messiânica em desenvolvimento**. Toda árvore que cresce em Israel é, no Sod, ensaio do crescimento da árvore messiânica histórica que ainda virá.
+Tu B'Shvat, então, é o Chag em que celebramos **a árvore messiânica em desenvolvimento**. Toda árvore que cresce em Israel é, no Sod, ensaio do crescimento da árvore messiânica histórica que ainda virá.
 
 ### A modéstia da celebração
 
-Diferentemente dos Chagim maiores, Tu B''Shvat não exige rituais elaborados, não tem proibição de trabalho, não tem leituras litúrgicas obrigatórias. É Chag **modesto** — apropriado ao próprio espírito da árvore que cresce silenciosamente.
+Diferentemente dos Chagim maiores, Tu B'Shvat não exige rituais elaborados, não tem proibição de trabalho, não tem leituras litúrgicas obrigatórias. É Chag **modesto** — apropriado ao próprio espírito da árvore que cresce silenciosamente.
 
 A modéstia não diminui a importância. Pelo contrário: ensina que **o sagrado não precisa de grandiosidade**. Uma maçã comida com bracháh em uma manhã comum pode ser tão santa quanto um Seder completo.
 
-**Fonte:** Devarim 20:19; Yeshayahu 11:1; Bereshit 2-3; Pri Etz Hadar; Talmud Bavli, Berachot 35b sobre brachot de frutas; Mishná Berachot 6.',
-  drash = '### Peshat — o sentido literal
+**Fonte:** Devarim 20:19; Yeshayahu 11:1; Bereshit 2-3; Pri Etz Hadar; Talmud Bavli, Berachot 35b sobre brachot de frutas; Mishná Berachot 6.$pardes_tu_bishvat_remez$,
+  drash = $pardes_tu_bishvat_drash$### Peshat — o sentido literal
 
-Tu B''Shvat, no Peshat, é o **Ano Novo das Árvores** (Mishná Rosh haShaná 1:1), estabelecido como marco legal para contagem da idade das árvores frutíferas em relação à orlá, ma''aser e neta revai. É instituição rabínica antiga, não bíblica. O Chag não tem proibição de trabalho, não tem liturgia complexa, não tem mitzvá ritual obrigatória além da omissão de Tachanun.
+Tu B'Shvat, no Peshat, é o **Ano Novo das Árvores** (Mishná Rosh haShaná 1:1), estabelecido como marco legal para contagem da idade das árvores frutíferas em relação à orlá, ma'aser e neta revai. É instituição rabínica antiga, não bíblica. O Chag não tem proibição de trabalho, não tem liturgia complexa, não tem mitzvá ritual obrigatória além da omissão de Tachanun.
 
-A celebração festiva atual (Seder cabalístico, comer Shiv''at haMinim, plantar árvores) é construção posterior — séc. XVI para o Seder, séc. XIX-XX para o plantio. Mas é construção válida e profunda.
+A celebração festiva atual (Seder cabalístico, comer Shiv'at haMinim, plantar árvores) é construção posterior — séc. XVI para o Seder, séc. XIX-XX para o plantio. Mas é construção válida e profunda.
 
 ### Remez — a alusão velada
 
@@ -2692,26 +2692,26 @@ A palavra **árvore** (*etz* עץ) tem valor numérico **160**. Esse número é 
 
 E **etz haChayim** (Árvore da Vida) tem valor 160 + 86 (haChayim) = 246. *Mor* (מור, mirra) também = 246. Há associação cosmologicamente entre Árvore da Vida e a mirra (planta aromática). Detalhe de guematria cabalística profunda.
 
-A **palavra Shvat** (שבט) significa também "vara/tribo". Tu B''Shvat ocorre no mês cujo nome é também "vara" — a árvore é uma vara que se tornou útero de frutos. Há analogia: cada um de nós começa como vara seca, e através de cuidado divino se torna árvore frutífera.
+A **palavra Shvat** (שבט) significa também "vara/tribo". Tu B'Shvat ocorre no mês cujo nome é também "vara" — a árvore é uma vara que se tornou útero de frutos. Há analogia: cada um de nós começa como vara seca, e através de cuidado divino se torna árvore frutífera.
 
 ### Drash — o ensino homilético
 
 O **Talmud Bavli, Taanit 7a** ensina paralelo profundo entre **estudioso de Toráh e árvore**:
 
-*Im talmid chacham hagun hu, lema''eilá lo lefagô*. Se o estudioso de Toráh é digno, o (texto) eleva-se sobre ele.
+*Im talmid chacham hagun hu, lema'eilá lo lefagô*. Se o estudioso de Toráh é digno, o (texto) eleva-se sobre ele.
 
-E continua: *kemo na''an etz hadar, sheishhú aviv vechorshô — ken talmid chacham*. Como uma árvore plantada formosa, cujo pai (raiz) é a primavera e o tronco — assim o estudioso de Toráh.
+E continua: *kemo na'an etz hadar, sheishhú aviv vechorshô — ken talmid chacham*. Como uma árvore plantada formosa, cujo pai (raiz) é a primavera e o tronco — assim o estudioso de Toráh.
 
-O estudioso é como árvore: precisa de tempo, raízes profundas, ambiente certo. Quem força resultados rápidos cultiva ervas daninhas, não árvores. **Tu B''Shvat é Chag da paciência espiritual estruturada**.
+O estudioso é como árvore: precisa de tempo, raízes profundas, ambiente certo. Quem força resultados rápidos cultiva ervas daninhas, não árvores. **Tu B'Shvat é Chag da paciência espiritual estruturada**.
 
-Outro Drash: **Adam haRishon comeu da Árvore do Conhecimento sem kavaná correta**. Em Tu B''Shvat, comemos frutas **com kavaná correta**. Cada bracháh dita é tikun parcial do erro adâmico. Por isto a tradição cabalística diz que Tu B''Shvat opera **micro-reparo do Gan Eden**. Não restauração completa (apenas Mashiach faz isto), mas contribuição autêntica.
+Outro Drash: **Adam haRishon comeu da Árvore do Conhecimento sem kavaná correta**. Em Tu B'Shvat, comemos frutas **com kavaná correta**. Cada bracháh dita é tikun parcial do erro adâmico. Por isto a tradição cabalística diz que Tu B'Shvat opera **micro-reparo do Gan Eden**. Não restauração completa (apenas Mashiach faz isto), mas contribuição autêntica.
 
 ### Sod — o segredo kabalístico
 
-Como tratado em 05, Tu B''Shvat ativa, no Sod, a **Etz Chaim cósmica** através de cada árvore física. Os elementos:
+Como tratado em 05, Tu B'Shvat ativa, no Sod, a **Etz Chaim cósmica** através de cada árvore física. Os elementos:
 
 ▸ **Quatro Olamot** (Asiáh, Yetziráh, Briáh, Atzilut) → quatro copos de vinho do Seder.
-▸ **Sete Sefirot inferiores** → sete espécies (Shiv''at haMinim).
+▸ **Sete Sefirot inferiores** → sete espécies (Shiv'at haMinim).
 ▸ **Frutos com casca dura** → Olam Asiáh, klipot facilmente identificáveis.
 ▸ **Frutos com osso interno** → Olam Yetziráh, fundamento sustentador.
 ▸ **Frutos comestíveis inteiros** → Olam Briáh, Or recebida sem mediação.
@@ -2721,13 +2721,13 @@ Quem participa do Seder consciente desses níveis **opera tikun simultâneo nos 
 
 ### O Sod do número 15
 
-Tu B''Shvat é em **15 de Shvat**. O número 15 é o valor da abreviação do nome divino **YH** (י = 10, ה = 5). Por respeito ao Nome, judeus escrevem o número 15 como **טו** (Tu = 9+6 = 15) em vez de **יה** (Yah = 10+5 = 15).
+Tu B'Shvat é em **15 de Shvat**. O número 15 é o valor da abreviação do nome divino **YH** (י = 10, ה = 5). Por respeito ao Nome, judeus escrevem o número 15 como **טו** (Tu = 9+6 = 15) em vez de **יה** (Yah = 10+5 = 15).
 
-O nome **TU B''SHVAT** preserva esta substituição: **Tu** (טו) literalmente significa "15", mas é codificação para não pronunciar o Nome divino diretamente como número.
+O nome **TU B'SHVAT** preserva esta substituição: **Tu** (טו) literalmente significa "15", mas é codificação para não pronunciar o Nome divino diretamente como número.
 
-No Sod, isto significa: **Tu B''Shvat opera sob influxo do nome YH** (Yah), o Nome divino "intermediário" entre Tetragrama completo e nomes menores. YH está associado a **Chochmáh e Bináh** (as duas Sefirot superiores da tríade pensante).
+No Sod, isto significa: **Tu B'Shvat opera sob influxo do nome YH** (Yah), o Nome divino "intermediário" entre Tetragrama completo e nomes menores. YH está associado a **Chochmáh e Bináh** (as duas Sefirot superiores da tríade pensante).
 
-Por isto Tu B''Shvat tem dimensão de **chochmáh ecológica** — sabedoria que reconhece a sacralidade da natureza sem cair em idolatria. O equilíbrio é fino, e o Chag oferece o modelo correto.
+Por isto Tu B'Shvat tem dimensão de **chochmáh ecológica** — sabedoria que reconhece a sacralidade da natureza sem cair em idolatria. O equilíbrio é fino, e o Chag oferece o modelo correto.
 
 ### A árvore como ponte entre mundos
 
@@ -2741,7 +2741,7 @@ Esta estrutura tripartite reflete, no Sod, a estrutura da alma humana:
 
 ▸ **Nefesh-Ruach-Neshamáh** (níveis crescentes da alma) ↔ raízes-tronco-galhos.
 
-Quem contempla uma árvore frutífera em Tu B''Shvat está, no Sod, contemplando **a estrutura de sua própria alma**. A árvore externa é espelho da árvore interna.
+Quem contempla uma árvore frutífera em Tu B'Shvat está, no Sod, contemplando **a estrutura de sua própria alma**. A árvore externa é espelho da árvore interna.
 
 ### Por que a Árvore do Conhecimento foi proibida
 
@@ -2749,25 +2749,25 @@ Bereshit 2:17 proíbe especificamente a **Árvore do Conhecimento do Bem e do Ma
 
 A tradição luriânica explica: a Árvore do Conhecimento misturava bem e mal em um único fruto. Comer dela seria internalizar a mistura — confundir kedushá e klipá dentro de si.
 
-Tu B''Shvat reverte isso simbolicamente: comemos frutos **com kavaná correta**, com brachot que **separam bem e mal**, com bênção que **purifica** o ato de comer. Cada fruto comido em Tu B''Shvat é micro-correção do erro adâmico.
+Tu B'Shvat reverte isso simbolicamente: comemos frutos **com kavaná correta**, com brachot que **separam bem e mal**, com bênção que **purifica** o ato de comer. Cada fruto comido em Tu B'Shvat é micro-correção do erro adâmico.
 
 ### A síntese
 
 ▸ **Peshat**: Ano Novo das Árvores, marco legal para idade de árvores frutíferas.
 ▸ **Remez**: árvore = sustento original; Shvat = vara que se torna árvore; etz haChayim com guematria.
 ▸ **Drash**: estudioso como árvore (paciência cosmológica); tikun do erro adâmico do Gan Eden.
-▸ **Sod**: Etz Chaim ativada; quatro Olamot percorridos; sete Sefirot inferiores via Shiv''at haMinim; influxo do nome YH; árvore como espelho da alma.
+▸ **Sod**: Etz Chaim ativada; quatro Olamot percorridos; sete Sefirot inferiores via Shiv'at haMinim; influxo do nome YH; árvore como espelho da alma.
 
-A Brit Im Mashiach vive Tu B''Shvat nos quatro níveis simultâneos. Reconhece no Chag não apenas memória botânica, mas **ato espiritual de honrar a Criação e antecipar a árvore messiânica em crescimento**.
+A Brit Im Mashiach vive Tu B'Shvat nos quatro níveis simultâneos. Reconhece no Chag não apenas memória botânica, mas **ato espiritual de honrar a Criação e antecipar a árvore messiânica em crescimento**.
 
-**Fonte:** Mishná Rosh haShaná 1:1; Bereshit 2-3; Devarim 8:7-10; Talmud Bavli, Taanit 7a; Pri Etz Hadar; Sefer Yetziráh sobre estrutura das letras hebraicas; Zohar Vayechi 222a.',
-  sod = 'Tu B''Shvat, no Sod, é o Chag em que a **Etz Chaim** (Árvore da Vida) se manifesta na árvore física. Cada árvore frutífera, cada fruto, cada bracháh dita, opera tikun nas Sefirot. O Seder cabalístico, instituído em Tzefat, codifica essa operatividade.
+**Fonte:** Mishná Rosh haShaná 1:1; Bereshit 2-3; Devarim 8:7-10; Talmud Bavli, Taanit 7a; Pri Etz Hadar; Sefer Yetziráh sobre estrutura das letras hebraicas; Zohar Vayechi 222a.$pardes_tu_bishvat_drash$,
+  sod = $pardes_tu_bishvat_sod$Tu B'Shvat, no Sod, é o Chag em que a **Etz Chaim** (Árvore da Vida) se manifesta na árvore física. Cada árvore frutífera, cada fruto, cada bracháh dita, opera tikun nas Sefirot. O Seder cabalístico, instituído em Tzefat, codifica essa operatividade.
 
 ### A Etz Chaim como árvore
 
 A **Etz Chaim** (Árvore da Vida) é a estrutura das **10 Sefirot** desenhadas em forma arborescente: raízes em Keter (alto), tronco descendo, galhos formando triângulos sefiróticos, frutos em Malchut (base manifesta).
 
-Tu B''Shvat é o Chag em que a Etz Chaim **se materializa**. Cada árvore frutífera real é, no Sod, **representação física** da Etz Chaim cósmica. Cada fruto comido é Or sefirótica internalizada.
+Tu B'Shvat é o Chag em que a Etz Chaim **se materializa**. Cada árvore frutífera real é, no Sod, **representação física** da Etz Chaim cósmica. Cada fruto comido é Or sefirótica internalizada.
 
 ### Os quatro Olamot e os 30 frutos
 
@@ -2789,25 +2789,25 @@ Como visto em 03, o Seder distribui frutos em três categorias correspondentes a
 
 **Malchut** corresponde à Sefirá da árvore frutífera. Por quê? Porque Malchut é a Sefirá **manifesta** — onde o que vem de cima toma forma material e dá fruto.
 
-Em Tu B''Shvat, Malchut está em estado especial: as árvores começam a renovar seu fluxo (a seiva sobe). Esta é, no Sod, **a renovação anual de Malchut**. Cada ano, Malchut passa por ciclo: renovação (Tu B''Shvat) → florescimento (Pessach) → frutificação (Shavuot) → colheita (Sukkot) → repouso (Cheshvan-Tevet) → renovação novamente (Tu B''Shvat seguinte).
+Em Tu B'Shvat, Malchut está em estado especial: as árvores começam a renovar seu fluxo (a seiva sobe). Esta é, no Sod, **a renovação anual de Malchut**. Cada ano, Malchut passa por ciclo: renovação (Tu B'Shvat) → florescimento (Pessach) → frutificação (Shavuot) → colheita (Sukkot) → repouso (Cheshvan-Tevet) → renovação novamente (Tu B'Shvat seguinte).
 
-### As Shiv''at haMinim como Sete Sefirot
+### As Shiv'at haMinim como Sete Sefirot
 
 As **sete espécies da Terra de Israel** (Devarim 8:8) correspondem, na tradição cabalística, às **sete Sefirot inferiores**:
 
 ▸ **Chitá** (trigo) → *Chesed* — bondade que nutre.
-▸ **Se''orá** (cevada) → *Gevurá* — rigor que disciplina.
+▸ **Se'orá** (cevada) → *Gevurá* — rigor que disciplina.
 ▸ **Guéfen** (uva) → *Tiferet* — beleza harmoniosa, vinho como simbolismo central.
-▸ **Te''enáh** (figo) → *Netzach* — vitória eternizada.
+▸ **Te'enáh** (figo) → *Netzach* — vitória eternizada.
 ▸ **Rimón** (romã) → *Hod* — esplendor com sementes inumeráveis.
 ▸ **Zayit** (azeitona) → *Yessod* — fundamento, com óleo como simbolismo da Or que desce.
 ▸ **Dvash/Tamar** (mel/tâmara) → *Malchut* — doçura final, reino que se manifesta.
 
-Quem come as sete espécies em Tu B''Shvat ativa, no Sod, as sete Sefirot inferiores em sequência completa.
+Quem come as sete espécies em Tu B'Shvat ativa, no Sod, as sete Sefirot inferiores em sequência completa.
 
 ### A Árvore do Conhecimento e o tikun
 
-A tradição (Pri Etz Hadar) é explícita: Tu B''Shvat opera tikun sobre o **pecado de Adam haRishon**. Adam comeu da Árvore do Conhecimento com kavaná errada, fora do tempo. Cada fruto comido em Tu B''Shvat **com bracháh** e **com kavaná** é micro-reparo daquele erro.
+A tradição (Pri Etz Hadar) é explícita: Tu B'Shvat opera tikun sobre o **pecado de Adam haRishon**. Adam comeu da Árvore do Conhecimento com kavaná errada, fora do tempo. Cada fruto comido em Tu B'Shvat **com bracháh** e **com kavaná** é micro-reparo daquele erro.
 
 A guematria sublinha: *Adam* (אדם) = **45**. *Chagim* (חגים, festas) tem componentes paralelos. A relação numérica complexa aponta para Adam como "primeiro celebrante" — e cada Chag posterior é correção de algum erro adâmico.
 
@@ -2815,37 +2815,37 @@ A guematria sublinha: *Adam* (אדם) = **45**. *Chagim* (חגים, festas) tem 
 
 Yeshayahu 11:1: *Veyatzá choter migezá Yishai, vanetzer mishorashav yifrê*. Sairá um rebento do tronco de Yishai, e um broto de suas raízes frutificará.
 
-O **Mashiach** é descrito explicitamente como **rebento que cresce de raiz**. Imagem botânica direta. Tu B''Shvat é, no Sod, **Chag da árvore messiânica em desenvolvimento**. A raiz davídica está plantada desde a Bíblia; o rebento ainda cresce; o fruto final virá quando a árvore atingir maturidade.
+O **Mashiach** é descrito explicitamente como **rebento que cresce de raiz**. Imagem botânica direta. Tu B'Shvat é, no Sod, **Chag da árvore messiânica em desenvolvimento**. A raiz davídica está plantada desde a Bíblia; o rebento ainda cresce; o fruto final virá quando a árvore atingir maturidade.
 
 Cada árvore plantada em Israel hoje é, no Sod, contribuição para a árvore messiânica cósmica que cresce silenciosamente.
 
 ### O número 15
 
-Tu B''Shvat é em 15 de Shvat. O número **15** tem significado cabalístico: é a soma de YH (יה = 10 + 5), nome divino abreviado. Tu B''Shvat ocorre sob influxo do nome YH.
+Tu B'Shvat é em 15 de Shvat. O número **15** tem significado cabalístico: é a soma de YH (יה = 10 + 5), nome divino abreviado. Tu B'Shvat ocorre sob influxo do nome YH.
 
 E 15 também é o número de **Tu** (טו = 9 + 6 = 15). A combinação Tu+Shvat = "15 de Shvat" carrega numericamente "YH em Shvat".
 
 ### A síntese
 
-Tu B''Shvat, no Sod:
+Tu B'Shvat, no Sod:
 
 ▸ Etz Chaim se materializa em árvore física.
 ▸ Quatro Olamot são percorridos no Seder (Asiáh, Yetziráh, Briáh, Atzilut).
-▸ Sete Sefirot inferiores são ativadas pelas Shiv''at haMinim.
+▸ Sete Sefirot inferiores são ativadas pelas Shiv'at haMinim.
 ▸ Tikun da Árvore do Conhecimento de Adam.
 ▸ Crescimento da árvore messiânica continuando silenciosamente.
 ▸ Influxo do nome YH no dia 15.
 
-Quem celebra Tu B''Shvat com kavaná consciente desses níveis opera tikun cósmico através de gestos aparentemente simples — comer fruta, dizer bracháh, contemplar árvore.
+Quem celebra Tu B'Shvat com kavaná consciente desses níveis opera tikun cósmico através de gestos aparentemente simples — comer fruta, dizer bracháh, contemplar árvore.
 
-**Fonte:** Pri Etz Hadar de Rabi Chaim Vital; Shaar haKavvanot, Inyan Tu B''Shvat; Devarim 8:8; Yeshayahu 11:1; Bereshit 2-3; Zohar Vayechi 222a sobre árvores cósmicas.'
-WHERE slug = 'tu-bishvat';
+**Fonte:** Pri Etz Hadar de Rabi Chaim Vital; Shaar haKavvanot, Inyan Tu B'Shvat; Devarim 8:8; Yeshayahu 11:1; Bereshit 2-3; Zohar Vayechi 222a sobre árvores cósmicas.$pardes_tu_bishvat_sod$
+WHERE slug = $pardes_tu_bishvat_slug$tu-bishvat$pardes_tu_bishvat_slug$;
 COMMIT;
 -- PaRDeS do Chag: yom-kippur
 -- Idempotente: atualiza apenas colunas peshat/remez/drash/sod
 BEGIN;
 UPDATE chagim SET
-  peshat = 'A Toráh dedica capítulos inteiros a Yom Kippur, mais que a qualquer outro dia do ano (exceto Shabat).
+  peshat = $pardes_yom_kippur_peshat$A Toráh dedica capítulos inteiros a Yom Kippur, mais que a qualquer outro dia do ano (exceto Shabat).
 
 ### Vayikra 16 — O Serviço do Kohen Gadol
 
@@ -2861,9 +2861,9 @@ Aqui Yom Kippur é nomeado como *Shabat Shabaton*, com a ordem de afligir a alma
 
 Detalhamento das oferendas do altar exterior em Yom Kippur (separadas do serviço interno do Kohen Gadol no Kodesh haKodashim).
 
-### Yesha''yahu 57:14 a 58:14 — A Haftaráh da Manhã
+### Yesha'yahu 57:14 a 58:14 — A Haftaráh da Manhã
 
-Profecia que se lê em Yom Kippur de manhã. Yesha''yahu critica o jejum vazio: *halô zé tzom evchareihu, patê chartzubot resha*. Não é este o jejum que escolho: soltar amarras de perversidade? O verdadeiro jejum, ensina o profeta, é **partilhar o pão com o faminto, abrigar o pobre desabrigado, vestir o nu**. Sem ação social, todo o jejum é hipocrisia. Este texto reorienta toda a vivência do dia.
+Profecia que se lê em Yom Kippur de manhã. Yesha'yahu critica o jejum vazio: *halô zé tzom evchareihu, patê chartzubot resha*. Não é este o jejum que escolho: soltar amarras de perversidade? O verdadeiro jejum, ensina o profeta, é **partilhar o pão com o faminto, abrigar o pobre desabrigado, vestir o nu**. Sem ação social, todo o jejum é hipocrisia. Este texto reorienta toda a vivência do dia.
 
 ### Yoná completo — A Haftaráh da Tarde
 
@@ -2871,10 +2871,10 @@ Lê-se o **livro de Yoná inteiro** (4 capítulos curtos) em Minchá de Yom Kipp
 
 ### Os Treze Atributos de Misericórdia
 
-Em **Shemot 34:6-7**, após o pecado do bezerro de ouro, HaShem se revela a Moshé com os Treze Atributos: *HaShem, HaShem, El rachum vechanun, erech apayim verav chesed veemet, notzer chesed laalafim, nosê avon vafesha vechata''á venake*. Estes treze atributos são o coração da Selichá. Em Yom Kippur, recitamos repetidamente, especialmente na Neilá, porque é a fórmula divina pela qual o decreto é revogado.
+Em **Shemot 34:6-7**, após o pecado do bezerro de ouro, HaShem se revela a Moshé com os Treze Atributos: *HaShem, HaShem, El rachum vechanun, erech apayim verav chesed veemet, notzer chesed laalafim, nosê avon vafesha vechata'á venake*. Estes treze atributos são o coração da Selichá. Em Yom Kippur, recitamos repetidamente, especialmente na Neilá, porque é a fórmula divina pela qual o decreto é revogado.
 
-**Fonte:** Vayikra 16; Vayikra 23:26-32; Bamidbar 29:7-11; Yesha''yahu 57:14 a 58:14; Livro de Yoná; Shemot 34:6-7; Talmud Bavli, Yoma 81b, 86a.',
-  remez = 'Yom Kippur é o dia em que o ser humano se aproxima ao máximo possível da condição angélica enquanto ainda vivo. As cinco aflições não são castigo, são instrumento: ao cessar de comer, beber, perfumar-se, calçar couro e ter relações, o corpo se aquieta e a alma fica exposta. Sem a "casca" das necessidades materiais, o que sobra é apenas a alma diante do Eterno.
+**Fonte:** Vayikra 16; Vayikra 23:26-32; Bamidbar 29:7-11; Yesha'yahu 57:14 a 58:14; Livro de Yoná; Shemot 34:6-7; Talmud Bavli, Yoma 81b, 86a.$pardes_yom_kippur_peshat$,
+  remez = $pardes_yom_kippur_remez$Yom Kippur é o dia em que o ser humano se aproxima ao máximo possível da condição angélica enquanto ainda vivo. As cinco aflições não são castigo, são instrumento: ao cessar de comer, beber, perfumar-se, calçar couro e ter relações, o corpo se aquieta e a alma fica exposta. Sem a "casca" das necessidades materiais, o que sobra é apenas a alma diante do Eterno.
 
 Por isto a tradição diz que Yom Kippur é o dia mais alegre do ano (**Mishná, Taanit 4:8**), apesar do jejum: é o único dia em que a alma toca o que é, sem disfarce.
 
@@ -2913,8 +2913,8 @@ Os Aseret Yemei Teshuváh começam em Rosh Hashanáh, quando o nome é inscrito.
 
 Aplicação prática: a sua Neilá deve incluir, com kavaná real, o pedido específico do que você quer ver mudado no ano que vem. Pedir vagamente "saúde e prosperidade" é fraco. Pedir nomeadamente *aquilo* que está pesando, *aquela* questão concreta, é a oração que atravessa o portão antes do fechamento.
 
-**Fonte:** Vayikra 16:30; Mishná, Taanit 4:8 e Yoma 8:8-9; Talmud Bavli, Yoma 85b-87b; Mishné Toráh, Hilchot Teshuváh 1-2.',
-  drash = 'Apresentamos Yom Kippur nos quatro níveis hermenêuticos.
+**Fonte:** Vayikra 16:30; Mishná, Taanit 4:8 e Yoma 8:8-9; Talmud Bavli, Yoma 85b-87b; Mishné Toráh, Hilchot Teshuváh 1-2.$pardes_yom_kippur_remez$,
+  drash = $pardes_yom_kippur_drash$Apresentamos Yom Kippur nos quatro níveis hermenêuticos.
 
 ### Peshat — o sentido literal
 
@@ -2967,8 +2967,8 @@ Os quatro níveis juntos compõem Yom Kippur completo:
 
 A Brit Im Mashiach vive Yom Kippur nos quatro níveis simultâneos. Cada Tekiá Gedolá final é, ao mesmo tempo, encerramento do dia, encerramento do julgamento, e ensaio do toque grande do Mashiach que reunirá os exilados de Israel e instaurará o reino eterno.
 
-**Fonte:** Vayikra 16; Vayikra 23:26-32; Livro de Yoná; Mishná, Yoma 8:9; Talmud Bavli, Yoma 86b; Zohar III, 67a-69b; Ari haKadosh, Shaar haKavvanot, Derush Yom haKippurim.',
-  sod = 'Em Yom Kippur, todo Israel atinge espiritualmente o nível do *Kohen Gadol* no *Kodesh haKodashim*. A barreira entre o sagrado e o profano se dissolve. O que durante o ano inteiro fica oculto é, neste dia, exposto.
+**Fonte:** Vayikra 16; Vayikra 23:26-32; Livro de Yoná; Mishná, Yoma 8:9; Talmud Bavli, Yoma 86b; Zohar III, 67a-69b; Ari haKadosh, Shaar haKavvanot, Derush Yom haKippurim.$pardes_yom_kippur_drash$,
+  sod = $pardes_yom_kippur_sod$Em Yom Kippur, todo Israel atinge espiritualmente o nível do *Kohen Gadol* no *Kodesh haKodashim*. A barreira entre o sagrado e o profano se dissolve. O que durante o ano inteiro fica oculto é, neste dia, exposto.
 
 ### O acesso ao Kodesh haKodashim
 
@@ -3016,6 +3016,6 @@ O nome *Neilá* significa "fechamento". Os portões do céu, abertos desde Rosh 
 
 Por isto a Neilá tem fórmulas como *patach lanu shaar*, abre-nos um portão. E termina com a proclamação coletiva, sete vezes: *HaShem hu haElohim*, HaShem é o Elohim. Esta sétupla proclamação leva *Malchut* até *Keter* — o reverso do caminho dos seis dias da semana. Em sete proclamações, a alma sobe a Etz Chaim inteira.
 
-**Fonte:** Vayikra 16; Shemot 34:6-7; Ari haKadosh, Shaar haKavvanot, Derush Yom haKippurim; Pri Etz Chaim, Shaar Yom haKippurim; Zohar III, 67a-69b; Tomer Devorá de Rabi Moshé Cordovero, capítulo sobre os Treze Atributos.'
-WHERE slug = 'yom-kippur';
+**Fonte:** Vayikra 16; Shemot 34:6-7; Ari haKadosh, Shaar haKavvanot, Derush Yom haKippurim; Pri Etz Chaim, Shaar Yom haKippurim; Zohar III, 67a-69b; Tomer Devorá de Rabi Moshé Cordovero, capítulo sobre os Treze Atributos.$pardes_yom_kippur_sod$
+WHERE slug = $pardes_yom_kippur_slug$yom-kippur$pardes_yom_kippur_slug$;
 COMMIT;

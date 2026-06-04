@@ -11,8 +11,14 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const repoRoot = join(__dirname, '..')
 const LEVELS = ['peshat', 'remez', 'drash', 'sod']
 
-function escapeSqlString(s) {
-  return s.replace(/'/g, "''")
+/** PostgreSQL: literais com aspas simples não podem ter quebras de linha. Usar dollar-quoting. */
+function dollarQuote(tag, s) {
+  let t = tag
+  let n = 0
+  while (s.includes(`$${t}$`)) {
+    t = `${tag}_${++n}`
+  }
+  return `$${t}$${s}$${t}$`
 }
 
 function readLevel(chagDir, level) {
@@ -43,16 +49,17 @@ function buildSeed(slug) {
   }
 
   const outPath = join(repoRoot, 'supabase', `seed_chag_pardes_${slug}.sql`)
+  const slugTag = slug.replace(/[^a-z0-9_]/gi, '_')
   const lines = [
     `-- PaRDeS do Chag: ${slug}`,
     `-- Idempotente: atualiza apenas colunas peshat/remez/drash/sod`,
     'BEGIN;',
     `UPDATE chagim SET`,
-    `  peshat = '${escapeSqlString(fields.peshat)}',`,
-    `  remez = '${escapeSqlString(fields.remez)}',`,
-    `  drash = '${escapeSqlString(fields.drash)}',`,
-    `  sod = '${escapeSqlString(fields.sod)}'`,
-    `WHERE slug = '${escapeSqlString(slug)}';`,
+    `  peshat = ${dollarQuote(`pardes_${slugTag}_peshat`, fields.peshat)},`,
+    `  remez = ${dollarQuote(`pardes_${slugTag}_remez`, fields.remez)},`,
+    `  drash = ${dollarQuote(`pardes_${slugTag}_drash`, fields.drash)},`,
+    `  sod = ${dollarQuote(`pardes_${slugTag}_sod`, fields.sod)}`,
+    `WHERE slug = ${dollarQuote(`pardes_${slugTag}_slug`, slug)};`,
     'COMMIT;',
     '',
   ]

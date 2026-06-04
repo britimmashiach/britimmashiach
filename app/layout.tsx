@@ -3,6 +3,7 @@ import { Cinzel, Cormorant_Garamond, Inter } from 'next/font/google'
 import { ThemeProvider } from '@/components/layout/ThemeProvider'
 import { AuthSessionProvider } from '@/components/layout/AuthSessionProvider'
 import { Header } from '@/components/layout/Header'
+import { LeaderAccessBar } from '@/components/layout/LeaderAccessBar'
 import { Footer } from '@/components/layout/Footer'
 import { PageWrapper } from '@/components/layout/PageWrapper'
 import { AuthSessionToast } from '@/components/layout/AuthSessionToast'
@@ -146,6 +147,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <AuthSessionProvider snapshot={authSnapshot}>
             <Header />
+            <LeaderAccessBar />
             <main className="flex-1">
               <PageWrapper>{children}</PageWrapper>
             </main>

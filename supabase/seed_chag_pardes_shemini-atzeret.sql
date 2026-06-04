@@ -2,11 +2,11 @@
 -- Idempotente: atualiza apenas colunas peshat/remez/drash/sod
 BEGIN;
 UPDATE chagim SET
-  peshat = 'A Toráh menciona Shemini Atzeret em três passagens centrais, cada uma com um ângulo distinto.
+  peshat = $pardes_shemini_atzeret_peshat$A Toráh menciona Shemini Atzeret em três passagens centrais, cada uma com um ângulo distinto.
 
 ### Vayikra 23:36
 
-*Shivat yamim takrivu ishé laHaShem, bayom hash''mini mikra kodesh yihyé lachem, vehikravtem ishé laHaShem, atzeret hi, kol melechet avodá lo taasu.*
+*Shivat yamim takrivu ishé laHaShem, bayom hash'mini mikra kodesh yihyé lachem, vehikravtem ishé laHaShem, atzeret hi, kol melechet avodá lo taasu.*
 
 Sete dias oferecereis oferenda a HaShem, no oitavo dia convocação santa será para vós, e oferecereis oferenda a HaShem, *atzeret* é, todo trabalho de servidão não fareis.
 
@@ -36,8 +36,8 @@ Este versículo, integrado a Tefilat Geshem, fundamenta a oração: a chuva vem 
 
 Yechezkel critica os profetas que prometem chuva sem autoridade divina. Esta crítica também ressoa em Shemini Atzeret: a chuva não vem por mágica nem por previsão; vem por *yichud* entre Israel e HaShem.
 
-**Fonte:** Vayikra 23:36; Bamidbar 29:35-38; Devarim 16:8; Yirmiyahu 14:22; Yechezkel 13; Talmud Bavli, Taanit 2a-3a; Bamidbar Rabá 21:24.',
-  remez = 'Shemini Atzeret é o Chag da **intimidade após a celebração pública**. Sukkot teve 70 oferendas pelas 70 nações; Shemini Atzeret tem uma oferenda — só por Israel, só com HaShem. É o momento em que a festa universal cede lugar ao encontro privado.
+**Fonte:** Vayikra 23:36; Bamidbar 29:35-38; Devarim 16:8; Yirmiyahu 14:22; Yechezkel 13; Talmud Bavli, Taanit 2a-3a; Bamidbar Rabá 21:24.$pardes_shemini_atzeret_peshat$,
+  remez = $pardes_shemini_atzeret_remez$Shemini Atzeret é o Chag da **intimidade após a celebração pública**. Sukkot teve 70 oferendas pelas 70 nações; Shemini Atzeret tem uma oferenda — só por Israel, só com HaShem. É o momento em que a festa universal cede lugar ao encontro privado.
 
 O Midrash de Rashi captura a essência: *kasheh alai peridatchem*. É difícil para Mim a vossa partida. HaShem detém Israel porque a despedida dói. Esta é uma das passagens mais comoventes da relação Israel-Eterno: HaShem como amigo que prolonga a visita porque não quer ver o convidado partir.
 
@@ -69,8 +69,8 @@ Yizkor (lembrança dos falecidos) é recitado em apenas quatro dias do ano: Yom 
 
 Resposta tradicional: porque Shemini Atzeret é o Chag da **intimidade reflexiva**, em que se pode parar e lembrar quem não está mais. Em Sukkot, a alegria é muito ativa e exterior; não cabe o silêncio do Yizkor. Em Simchat Toráh, a dança e o canto também são exteriorizados. Shemini Atzeret tem o tom recolhido apropriado.
 
-**Fonte:** Vayikra 23:36; Bamidbar 29:35; Talmud Bavli, Sucá 48a, Taanit 2a-7a; Mishné Toráh, Hilchot Yom Tov 6:2; Bamidbar Rabá 21:24; Rashi sobre Bamidbar 29:36.',
-  drash = 'Apresentamos Shemini Atzeret nos quatro níveis hermenêuticos.
+**Fonte:** Vayikra 23:36; Bamidbar 29:35; Talmud Bavli, Sucá 48a, Taanit 2a-7a; Mishné Toráh, Hilchot Yom Tov 6:2; Bamidbar Rabá 21:24; Rashi sobre Bamidbar 29:36.$pardes_shemini_atzeret_remez$,
+  drash = $pardes_shemini_atzeret_drash$Apresentamos Shemini Atzeret nos quatro níveis hermenêuticos.
 
 ### Peshat — o sentido literal
 
@@ -115,8 +115,8 @@ Os quatro níveis juntos compõem Shemini Atzeret completo:
 
 A Brit Im Mashiach vive Shemini Atzeret nos quatro níveis simultâneos. Reconhece nele o ensaio do **reino messiânico íntimo**, em que HaShem e Israel não terão mais necessidade de se despedir — porque *kasheh alai peridatchem* se tornará, para sempre, *kasheh aleichem peridati* (é difícil para vós a Minha partida), e a partida não ocorrerá mais.
 
-**Fonte:** Vayikra 23:36; Bamidbar 29:35-36; Talmud Bavli, Sucá 47a-48a, 55b; Ari haKadosh, Pri Etz Chaim, Shaar Shemini Atzeret; Zohar III, 104a-b; Tikkunei Zohar, Tikkun 6.',
-  sod = 'Shemini Atzeret é, no Sod, o dia em que toda a Or (luz) acumulada nos Chagim de Tishrei é integrada à alma de Israel para o ano que se inicia.
+**Fonte:** Vayikra 23:36; Bamidbar 29:35-36; Talmud Bavli, Sucá 47a-48a, 55b; Ari haKadosh, Pri Etz Chaim, Shaar Shemini Atzeret; Zohar III, 104a-b; Tikkunei Zohar, Tikkun 6.$pardes_shemini_atzeret_drash$,
+  sod = $pardes_shemini_atzeret_sod$Shemini Atzeret é, no Sod, o dia em que toda a Or (luz) acumulada nos Chagim de Tishrei é integrada à alma de Israel para o ano que se inicia.
 
 ### O oitavo dia como transcendência do sete
 
@@ -159,6 +159,6 @@ Quem recebe sem dançar perde a alegria. Quem dança sem receber dança sem subs
 
 Em Israel, ambos se condensam em um único dia, mas a estrutura espiritual interna mantém os dois movimentos sobrepostos.
 
-**Fonte:** Ari haKadosh, Shaar haKavvanot, Derush Shemini Atzeret; Pri Etz Chaim, Shaar Shemini Atzeret; Zohar III, 104a-b; Talmud Bavli, Sucá 48a; Tikkunei Zohar Tikkun 6.'
-WHERE slug = 'shemini-atzeret';
+**Fonte:** Ari haKadosh, Shaar haKavvanot, Derush Shemini Atzeret; Pri Etz Chaim, Shaar Shemini Atzeret; Zohar III, 104a-b; Talmud Bavli, Sucá 48a; Tikkunei Zohar Tikkun 6.$pardes_shemini_atzeret_sod$
+WHERE slug = $pardes_shemini_atzeret_slug$shemini-atzeret$pardes_shemini_atzeret_slug$;
 COMMIT;

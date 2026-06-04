@@ -4,10 +4,15 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, ShieldCheck, Wrench } from 'lucide-react'
 import { createServerSupabaseClient, hasSupabaseServerEnv } from '@/lib/supabase-server'
-import { hasServiceRoleEnv } from '@/lib/supabase-admin'
+import { getSupabaseAdmin, hasServiceRoleEnv } from '@/lib/supabase-admin'
 import { listMembersAction } from '@/app/admin/actions'
 import { PromoteUserPanel } from '@/components/admin/PromoteUserPanel'
 import { AdminMembersPanel } from '@/components/admin/AdminMembersPanel'
+import {
+  LeaderPortalAdminPanel,
+  type AdminAnnouncementRow,
+  type AdminResourceRow,
+} from '@/components/admin/LeaderPortalAdminPanel'
 
 export const dynamic = 'force-dynamic'
 
@@ -45,6 +50,28 @@ export default async function AdminPage() {
           perPage: listResult.perPage,
         }
       : null
+
+  let announcements: AdminAnnouncementRow[] = []
+  let resources: AdminResourceRow[] = []
+  if (serviceOk) {
+    const admin = getSupabaseAdmin()
+    const [annRes, resRes] = await Promise.all([
+      admin
+        .from('leader_announcements')
+        .select('id, title, pinned, created_at')
+        .order('pinned', { ascending: false })
+        .order('created_at', { ascending: false })
+        .limit(50),
+      admin
+        .from('leader_resources')
+        .select('id, title, category, file_url')
+        .order('sort_order', { ascending: true })
+        .order('created_at', { ascending: false })
+        .limit(100),
+    ])
+    announcements = annRes.data ?? []
+    resources = resRes.data ?? []
+  }
 
   return (
     <div className="container mx-auto px-4 py-10 max-w-6xl space-y-10">
@@ -101,6 +128,21 @@ export default async function AdminPage() {
           serviceRoleConfigured={serviceOk}
           currentUserId={user.id}
           initialSnapshot={snapshot}
+        />
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="font-cinzel text-lg font-semibold text-petroleum-800 dark:text-parchment-100">
+          Portal de líderes
+        </h2>
+        <p className="section-subtitle max-w-2xl">
+          Publique avisos do Rav e materiais (PDFs) exclusivos. Aparecem no{' '}
+          <code className="text-xs bg-muted px-1 rounded">/lideres/painel</code> apenas para líderes aprovados.
+        </p>
+        <LeaderPortalAdminPanel
+          serviceRoleConfigured={serviceOk}
+          announcements={announcements}
+          resources={resources}
         />
       </section>
     </div>

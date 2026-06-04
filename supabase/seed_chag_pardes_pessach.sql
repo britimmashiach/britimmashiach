@@ -2,7 +2,7 @@
 -- Idempotente: atualiza apenas colunas peshat/remez/drash/sod
 BEGIN;
 UPDATE chagim SET
-  peshat = 'Pessach é o Chag mais densamente descrito na Toráh. Cinco passagens centrais o fundam, com camadas se complementando.
+  peshat = $pardes_pessach_peshat$Pessach é o Chag mais densamente descrito na Toráh. Cinco passagens centrais o fundam, com camadas se complementando.
 
 ### Shemot 12 — A Instituição Original
 
@@ -55,7 +55,7 @@ Quando Moshé repete os mandamentos antes de Israel entrar na Terra, recita as i
 
 ▸ **Yeshua bin Nun 5:10-12**: Israel celebra o **primeiro Pessach na Terra**, na planície de Yericho. O maná cessa neste momento; Israel começa a comer dos frutos da Terra.
 
-▸ **2 Melachim 23:21-23**: o Rei Yoshiyahu restaura a celebração de Pessach na sua geração — *ki lo na''asá chaPessach hazê mimei haShoftim* (não se celebrou tal Pessach desde os dias dos Juízes). Indica que houve épocas em que Pessach foi negligenciado.
+▸ **2 Melachim 23:21-23**: o Rei Yoshiyahu restaura a celebração de Pessach na sua geração — *ki lo na'asá chaPessach hazê mimei haShoftim* (não se celebrou tal Pessach desde os dias dos Juízes). Indica que houve épocas em que Pessach foi negligenciado.
 
 ▸ **Ezrá 6:19-22**: Israel, após o retorno do exílio babilônico, celebra Pessach restaurado no Segundo Beit haMikdash.
 
@@ -65,14 +65,14 @@ Quando Moshé repete os mandamentos antes de Israel entrar na Terra, recita as i
 
 Yechezkel, descrevendo o Beit haMikdash messiânico, prescreve oferendas para Pessach:
 
-*BaRishon, bearba''á asar yom lachodesh, yihyeh lachem haPessach, chag shvuot yamim matzot yeachel.*
+*BaRishon, bearba'á asar yom lachodesh, yihyeh lachem haPessach, chag shvuot yamim matzot yeachel.*
 
 No primeiro mês, no 14° dia do mês, será para vós o Pessach, festa de sete dias, em que matsot serão comidas.
 
 A profecia confirma: **Pessach permanecerá no reino messiânico**, com Beit haMikdash restaurado e oferendas restauradas.
 
-**Fonte:** Shemot 12-13; Vayikra 23:5-8; Bamidbar 9:1-14, 28:16-25; Devarim 16:1-8; Yehoshua 5:10-12; 2 Melachim 23:21-23; Ezrá 6:19-22; 2 Divrei haYamim 30; Yechezkel 45:21-25.',
-  remez = 'Pessach é o Chag em que Israel **nasce como povo**. Antes do êxodo, eram família crescida de Yaakov; após o êxodo, são *am* — povo livre, com missão histórica. Cada Pessach reativa esta consciência fundadora.
+**Fonte:** Shemot 12-13; Vayikra 23:5-8; Bamidbar 9:1-14, 28:16-25; Devarim 16:1-8; Yehoshua 5:10-12; 2 Melachim 23:21-23; Ezrá 6:19-22; 2 Divrei haYamim 30; Yechezkel 45:21-25.$pardes_pessach_peshat$,
+  remez = $pardes_pessach_remez$Pessach é o Chag em que Israel **nasce como povo**. Antes do êxodo, eram família crescida de Yaakov; após o êxodo, são *am* — povo livre, com missão histórica. Cada Pessach reativa esta consciência fundadora.
 
 ### A libertação como condição da Toráh
 
@@ -84,7 +84,7 @@ Aplicação prática: qualquer libertação interna (de vícios, padrões, opres
 
 ### O chametz como simbolismo profundo
 
-A proibição total de **chametz** durante Pessach (8 dias) é uma das mitzvot mais severas do calendário. O chametz não pode ser apenas "evitado" — deve ser **eliminado** (*bi''ur chametz*), **vendido** ao não-judeu, **buscado** em toda a casa (*bedikat chametz*). O esforço é considerável.
+A proibição total de **chametz** durante Pessach (8 dias) é uma das mitzvot mais severas do calendário. O chametz não pode ser apenas "evitado" — deve ser **eliminado** (*bi'ur chametz*), **vendido** ao não-judeu, **buscado** em toda a casa (*bedikat chametz*). O esforço é considerável.
 
 Por quê? O **chametz** é fermento — massa que **inflou**. Inflar-se é, na linguagem rabínica, o pecado fundamental do **ego inflado**. Quem se eleva acima do que é, quem se torna "maior que sua verdade", está com chametz na alma.
 
@@ -140,8 +140,8 @@ Pessach não é apenas memória de evento antigo. É **template da libertação 
 
 A Brit Im Mashiach lê esta dimensão com seriedade: o ano que se passou trouxe escravidões novas? O ano que se inicia oferece novas libertações? Pessach é o momento anual para fazer este balanço e empurrar para fora aquilo que ainda escraviza.
 
-**Fonte:** Shemot 12-15; Mishná Pessachim 10; Talmud Bavli, Pessachim 115b-118a; Mishné Toráh, Hilchot Chametz uMatzá 7-8; Hagadá de Pessach com comentários clássicos; Maharal, Gevurot HaShem.',
-  drash = '### Peshat — o sentido literal
+**Fonte:** Shemot 12-15; Mishná Pessachim 10; Talmud Bavli, Pessachim 115b-118a; Mishné Toráh, Hilchot Chametz uMatzá 7-8; Hagadá de Pessach com comentários clássicos; Maharal, Gevurot HaShem.$pardes_pessach_remez$,
+  drash = $pardes_pessach_drash$### Peshat — o sentido literal
 
 Pessach, no Peshat, é o Chag que comemora a libertação histórica do Mitzraim. Shemot 12-15 narra os eventos: a noite das pragas dos primogênitos, a saída precipitada, a perseguição egípcia, a travessia do Yam Suf. A Toráh prescreve 7 dias (ou 8 na diáspora) de Chag haMatzot, com proibição de chametz, eliminação prévia, e celebração ritual.
 
@@ -161,9 +161,9 @@ E o **chametz como inflar do ego** (já tratado em 04) é alusão profunda: por 
 
 ### Drash — o ensino homilético
 
-O **Mishná Pessachim 10:5** estabelece a regra de ouro: *bechol dor vador chayav adam lir''ot et atzmó keilu hu yatzá miMitzraim*. Em cada geração, cada pessoa é obrigada a ver-se como se ela mesma houvesse saído do Mitzraim.
+O **Mishná Pessachim 10:5** estabelece a regra de ouro: *bechol dor vador chayav adam lir'ot et atzmó keilu hu yatzá miMitzraim*. Em cada geração, cada pessoa é obrigada a ver-se como se ela mesma houvesse saído do Mitzraim.
 
-A frase é precisamente formulada. Não diz "lembrar" (זכר, *zachor*) — diz **"ver-se"** (לראות, *lir''ot*). Ver é mais que lembrar. Lembrar é cognitivo; ver é experiencial. **O Seder é dispositivo para fazer ver, não apenas lembrar**.
+A frase é precisamente formulada. Não diz "lembrar" (זכר, *zachor*) — diz **"ver-se"** (לראות, *lir'ot*). Ver é mais que lembrar. Lembrar é cognitivo; ver é experiencial. **O Seder é dispositivo para fazer ver, não apenas lembrar**.
 
 Por isto:
 
@@ -220,8 +220,8 @@ Os quatro níveis:
 
 A Brit Im Mashiach vive Pessach nos quatro níveis simultâneos. Reconhece em cada Seder não apenas memória de evento antigo, mas vivência da **libertação contínua** — a histórica que foi, a presente que opera, e a futura messiânica que vem. O Kos shel Eliyahu cheio sobre a mesa testemunha: ainda há liberdade a vir, e Pessach aguarda.
 
-**Fonte:** Mishná Pessachim 10:5; Talmud Bavli, Pessachim 116a; Shemot 12-15; Ari haKadosh, Pri Etz Chaim, Shaar Chag haMatzot; Shaar haKavvanot, Inyan haSeder; Zohar Beshalach 52a-55b; Maharal, Gevurot HaShem.',
-  sod = 'Pessach, no Sod, é o **nascimento cósmico de Israel** como povo. Toda a estrutura espiritual do Chag — Seder, Arba Kosot, matsá, maror, afikoman — opera no nível dos Olamot uma sequência precisa de tikun.
+**Fonte:** Mishná Pessachim 10:5; Talmud Bavli, Pessachim 116a; Shemot 12-15; Ari haKadosh, Pri Etz Chaim, Shaar Chag haMatzot; Shaar haKavvanot, Inyan haSeder; Zohar Beshalach 52a-55b; Maharal, Gevurot HaShem.$pardes_pessach_drash$,
+  sod = $pardes_pessach_sod$Pessach, no Sod, é o **nascimento cósmico de Israel** como povo. Toda a estrutura espiritual do Chag — Seder, Arba Kosot, matsá, maror, afikoman — opera no nível dos Olamot uma sequência precisa de tikun.
 
 ### As Arba Kosot e os quatro Olamot
 
@@ -247,7 +247,7 @@ As Arba Kosot derivam-se diretamente de **Shemot 6:6-7**, quatro verbos consecut
 
 Os quatro estágios da redenção: tirar, livrar, resgatar, tomar. Não são sinônimos — são fases progressivas. **Cada copo do Seder marca uma fase**.
 
-E o **quinto verbo** vem em Shemot 6:8: *vehevê''ti etchem el haarets* — vos trarei à Terra. Este verbo, segundo o Talmud Yerushalmi, fundamenta o Kos shel Eliyahu — porque a entrada na Terra de Israel em sua plenitude só ocorrerá com Mashiach. Por isto o copo aguarda.
+E o **quinto verbo** vem em Shemot 6:8: *vehevê'ti etchem el haarets* — vos trarei à Terra. Este verbo, segundo o Talmud Yerushalmi, fundamenta o Kos shel Eliyahu — porque a entrada na Terra de Israel em sua plenitude só ocorrerá com Mashiach. Por isto o copo aguarda.
 
 ### Matsá como Or descendente
 
@@ -299,6 +299,6 @@ Aquele que cumpre Pessach + Sefirat haOmer + Shavuot atravessa o ciclo completo 
 
 Quem celebra Pessach com kavaná consciente de todos esses níveis opera, no Sod, a própria estrutura cósmica do nascimento espiritual de Israel.
 
-**Fonte:** Ari haKadosh, Pri Etz Chaim, Shaar Chag haMatzot; Shemot 6:6-8; Shaar haKavvanot, Inyan haSeder; Zohar Bo 33b-44a; Maharal, Gevurot HaShem.'
-WHERE slug = 'pessach';
+**Fonte:** Ari haKadosh, Pri Etz Chaim, Shaar Chag haMatzot; Shemot 6:6-8; Shaar haKavvanot, Inyan haSeder; Zohar Bo 33b-44a; Maharal, Gevurot HaShem.$pardes_pessach_sod$
+WHERE slug = $pardes_pessach_slug$pessach$pardes_pessach_slug$;
 COMMIT;

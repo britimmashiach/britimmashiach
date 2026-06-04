@@ -2,7 +2,14 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getAuthSnapshot } from '@/lib/auth-snapshot'
 import { profileHasLeaderAccess } from '@/lib/leader-access-policy'
+import { getManhigutProgressFromProfile } from '@/lib/manhigut-progress'
+import { fetchManhigutModulesForLeader } from '@/lib/leader-modules-supabase'
+import { fetchLeaderAnnouncements, fetchLeaderResources } from '@/lib/leader-portal-supabase'
 import { ManhigutSalutation } from '@/components/leaders/ManhigutSalutation'
+import { ManhigutProgressCard } from '@/components/leaders/ManhigutProgressCard'
+import { LeaderAnnouncements } from '@/components/leaders/LeaderAnnouncements'
+import { LeaderResourcesList } from '@/components/leaders/LeaderResourcesList'
+import { MinistryChecklist } from '@/components/leaders/MinistryChecklist'
 import { LeaderGate } from '@/components/ui/LeaderGate'
 import { BookOpen, Calendar, FileText, MessageCircle, Crown, GraduationCap } from 'lucide-react'
 
@@ -77,6 +84,13 @@ export default async function LideresPainelPage() {
   }
 
   const firstName = auth.sessionDisplay?.firstName ?? 'Líder'
+  const progress = getManhigutProgressFromProfile(auth.profile)
+  const [modules, announcements, leaderResources] = await Promise.all([
+    fetchManhigutModulesForLeader(auth.user?.id ?? null),
+    fetchLeaderAnnouncements(),
+    fetchLeaderResources(),
+  ])
+  const availableCount = modules.filter((m) => m.status === 'available').length
 
   return (
     <div className="min-h-screen">
@@ -87,14 +101,17 @@ export default async function LideresPainelPage() {
           </p>
           <ManhigutSalutation firstName={firstName} compact className="mb-1" />
           <p className="text-sm font-inter text-warmgray-600 dark:text-warmgray-400 max-w-2xl">
-            Bem-vindo ao painel reservado a líderes aprovados. A Formação Manhigut já está disponível para
-            estudo pastoral. PDFs exclusivos, checklist de ministério e avisos do Rav serão acrescentados em
-            breve.
+            Bem-vindo ao painel reservado a líderes aprovados. Acompanhe sua Formação Manhigut, os avisos do
+            Rav, os materiais exclusivos e seu checklist de ministério.
           </p>
         </div>
       </section>
 
-      <section className="container mx-auto px-4 py-12 max-w-4xl space-y-8">
+      <section className="container mx-auto px-4 py-12 max-w-4xl space-y-10">
+        <ManhigutProgressCard progress={progress} availableCount={availableCount} />
+
+        <LeaderAnnouncements announcements={announcements} />
+
         <div className="grid gap-5 sm:grid-cols-2">
           {resources.map(({ icon: Icon, title, text, href, cta, featured }) => (
             <div
@@ -110,6 +127,10 @@ export default async function LideresPainelPage() {
             </div>
           ))}
         </div>
+
+        <LeaderResourcesList resources={leaderResources} />
+
+        <MinistryChecklist />
 
         <div className="glass-card p-6 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
           <div className="flex gap-3">

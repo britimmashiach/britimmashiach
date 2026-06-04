@@ -2,7 +2,7 @@
 -- Idempotente: atualiza apenas colunas peshat/remez/drash/sod
 BEGIN;
 UPDATE chagim SET
-  peshat = 'Chanukáh comemora eventos do **período do Segundo Templo**, ocorridos entre 175 e 165 a.C. (séc. II antes da era comum), durante o domínio do império grego selêucida sobre a Terra de Israel.
+  peshat = $pardes_chanukah_peshat$Chanukáh comemora eventos do **período do Segundo Templo**, ocorridos entre 175 e 165 a.C. (séc. II antes da era comum), durante o domínio do império grego selêucida sobre a Terra de Israel.
 
 ### Contexto histórico
 
@@ -23,7 +23,7 @@ Antíoco erigiu uma estátua de Zeus no Kodesh haKodashim, profanou o azeite rit
 
 ### A revolta dos Macabeus
 
-A revolta começou em **Modi''in**, vila a noroeste de Yerushalaim, quando o sacerdote idoso **Matatias ben Yochanan haKohen** recusou-se a sacrificar a Zeus. Quando um judeu helenizado tentou fazer o sacrifício em seu lugar, Matatias matou-o e ao oficial grego presente, gritando *mi laAdonai elai*. Quem é por HaShem, comigo. (Eco de Shemot 32:26.)
+A revolta começou em **Modi'in**, vila a noroeste de Yerushalaim, quando o sacerdote idoso **Matatias ben Yochanan haKohen** recusou-se a sacrificar a Zeus. Quando um judeu helenizado tentou fazer o sacrifício em seu lugar, Matatias matou-o e ao oficial grego presente, gritando *mi laAdonai elai*. Quem é por HaShem, comigo. (Eco de Shemot 32:26.)
 
 Matatias e seus cinco filhos (Yehuda haMacabi, Yonatan, Shimon, Elazar, Yochanan) fugiram para as montanhas e iniciaram guerrilha contra os selêucidas. Durante três anos, uma força muito menor venceu o exército mais poderoso de seu tempo. *Rabim beyad meatim*, muitos na mão de poucos — frase central da liturgia de Chanukáh.
 
@@ -57,8 +57,8 @@ Os Chashmonaim governaram Israel por cerca de um século (165-63 a.C.) como dina
 
 A Brit Im Mashiach reconhece tanto a grandeza do início heroico quanto a tragédia do declínio, lendo a história sem idealizações.
 
-**Fonte:** I Macabeus 1-4; II Macabeus 6-10; Talmud Bavli, Shabat 21b; Megilat Antiochus; Mishné Toráh, Hilchot Chanukáh 3.',
-  remez = 'Chanukáh é o Chag da **luz que vence a escuridão**. Não no sentido cósmico apenas — também no sentido cultural e espiritual. A revolta dos Macabeus não foi apenas militar; foi uma resistência espiritual contra a **helenização**, que ameaçava extinguir a identidade judaica não pela violência direta, mas pela **assimilação**.
+**Fonte:** I Macabeus 1-4; II Macabeus 6-10; Talmud Bavli, Shabat 21b; Megilat Antiochus; Mishné Toráh, Hilchot Chanukáh 3.$pardes_chanukah_peshat$,
+  remez = $pardes_chanukah_remez$Chanukáh é o Chag da **luz que vence a escuridão**. Não no sentido cósmico apenas — também no sentido cultural e espiritual. A revolta dos Macabeus não foi apenas militar; foi uma resistência espiritual contra a **helenização**, que ameaçava extinguir a identidade judaica não pela violência direta, mas pela **assimilação**.
 
 ### Os dois inimigos: violência e assimilação
 
@@ -104,8 +104,8 @@ Há uma dimensão que Chazal deixaram intencionalmente velada. Quando os Macabeu
 
 A Brit Im Mashiach lê isto com nuance: Chanukáh celebra a vitória sobre a assimilação, mas **não foi a restauração messiânica**. Aquela ainda virá, com **Mashiach ben David** restaurando a realeza para Yehudá e o sacerdócio para Aharon, sem confusão entre as duas funções. Cada acendimento de Chanukiá é, em camada profunda, espera pela restauração completa.
 
-**Fonte:** Talmud Bavli, Shabat 21b; Bereshit 49:10; Rambam, Mishné Toráh, Hilchot Chanukáh 3:1; Maharal, Ner Mitzvá; Bnei Yissachar (Rav Tzvi Elimelech de Dynów).',
-  drash = '### Peshat — o sentido literal
+**Fonte:** Talmud Bavli, Shabat 21b; Bereshit 49:10; Rambam, Mishné Toráh, Hilchot Chanukáh 3:1; Maharal, Ner Mitzvá; Bnei Yissachar (Rav Tzvi Elimelech de Dynów).$pardes_chanukah_remez$,
+  drash = $pardes_chanukah_drash$### Peshat — o sentido literal
 
 Chanukáh, no Peshat, é Chag rabínico de oito dias, instituído pelos sábios após a vitória dos Macabeus em 165 a.C. e o milagre do óleo que durou oito dias. Não há base direta na Toráh; está em livros pós-bíblicos (Macabeus) e codificado no Talmud (Shabat 21b). As práticas: acender a Chanukiá oito noites, recitar Hallel completo, dizer Al haNissim, comer fritos e lácteos.
 
@@ -156,8 +156,8 @@ Os quatro níveis juntos:
 
 A Brit Im Mashiach vive Chanukáh nos quatro níveis simultâneos. Cada chama acesa é, ao mesmo tempo, vela física, símbolo de coragem identitária, luz cósmica descendo, e ensaio da Or haGanuz desocultada que iluminará o Olam Habá com Mashiach ben David.
 
-**Fonte:** Talmud Bavli, Shabat 21b; Maharal, Ner Mitzvá; Bnei Yissachar; Pri Etz Chaim, Shaar Chanukáh; Ari haKadosh, Shaar haKavvanot, Derush Chanukáh.',
-  sod = 'Chanukáh, no Sod, é o Chag da **Or haGanuz** (Luz Oculta), a luz primordial dos primeiros dias da Criação que foi escondida por HaShem para os justos no Olam Habá. A pequena chama da Chanukiá, ensina a tradição luriânica, é faísca direta dessa Luz Oculta descendo ao mundo manifesto.
+**Fonte:** Talmud Bavli, Shabat 21b; Maharal, Ner Mitzvá; Bnei Yissachar; Pri Etz Chaim, Shaar Chanukáh; Ari haKadosh, Shaar haKavvanot, Derush Chanukáh.$pardes_chanukah_drash$,
+  sod = $pardes_chanukah_sod$Chanukáh, no Sod, é o Chag da **Or haGanuz** (Luz Oculta), a luz primordial dos primeiros dias da Criação que foi escondida por HaShem para os justos no Olam Habá. A pequena chama da Chanukiá, ensina a tradição luriânica, é faísca direta dessa Luz Oculta descendo ao mundo manifesto.
 
 ### A Or haGanuz
 
@@ -211,6 +211,6 @@ Lendo como acróstico: a transcendência do oito (Chet) atravessa a queda/perpet
 
 A tradição messiânica espera o Terceiro Beit haMikdash. Quando vier, **a Menorá será reacesa**, e o óleo virá milagrosamente — como em Chanukáh, mas em escala universal. Cada acendimento de Chanukiá hoje é ensaio para aquele acendimento final.
 
-**Fonte:** Bereshit Rabá 3:6; Talmud Bavli, Shabat 21b; Maharal, Ner Mitzvá; Bnei Yissachar; Ari haKadosh, Shaar haKavvanot, Derush Chanukáh; Pri Etz Chaim, Shaar Chanukáh.'
-WHERE slug = 'chanukah';
+**Fonte:** Bereshit Rabá 3:6; Talmud Bavli, Shabat 21b; Maharal, Ner Mitzvá; Bnei Yissachar; Ari haKadosh, Shaar haKavvanot, Derush Chanukáh; Pri Etz Chaim, Shaar Chanukáh.$pardes_chanukah_sod$
+WHERE slug = $pardes_chanukah_slug$chanukah$pardes_chanukah_slug$;
 COMMIT;

@@ -2,11 +2,11 @@
 -- Idempotente: atualiza apenas colunas peshat/remez/drash/sod
 BEGIN;
 UPDATE chagim SET
-  peshat = 'A Toráh menciona Rosh Hashanáh em duas passagens principais e os profetas iluminam seu sentido em outras tantas.
+  peshat = $pardes_rosh_hashana_peshat$A Toráh menciona Rosh Hashanáh em duas passagens principais e os profetas iluminam seu sentido em outras tantas.
 
-Em **Vayikra 23:23-25**: *bachodesh hash''vi''i be''echad lachodesh yihyé lachem Shabaton, zichron teruáh mikra kodesh*. No sétimo mês, no primeiro do mês, sereis em descanso solene, lembrança do toque do shofar, convocação santa. A Toráh chama Tishrei de *chodesh hash''vi''i*, sétimo mês, contado a partir de Nissan (mês da libertação). Mas a tradição rabínica reconhece Tishrei como **rosh hashanáh**, cabeça do ano, no sentido de início do ciclo civil e do julgamento.
+Em **Vayikra 23:23-25**: *bachodesh hash'vi'i be'echad lachodesh yihyé lachem Shabaton, zichron teruáh mikra kodesh*. No sétimo mês, no primeiro do mês, sereis em descanso solene, lembrança do toque do shofar, convocação santa. A Toráh chama Tishrei de *chodesh hash'vi'i*, sétimo mês, contado a partir de Nissan (mês da libertação). Mas a tradição rabínica reconhece Tishrei como **rosh hashanáh**, cabeça do ano, no sentido de início do ciclo civil e do julgamento.
 
-Em **Bamidbar 29:1-6**: *uvachodesh hash''vi''i be''echad lachodesh mikra kodesh yihyé lachem, kol melechet avodá lo taasu, yom teruáh yihyé lachem*. No sétimo mês, no primeiro do mês, convocação santa será para vós, nenhum trabalho de servidão fareis, dia de toque do shofar será para vós. Aqui aparece explicitamente *Yom Teruáh*, com a oferenda específica do dia.
+Em **Bamidbar 29:1-6**: *uvachodesh hash'vi'i be'echad lachodesh mikra kodesh yihyé lachem, kol melechet avodá lo taasu, yom teruáh yihyé lachem*. No sétimo mês, no primeiro do mês, convocação santa será para vós, nenhum trabalho de servidão fareis, dia de toque do shofar será para vós. Aqui aparece explicitamente *Yom Teruáh*, com a oferenda específica do dia.
 
 O profeta Yoel (2:15) ecoa o mandamento em chamado público: *tiku shofar beTzion, kadshu tzom, kireu atzaráh*. Tocai o shofar em Tzion, santificai jejum, convocai assembleia.
 
@@ -14,8 +14,8 @@ E Tehilim 81:4-5 oferece a chave litúrgica do dia: *tiku vachodesh shofar, bake
 
 Por fim, **Yirmiyahu 4:19** e **Tsefaniá 1:14-16** descrevem o som do shofar como aviso profético: a alma é chamada a despertar antes que o Dia do Julgamento chegue em sua plenitude. Para Israel, este Dia chega antecipadamente, todo 1 de Tishrei, como ensaio de redenção pessoal e coletiva.
 
-**Fonte:** Vayikra 23:23-25; Bamidbar 29:1-6; Tehilim 81:1-5; Yoel 2:15-17; Yirmiyahu 4:19; Tsefaniá 1:14-16; Talmud Bavli, Rosh Hashanáh 16a.',
-  remez = 'Rosh Hashanáh opera em três planos simultâneos: pessoal, comunitário e cósmico.
+**Fonte:** Vayikra 23:23-25; Bamidbar 29:1-6; Tehilim 81:1-5; Yoel 2:15-17; Yirmiyahu 4:19; Tsefaniá 1:14-16; Talmud Bavli, Rosh Hashanáh 16a.$pardes_rosh_hashana_peshat$,
+  remez = $pardes_rosh_hashana_remez$Rosh Hashanáh opera em três planos simultâneos: pessoal, comunitário e cósmico.
 
 No **plano pessoal**, cada alma é julgada. Não no sentido de punição arbitrária, mas no sentido de balanço espiritual: o que se fez no ano que passou, o que se omitiu, o que se promete fazer no ano que vem. O **Talmud Bavli, Rosh Hashanáh 16b** ensina que três livros são abertos em Rosh Hashanáh: o dos completamente justos (inscritos imediatamente para a vida), o dos completamente ímpios (inscritos para o oposto) e o dos intermediários (que pendem até Yom Kippur). A maioria de Israel se encontra no terceiro livro, e por isto os Dez Dias entre Rosh Hashanáh e Yom Kippur são vividos com intensidade.
 
@@ -29,14 +29,14 @@ No **plano cósmico**, Rosh Hashanáh é o dia em que HaShem é coroado como Rei
 
 Rosh Hashanáh refina cinco qualidades específicas da alma:
 
-▸ **Reverência** (*yir''á*), porque a coroação exige postura interior diante do Rei.
+▸ **Reverência** (*yir'á*), porque a coroação exige postura interior diante do Rei.
 ▸ **Honestidade**, porque o julgamento autêntico começa por se ver com clareza.
 ▸ **Esperança**, porque cada Rosh Hashanáh é nova chance, mesmo após anos de erro.
 ▸ **Memória ativa**, porque pedir que HaShem lembre exige primeiro que nós lembremos.
 ▸ **Despertar**, que é o efeito direto do shofar sobre o coração que ouve.
 
-**Fonte:** Talmud Bavli, Rosh Hashanáh 16a-b, 17a; Mishné Toráh, Hilchot Teshuváh 3:3-4; Machzor de Rosh Hashanáh; Ari haKadosh, Shaar haKavvanot, Derush Tekiat Shofar.',
-  drash = 'Apresentamos Rosh Hashanáh nos quatro níveis hermenêuticos da tradição.
+**Fonte:** Talmud Bavli, Rosh Hashanáh 16a-b, 17a; Mishné Toráh, Hilchot Teshuváh 3:3-4; Machzor de Rosh Hashanáh; Ari haKadosh, Shaar haKavvanot, Derush Tekiat Shofar.$pardes_rosh_hashana_remez$,
+  drash = $pardes_rosh_hashana_drash$Apresentamos Rosh Hashanáh nos quatro níveis hermenêuticos da tradição.
 
 ### Peshat — o sentido literal
 
@@ -72,8 +72,8 @@ Os quatro níveis juntos compõem Rosh Hashanáh completo. No Peshat, é mitzvá
 
 A Brit Im Mashiach vive Rosh Hashanáh nos quatro níveis simultâneos, com kavaná messiânica adicional: cada toque ensaia o shofar grande do Mashiach, e cada coroação do Eterno como Rei prepara o reino que virá em plenitude.
 
-**Fonte:** Vayikra 23:23-25; Yechezkel 18:32, 40:1; Tehilim 34:19; Talmud Bavli, Rosh Hashanáh 16a-b; Zohar III, 99b-100b; Ari haKadosh, Shaar haKavvanot, Derush Rosh haShanáh.',
-  sod = 'A tradição luriânica ensina que em Rosh Hashanáh ocorre o renascimento do *Zeir Anpin*, a configuração sefirótica que rege o mundo. Durante o ano que passou, esta configuração se gasta espiritualmente. Em Tishrei, a Mãe celestial, *Bináh*, gera novamente o *Zeir Anpin* para o próximo ciclo. Tudo o que acontece em Rosh Hashanáh, no nível do Sod, é parte deste parto cósmico.
+**Fonte:** Vayikra 23:23-25; Yechezkel 18:32, 40:1; Tehilim 34:19; Talmud Bavli, Rosh Hashanáh 16a-b; Zohar III, 99b-100b; Ari haKadosh, Shaar haKavvanot, Derush Rosh haShanáh.$pardes_rosh_hashana_drash$,
+  sod = $pardes_rosh_hashana_sod$A tradição luriânica ensina que em Rosh Hashanáh ocorre o renascimento do *Zeir Anpin*, a configuração sefirótica que rege o mundo. Durante o ano que passou, esta configuração se gasta espiritualmente. Em Tishrei, a Mãe celestial, *Bináh*, gera novamente o *Zeir Anpin* para o próximo ciclo. Tudo o que acontece em Rosh Hashanáh, no nível do Sod, é parte deste parto cósmico.
 
 O shofar, na compreensão luriânica, opera diretamente sobre os mundos superiores. Cada um dos três sons tem função específica:
 
@@ -93,6 +93,6 @@ As **três bênçãos do Musaf** (Malchuyot, Zichronot, Shofarot) correspondem �
 ▸ **Zichronot** corresponde a *Chochmáh*, a Sabedoria, porque lembrar é o ato primordial da mente divina.
 ▸ **Shofarot** corresponde a *Bináh*, a Compreensão, porque o som do shofar é o canal pelo qual Bináh desce ao mundo manifesto.
 
-**Fonte:** Ari haKadosh, Shaar haKavvanot, Derush Tekiat Shofar e Derush Rosh haShanáh; Etz Chaim, Shaar haShofarot; Pri Etz Chaim, Shaar Rosh haShanáh; Zohar III, 99b-100b; Zohar Pinchas 231a.'
-WHERE slug = 'rosh-hashana';
+**Fonte:** Ari haKadosh, Shaar haKavvanot, Derush Tekiat Shofar e Derush Rosh haShanáh; Etz Chaim, Shaar haShofarot; Pri Etz Chaim, Shaar Rosh haShanáh; Zohar III, 99b-100b; Zohar Pinchas 231a.$pardes_rosh_hashana_sod$
+WHERE slug = $pardes_rosh_hashana_slug$rosh-hashana$pardes_rosh_hashana_slug$;
 COMMIT;

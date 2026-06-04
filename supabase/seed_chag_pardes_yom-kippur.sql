@@ -2,7 +2,7 @@
 -- Idempotente: atualiza apenas colunas peshat/remez/drash/sod
 BEGIN;
 UPDATE chagim SET
-  peshat = 'A Toráh dedica capítulos inteiros a Yom Kippur, mais que a qualquer outro dia do ano (exceto Shabat).
+  peshat = $pardes_yom_kippur_peshat$A Toráh dedica capítulos inteiros a Yom Kippur, mais que a qualquer outro dia do ano (exceto Shabat).
 
 ### Vayikra 16 — O Serviço do Kohen Gadol
 
@@ -18,9 +18,9 @@ Aqui Yom Kippur é nomeado como *Shabat Shabaton*, com a ordem de afligir a alma
 
 Detalhamento das oferendas do altar exterior em Yom Kippur (separadas do serviço interno do Kohen Gadol no Kodesh haKodashim).
 
-### Yesha''yahu 57:14 a 58:14 — A Haftaráh da Manhã
+### Yesha'yahu 57:14 a 58:14 — A Haftaráh da Manhã
 
-Profecia que se lê em Yom Kippur de manhã. Yesha''yahu critica o jejum vazio: *halô zé tzom evchareihu, patê chartzubot resha*. Não é este o jejum que escolho: soltar amarras de perversidade? O verdadeiro jejum, ensina o profeta, é **partilhar o pão com o faminto, abrigar o pobre desabrigado, vestir o nu**. Sem ação social, todo o jejum é hipocrisia. Este texto reorienta toda a vivência do dia.
+Profecia que se lê em Yom Kippur de manhã. Yesha'yahu critica o jejum vazio: *halô zé tzom evchareihu, patê chartzubot resha*. Não é este o jejum que escolho: soltar amarras de perversidade? O verdadeiro jejum, ensina o profeta, é **partilhar o pão com o faminto, abrigar o pobre desabrigado, vestir o nu**. Sem ação social, todo o jejum é hipocrisia. Este texto reorienta toda a vivência do dia.
 
 ### Yoná completo — A Haftaráh da Tarde
 
@@ -28,10 +28,10 @@ Lê-se o **livro de Yoná inteiro** (4 capítulos curtos) em Minchá de Yom Kipp
 
 ### Os Treze Atributos de Misericórdia
 
-Em **Shemot 34:6-7**, após o pecado do bezerro de ouro, HaShem se revela a Moshé com os Treze Atributos: *HaShem, HaShem, El rachum vechanun, erech apayim verav chesed veemet, notzer chesed laalafim, nosê avon vafesha vechata''á venake*. Estes treze atributos são o coração da Selichá. Em Yom Kippur, recitamos repetidamente, especialmente na Neilá, porque é a fórmula divina pela qual o decreto é revogado.
+Em **Shemot 34:6-7**, após o pecado do bezerro de ouro, HaShem se revela a Moshé com os Treze Atributos: *HaShem, HaShem, El rachum vechanun, erech apayim verav chesed veemet, notzer chesed laalafim, nosê avon vafesha vechata'á venake*. Estes treze atributos são o coração da Selichá. Em Yom Kippur, recitamos repetidamente, especialmente na Neilá, porque é a fórmula divina pela qual o decreto é revogado.
 
-**Fonte:** Vayikra 16; Vayikra 23:26-32; Bamidbar 29:7-11; Yesha''yahu 57:14 a 58:14; Livro de Yoná; Shemot 34:6-7; Talmud Bavli, Yoma 81b, 86a.',
-  remez = 'Yom Kippur é o dia em que o ser humano se aproxima ao máximo possível da condição angélica enquanto ainda vivo. As cinco aflições não são castigo, são instrumento: ao cessar de comer, beber, perfumar-se, calçar couro e ter relações, o corpo se aquieta e a alma fica exposta. Sem a "casca" das necessidades materiais, o que sobra é apenas a alma diante do Eterno.
+**Fonte:** Vayikra 16; Vayikra 23:26-32; Bamidbar 29:7-11; Yesha'yahu 57:14 a 58:14; Livro de Yoná; Shemot 34:6-7; Talmud Bavli, Yoma 81b, 86a.$pardes_yom_kippur_peshat$,
+  remez = $pardes_yom_kippur_remez$Yom Kippur é o dia em que o ser humano se aproxima ao máximo possível da condição angélica enquanto ainda vivo. As cinco aflições não são castigo, são instrumento: ao cessar de comer, beber, perfumar-se, calçar couro e ter relações, o corpo se aquieta e a alma fica exposta. Sem a "casca" das necessidades materiais, o que sobra é apenas a alma diante do Eterno.
 
 Por isto a tradição diz que Yom Kippur é o dia mais alegre do ano (**Mishná, Taanit 4:8**), apesar do jejum: é o único dia em que a alma toca o que é, sem disfarce.
 
@@ -70,8 +70,8 @@ Os Aseret Yemei Teshuváh começam em Rosh Hashanáh, quando o nome é inscrito.
 
 Aplicação prática: a sua Neilá deve incluir, com kavaná real, o pedido específico do que você quer ver mudado no ano que vem. Pedir vagamente "saúde e prosperidade" é fraco. Pedir nomeadamente *aquilo* que está pesando, *aquela* questão concreta, é a oração que atravessa o portão antes do fechamento.
 
-**Fonte:** Vayikra 16:30; Mishná, Taanit 4:8 e Yoma 8:8-9; Talmud Bavli, Yoma 85b-87b; Mishné Toráh, Hilchot Teshuváh 1-2.',
-  drash = 'Apresentamos Yom Kippur nos quatro níveis hermenêuticos.
+**Fonte:** Vayikra 16:30; Mishná, Taanit 4:8 e Yoma 8:8-9; Talmud Bavli, Yoma 85b-87b; Mishné Toráh, Hilchot Teshuváh 1-2.$pardes_yom_kippur_remez$,
+  drash = $pardes_yom_kippur_drash$Apresentamos Yom Kippur nos quatro níveis hermenêuticos.
 
 ### Peshat — o sentido literal
 
@@ -124,8 +124,8 @@ Os quatro níveis juntos compõem Yom Kippur completo:
 
 A Brit Im Mashiach vive Yom Kippur nos quatro níveis simultâneos. Cada Tekiá Gedolá final é, ao mesmo tempo, encerramento do dia, encerramento do julgamento, e ensaio do toque grande do Mashiach que reunirá os exilados de Israel e instaurará o reino eterno.
 
-**Fonte:** Vayikra 16; Vayikra 23:26-32; Livro de Yoná; Mishná, Yoma 8:9; Talmud Bavli, Yoma 86b; Zohar III, 67a-69b; Ari haKadosh, Shaar haKavvanot, Derush Yom haKippurim.',
-  sod = 'Em Yom Kippur, todo Israel atinge espiritualmente o nível do *Kohen Gadol* no *Kodesh haKodashim*. A barreira entre o sagrado e o profano se dissolve. O que durante o ano inteiro fica oculto é, neste dia, exposto.
+**Fonte:** Vayikra 16; Vayikra 23:26-32; Livro de Yoná; Mishná, Yoma 8:9; Talmud Bavli, Yoma 86b; Zohar III, 67a-69b; Ari haKadosh, Shaar haKavvanot, Derush Yom haKippurim.$pardes_yom_kippur_drash$,
+  sod = $pardes_yom_kippur_sod$Em Yom Kippur, todo Israel atinge espiritualmente o nível do *Kohen Gadol* no *Kodesh haKodashim*. A barreira entre o sagrado e o profano se dissolve. O que durante o ano inteiro fica oculto é, neste dia, exposto.
 
 ### O acesso ao Kodesh haKodashim
 
@@ -173,6 +173,6 @@ O nome *Neilá* significa "fechamento". Os portões do céu, abertos desde Rosh 
 
 Por isto a Neilá tem fórmulas como *patach lanu shaar*, abre-nos um portão. E termina com a proclamação coletiva, sete vezes: *HaShem hu haElohim*, HaShem é o Elohim. Esta sétupla proclamação leva *Malchut* até *Keter* — o reverso do caminho dos seis dias da semana. Em sete proclamações, a alma sobe a Etz Chaim inteira.
 
-**Fonte:** Vayikra 16; Shemot 34:6-7; Ari haKadosh, Shaar haKavvanot, Derush Yom haKippurim; Pri Etz Chaim, Shaar Yom haKippurim; Zohar III, 67a-69b; Tomer Devorá de Rabi Moshé Cordovero, capítulo sobre os Treze Atributos.'
-WHERE slug = 'yom-kippur';
+**Fonte:** Vayikra 16; Shemot 34:6-7; Ari haKadosh, Shaar haKavvanot, Derush Yom haKippurim; Pri Etz Chaim, Shaar Yom haKippurim; Zohar III, 67a-69b; Tomer Devorá de Rabi Moshé Cordovero, capítulo sobre os Treze Atributos.$pardes_yom_kippur_sod$
+WHERE slug = $pardes_yom_kippur_slug$yom-kippur$pardes_yom_kippur_slug$;
 COMMIT;

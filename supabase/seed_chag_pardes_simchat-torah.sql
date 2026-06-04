@@ -2,7 +2,7 @@
 -- Idempotente: atualiza apenas colunas peshat/remez/drash/sod
 BEGIN;
 UPDATE chagim SET
-  peshat = 'Simchat Toráh não tem fundação direta na Toráh. É **Chag rabínico**, mas com raízes bíblicas profundas que se manifestaram historicamente em forma de celebração.
+  peshat = $pardes_simchat_torah_peshat$Simchat Toráh não tem fundação direta na Toráh. É **Chag rabínico**, mas com raízes bíblicas profundas que se manifestaram historicamente em forma de celebração.
 
 ### Fundação histórica
 
@@ -37,7 +37,7 @@ E o **reinício imediato** em Bereshit 1:1 expressa princípio profundo: a Torá
 ### O nome do Chag
 
 ▸ **Simchat Toráh**: nome ashkenazi e moderno padrão. "Alegria da Toráh."
-▸ **Yom haShevi''i shel Atzeret**: nome talmúdico literal — "Sétimo dia da Atzeret" (contando Sukkot+Atzeret=8, e este é o 8 dentro da contagem).
+▸ **Yom haShevi'i shel Atzeret**: nome talmúdico literal — "Sétimo dia da Atzeret" (contando Sukkot+Atzeret=8, e este é o 8 dentro da contagem).
 ▸ Em algumas tradições sefarditas: *Atzeret II* — "segundo dia de Atzeret".
 ▸ **Brit Im Mashiach** segue padrão moderno: Simchat Toráh.
 
@@ -47,8 +47,8 @@ A celebração ser rabínica e não escrita não diminui sua importância. Pelo 
 
 A Brit Im Mashiach reconhece Simchat Toráh como Chag legítimo da tradição rabínica, profundamente alinhado ao espírito bíblico, mesmo sem prescrição explícita.
 
-**Fonte:** Talmud Bavli, Megilá 29b-31a; Devarim 33:4; Tehilim 19:9, 119:111; Yirmiyahu 31:11-12; Sefer haRokeach 219; Mishné Toráh, Hilchot Tefilá 13.',
-  remez = 'Simchat Toráh é o Chag em que o judeu **dança com a Toráh**, não estuda apenas. É o reconhecimento de que a relação com a Toráh não é apenas intelectual ou mesmo ritual — é amorosa, corporal, exuberante. Por isto Simchat Toráh tem dança, e dança é incomum no calendário litúrgico judaico.
+**Fonte:** Talmud Bavli, Megilá 29b-31a; Devarim 33:4; Tehilim 19:9, 119:111; Yirmiyahu 31:11-12; Sefer haRokeach 219; Mishné Toráh, Hilchot Tefilá 13.$pardes_simchat_torah_peshat$,
+  remez = $pardes_simchat_torah_remez$Simchat Toráh é o Chag em que o judeu **dança com a Toráh**, não estuda apenas. É o reconhecimento de que a relação com a Toráh não é apenas intelectual ou mesmo ritual — é amorosa, corporal, exuberante. Por isto Simchat Toráh tem dança, e dança é incomum no calendário litúrgico judaico.
 
 ### O casamento entre Israel e a Toráh
 
@@ -74,7 +74,7 @@ A repetição cíclica também ensina **persistência**. Nenhum aprendizado real
 
 A Toráh termina (Devarim 34:12) com a palavra **ישראל** (Israel), última palavra. A Toráh começa (Bereshit 1:1) com a palavra **בראשית** (Bereshit, "no princípio"). A tradição (Pri Etz Chaim) ensina:
 
-▸ A **última letra** de Devarim 34:12 é **lamed** (ל), de *Yisra''el*.
+▸ A **última letra** de Devarim 34:12 é **lamed** (ל), de *Yisra'el*.
 ▸ A **primeira letra** de Bereshit 1:1 é **bet** (ב), de *Bereshit*.
 ▸ Juntas formam **לב** (*lev*, coração).
 
@@ -86,8 +86,8 @@ A Toráh ordena alegria três vezes em Sukkot (Devarim 16:14-15: *vesamachta bec
 
 Aquele que não se alegra em Simchat Toráh perde uma das mitzvot mais bonitas do calendário. Não importa o cansaço, a tristeza pessoal, a complicação do ano: por algumas horas, **dança-se com a Toráh**, e a alegria precede a vontade. O corpo dança e arrasta a alma.
 
-**Fonte:** Talmud Bavli, Eiruvin 54a, Megilá 31a; Devarim 16:14-15, 33:4; Tehilim 19:9; Mishné Toráh, Hilchot Tefilá 13; Ari haKadosh, Pri Etz Chaim, Shaar Simchat Torá.',
-  drash = 'Apresentamos Simchat Toráh nos quatro níveis hermenêuticos.
+**Fonte:** Talmud Bavli, Eiruvin 54a, Megilá 31a; Devarim 16:14-15, 33:4; Tehilim 19:9; Mishné Toráh, Hilchot Tefilá 13; Ari haKadosh, Pri Etz Chaim, Shaar Simchat Torá.$pardes_simchat_torah_remez$,
+  drash = $pardes_simchat_torah_drash$Apresentamos Simchat Toráh nos quatro níveis hermenêuticos.
 
 ### Peshat — o sentido literal
 
@@ -101,7 +101,7 @@ A imagem central do dia — Israel dançando com a Toráh — alude a duas profe
 
 ▸ **Yirmiyahu 31:13**: *az tismach betulá bemachol, uvachurim uzkenim yachdav*. Então alegrar-se-á a virgem em dança, e jovens e velhos juntos. A dança em Simchat Toráh é antegosto da dança messiânica.
 
-▸ **Yesha''yahu 35:10**: *ufdueyé HaShem yeshuvun uvau leTzion berinah*. E os redimidos de HaShem voltarão e virão a Tzion em alegria. A alegria que retorna a Tzion no fim dos dias é a mesma alegria das Hakafot.
+▸ **Yesha'yahu 35:10**: *ufdueyé HaShem yeshuvun uvau leTzion berinah*. E os redimidos de HaShem voltarão e virão a Tzion em alegria. A alegria que retorna a Tzion no fim dos dias é a mesma alegria das Hakafot.
 
 E o **número sete** das Hakafot alude aos sete dias da Criação. Cada Hakafá é dia recriado. As sete Hakafot juntas recriam o cosmos com a Toráh no centro.
 
@@ -136,8 +136,8 @@ Os quatro níveis juntos compõem Simchat Toráh completo:
 
 A Brit Im Mashiach vive Simchat Toráh nos quatro níveis simultâneos. Reconhece nele o ensaio do **reino messiânico** em que toda a humanidade dançará em torno da Toráh — Israel no centro, as nações ao redor — formando os sete círculos visíveis de Yerushalaim eterna.
 
-**Fonte:** Devarim 34:12; Bereshit 1:1; Yirmiyahu 31:13; Yesha''yahu 35:10; Talmud Bavli, Megilá 31a; Shir haShirim Rabá 1:2; Zohar Vayikra 73a; Sefer Yetziráh 1:1 (sobre os 32 caminhos); Ari haKadosh, Pri Etz Chaim, Shaar Simchat Torá.',
-  sod = 'Simchat Toráh é, no Sod, o dia em que a alma de Israel é **unida à Toráh em yichud nupcial completo**, e essa união se torna a semente espiritual de todo o ano que se inicia.
+**Fonte:** Devarim 34:12; Bereshit 1:1; Yirmiyahu 31:13; Yesha'yahu 35:10; Talmud Bavli, Megilá 31a; Shir haShirim Rabá 1:2; Zohar Vayikra 73a; Sefer Yetziráh 1:1 (sobre os 32 caminhos); Ari haKadosh, Pri Etz Chaim, Shaar Simchat Torá.$pardes_simchat_torah_drash$,
+  sod = $pardes_simchat_torah_sod$Simchat Toráh é, no Sod, o dia em que a alma de Israel é **unida à Toráh em yichud nupcial completo**, e essa união se torna a semente espiritual de todo o ano que se inicia.
 
 ### O Yichud entre Israel e a Toráh
 
@@ -169,9 +169,9 @@ Cada Sefer Toráh, no Sod, é manifestação física de **Malchut**. As letras e
 
 Em Simchat Toráh, ao dançar com o Sefer nos braços, o judeu não dança apenas com um objeto sagrado. Está dançando com a própria *Shechiná* corporificada. Esta é a única ocasião litúrgica do ano em que isto acontece publicamente.
 
-### A última palavra: Yisra''el
+### A última palavra: Yisra'el
 
-A Toráh termina em Devarim 34:12 com a palavra **לְעֵינֵי כׇּל יִשְׂרָאֵל** (lifnei einei kol Yisra''el), diante dos olhos de todo Israel. **Israel é a última palavra**.
+A Toráh termina em Devarim 34:12 com a palavra **לְעֵינֵי כׇּל יִשְׂרָאֵל** (lifnei einei kol Yisra'el), diante dos olhos de todo Israel. **Israel é a última palavra**.
 
 No Sod, isto significa: o destino e o ápice de toda a Toráh é Israel mesmo. Não há Toráh sem Israel para recebê-la, internalizá-la, dançá-la. A Toráh chega à sua completude no povo que a vive.
 
@@ -189,6 +189,6 @@ A dança das sete Hakafot, a leitura final, o reinício imediato, a aliyá de *K
 
 Quem participa de Simchat Toráh com kavaná consciente participa, no Sod, da reciclagem cósmica da Or pela qual o mundo é sustentado por mais um ano.
 
-**Fonte:** Zohar III, 73a; Mishlei 8:22; Devarim 34:12; Bereshit 1:1; Ari haKadosh, Pri Etz Chaim, Shaar Simchat Torá; Etz Chaim, Shaar haRishon; Tikkunei Zohar, Tikkun 70 (sobre Bereshit como Chochmáh).'
-WHERE slug = 'simchat-torah';
+**Fonte:** Zohar III, 73a; Mishlei 8:22; Devarim 34:12; Bereshit 1:1; Ari haKadosh, Pri Etz Chaim, Shaar Simchat Torá; Etz Chaim, Shaar haRishon; Tikkunei Zohar, Tikkun 70 (sobre Bereshit como Chochmáh).$pardes_simchat_torah_sod$
+WHERE slug = $pardes_simchat_torah_slug$simchat-torah$pardes_simchat_torah_slug$;
 COMMIT;

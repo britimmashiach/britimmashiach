@@ -620,6 +620,75 @@ export interface Database {
         }
         Relationships: []
       }
+      leader_announcements: {
+        Row: {
+          id: string
+          title: string
+          body: string
+          pinned: boolean
+          is_published: boolean
+          created_by: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          title: string
+          body?: string
+          pinned?: boolean
+          is_published?: boolean
+          created_by?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          title?: string
+          body?: string
+          pinned?: boolean
+          is_published?: boolean
+          created_by?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      leader_resources: {
+        Row: {
+          id: string
+          title: string
+          description: string
+          category: string
+          file_url: string
+          is_published: boolean
+          sort_order: number
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          title: string
+          description?: string
+          category?: string
+          file_url: string
+          is_published?: boolean
+          sort_order?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          title?: string
+          description?: string
+          category?: string
+          file_url?: string
+          is_published?: boolean
+          sort_order?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

@@ -2,13 +2,13 @@
 -- Idempotente: atualiza apenas colunas peshat/remez/drash/sod
 BEGIN;
 UPDATE chagim SET
-  peshat = 'A Toráh dedica uma das passagens mais densas a Sukkot, em **Vayikra 23:33-43**, e as referências se multiplicam em Devarim, Bamidbar e nos profetas.
+  peshat = $pardes_sukkot_peshat$A Toráh dedica uma das passagens mais densas a Sukkot, em **Vayikra 23:33-43**, e as referências se multiplicam em Devarim, Bamidbar e nos profetas.
 
 ### Vayikra 23:33-43 — A Fundação
 
 A Toráh estabelece sete dias de festa, começando em 15 de Tishrei, com *mikra kodesh* (convocação santa) no primeiro dia, Shemini Atzeret no oitavo, e a ordem das Arba Minim em 23:40: *ulekachtem lachem bayom harishon pri etz hadar, kapot temarim, vaanaf etz avot, vearvei nachal*. E tomareis para vós no primeiro dia fruto de árvore formosa (etrog), folhas de palmeira (lulav), ramo de árvore frondosa (hadassim) e salgueiros do riacho (aravot).
 
-Em **23:42-43** vem o mandamento da Sucá com sua razão histórica: *basukot teshvu shivat yamim, kol haezrach beYisrael yeshvu basukot, lemaan yedu doroteichem ki vasukot hoshavti et benei Yisrael behotzi''i otam meerets Mitzraim*. Em sucot habitareis sete dias, todo o nativo em Israel habitará em sucot, para que saibam vossas gerações que em sucot fiz habitar os filhos de Israel ao tirá-los da terra do Mitzraim.
+Em **23:42-43** vem o mandamento da Sucá com sua razão histórica: *basukot teshvu shivat yamim, kol haezrach beYisrael yeshvu basukot, lemaan yedu doroteichem ki vasukot hoshavti et benei Yisrael behotzi'i otam meerets Mitzraim*. Em sucot habitareis sete dias, todo o nativo em Israel habitará em sucot, para que saibam vossas gerações que em sucot fiz habitar os filhos de Israel ao tirá-los da terra do Mitzraim.
 
 ### Devarim 16:13-15 — A Alegria Ordenada
 
@@ -26,14 +26,14 @@ No reino messiânico, segundo Zechariáh, todas as nações subirão a Yerushala
 
 ### Tehilim 27:5 — A Sucá como Proteção
 
-*Ki yitzpenéni besukó beyom ra''á, yastireni beseter aholó*. Pois Ele me esconderá em Sua sucá no dia mal, me ocultará no segredo da Sua tenda. David usa a imagem da sucá divina para falar de proteção: a frágil cabana terrena é símbolo da sólida proteção celestial. O versículo abre o Salmo 27, lido durante todo Elul e Aseret Yemei Teshuváh.
+*Ki yitzpenéni besukó beyom ra'á, yastireni beseter aholó*. Pois Ele me esconderá em Sua sucá no dia mal, me ocultará no segredo da Sua tenda. David usa a imagem da sucá divina para falar de proteção: a frágil cabana terrena é símbolo da sólida proteção celestial. O versículo abre o Salmo 27, lido durante todo Elul e Aseret Yemei Teshuváh.
 
 ### Nechemiá 8:13-18 — A Restauração Histórica
 
 Após o retorno do exílio babilônico, Ezrá e Nechemiá restauraram a observância de Sukkot. *Velô assu mimei Yeshua bin Nun kén benei Yisrael ad hayom hahu, vatehí simchá gedolá meod*. Os filhos de Israel não fizeram assim desde os dias de Yehoshua filho de Nun, e houve grande alegria.
 
-**Fonte:** Vayikra 23:33-43; Devarim 16:13-15; Bamidbar 29:12-34; Tehilim 27:5; Zechariáh 14:16-19; Nechemiá 8:13-18.',
-  remez = 'Sukkot é o Chag da **transição entre seguranças**. Sair da casa permanente, com paredes sólidas e teto firme, e morar sete dias numa cabana frágil, com schach pelo qual se vê o céu. Esta troca não é sacrifício; é revelação. A Sucá ensina que a segurança real nunca esteve na casa permanente. Esteve sempre na proteção do Eterno.
+**Fonte:** Vayikra 23:33-43; Devarim 16:13-15; Bamidbar 29:12-34; Tehilim 27:5; Zechariáh 14:16-19; Nechemiá 8:13-18.$pardes_sukkot_peshat$,
+  remez = $pardes_sukkot_remez$Sukkot é o Chag da **transição entre seguranças**. Sair da casa permanente, com paredes sólidas e teto firme, e morar sete dias numa cabana frágil, com schach pelo qual se vê o céu. Esta troca não é sacrifício; é revelação. A Sucá ensina que a segurança real nunca esteve na casa permanente. Esteve sempre na proteção do Eterno.
 
 Por isto Sukkot vem logo após Yom Kippur. Em Yom Kippur, a alma é purificada. Em Sukkot, a alma purificada é convidada a confiar de novo. Confiar não na casa, no salário, no plano, na previsibilidade. Confiar na Presença que cobre Israel desde os 40 anos do deserto, e continua cobrindo onde quer que Israel se reúna em sucá.
 
@@ -46,7 +46,7 @@ A tradição (Talmud Bavli, Sucá 11b) ensina que as sucot do deserto não eram 
 ▸ **Confiança radical** (*bitachón*): morar onde o céu se vê pelo schach.
 ▸ **Hospitalidade** (*hachnasat orchim*): a Sucá é, por sua natureza, espaço de hóspedes; sete deles celestiais (Ushpizin), e tantos quantos couberem terrenos.
 ▸ **Simplicidade material**: a Sucá tem o mínimo necessário; descobre-se que basta.
-▸ **Alegria autêntica**: ordenada três vezes em Devarim 16, *Z''man Simchateinu*.
+▸ **Alegria autêntica**: ordenada três vezes em Devarim 16, *Z'man Simchateinu*.
 ▸ **Universalidade**: as 70 oferendas pelas 70 nações expandem a oração para fora de Israel; Sukkot abre a porta do humanismo bíblico.
 
 ### As Arba Minim como tipos de almas
@@ -64,8 +64,8 @@ Mas as quatro são amarradas juntas e agitadas como uma unidade. Lição: nenhum
 
 Em outros Chagim, a alegria é consequência natural da observância. Em Sukkot, a alegria é mitzvá explícita. Quem não consegue se alegrar deve trabalhar conscientemente nisto: cantar, dançar com lulav, comer com gosto, receber convidados. A *Simchat Beit haShoeva* (Alegria do Bombeamento de Água), realizada no Beit haMikdash durante Sukkot, era a celebração mais espetacular do ano (Talmud Bavli, Sucá 51a). Hoje, sem Templo, a alegria toma outras formas: Nigunim na Sucá, danças no Hoshaná Rabá, hospitalidade exuberante.
 
-**Fonte:** Talmud Bavli, Sucá 11b, 51a; Midrash Vayikra Rabá 30:12; Devarim 16:14-15; Mishné Toráh, Hilchot Sucá; Sefer haChinuch, mitzvot 324-326.',
-  drash = 'Apresentamos Sukkot nos quatro níveis hermenêuticos.
+**Fonte:** Talmud Bavli, Sucá 11b, 51a; Midrash Vayikra Rabá 30:12; Devarim 16:14-15; Mishné Toráh, Hilchot Sucá; Sefer haChinuch, mitzvot 324-326.$pardes_sukkot_remez$,
+  drash = $pardes_sukkot_drash$Apresentamos Sukkot nos quatro níveis hermenêuticos.
 
 ### Peshat — o sentido literal
 
@@ -110,8 +110,8 @@ Os quatro níveis juntos compõem Sukkot completo:
 
 A Brit Im Mashiach vive Sukkot nos quatro níveis simultâneos. Cada Sucá é antecipação da **Sucá universal** que cobrirá Israel e as nações no reino messiânico, conforme Zechariáh 14:16. Cada agitação do lulav é proclamação que o Mashiach é Senhor das seis direções e do centro.
 
-**Fonte:** Vayikra 23:33-43; Talmud Bavli, Sucá 11b, 51a; Midrash Vayikra Rabá 30:12-14; Zohar III, Emor 103a-104b; Zohar Vayechi 220a; Ari haKadosh, Shaar haKavvanot, Derush Sukkot.',
-  sod = 'Em Sukkot, a alma de Israel sai da casa permanente e entra na *Sucá*, e este movimento físico corresponde, no Sod, a uma reconfiguração sefirótica completa.
+**Fonte:** Vayikra 23:33-43; Talmud Bavli, Sucá 11b, 51a; Midrash Vayikra Rabá 30:12-14; Zohar III, Emor 103a-104b; Zohar Vayechi 220a; Ari haKadosh, Shaar haKavvanot, Derush Sukkot.$pardes_sukkot_drash$,
+  sod = $pardes_sukkot_sod$Em Sukkot, a alma de Israel sai da casa permanente e entra na *Sucá*, e este movimento físico corresponde, no Sod, a uma reconfiguração sefirótica completa.
 
 ### A Sucá como Bináh
 
@@ -154,6 +154,6 @@ A tradição luriânica diz que na Hoshaná Rabá, os anjos chamados *malachei h
 
 Os Chagim que seguem Sukkot (tratados em portais próprios) completam o ciclo: *Shemini Atzeret* é o "oitavo dia" em que HaShem detém Israel para um último momento de intimidade, e *Simchat Toráh* fecha e reinicia o ciclo da Toráh. Os três juntos formam o **período de Tishrei** completo, do despertar do shofar em Rosh Hashanáh à reaberatura da Toráh em Simchat Toráh.
 
-**Fonte:** Ari haKadosh, Shaar haKavvanot, Derush Sukkot; Pri Etz Chaim, Shaar Sukkot; Zohar III, 101b-104b; Zohar Emor 103a-b; Sefer haBahir parágrafos sobre Sucá.'
-WHERE slug = 'sukkot';
+**Fonte:** Ari haKadosh, Shaar haKavvanot, Derush Sukkot; Pri Etz Chaim, Shaar Sukkot; Zohar III, 101b-104b; Zohar Emor 103a-b; Sefer haBahir parágrafos sobre Sucá.$pardes_sukkot_sod$
+WHERE slug = $pardes_sukkot_slug$sukkot$pardes_sukkot_slug$;
 COMMIT;

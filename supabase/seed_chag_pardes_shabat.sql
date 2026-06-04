@@ -2,7 +2,7 @@
 -- Idempotente: atualiza apenas colunas peshat/remez/drash/sod
 BEGIN;
 UPDATE chagim SET
-  peshat = 'A Toráh menciona Shabat mais de cem vezes, mais que qualquer outro Moed. Três passagens centrais sustentam a observância.
+  peshat = $pardes_shabat_peshat$A Toráh menciona Shabat mais de cem vezes, mais que qualquer outro Moed. Três passagens centrais sustentam a observância.
 
 Na **Criação** (Bereshit 2:1-3), HaShem cessa no sétimo dia, abençoa e santifica. Shabat pertence à ordem do cosmos, anterior a qualquer revelação posterior.
 
@@ -10,10 +10,10 @@ No **Decálogo de Shemot 20:8**, ouvimos *zachor*, lembra. Mitzvá positiva: san
 
 Em **Shemot 31:13-17**, Shabat é declarado *brit olam*, aliança eterna, e *ot beini uveinechem*, sinal entre Mim e vós. Não é simples observância, é o emblema constitutivo do povo eleito.
 
-E o profeta Yesha''yahu (58:13) revela a chave do Shabat profundo: *vekarata laShabat oneg*, chamarás ao Shabat deleite. Guardar com tristeza é guardar pela metade. *Oneg Shabat* é a marca do cumprimento autêntico.
+E o profeta Yesha'yahu (58:13) revela a chave do Shabat profundo: *vekarata laShabat oneg*, chamarás ao Shabat deleite. Guardar com tristeza é guardar pela metade. *Oneg Shabat* é a marca do cumprimento autêntico.
 
-**Fonte:** Bereshit 2:1-3; Shemot 20:8-11, 31:13-17; Devarim 5:12-15; Yesha''yahu 58:13-14; Talmud Bavli, Shevuot 20b.',
-  remez = 'Em Shabat, cada filho de Israel recebe a *neshamáh yeterá*, alma adicional, conforme o Talmud Bavli, Beitzá 16a. Esta alma se acopla à alma comum durante as vinte e cinco horas do dia e parte ao final, na Havdaláh. Por isto cheiramos especiarias na separação: para consolar a alma comum pela perda.
+**Fonte:** Bereshit 2:1-3; Shemot 20:8-11, 31:13-17; Devarim 5:12-15; Yesha'yahu 58:13-14; Talmud Bavli, Shevuot 20b.$pardes_shabat_peshat$,
+  remez = $pardes_shabat_remez$Em Shabat, cada filho de Israel recebe a *neshamáh yeterá*, alma adicional, conforme o Talmud Bavli, Beitzá 16a. Esta alma se acopla à alma comum durante as vinte e cinco horas do dia e parte ao final, na Havdaláh. Por isto cheiramos especiarias na separação: para consolar a alma comum pela perda.
 
 Shabat refina cinco qualidades específicas da alma:
 
@@ -21,12 +21,12 @@ Shabat refina cinco qualidades específicas da alma:
 ▸ **Humildade**, ao perceber que o mundo continua girando sem nossa intervenção.
 ▸ **Gratidão**, ao contemplar com calma o que se atravessa correndo durante a semana.
 ▸ **Bitachón** (confiança), ao entregar um dia inteiro a HaShem.
-▸ **Simchá** (alegria), porque Yesha''yahu chama Shabat de *oneg*, deleite.
+▸ **Simchá** (alegria), porque Yesha'yahu chama Shabat de *oneg*, deleite.
 
-E Shabat é também *me''ein Olam Habá*, uma sexagésima parte do mundo vindouro (Talmud Bavli, Berachot 57b). Cada Shabat é janela aberta para o **Yom Shekuló Shabat**, o Dia que é Todo Shabat. Aquele que guarda com kavaná já prova, agora, da realidade que está vindo.
+E Shabat é também *me'ein Olam Habá*, uma sexagésima parte do mundo vindouro (Talmud Bavli, Berachot 57b). Cada Shabat é janela aberta para o **Yom Shekuló Shabat**, o Dia que é Todo Shabat. Aquele que guarda com kavaná já prova, agora, da realidade que está vindo.
 
-**Fonte:** Talmud Bavli, Beitzá 16a; Berachot 57b; Shabat 119b; Yesha''yahu 58:13-14.',
-  drash = 'O Zohar III, 152a ensina que a Toráh tem **corpo** (Peshat), **vestes** (Remez), **alma** (Drash) e **alma da alma** (Sod). Apresentamos o Shabat nos quatro níveis.
+**Fonte:** Talmud Bavli, Beitzá 16a; Berachot 57b; Shabat 119b; Yesha'yahu 58:13-14.$pardes_shabat_remez$,
+  drash = $pardes_shabat_drash$O Zohar III, 152a ensina que a Toráh tem **corpo** (Peshat), **vestes** (Remez), **alma** (Drash) e **alma da alma** (Sod). Apresentamos o Shabat nos quatro níveis.
 
 ### Peshat — o sentido literal
 
@@ -48,8 +48,8 @@ A Shechiná (*Malchut*) sobe pelos quatro Olamot durante o Kabalat Shabat e se u
 
 Os quatro níveis juntos compõem o Shabat completo. Ninguém vive Shabat por inteiro sem começar a perceber os quatro simultâneos. A percepção não vem de uma vez, vem ao longo dos anos.
 
-**Fonte:** Zohar III, 152a; Talmud Bavli, Shabat 118b-119a, Sanhedrin 97a, Berachot 57b; Ari haKadosh, Shaar haKavvanot, Derush Kabalat Shabat.',
-  sod = 'A tradição luriânica, transmitida pelo Arizal em Tzefat no século XVI, revela o que de fato ocorre cosmicamente na entrada do Shabat.
+**Fonte:** Zohar III, 152a; Talmud Bavli, Shabat 118b-119a, Sanhedrin 97a, Berachot 57b; Ari haKadosh, Shaar haKavvanot, Derush Kabalat Shabat.$pardes_shabat_drash$,
+  sod = $pardes_shabat_sod$A tradição luriânica, transmitida pelo Arizal em Tzefat no século XVI, revela o que de fato ocorre cosmicamente na entrada do Shabat.
 
 Durante os seis dias da semana, *Malchut*, a décima Sefiráh, encontra-se em descida pelos mundos inferiores, resgatando *nitzotzot*, faíscas santas, dispersas em toda matéria. Cada bracháh dita com kavaná eleva uma faísca. Cada mitzvá cumprida, idem.
 
@@ -59,6 +59,6 @@ Por isto chamamos Shabat de **Shabat HaMalká** (Shabat a Rainha) e cantamos *Bo
 
 As três refeições operam tikun nas três Sefirot emocionais centrais: a primeira (sexta à noite) em **Chesed**, a segunda (almoço) em **Gevurá**, e a *Seudá Shelishit* em **Tiferet**. Quem cumpre as três equilibra a tríade interior para a semana seguinte.
 
-**Fonte:** Zohar, Bereshit 48a; Vayakhel 204b; Ari haKadosh, Shaar haKavvanot, Derush Kabalat Shabat; Etz Chaim, Shaar haShabat.'
-WHERE slug = 'shabat';
+**Fonte:** Zohar, Bereshit 48a; Vayakhel 204b; Ari haKadosh, Shaar haKavvanot, Derush Kabalat Shabat; Etz Chaim, Shaar haShabat.$pardes_shabat_sod$
+WHERE slug = $pardes_shabat_slug$shabat$pardes_shabat_slug$;
 COMMIT;

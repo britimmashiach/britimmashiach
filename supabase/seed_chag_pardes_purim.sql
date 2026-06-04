@@ -2,7 +2,7 @@
 -- Idempotente: atualiza apenas colunas peshat/remez/drash/sod
 BEGIN;
 UPDATE chagim SET
-  peshat = 'Purim tem sua fonte na **Megilat Esther**, livro completo do Tanach (Ketuvim), com 10 capítulos. É o único Chag pós-êxodo que tem fundação direta em livro canônico do Tanach.
+  peshat = $pardes_purim_peshat$Purim tem sua fonte na **Megilat Esther**, livro completo do Tanach (Ketuvim), com 10 capítulos. É o único Chag pós-êxodo que tem fundação direta em livro canônico do Tanach.
 
 ### A Megilá em sete capítulos-chave
 
@@ -55,8 +55,8 @@ A obrigação de destruir Amalek (Devarim 25:17-19) é mitzvá eterna. Purim é 
 
 Os eventos da Megilá ocorreram aproximadamente em 480 a.C., durante o reinado de Xerxes I. Foram codificados como Chag por Mordechai e Esther logo após (Esther 9:20-32). A celebração foi continuamente observada desde então — uma das mais antigas práticas judaicas ininterruptas.
 
-**Fonte:** Megilat Esther completa (10 capítulos); Talmud Bavli, Megilá 7a-19a, especialmente 13b sobre Amalek; Devarim 25:17-19; 1 Shmuel 15; Mishné Toráh, Hilchot Megilá uChanukáh 1.',
-  remez = 'Purim é o Chag do **HaShem oculto que opera sem se nomear**. Em todos os outros Chagim, HaShem aparece declaradamente: criou em Bereshit (Shabat), entregou a Toráh no Sinai (Shavuot), libertou do Mitzraim (Pessach), perdoa em Yom Kippur. Em Purim, **Seu Nome não está escrito**. Mas Sua mão está em cada virada da história.
+**Fonte:** Megilat Esther completa (10 capítulos); Talmud Bavli, Megilá 7a-19a, especialmente 13b sobre Amalek; Devarim 25:17-19; 1 Shmuel 15; Mishné Toráh, Hilchot Megilá uChanukáh 1.$pardes_purim_peshat$,
+  remez = $pardes_purim_remez$Purim é o Chag do **HaShem oculto que opera sem se nomear**. Em todos os outros Chagim, HaShem aparece declaradamente: criou em Bereshit (Shabat), entregou a Toráh no Sinai (Shavuot), libertou do Mitzraim (Pessach), perdoa em Yom Kippur. Em Purim, **Seu Nome não está escrito**. Mas Sua mão está em cada virada da história.
 
 ### A teologia do Hester Panim
 
@@ -64,7 +64,7 @@ Os eventos da Megilá ocorreram aproximadamente em 480 a.C., durante o reinado d
 
 A lição é poderosa para a vida cotidiana. Há momentos em que oramos e parece que ninguém ouve. Há períodos em que pedimos sinais e nada vem. **Purim ensina que mesmo nessas horas, HaShem está agindo**. Apenas, está agindo sob a face oculta, através de eventos que só posteriormente revelam sua coerência.
 
-Esther é exemplo. Quando aparece pela primeira vez na Megilá (capítulo 2), parece apenas uma jovem órfã sortuda. Apenas posteriormente entende-se que ela foi colocada na posição de rainha **exatamente para salvar Israel** — *mi yodea im le''et kazot higaat lamalchut* (quem sabe se para um momento como este chegaste à realeza, Esther 4:14).
+Esther é exemplo. Quando aparece pela primeira vez na Megilá (capítulo 2), parece apenas uma jovem órfã sortuda. Apenas posteriormente entende-se que ela foi colocada na posição de rainha **exatamente para salvar Israel** — *mi yodea im le'et kazot higaat lamalchut* (quem sabe se para um momento como este chegaste à realeza, Esther 4:14).
 
 ### Cinco qualidades refinadas em Purim
 
@@ -74,7 +74,7 @@ Esther é exemplo. Quando aparece pela primeira vez na Megilá (capítulo 2), pa
 
 ▸ **Jejum corporativo**: três dias de jejum coletivo (Esther 4:16) precedem a ação de Esther. Israel sabe que sem oração, a coragem humana é insuficiente. Purim ensina que ação precisa de oração prévia.
 
-▸ **Generosidade dirigida**: matanot la''evyonim (presentes aos pobres) é mitzvá central. Esther salvou Israel; agora Israel salva o pobre. Compaixão é o cumprimento ético do milagre.
+▸ **Generosidade dirigida**: matanot la'evyonim (presentes aos pobres) é mitzvá central. Esther salvou Israel; agora Israel salva o pobre. Compaixão é o cumprimento ético do milagre.
 
 ▸ **Alegria celebrativa**: *yemei mishtê vesimchá* (dias de banquete e alegria) é mandamento explícito. Purim sem alegria autêntica falha em cumprir-se. A alegria não é decoração; é mitzvá.
 
@@ -107,12 +107,12 @@ Purim aponta, no Drash messiânico, para a **inversão final dos tempos**. Quand
 
 A Brit Im Mashiach lê Purim com esta esperança: cada *venahafoch hu* local que vemos hoje na história é ensaio do *venahafoch hu* universal que vem.
 
-**Fonte:** Megilat Esther; Talmud Bavli, Megilá 7a-19a; Talmud Bavli, Eruvin 65a; Mishné Toráh, Hilchot Megilá uChanukáh; Maharal, Or Chadash sobre Esther.',
-  drash = '### Peshat — o sentido literal
+**Fonte:** Megilat Esther; Talmud Bavli, Megilá 7a-19a; Talmud Bavli, Eruvin 65a; Mishné Toráh, Hilchot Megilá uChanukáh; Maharal, Or Chadash sobre Esther.$pardes_purim_remez$,
+  drash = $pardes_purim_drash$### Peshat — o sentido literal
 
 Purim, no Peshat, comemora a salvação dos judeus do Império Persa em ~480 a.C., conforme narrado em Megilat Esther. Os judeus, ameaçados de extermínio pelo decreto de Haman, foram salvos pela coragem de Esther e Mordechai. Em 14 de Adar (15 nas cidades muradas), Israel celebra a vitória.
 
-As quatro mitzvot: leitura da Megilá, mishloach manot, matanot la''evyonim, seudat Purim. Mais o jejum prévio (Ta''anit Esther, 13 de Adar) e o anúncio "*mishenichnas Adar marbim besimchá*" (com a entrada de Adar, aumenta-se a alegria).
+As quatro mitzvot: leitura da Megilá, mishloach manot, matanot la'evyonim, seudat Purim. Mais o jejum prévio (Ta'anit Esther, 13 de Adar) e o anúncio "*mishenichnas Adar marbim besimchá*" (com a entrada de Adar, aumenta-se a alegria).
 
 ### Remez — a alusão velada
 
@@ -163,8 +163,8 @@ Os quatro níveis juntos:
 
 A Brit Im Mashiach vive Purim nos quatro níveis simultâneos. Reconhece nele o ensaio anual da **inversão messiânica final**, em que toda forma histórica de Haman será definitivamente derrotada, e *venahafoch hu* será cumprido em escala cósmica universal.
 
-**Fonte:** Megilat Esther; Talmud Bavli, Megilá 4a-22a, especialmente 7b; Maharal, Or Chadash; Ari haKadosh, Shaar haKavvanot, Inyan Purim; Bnei Yissachar, Maamarei Adar.',
-  sod = 'Purim, no Sod, é o Chag em que **Malchut** (a Shechiná no exílio) opera salvação sob disfarce. Toda a estrutura espiritual do Chag é codificada em uma única expressão: *hester panim* — o ocultamento da face divina que paradoxalmente revela a Presença mais profunda.
+**Fonte:** Megilat Esther; Talmud Bavli, Megilá 4a-22a, especialmente 7b; Maharal, Or Chadash; Ari haKadosh, Shaar haKavvanot, Inyan Purim; Bnei Yissachar, Maamarei Adar.$pardes_purim_drash$,
+  sod = $pardes_purim_sod$Purim, no Sod, é o Chag em que **Malchut** (a Shechiná no exílio) opera salvação sob disfarce. Toda a estrutura espiritual do Chag é codificada em uma única expressão: *hester panim* — o ocultamento da face divina que paradoxalmente revela a Presença mais profunda.
 
 ### Esther como Malchut em exílio
 
@@ -172,7 +172,7 @@ O nome **Esther** (אסתר) tem raiz em *seter* (סתר), ocultamento. Ela é M
 
 E ainda assim, no momento decisivo, Malchut age. **Esther salva Israel não apesar do exílio, mas através do exílio**. A posição que parecia perdição se revela ser exatamente a posição necessária para salvar o povo. Esta é a estrutura do Sod de Purim.
 
-A tradição luriânica ensina que cada exílio de Israel tem este padrão. Malchut está oculta em meio às nações, parecendo perdida, mas está ali para realizar tikun cósmico do qual nem ela mesma sabe completamente. Apenas no momento certo (*le''et kazot*), a Malchut age e tudo se reverte.
+A tradição luriânica ensina que cada exílio de Israel tem este padrão. Malchut está oculta em meio às nações, parecendo perdida, mas está ali para realizar tikun cósmico do qual nem ela mesma sabe completamente. Apenas no momento certo (*le'et kazot*), a Malchut age e tudo se reverte.
 
 ### Mordechai como Tiferet
 
@@ -192,7 +192,7 @@ Por isto Haman lança *pur* (sorte). Crê que o destino é resultado de dados. M
 
 Esther proclama três dias de jejum antes de se apresentar ao rei (Esther 4:16). Estes três dias correspondem, no Sod, ao **purificação dos três níveis emocionais inferiores** (Netzach, Hod, Yessod) antes que Malchut suba.
 
-A tradição estabeleceu também o **Ta''anit Esther** (Jejum de Esther) no 13 de Adar, dia anterior a Purim. Marca o jejum original. Quem jejua, opera tikun preparatório para a alegria do dia seguinte.
+A tradição estabeleceu também o **Ta'anit Esther** (Jejum de Esther) no 13 de Adar, dia anterior a Purim. Marca o jejum original. Quem jejua, opera tikun preparatório para a alegria do dia seguinte.
 
 ### A guematria de Amalek
 
@@ -222,6 +222,6 @@ A tradição (Yalkut Shimoni, Mishlei 944) ensina que **todos os Chagim cessarã
 
 Esther como Malchut em exílio, Mordechai como Tiferet conectando, Haman como Amalek/Klipá/Dúvida, *venahafoch hu* como inversão sefirótica, *hester panim* como teologia da Providência oculta — todos juntos compõem o mapa do Sod de Purim. Quem celebra Purim com kavaná consciente opera no próprio mecanismo cósmico da salvação.
 
-**Fonte:** Talmud Bavli, Megilá 13b; Yalkut Shimoni, Mishlei 944; Maharal, Or Chadash sobre Esther; Ari haKadosh, Shaar haKavvanot, Inyan Purim; Pri Etz Chaim, Shaar Purim.'
-WHERE slug = 'purim';
+**Fonte:** Talmud Bavli, Megilá 13b; Yalkut Shimoni, Mishlei 944; Maharal, Or Chadash sobre Esther; Ari haKadosh, Shaar haKavvanot, Inyan Purim; Pri Etz Chaim, Shaar Purim.$pardes_purim_sod$
+WHERE slug = $pardes_purim_slug$purim$pardes_purim_slug$;
 COMMIT;

@@ -299,3 +299,82 @@ export async function deleteUserAction(
   if (error) return { ok: false, message: error.message }
   return { ok: true, message: 'Conta removida do sistema de autenticação.' }
 }
+
+// ── Portal de líderes: avisos do Rav e recursos exclusivos ──────────────────
+
+type SimpleResult = { ok: true; message: string } | { ok: false; message: string }
+
+export async function createLeaderAnnouncementAction(input: {
+  title: string
+  body: string
+  pinned: boolean
+}): Promise<SimpleResult> {
+  const gate = await requireAdmin()
+  if (!gate.ok) return { ok: false, message: gate.message }
+
+  const title = input.title.trim()
+  if (!title) return { ok: false, message: 'Informe um título para o aviso.' }
+
+  const admin = getSupabaseAdmin()
+  const { error } = await admin.from('leader_announcements').insert({
+    title,
+    body: input.body.trim(),
+    pinned: input.pinned,
+    is_published: true,
+    created_by: await getCallerId(),
+  })
+
+  if (error) return { ok: false, message: error.message }
+  return { ok: true, message: `Aviso publicado: ${title}` }
+}
+
+export async function deleteLeaderAnnouncementAction(id: string): Promise<SimpleResult> {
+  const gate = await requireAdmin()
+  if (!gate.ok) return { ok: false, message: gate.message }
+
+  const admin = getSupabaseAdmin()
+  const { error } = await admin.from('leader_announcements').delete().eq('id', id)
+  if (error) return { ok: false, message: error.message }
+  return { ok: true, message: 'Aviso removido.' }
+}
+
+export async function createLeaderResourceAction(input: {
+  title: string
+  description: string
+  category: string
+  fileUrl: string
+  sortOrder: number
+}): Promise<SimpleResult> {
+  const gate = await requireAdmin()
+  if (!gate.ok) return { ok: false, message: gate.message }
+
+  const title = input.title.trim()
+  const fileUrl = input.fileUrl.trim()
+  if (!title) return { ok: false, message: 'Informe um título para o material.' }
+  if (!/^https?:\/\/.+/i.test(fileUrl)) {
+    return { ok: false, message: 'Informe uma URL válida (http/https) para o arquivo.' }
+  }
+
+  const admin = getSupabaseAdmin()
+  const { error } = await admin.from('leader_resources').insert({
+    title,
+    description: input.description.trim(),
+    category: input.category.trim() || 'geral',
+    file_url: fileUrl,
+    is_published: true,
+    sort_order: Number.isFinite(input.sortOrder) ? input.sortOrder : 0,
+  })
+
+  if (error) return { ok: false, message: error.message }
+  return { ok: true, message: `Material publicado: ${title}` }
+}
+
+export async function deleteLeaderResourceAction(id: string): Promise<SimpleResult> {
+  const gate = await requireAdmin()
+  if (!gate.ok) return { ok: false, message: gate.message }
+
+  const admin = getSupabaseAdmin()
+  const { error } = await admin.from('leader_resources').delete().eq('id', id)
+  if (error) return { ok: false, message: error.message }
+  return { ok: true, message: 'Material removido.' }
+}
