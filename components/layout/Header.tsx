@@ -54,7 +54,7 @@ const mainNavLinks: NavItem[] = [
   { href: '/studies', label: 'Estudos', icon: GraduationCap },
   { href: '/library', label: 'Biblioteca', icon: Library },
   { href: '/tanach', label: 'Tanach', icon: Languages },
-  { href: '/lideres', label: 'Líderes', icon: Users },
+  { href: '/lideres/painel', label: 'Portal de Líderes', icon: Users },
 ]
 
 /** Sempre visíveis no desktop, ao lado da conta — não ficam cortados pelo menu central. */
