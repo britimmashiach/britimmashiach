@@ -189,8 +189,8 @@ export function ProfileClient({ profile, successPayment, asaasReady = false }: P
       {/* Convite: WhatsApp para avisos da kehilah */}
       <WhatsAppOptInCard
         profileId={profile.id}
-        initialWhatsapp={profile.whatsapp}
-        initialNotify={profile.whatsapp_notify}
+        initialWhatsapp={profile.whatsapp ?? null}
+        initialNotify={profile.whatsapp_notify ?? false}
       />
 
       {/* Ações */}

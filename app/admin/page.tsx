@@ -13,6 +13,8 @@ import {
   type AdminAnnouncementRow,
   type AdminResourceRow,
 } from '@/components/admin/LeaderPortalAdminPanel'
+import { countWhatsAppOptInMembers } from '@/lib/broadcast-announcement-whatsapp'
+import { getWhatsAppProvider } from '@/lib/whatsapp-notify'
 
 export const dynamic = 'force-dynamic'
 
@@ -53,7 +55,10 @@ export default async function AdminPage() {
 
   let announcements: AdminAnnouncementRow[] = []
   let resources: AdminResourceRow[] = []
+  let whatsappOptInCount = 0
+  const whatsappProviderConfigured = getWhatsAppProvider() !== 'none'
   if (serviceOk) {
+    whatsappOptInCount = await countWhatsAppOptInMembers()
     const admin = getSupabaseAdmin()
     const [annRes, resRes] = await Promise.all([
       admin
@@ -143,6 +148,8 @@ export default async function AdminPage() {
           serviceRoleConfigured={serviceOk}
           announcements={announcements}
           resources={resources}
+          whatsappOptInCount={whatsappOptInCount}
+          whatsappProviderConfigured={whatsappProviderConfigured}
         />
       </section>
     </div>

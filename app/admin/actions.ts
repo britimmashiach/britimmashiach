@@ -1,7 +1,13 @@
 'use server'
 
+import { after } from 'next/server'
 import { createServerSupabaseClient, hasSupabaseServerEnv } from '@/lib/supabase-server'
 import { getSupabaseAdmin, hasServiceRoleEnv } from '@/lib/supabase-admin'
+import {
+  broadcastAnnouncementWhatsApp,
+  countWhatsAppOptInMembers,
+} from '@/lib/broadcast-announcement-whatsapp'
+import { getWhatsAppProvider } from '@/lib/whatsapp-notify'
 import type { UserRole } from '@/types'
 
 type Gate = { ok: true } | { ok: false; message: string }
@@ -309,6 +315,7 @@ export async function createLeaderAnnouncementAction(input: {
   body: string
   pinned: boolean
   showOnHome?: boolean
+  notifyWhatsapp?: boolean
 }): Promise<SimpleResult> {
   const gate = await requireAdmin()
   if (!gate.ok) return { ok: false, message: gate.message }
@@ -316,18 +323,41 @@ export async function createLeaderAnnouncementAction(input: {
   const title = input.title.trim()
   if (!title) return { ok: false, message: 'Informe um título para o aviso.' }
 
+  const showOnHome = input.showOnHome ?? false
+  const notifyWhatsapp = input.notifyWhatsapp ?? true
+
   const admin = getSupabaseAdmin()
   const { error } = await admin.from('leader_announcements').insert({
     title,
     body: input.body.trim(),
     pinned: input.pinned,
-    show_on_home: input.showOnHome ?? false,
+    show_on_home: showOnHome,
     is_published: true,
     created_by: await getCallerId(),
   })
 
   if (error) return { ok: false, message: error.message }
-  return { ok: true, message: `Aviso publicado: ${title}` }
+
+  let whatsappNote = ''
+  if (notifyWhatsapp) {
+    const optInCount = await countWhatsAppOptInMembers()
+    const provider = getWhatsAppProvider()
+    if (provider === 'none') {
+      whatsappNote =
+        optInCount > 0
+          ? ` ${optInCount} membro(s) com zap cadastrado; configure WHATSAPP_PROVIDER na Vercel para enviar.`
+          : ''
+    } else if (optInCount > 0) {
+      whatsappNote = ` WhatsApp sera enviado em segundo plano para ${optInCount} membro(s).`
+      after(async () => {
+        await broadcastAnnouncementWhatsApp({ title, showOnHome })
+      })
+    } else {
+      whatsappNote = ' Nenhum membro com zap cadastrado ainda.'
+    }
+  }
+
+  return { ok: true, message: `Aviso publicado: ${title}.${whatsappNote}` }
 }
 
 export async function deleteLeaderAnnouncementAction(id: string): Promise<SimpleResult> {

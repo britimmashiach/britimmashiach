@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
-import { Megaphone, FileText, Trash2, Pin, Home } from 'lucide-react'
+import { Megaphone, FileText, Trash2, Pin, Home, MessageCircle } from 'lucide-react'
 import {
   createLeaderAnnouncementAction,
   deleteLeaderAnnouncementAction,
@@ -30,18 +30,27 @@ interface Props {
   serviceRoleConfigured: boolean
   announcements: AdminAnnouncementRow[]
   resources: AdminResourceRow[]
+  whatsappOptInCount?: number
+  whatsappProviderConfigured?: boolean
 }
 
 const inputClass =
   'w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm font-inter focus:outline-none focus:ring-2 focus:ring-gold-500/30'
 
-export function LeaderPortalAdminPanel({ serviceRoleConfigured, announcements, resources }: Props) {
+export function LeaderPortalAdminPanel({
+  serviceRoleConfigured,
+  announcements,
+  resources,
+  whatsappOptInCount = 0,
+  whatsappProviderConfigured = false,
+}: Props) {
   const router = useRouter()
 
   const [annTitle, setAnnTitle] = useState('')
   const [annBody, setAnnBody] = useState('')
   const [annPinned, setAnnPinned] = useState(false)
   const [annShowOnHome, setAnnShowOnHome] = useState(false)
+  const [annNotifyWhatsapp, setAnnNotifyWhatsapp] = useState(true)
   const [annLoading, setAnnLoading] = useState(false)
 
   const [resTitle, setResTitle] = useState('')
@@ -65,6 +74,7 @@ export function LeaderPortalAdminPanel({ serviceRoleConfigured, announcements, r
         body: annBody,
         pinned: annPinned,
         showOnHome: annShowOnHome,
+        notifyWhatsapp: annNotifyWhatsapp,
       })
       if (!r.ok) {
         toast.error('Não foi possível publicar', { description: r.message })
@@ -75,6 +85,7 @@ export function LeaderPortalAdminPanel({ serviceRoleConfigured, announcements, r
       setAnnBody('')
       setAnnPinned(false)
       setAnnShowOnHome(false)
+      setAnnNotifyWhatsapp(true)
       router.refresh()
     } finally {
       setAnnLoading(false)
@@ -151,6 +162,19 @@ export function LeaderPortalAdminPanel({ serviceRoleConfigured, announcements, r
           </h3>
         </div>
 
+        {whatsappOptInCount > 0 && (
+          <p className="text-xs font-inter text-warmgray-500 dark:text-warmgray-400 flex items-center gap-1.5">
+            <MessageCircle className="h-3.5 w-3.5 text-green-600 shrink-0" aria-hidden="true" />
+            {whatsappOptInCount} membro(s) com WhatsApp cadastrado para avisos.
+            {!whatsappProviderConfigured && (
+              <span className="text-amber-700 dark:text-amber-400">
+                {' '}
+                Configure WHATSAPP_PROVIDER=meta na Vercel para enviar automaticamente.
+              </span>
+            )}
+          </p>
+        )}
+
         <div className="space-y-3">
           <input
             type="text"
@@ -190,6 +214,23 @@ export function LeaderPortalAdminPanel({ serviceRoleConfigured, announcements, r
               </span>
               <span className="text-xs text-warmgray-400">
                 Só o título aparece na home. O contexto continua restrito ao portal de líderes.
+              </span>
+            </span>
+          </label>
+          <label className="flex items-start gap-2 text-sm font-inter text-warmgray-600 dark:text-warmgray-400">
+            <input
+              type="checkbox"
+              checked={annNotifyWhatsapp}
+              onChange={(e) => setAnnNotifyWhatsapp(e.target.checked)}
+              className="mt-0.5 h-4 w-4 rounded border-border accent-green-600"
+            />
+            <span className="flex flex-col">
+              <span className="inline-flex items-center gap-1.5">
+                <MessageCircle className="h-3.5 w-3.5" aria-hidden="true" />
+                Enviar título por WhatsApp aos membros cadastrados
+              </span>
+              <span className="text-xs text-warmgray-400">
+                Envia só o título e o link; o contexto completo fica no portal de líderes.
               </span>
             </span>
           </label>
