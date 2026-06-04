@@ -308,6 +308,7 @@ export async function createLeaderAnnouncementAction(input: {
   title: string
   body: string
   pinned: boolean
+  showOnHome?: boolean
 }): Promise<SimpleResult> {
   const gate = await requireAdmin()
   if (!gate.ok) return { ok: false, message: gate.message }
@@ -320,6 +321,7 @@ export async function createLeaderAnnouncementAction(input: {
     title,
     body: input.body.trim(),
     pinned: input.pinned,
+    show_on_home: input.showOnHome ?? false,
     is_published: true,
     created_by: await getCallerId(),
   })

@@ -58,6 +58,37 @@ export async function fetchLeaderResources(limit = 60): Promise<LeaderResource[]
   }
 }
 
+/** Apenas o título dos avisos marcados para a página inicial (todos veem). */
+export type HomeAnnouncement = Pick<LeaderAnnouncement, 'id' | 'title' | 'created_at'>
+
+/**
+ * Títulos de avisos liberados para a home (show_on_home + is_published).
+ * Só o título é exposto publicamente; o corpo permanece no portal de líderes.
+ */
+export async function fetchHomeAnnouncements(limit = 3): Promise<HomeAnnouncement[]> {
+  if (!hasServiceRoleEnv()) return []
+  try {
+    const supabase = getSupabaseAdmin()
+    const { data, error } = await supabase
+      .from('leader_announcements')
+      .select('id, title, created_at')
+      .eq('is_published', true)
+      .eq('show_on_home', true)
+      .order('created_at', { ascending: false })
+      .limit(limit)
+
+    if (error) {
+      if (process.env.NODE_ENV === 'development') {
+        console.warn('[leader-portal] home announcements:', error.message)
+      }
+      return []
+    }
+    return data ?? []
+  } catch {
+    return []
+  }
+}
+
 export function formatAnnouncementDatePt(iso: string): string {
   return new Date(iso).toLocaleDateString('pt-BR', {
     day: 'numeric',

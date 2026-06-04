@@ -12,8 +12,16 @@ create table if not exists public.leader_announcements (
   updated_at timestamptz not null default now()
 );
 
+-- Quando true, o TITULO do aviso aparece na pagina inicial para todos.
+-- O corpo (contexto) permanece restrito ao portal de lideres.
+alter table public.leader_announcements
+  add column if not exists show_on_home boolean not null default false;
+
 create index if not exists idx_leader_announcements_feed
   on public.leader_announcements(is_published, pinned desc, created_at desc);
+
+create index if not exists idx_leader_announcements_home
+  on public.leader_announcements(show_on_home, is_published, created_at desc);
 
 alter table public.leader_announcements enable row level security;
 

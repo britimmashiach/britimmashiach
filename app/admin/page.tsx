@@ -58,7 +58,7 @@ export default async function AdminPage() {
     const [annRes, resRes] = await Promise.all([
       admin
         .from('leader_announcements')
-        .select('id, title, pinned, created_at')
+        .select('id, title, pinned, show_on_home, created_at')
         .order('pinned', { ascending: false })
         .order('created_at', { ascending: false })
         .limit(50),

@@ -7,6 +7,9 @@ import { getPublicSiteOrigin } from '@/lib/public-site-url'
 
 const APP_URL = getPublicSiteOrigin()
 
+// Revalida a home periodicamente para refletir novos avisos da kehilah.
+export const revalidate = 60
+
 export const metadata: Metadata = {
   title: SEO_HOME_TITLE,
   description: SEO_HOME_DESCRIPTION,
@@ -24,6 +27,8 @@ import { OmerCounter } from '@/components/spiritual/OmerCounter'
 import { ParashaWidget } from '@/components/spiritual/ParashaWidget'
 import { HebrewDateSkeleton } from '@/components/ui/Skeleton'
 import { getHebrewDateInfo } from '@/lib/hebrew-date'
+import { fetchHomeAnnouncements } from '@/lib/leader-portal-supabase'
+import { HomeAnnouncementsCall } from '@/components/home/HomeAnnouncementsCall'
 import { cn } from '@/lib/utils'
 
 // Aproximação gregoriana do próximo Chag (sem @hebcal/core no server component)
@@ -115,12 +120,15 @@ const ecosystemCards = [
   },
 ]
 
-export default function HomePage() {
+export default async function HomePage() {
   const hebrewInfo = getHebrewDateInfo(new Date())
   const nextChag = getNextChagName()
+  const homeAnnouncements = await fetchHomeAnnouncements()
 
   return (
     <div className="min-h-screen">
+
+      <HomeAnnouncementsCall announcements={homeAnnouncements} />
 
       {/* Hero — portal de entrada no ciclo espiritual */}
       <section className="relative overflow-hidden border-b border-border/30 bg-spiritual-depth bg-kabbalah-texture">

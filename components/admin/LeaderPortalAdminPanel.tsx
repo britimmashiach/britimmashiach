@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
-import { Megaphone, FileText, Trash2, Pin } from 'lucide-react'
+import { Megaphone, FileText, Trash2, Pin, Home } from 'lucide-react'
 import {
   createLeaderAnnouncementAction,
   deleteLeaderAnnouncementAction,
@@ -15,6 +15,7 @@ export interface AdminAnnouncementRow {
   id: string
   title: string
   pinned: boolean
+  show_on_home: boolean
   created_at: string
 }
 
@@ -40,6 +41,7 @@ export function LeaderPortalAdminPanel({ serviceRoleConfigured, announcements, r
   const [annTitle, setAnnTitle] = useState('')
   const [annBody, setAnnBody] = useState('')
   const [annPinned, setAnnPinned] = useState(false)
+  const [annShowOnHome, setAnnShowOnHome] = useState(false)
   const [annLoading, setAnnLoading] = useState(false)
 
   const [resTitle, setResTitle] = useState('')
@@ -58,7 +60,12 @@ export function LeaderPortalAdminPanel({ serviceRoleConfigured, announcements, r
     }
     setAnnLoading(true)
     try {
-      const r = await createLeaderAnnouncementAction({ title: annTitle, body: annBody, pinned: annPinned })
+      const r = await createLeaderAnnouncementAction({
+        title: annTitle,
+        body: annBody,
+        pinned: annPinned,
+        showOnHome: annShowOnHome,
+      })
       if (!r.ok) {
         toast.error('Não foi possível publicar', { description: r.message })
         return
@@ -67,6 +74,7 @@ export function LeaderPortalAdminPanel({ serviceRoleConfigured, announcements, r
       setAnnTitle('')
       setAnnBody('')
       setAnnPinned(false)
+      setAnnShowOnHome(false)
       router.refresh()
     } finally {
       setAnnLoading(false)
@@ -168,6 +176,23 @@ export function LeaderPortalAdminPanel({ serviceRoleConfigured, announcements, r
             <Pin className="h-3.5 w-3.5" aria-hidden="true" />
             Fixar no topo
           </label>
+          <label className="flex items-start gap-2 text-sm font-inter text-warmgray-600 dark:text-warmgray-400">
+            <input
+              type="checkbox"
+              checked={annShowOnHome}
+              onChange={(e) => setAnnShowOnHome(e.target.checked)}
+              className="mt-0.5 h-4 w-4 rounded border-border accent-gold-600"
+            />
+            <span className="flex flex-col">
+              <span className="inline-flex items-center gap-1.5">
+                <Home className="h-3.5 w-3.5" aria-hidden="true" />
+                Mostrar título na página inicial (todos veem)
+              </span>
+              <span className="text-xs text-warmgray-400">
+                Só o título aparece na home. O contexto continua restrito ao portal de líderes.
+              </span>
+            </span>
+          </label>
           <button
             type="button"
             disabled={disabled || annLoading}
@@ -184,6 +209,9 @@ export function LeaderPortalAdminPanel({ serviceRoleConfigured, announcements, r
               <li key={a.id} className="flex items-center justify-between gap-3 text-sm font-inter">
                 <span className="flex items-center gap-1.5 truncate">
                   {a.pinned && <Pin className="h-3 w-3 text-gold-500 shrink-0" aria-hidden="true" />}
+                  {a.show_on_home && (
+                    <Home className="h-3 w-3 text-petroleum-600 dark:text-gold-400 shrink-0" aria-label="Aparece na página inicial" />
+                  )}
                   <span className="truncate text-warmgray-700 dark:text-warmgray-300">{a.title}</span>
                 </span>
                 <button

@@ -627,6 +627,7 @@ export interface Database {
           body: string
           pinned: boolean
           is_published: boolean
+          show_on_home: boolean
           created_by: string | null
           created_at: string
           updated_at: string
@@ -637,6 +638,7 @@ export interface Database {
           body?: string
           pinned?: boolean
           is_published?: boolean
+          show_on_home?: boolean
           created_by?: string | null
           created_at?: string
           updated_at?: string
@@ -647,6 +649,7 @@ export interface Database {
           body?: string
           pinned?: boolean
           is_published?: boolean
+          show_on_home?: boolean
           created_by?: string | null
           created_at?: string
           updated_at?: string
