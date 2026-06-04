@@ -12,6 +12,7 @@ import {
   profileHasActivePremium,
 } from '@/lib/premium-subscription'
 import { CheckoutButton } from '@/components/ui/CheckoutButton'
+import { WhatsAppOptInCard } from '@/components/ui/WhatsAppOptInCard'
 
 interface ProfileClientProps {
   profile: Profile | null
@@ -184,6 +185,13 @@ export function ProfileClient({ profile, successPayment, asaasReady = false }: P
           </p>
         )}
       </div>
+
+      {/* Convite: WhatsApp para avisos da kehilah */}
+      <WhatsAppOptInCard
+        profileId={profile.id}
+        initialWhatsapp={profile.whatsapp}
+        initialNotify={profile.whatsapp_notify}
+      />
 
       {/* Ações */}
       <div className="space-y-3">

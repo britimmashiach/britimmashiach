@@ -8,6 +8,8 @@ export interface Profile {
   role: UserRole
   is_leader: boolean
   leader_since: string | null
+  whatsapp: string | null
+  whatsapp_notify: boolean
   stripe_customer_id: string | null
   stripe_subscription_id: string | null
   mp_subscription_id: string | null
