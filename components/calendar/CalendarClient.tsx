@@ -285,14 +285,24 @@ export function CalendarClient({
                   aria-pressed={isSelected}
                 >
                   {/* Número do dia (gregoriano) */}
-                  <span className="block font-cinzel text-base leading-none pt-2">
+                  <span className="block font-cinzel text-base leading-none pt-1.5">
                     {info.date.getDate()}
                   </span>
-                  {/* Dia hebraico em mini */}
+                  {/* Dia hebraico: letras (ênfase) + número abaixo */}
                   <span
                     className={cn(
-                      'block text-[9px] font-inter mt-0.5 opacity-70',
-                      isSelected && 'opacity-90',
+                      'block font-hebrew text-[13px] leading-none mt-0.5 font-semibold text-gold-600 dark:text-gold-400',
+                      isSelected && 'text-gold-700 dark:text-gold-300',
+                    )}
+                    lang="he"
+                    dir="rtl"
+                  >
+                    {info.hebrewDayLetters}
+                  </span>
+                  <span
+                    className={cn(
+                      'block text-[8px] font-inter leading-none mt-0.5 opacity-60',
+                      isSelected && 'opacity-80',
                     )}
                   >
                     {info.hebrewDay}

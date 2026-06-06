@@ -4,6 +4,7 @@ import {
   Location,
   Zmanim,
   flags,
+  gematriya,
   getHolidaysOnDate,
   type Event,
 } from '@hebcal/core'
@@ -173,6 +174,8 @@ export interface DayInfo {
 
   /** Data hebraica: 28 Iyar 5786 */
   hebrewDay: number
+  /** Dia hebraico em letras (gematria), sem pontuacao, ex.: 21 -> "כא". */
+  hebrewDayLetters: string
   hebrewMonth: string
   hebrewYear: number
   hebrewDateLabel: string
@@ -382,6 +385,8 @@ export function getDayInfo(date: Date = new Date()): DayInfo {
   })
 
   const hebrewDay = hDate.getDate()
+  // Letras hebraicas do dia, sem pontuacao (geresh/gershayim): 21 -> "כא".
+  const hebrewDayLetters = gematriya(hebrewDay).replace(/[\u05F3\u05F4]/g, '')
   const hebrewMonth = MONTHS_PT[hDate.getMonthName()] ?? hDate.getMonthName()
   const hebrewYear = hDate.getFullYear()
   const hebrewDateLabel = `${hebrewDay} ${hebrewMonth} ${hebrewYear}`
@@ -438,6 +443,7 @@ export function getDayInfo(date: Date = new Date()): DayInfo {
     dayOfWeekName: DAYS_PT[dayOfWeek] ?? '',
     isShabbat,
     hebrewDay,
+    hebrewDayLetters,
     hebrewMonth,
     hebrewYear,
     hebrewDateLabel,
