@@ -7,8 +7,10 @@ import { getPublicSiteOrigin } from '@/lib/public-site-url'
 
 const APP_URL = getPublicSiteOrigin()
 
-// Revalida a home periodicamente para refletir novos avisos da kehilah.
-export const revalidate = 60
+// A home tem conteudo sensivel a data (contagem do Omer, "Aliyah de hoje",
+// data hebraica), entao precisa ser sempre calculada na hora. Sem isso, snapshots
+// ISR/CDN podem ficar presos numa data antiga (ex.: mostrar o Omer fora do periodo).
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: SEO_HOME_TITLE,
