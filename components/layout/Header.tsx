@@ -30,6 +30,7 @@ import {
   Landmark,
   ShoppingBag,
   HeartHandshake,
+  Sparkles,
 } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { cn } from '@/lib/utils'
@@ -51,6 +52,7 @@ const mainNavLinks: NavItem[] = [
   { href: '/calendar', label: 'Calendário', icon: Calendar },
   { href: '/parashot', label: 'Parashot', icon: BookOpen },
   { href: '/chagim', label: 'Chagim', icon: Flame },
+  { href: '/imersoes', label: 'Imersões', icon: Sparkles },
   { href: '/studies', label: 'Estudos', icon: GraduationCap },
   { href: '/library', label: 'Biblioteca', icon: Library },
   { href: '/tanach', label: 'Tanach', icon: Languages },

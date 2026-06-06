@@ -14,12 +14,14 @@ import {
   Trash2,
   Unlock,
   ChevronDown,
+  GraduationCap,
 } from 'lucide-react'
 import type { AdminMemberRow } from '@/app/admin/actions'
 import {
   listMembersAction,
   promoteUserByIdAction,
   setLeaderByIdAction,
+  setFormacaoConcluidaByIdAction,
   banUserAction,
   unbanUserAction,
   deleteUserAction,
@@ -128,6 +130,22 @@ export function AdminMembersPanel({
       }
       toast.success('Portal de líderes', { description: r.message })
       setMembers((prev) => prev.map((m) => (m.id === id ? { ...m, is_leader: isLeader } : m)))
+      refreshFromServer()
+    } finally {
+      setRowBusy(null)
+    }
+  }
+
+  async function toggleFormacao(id: string, concluida: boolean) {
+    setRowBusy(id)
+    try {
+      const r = await setFormacaoConcluidaByIdAction(id, concluida)
+      if (!r.ok) {
+        toast.error('Formação', { description: r.message })
+        return
+      }
+      toast.success('Formação de líderes', { description: r.message })
+      setMembers((prev) => prev.map((m) => (m.id === id ? { ...m, formacao_concluida: concluida } : m)))
       refreshFromServer()
     } finally {
       setRowBusy(null)
@@ -260,6 +278,12 @@ export function AdminMembersPanel({
                         Líder
                       </span>
                     )}
+                    {m.formacao_concluida && (
+                      <span className="ml-1.5 inline-flex items-center gap-0.5 rounded-full bg-gold-500/20 text-gold-700 dark:text-gold-400 px-2 py-0.5 text-[10px] font-semibold">
+                        <GraduationCap className="h-2.5 w-2.5" aria-hidden="true" />
+                        Formação
+                      </span>
+                    )}
                     {banned && (
                       <span className="ml-1.5 inline-flex items-center rounded-full bg-red-500/15 text-red-600 dark:text-red-400 px-2 py-0.5 text-[10px] font-semibold">
                         Banido
@@ -320,6 +344,20 @@ export function AdminMembersPanel({
                           >
                             <Users className="h-3.5 w-3.5" />
                             {m.is_leader ? '− Líder' : '+ Líder'}
+                          </button>
+                          <button
+                            type="button"
+                            disabled={busy}
+                            onClick={() => void toggleFormacao(m.id, !m.formacao_concluida)}
+                            className="inline-flex items-center gap-1 rounded-lg border border-gold-500/40 px-2 py-1 text-xs hover:bg-gold-500/10 disabled:opacity-50"
+                            title={
+                              m.formacao_concluida
+                                ? 'Desmarcar formação concluída'
+                                : 'Marcar formação concluída (libera material das Imersões)'
+                            }
+                          >
+                            <GraduationCap className="h-3.5 w-3.5" />
+                            {m.formacao_concluida ? '− Formação' : '+ Formação'}
                           </button>
                           {banned ? (
                             <button

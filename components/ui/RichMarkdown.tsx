@@ -57,6 +57,7 @@ export function RichMarkdown({ text, className }: Props) {
   const lines = text.replace(/\r\n/g, '\n').split('\n')
   const blocks: React.ReactNode[] = []
   let bullets: string[] | null = null
+  let ordered: string[] | null = null
   let key = 0
 
   const flushBullets = () => {
@@ -78,13 +79,39 @@ export function RichMarkdown({ text, className }: Props) {
     )
   }
 
+  const flushOrdered = () => {
+    if (!ordered) return
+    const items = ordered
+    ordered = null
+    blocks.push(
+      <ol key={`o${key++}`} className="my-3 space-y-1.5 list-none">
+        {items.map((it, idx) => (
+          <li
+            key={idx}
+            className="font-inter text-base text-foreground/90 leading-relaxed flex gap-2"
+          >
+            <span className="font-cinzel text-sm text-gold-600 dark:text-gold-400 select-none flex-shrink-0 min-w-[1.25rem]">
+              {idx + 1}.
+            </span>
+            <span>{parseInline(it, `oi${idx}`)}</span>
+          </li>
+        ))}
+      </ol>,
+    )
+  }
+
+  const flushLists = () => {
+    flushBullets()
+    flushOrdered()
+  }
+
   for (let li = 0; li < lines.length; li++) {
     const raw = lines[li]
     const line = raw.trimEnd()
     const trimmed = line.trim()
 
     if (trimmed === '') {
-      flushBullets()
+      flushLists()
       continue
     }
 
@@ -94,7 +121,7 @@ export function RichMarkdown({ text, className }: Props) {
       li + 1 < lines.length &&
       isTableSeparator(lines[li + 1])
     ) {
-      flushBullets()
+      flushLists()
       const header = splitRow(trimmed)
       const rows: string[][] = []
       let j = li + 2
@@ -139,17 +166,32 @@ export function RichMarkdown({ text, className }: Props) {
     }
 
     if (trimmed === '---' || trimmed === '***') {
-      flushBullets()
+      flushLists()
       blocks.push(<hr key={`hr${key++}`} className="divider-gold my-6" />)
       continue
     }
 
     if (trimmed.startsWith('▸ ')) {
+      flushOrdered()
       ;(bullets ??= []).push(trimmed.slice(2))
       continue
     }
 
-    flushBullets()
+    const unorderedMatch = /^[-*]\s+(.*)$/.exec(trimmed)
+    if (unorderedMatch) {
+      flushOrdered()
+      ;(bullets ??= []).push(unorderedMatch[1])
+      continue
+    }
+
+    const orderedMatch = /^\d+\.\s+(.*)$/.exec(trimmed)
+    if (orderedMatch) {
+      flushBullets()
+      ;(ordered ??= []).push(orderedMatch[1])
+      continue
+    }
+
+    flushLists()
 
     if (trimmed.startsWith('#### ')) {
       blocks.push(
@@ -239,6 +281,6 @@ export function RichMarkdown({ text, className }: Props) {
     )
   }
 
-  flushBullets()
+  flushLists()
   return <div className={className}>{blocks}</div>
 }

@@ -388,6 +388,70 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* Imersões — Cura, Libertação e Tikkun */}
+      <section className="container mx-auto px-4 py-14 md:py-16" aria-labelledby="imersoes-titulo">
+        <div className="glass-card p-6 md:p-8 border-gold-500/20 bg-gold-500/[0.02] space-y-6">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+            <div className="space-y-2">
+              <p className="text-[10px] font-inter font-semibold text-warmgray-400 uppercase tracking-widest">
+                Escola Rav EBBY
+              </p>
+              <h2 id="imersoes-titulo" className="font-cinzel text-2xl font-semibold text-petroleum-800 dark:text-parchment-100">
+                Imersões de Cura e Libertação
+              </h2>
+              <p className="font-inter text-sm text-warmgray-600 dark:text-warmgray-400 leading-relaxed max-w-xl">
+                Encontros intensivos de restauração da alma, com base na Toráh, em Teshuváh e Tikkun. Sempre com triagem, consentimento e supervisão.
+              </p>
+            </div>
+            <Link
+              href="/imersoes"
+              className="text-sm font-inter font-medium text-gold-700 dark:text-gold-400 hover:text-gold-800 dark:hover:text-gold-300 transition-colors inline-flex items-center gap-1.5 shrink-0"
+            >
+              Ver as imersões
+              <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Link
+              href="/imersoes/iecl"
+              className="rounded-xl border border-border/50 bg-card/40 p-5 group hover:border-gold-500/40 transition-colors space-y-2"
+            >
+              <div className="flex items-center gap-2">
+                <Flame className="w-4 h-4 text-gold-600 dark:text-gold-400 shrink-0" aria-hidden="true" />
+                <h3 className="font-cinzel text-base font-semibold text-petroleum-800 dark:text-parchment-100">
+                  IECL
+                </h3>
+              </div>
+              <p className="text-[11px] font-inter font-semibold uppercase tracking-widest text-gold-700 dark:text-gold-400">
+                Imersão Espiritual · Cura · Libertação
+              </p>
+              <p className="text-sm font-inter text-warmgray-600 dark:text-warmgray-400 leading-relaxed">
+                Cura Interior e libertação judaico-messiânica: restauração emocional, relacional e espiritual.
+              </p>
+            </Link>
+
+            <Link
+              href="/imersoes/avodat-hanefesh"
+              className="rounded-xl border border-border/50 bg-card/40 p-5 group hover:border-gold-500/40 transition-colors space-y-2"
+            >
+              <div className="flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-gold-600 dark:text-gold-400 shrink-0" aria-hidden="true" />
+                <h3 className="font-cinzel text-base font-semibold text-petroleum-800 dark:text-parchment-100">
+                  Avodat HaNefesh
+                </h3>
+              </div>
+              <p className="text-[11px] font-inter font-semibold uppercase tracking-widest text-gold-700 dark:text-gold-400">
+                Imersão de Tikkun · Cura · Retorno
+              </p>
+              <p className="text-sm font-inter text-warmgray-600 dark:text-warmgray-400 leading-relaxed">
+                O trabalho da alma: Teshuváh, Middot, ferramentas espirituais e Cura Interior na vida diária.
+              </p>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Comunidade viva */}
       <section className="container mx-auto px-4 py-14 md:py-16" aria-labelledby="comunidade-titulo">
         <div className="glass-card p-6 md:p-8 border-petroleum-800/10 flex flex-col md:flex-row gap-6 md:items-center">
