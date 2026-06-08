@@ -31,6 +31,7 @@ import {
   ShoppingBag,
   HeartHandshake,
   Sparkles,
+  Hash,
 } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { cn } from '@/lib/utils'
@@ -56,6 +57,7 @@ const mainNavLinks: NavItem[] = [
   { href: '/studies', label: 'Estudos', icon: GraduationCap },
   { href: '/library', label: 'Biblioteca', icon: Library },
   { href: '/tanach', label: 'Tanach', icon: Languages },
+  { href: '/gematria', label: 'Gematria', icon: Hash },
   { href: '/lideres/painel', label: 'Portal de Líderes', icon: Users },
 ]
 

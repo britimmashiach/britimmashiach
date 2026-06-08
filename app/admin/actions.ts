@@ -19,6 +19,7 @@ export type AdminMemberRow = {
   role: UserRole
   is_leader: boolean
   formacao_concluida: boolean
+  is_mestre: boolean
   created_at: string
   banned_until: string | null
   last_sign_in_at: string | null
@@ -94,7 +95,7 @@ export async function listMembersAction(
 
   const { data: profiles, error: profErr } = await admin
     .from('profiles')
-    .select('id, email, full_name, role, is_leader, formacao_concluida')
+    .select('id, email, full_name, role, is_leader, formacao_concluida, is_mestre')
     .in('id', ids)
 
   if (profErr) return { ok: false, message: profErr.message }
@@ -111,6 +112,7 @@ export async function listMembersAction(
       role,
       is_leader: Boolean(p?.is_leader),
       formacao_concluida: Boolean(p?.formacao_concluida),
+      is_mestre: Boolean(p?.is_mestre),
       created_at: u.created_at,
       banned_until: u.banned_until ?? null,
       last_sign_in_at: u.last_sign_in_at ?? null,
@@ -290,6 +292,38 @@ export async function setFormacaoConcluidaByIdAction(
   if (updateErr) return { ok: false, message: updateErr.message }
 
   const label = concluida ? 'Formação concluída' : 'Formação não concluída'
+  return { ok: true, message: `${target.email} → ${label}` }
+}
+
+/** Marca/desmarca Mestre (libera os métodos avançados da Gematria). */
+export async function setMestreByIdAction(
+  userId: string,
+  isMestre: boolean,
+): Promise<{ ok: true; message: string } | { ok: false; message: string }> {
+  const gate = await requireAdmin()
+  if (!gate.ok) return { ok: false, message: gate.message }
+
+  const admin = getSupabaseAdmin()
+  const { data: target, error: findErr } = await admin
+    .from('profiles')
+    .select('id, email')
+    .eq('id', userId)
+    .maybeSingle()
+
+  if (findErr) return { ok: false, message: findErr.message }
+  if (!target) return { ok: false, message: 'Perfil não encontrado.' }
+
+  const { error: updateErr } = await admin
+    .from('profiles')
+    .update({
+      is_mestre: isMestre,
+      updated_at: new Date().toISOString(),
+    })
+    .eq('id', userId)
+
+  if (updateErr) return { ok: false, message: updateErr.message }
+
+  const label = isMestre ? 'Mestre de Gematria' : 'Mestre revogado'
   return { ok: true, message: `${target.email} → ${label}` }
 }
 

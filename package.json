@@ -30,7 +30,8 @@
     "chag:pardes:migrate": "node --env-file=.env.local scripts/apply-chag-pardes-migration.mjs",
     "chag:pardes:prod": "npm run chag:pardes:migrate && npm run chag:pardes:deploy",
     "chag:pardes:check": "tsx --env-file=.env.local scripts/check-chag-pardes-migration.mjs",
-    "chag:pardes:sql-all": "node scripts/build-chag-pardes-all-sql.mjs"
+    "chag:pardes:sql-all": "node scripts/build-chag-pardes-all-sql.mjs",
+    "build:gematria": "node scripts/build-gematria-tanach.mjs"
   },
   "dependencies": {
     "@hebcal/core": "^5.9.0",

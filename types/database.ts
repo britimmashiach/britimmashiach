@@ -13,6 +13,7 @@ export interface Database {
           is_leader: boolean
           leader_since: string | null
           formacao_concluida: boolean
+          is_mestre: boolean
           whatsapp: string | null
           whatsapp_notify: boolean
           stripe_customer_id: string | null
@@ -36,6 +37,7 @@ export interface Database {
           is_leader?: boolean
           leader_since?: string | null
           formacao_concluida?: boolean
+          is_mestre?: boolean
           whatsapp?: string | null
           whatsapp_notify?: boolean
           stripe_customer_id?: string | null
@@ -59,6 +61,7 @@ export interface Database {
           is_leader?: boolean
           leader_since?: string | null
           formacao_concluida?: boolean
+          is_mestre?: boolean
           whatsapp?: string | null
           whatsapp_notify?: boolean
           stripe_customer_id?: string | null
