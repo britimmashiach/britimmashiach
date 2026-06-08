@@ -9,6 +9,7 @@
 // =============================================================================
 
 import { NextResponse } from 'next/server'
+import { GEMATRIA_LEXICON } from '@/lib/gematria-lexicon'
 
 interface Definition {
   dict: string
@@ -39,6 +40,36 @@ function stripHtml(s: string): string {
     .replace(/<[^>]*>/g, '')
     .replace(/\s+/g, ' ')
     .trim()
+}
+
+/** Reduz a palavra à forma consonantal (sem nikud/pontuação) para comparação. */
+function consonantal(s: string): string {
+  return s.replace(/[^\u05D0-\u05EA]/g, '')
+}
+
+/** Traduz um texto para português BR (Google translate público, sem chave). */
+async function translateToPt(text: string): Promise<string> {
+  const trimmed = text.slice(0, 1500)
+  if (!trimmed) return text
+  try {
+    const url =
+      'https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=pt&dt=t&q=' +
+      encodeURIComponent(trimmed)
+    const res = await fetch(url, {
+      headers: { Accept: 'application/json' },
+      next: { revalidate: 604_800 },
+    })
+    if (!res.ok) return text
+    const data = (await res.json()) as unknown
+    const segments = Array.isArray(data) ? (data as unknown[])[0] : null
+    if (!Array.isArray(segments)) return text
+    const out = segments
+      .map((s) => (Array.isArray(s) && typeof s[0] === 'string' ? s[0] : ''))
+      .join('')
+    return out.trim() || text
+  } catch {
+    return text
+  }
 }
 
 /** Coleta recursivamente as definições (campo "definition") de um content. */
@@ -89,10 +120,35 @@ async function fetchDefinitions(word: string): Promise<Definition[]> {
       })
       if (out.length >= 5) break
     }
+    // Traduz as definições (em inglês) para português BR.
+    await Promise.all(
+      out.map(async (d) => {
+        d.text = await translateToPt(d.text)
+      }),
+    )
     return out
   } catch {
     return []
   }
+}
+
+/** Traduções curadas (PT) do nosso léxico, para a forma consonantal dada. */
+function curatedDefinitions(word: string): Definition[] {
+  const target = consonantal(word)
+  const seen = new Set<string>()
+  const out: Definition[] = []
+  for (const entry of GEMATRIA_LEXICON) {
+    if (consonantal(entry.he) !== target) continue
+    const key = entry.pt
+    if (seen.has(key)) continue
+    seen.add(key)
+    out.push({
+      dict: 'Tradução (curadoria)',
+      headword: entry.he,
+      text: entry.translit ? `${entry.pt} — ${entry.translit}` : entry.pt,
+    })
+  }
+  return out
 }
 
 async function fetchOccurrences(
@@ -157,14 +213,15 @@ export async function GET(request: Request) {
   const cached = cache.get(he)
   if (cached) return NextResponse.json(cached)
 
-  const [definitions, occ] = await Promise.all([
+  const [sefariaDefs, occ] = await Promise.all([
     fetchDefinitions(he),
     fetchOccurrences(he),
   ])
 
+  // Tradução curada primeiro (alta qualidade), depois dicionários traduzidos.
   const detail: WordDetail = {
     he,
-    definitions,
+    definitions: [...curatedDefinitions(he), ...sefariaDefs],
     occurrences: occ.list,
     occurrencesTotal: occ.total,
   }
