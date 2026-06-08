@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
+import * as Dialog from '@radix-ui/react-dialog'
 import {
   Calculator,
   Search,
@@ -11,6 +12,10 @@ import {
   BookText,
   Loader2,
   Lock,
+  X,
+  ExternalLink,
+  BookOpen,
+  MapPin,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import {
@@ -43,6 +48,26 @@ interface ReverseResponse {
   results: ReverseResult[]
 }
 
+interface WordDefinition {
+  dict: string
+  headword: string
+  text: string
+}
+
+interface WordOccurrence {
+  ref: string
+  heRef: string
+  snippet: string
+  url: string
+}
+
+interface WordDetail {
+  he: string
+  definitions: WordDefinition[]
+  occurrences: WordOccurrence[]
+  occurrencesTotal: number
+}
+
 // Teclado hebraico: linhas lógicas + formas finais.
 const KEY_ROWS: string[][] = [
   ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט', 'י'],
@@ -71,6 +96,12 @@ export function GematriaClient() {
   const [data, setData] = useState<ReverseResponse | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
+
+  // Detalhe de uma palavra (significado + onde aparece), aberto em modal.
+  const [selectedWord, setSelectedWord] = useState<string | null>(null)
+  const [wordDetail, setWordDetail] = useState<WordDetail | null>(null)
+  const [wordLoading, setWordLoading] = useState(false)
+  const [wordError, setWordError] = useState(false)
 
   const calc = useMemo(() => computeAllGematria(text), [text])
   const targetNumber = Number(reverseValue)
@@ -117,6 +148,29 @@ export function GematriaClient() {
       clearTimeout(t)
     }
   }, [targetNumber, reverseValue, reverseMethod, sourceFilter])
+
+  // Busca o detalhe da palavra selecionada (Sefaria: dicionário + ocorrências).
+  useEffect(() => {
+    if (!selectedWord) return
+    const controller = new AbortController()
+    setWordLoading(true)
+    setWordError(false)
+    setWordDetail(null)
+    ;(async () => {
+      try {
+        const res = await fetch(`/api/gematria/word?he=${encodeURIComponent(selectedWord)}`, {
+          signal: controller.signal,
+        })
+        if (!res.ok) throw new Error('falha')
+        setWordDetail((await res.json()) as WordDetail)
+      } catch {
+        if (!controller.signal.aborted) setWordError(true)
+      } finally {
+        if (!controller.signal.aborted) setWordLoading(false)
+      }
+    })()
+    return () => controller.abort()
+  }, [selectedWord])
 
   function insert(ch: string) {
     setText((t) => t + ch)
@@ -310,27 +364,27 @@ export function GematriaClient() {
                 >
                   Método de cálculo
                 </label>
-                {isMestre ? (
-                  <select
-                    id="rev-method"
-                    value={reverseMethod}
-                    onChange={(e) => setReverseMethod(e.target.value as GematriaMethodId)}
-                    className="w-full rounded-lg border border-border/50 bg-background px-3 py-2.5 text-sm font-inter text-foreground focus:border-gold-500 outline-none"
-                  >
-                    {GEMATRIA_METHODS.map((m) => (
-                      <option key={m.id} value={m.id}>
+                <select
+                  id="rev-method"
+                  value={reverseMethod}
+                  onChange={(e) => setReverseMethod(e.target.value as GematriaMethodId)}
+                  className="w-full rounded-lg border border-border/50 bg-background px-3 py-2.5 text-sm font-inter text-foreground focus:border-gold-500 outline-none"
+                >
+                  {GEMATRIA_METHODS.map((m) => {
+                    const lockedOpt = m.tier === 'mestre' && !isMestre
+                    return (
+                      <option key={m.id} value={m.id} disabled={lockedOpt}>
                         {m.name}
+                        {lockedOpt ? '  🔒 Mestres' : ''}
                       </option>
-                    ))}
-                  </select>
-                ) : (
-                  <div
-                    className="w-full rounded-lg border border-dashed border-border/60 bg-muted/20 px-3 py-2.5 text-sm font-inter text-warmgray-600 dark:text-warmgray-400 flex items-center justify-between gap-2"
-                    title="Métodos avançados são exclusivos para Mestres"
-                  >
-                    <span>Mispar Hechrachi</span>
-                    <Lock className="w-3.5 h-3.5 text-warmgray-400 shrink-0" aria-hidden="true" />
-                  </div>
+                    )
+                  })}
+                </select>
+                {!isMestre && (
+                  <p className="mt-1.5 text-[11px] font-inter text-warmgray-400 flex items-center gap-1">
+                    <Lock className="w-3 h-3 shrink-0" aria-hidden="true" />
+                    Métodos avançados são exclusivos para Mestres.
+                  </p>
                 )}
               </div>
             </div>
@@ -414,13 +468,16 @@ export function GematriaClient() {
                     >
                       <div className="min-w-0">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <span
-                            className="font-hebrew text-2xl text-petroleum-800 dark:text-parchment-100"
+                          <button
+                            type="button"
+                            onClick={() => setSelectedWord(r.he)}
+                            className="font-hebrew text-2xl text-petroleum-800 dark:text-parchment-100 hover:text-gold-600 dark:hover:text-gold-400 transition-colors underline-offset-4 decoration-gold-500/40 hover:underline"
                             dir="rtl"
                             lang="he"
+                            title="Ver significado e onde aparece"
                           >
                             {r.he}
-                          </span>
+                          </button>
                           {r.translit && (
                             <span className="text-xs font-inter italic text-warmgray-500">{r.translit}</span>
                           )}
@@ -434,6 +491,14 @@ export function GematriaClient() {
                             </span>
                           )}
                         </div>
+                        <button
+                          type="button"
+                          onClick={() => setSelectedWord(r.he)}
+                          className="mt-2 inline-flex items-center gap-1 text-[11px] font-inter font-medium text-gold-600 dark:text-gold-400 hover:underline"
+                        >
+                          <BookOpen className="w-3 h-3" aria-hidden="true" />
+                          Significado e onde aparece
+                        </button>
                       </div>
                       <SourceBadge inTanach={r.inTanach} />
                     </li>
@@ -457,7 +522,150 @@ export function GematriaClient() {
         Corpus: {(data?.corpusSize ?? 40140).toLocaleString('pt-BR')} palavras do Tanach +{' '}
         {LEXICON_SIZE} termos curados com tradução.
       </p>
+
+      <WordDetailDialog
+        word={selectedWord}
+        detail={wordDetail}
+        loading={wordLoading}
+        error={wordError}
+        onClose={() => setSelectedWord(null)}
+      />
     </div>
+  )
+}
+
+function WordDetailDialog({
+  word,
+  detail,
+  loading,
+  error,
+  onClose,
+}: {
+  word: string | null
+  detail: WordDetail | null
+  loading: boolean
+  error: boolean
+  onClose: () => void
+}) {
+  return (
+    <Dialog.Root open={word !== null} onOpenChange={(o) => !o && onClose()}>
+      <Dialog.Portal>
+        <Dialog.Overlay className="fixed inset-0 z-[200] bg-black/50" />
+        <Dialog.Content className="fixed left-1/2 top-1/2 z-[201] w-[min(94vw,40rem)] max-h-[85vh] -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-2xl border border-border bg-background p-5 sm:p-6 shadow-xl">
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <Dialog.Title
+                className="font-hebrew text-3xl text-petroleum-800 dark:text-parchment-100"
+                dir="rtl"
+                lang="he"
+              >
+                {word}
+              </Dialog.Title>
+              <Dialog.Description className="text-xs font-inter text-warmgray-500 mt-1">
+                Significado e ocorrências no Tanach · fonte: Sefaria
+              </Dialog.Description>
+            </div>
+            <Dialog.Close asChild>
+              <button
+                type="button"
+                className="rounded-lg p-1.5 text-warmgray-500 hover:bg-muted hover:text-foreground transition-colors"
+                aria-label="Fechar"
+              >
+                <X className="w-5 h-5" aria-hidden="true" />
+              </button>
+            </Dialog.Close>
+          </div>
+
+          {loading ? (
+            <div className="flex items-center justify-center gap-2 p-10 text-warmgray-500">
+              <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
+              <span className="font-inter text-sm">Consultando a Sefaria…</span>
+            </div>
+          ) : error ? (
+            <p className="font-inter text-sm text-red-500 p-6 text-center">
+              Não foi possível consultar agora. Tente novamente.
+            </p>
+          ) : detail ? (
+            <div className="mt-5 space-y-6">
+              {/* Significado */}
+              <section>
+                <h3 className="flex items-center gap-1.5 font-cinzel text-sm font-semibold text-petroleum-800 dark:text-parchment-100 mb-2">
+                  <BookText className="w-4 h-4 text-gold-500" aria-hidden="true" />
+                  Significado
+                </h3>
+                {detail.definitions.length > 0 ? (
+                  <ul className="space-y-2">
+                    {detail.definitions.map((d, i) => (
+                      <li
+                        key={`${d.dict}-${i}`}
+                        className="rounded-lg border border-border/50 bg-card/60 p-3"
+                      >
+                        <div className="flex items-baseline gap-2 flex-wrap">
+                          <span className="font-hebrew text-base text-foreground" dir="rtl" lang="he">
+                            {d.headword}
+                          </span>
+                          <span className="text-[10px] font-inter uppercase tracking-wider text-warmgray-400">
+                            {d.dict}
+                          </span>
+                        </div>
+                        <p className="text-sm font-inter text-foreground/80 mt-1 leading-snug">{d.text}</p>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-sm font-inter text-warmgray-500">
+                    Sem entrada de dicionário para esta forma. Veja as ocorrências abaixo.
+                  </p>
+                )}
+              </section>
+
+              {/* Onde aparece */}
+              <section>
+                <h3 className="flex items-center gap-1.5 font-cinzel text-sm font-semibold text-petroleum-800 dark:text-parchment-100 mb-2">
+                  <MapPin className="w-4 h-4 text-gold-500" aria-hidden="true" />
+                  Onde aparece
+                  {detail.occurrencesTotal > 0 && (
+                    <span className="text-xs font-inter font-normal text-warmgray-400">
+                      ({detail.occurrencesTotal.toLocaleString('pt-BR')} resultado(s) · mostrando{' '}
+                      {detail.occurrences.length})
+                    </span>
+                  )}
+                </h3>
+                {detail.occurrences.length > 0 ? (
+                  <ul className="space-y-2">
+                    {detail.occurrences.map((o, i) => (
+                      <li
+                        key={`${o.ref}-${i}`}
+                        className="rounded-lg border border-border/50 bg-card/60 p-3"
+                      >
+                        <a
+                          href={o.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-sm font-inter font-medium text-gold-600 dark:text-gold-400 hover:underline"
+                        >
+                          {o.ref}
+                          <ExternalLink className="w-3 h-3" aria-hidden="true" />
+                        </a>
+                        {o.snippet && (
+                          <p className="text-sm font-hebrew text-foreground/75 mt-1 leading-relaxed" dir="rtl" lang="he">
+                            {o.snippet}
+                          </p>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-sm font-inter text-warmgray-500">
+                    Nenhuma ocorrência encontrada no Tanach para esta forma exata.
+                  </p>
+                )}
+              </section>
+            </div>
+          ) : null}
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
   )
 }
 
