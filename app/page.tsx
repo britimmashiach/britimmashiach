@@ -28,30 +28,10 @@ import { HebrewDateDisplay } from '@/components/spiritual/HebrewDateDisplay'
 import { OmerCounter } from '@/components/spiritual/OmerCounter'
 import { ParashaWidget } from '@/components/spiritual/ParashaWidget'
 import { HebrewDateSkeleton } from '@/components/ui/Skeleton'
-import { getHebrewDateInfo } from '@/lib/hebrew-date'
+import { getHebrewDateInfo, getNextChag } from '@/lib/hebrew-date'
 import { fetchHomeAnnouncements } from '@/lib/leader-portal-supabase'
 import { HomeAnnouncementsCall } from '@/components/home/HomeAnnouncementsCall'
 import { cn } from '@/lib/utils'
-
-// Aproximação gregoriana do próximo Chag (sem @hebcal/core no server component)
-function getNextChagName(): { name: string; slug: string; hebrew: string } | null {
-  const month = new Date().getMonth() + 1
-  const upcoming: Record<number, { name: string; slug: string; hebrew: string }> = {
-    1:  { name: 'Purim',        slug: 'purim',         hebrew: 'פּוּרִים' },
-    2:  { name: 'Purim',        slug: 'purim',         hebrew: 'פּוּרִים' },
-    3:  { name: 'Pesach',       slug: 'pesach',        hebrew: 'פֶּסַח' },
-    4:  { name: 'Shavuot',      slug: 'shavuot',       hebrew: 'שָׁבוּעוֹת' },
-    5:  { name: 'Shavuot',      slug: 'shavuot',       hebrew: 'שָׁבוּעוֹת' },
-    6:  { name: 'Shavuot',      slug: 'shavuot',       hebrew: 'שָׁבוּעוֹת' },
-    7:  { name: 'Rosh Hashaná', slug: 'rosh-hashanah', hebrew: 'רֹאשׁ הַשָּׁנָה' },
-    8:  { name: 'Rosh Hashaná', slug: 'rosh-hashanah', hebrew: 'רֹאשׁ הַשָּׁנָה' },
-    9:  { name: 'Yom Kippur',   slug: 'yom-kippur',    hebrew: 'יוֹם כִּפּוּר' },
-    10: { name: 'Chanukah',     slug: 'chanukah',      hebrew: 'חֲנוּכָּה' },
-    11: { name: 'Chanukah',     slug: 'chanukah',      hebrew: 'חֲנוּכָּה' },
-    12: { name: 'Chanukah',     slug: 'chanukah',      hebrew: 'חֲנוּכָּה' },
-  }
-  return upcoming[month] ?? null
-}
 
 const recentStudies = [
   {
@@ -124,7 +104,7 @@ const ecosystemCards = [
 
 export default async function HomePage() {
   const hebrewInfo = getHebrewDateInfo(new Date())
-  const nextChag = getNextChagName()
+  const nextChag = getNextChag(new Date())
   const homeAnnouncements = await fetchHomeAnnouncements()
 
   return (

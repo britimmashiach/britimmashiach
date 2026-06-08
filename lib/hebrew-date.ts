@@ -1047,6 +1047,44 @@ function monthsTag(d: Date): string {
 }
 
 // =============================================================================
+// PRÓXIMO CHAG — para o destaque "Em breve" da home (sempre uma data futura)
+// =============================================================================
+
+export interface NextChag {
+  name: string
+  slug: string
+  hebrew: string
+  daysUntil: number
+}
+
+/** Chagim "de destaque" (com hebraico pontuado fixo para consistência visual). */
+const HEADLINE_CHAGIM: { test: (t: string) => boolean; name: string; slug: string; hebrew: string }[] = [
+  { test: (t) => t.includes('Pesach'), name: 'Pesach', slug: 'pessach', hebrew: 'פֶּסַח' },
+  { test: (t) => t.includes('Shavuot'), name: 'Shavuot', slug: 'shavuot', hebrew: 'שָׁבוּעוֹת' },
+  { test: (t) => t.includes('Rosh Hashana'), name: 'Rosh Hashaná', slug: 'rosh-hashana', hebrew: 'רֹאשׁ הַשָּׁנָה' },
+  { test: (t) => t.includes('Yom Kippur') && !t.includes('Katán') && !t.includes('Katan'), name: 'Yom Kippur', slug: 'yom-kippur', hebrew: 'יוֹם כִּפּוּר' },
+  { test: (t) => t.includes('Sukkot'), name: 'Sukkot', slug: 'sukkot', hebrew: 'סֻכּוֹת' },
+  { test: (t) => t.includes('Shemini Atzeret'), name: 'Shemini Atzeret', slug: 'shemini-atzeret', hebrew: 'שְׁמִינִי עֲצֶרֶת' },
+  { test: (t) => t.includes('Simchat Tor'), name: 'Simchat Toráh', slug: 'simchat-torah', hebrew: 'שִׂמְחַת תּוֹרָה' },
+  { test: (t) => t.includes('Chanukáh') || t.includes('Chanukah'), name: 'Chanukáh', slug: 'chanukah', hebrew: 'חֲנוּכָּה' },
+  { test: (t) => t.includes('Purim') && !t.includes('Shushan'), name: 'Purim', slug: 'purim', hebrew: 'פּוּרִים' },
+  { test: (t) => t.includes('Tu BiShvat'), name: 'Tu BiShvat', slug: 'tu-bishvat', hebrew: 'ט״וּ בִּשְׁבָט' },
+  { test: (t) => t.includes('Lag BaOmer'), name: 'Lag BaOmer', slug: 'lag-baomer', hebrew: 'ל״ג בָּעוֹמֶר' },
+]
+
+/** Próximo Chag de destaque (calculado por @hebcal/core; nunca retorna um já passado). */
+export function getNextChag(fromDate: Date = new Date()): NextChag | null {
+  const upcoming = getUpcomingEvents(fromDate, 40, 13)
+  for (const ev of upcoming) {
+    const match = HEADLINE_CHAGIM.find((h) => h.test(ev.title))
+    if (match) {
+      return { name: match.name, slug: match.slug, hebrew: match.hebrew, daysUntil: ev.daysUntil }
+    }
+  }
+  return null
+}
+
+// =============================================================================
 // UTILIDADES
 // =============================================================================
 
