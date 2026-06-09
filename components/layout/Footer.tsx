@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import { MapPin, Phone, Star } from 'lucide-react'
+import { MapPin, Phone } from 'lucide-react'
+import { MagenDavidIcon } from '@/components/ui/MagenDavidIcon'
 import { SITE_ADDRESS_FULL, SITE_MAPS_URL, SITE_PHONE_DISPLAY, SITE_PHONE_TEL, SITE_WHATSAPP_URL } from '@/lib/site-brand'
 
 export function Footer() {
@@ -14,7 +15,7 @@ export function Footer() {
           <div className="md:col-span-2 space-y-3">
             <div className="flex items-center gap-2">
               <div className="w-7 h-7 rounded-full bg-petroleum-gradient flex items-center justify-center">
-                <Star className="w-3.5 h-3.5 text-gold-400 fill-gold-400" />
+                <MagenDavidIcon className="w-4 h-4 text-gold-400" />
               </div>
               <span className="font-cinzel text-base font-semibold text-petroleum-800 dark:text-parchment-100 tracking-wide">
                 BRIT IM MASHIACH

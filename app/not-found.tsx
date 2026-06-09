@@ -1,12 +1,13 @@
 import Link from 'next/link'
-import { Star, ArrowLeft } from 'lucide-react'
+import { ArrowLeft } from 'lucide-react'
+import { MagenDavidIcon } from '@/components/ui/MagenDavidIcon'
 
 export default function NotFound() {
   return (
     <div className="min-h-[calc(100vh-8rem)] flex items-center justify-center px-4">
       <div className="text-center space-y-6 max-w-sm">
         <div className="w-16 h-16 rounded-full bg-petroleum-gradient flex items-center justify-center mx-auto">
-          <Star className="w-8 h-8 text-gold-400 fill-gold-400/30" />
+          <MagenDavidIcon className="w-8 h-8 text-gold-400" />
         </div>
 
         <div className="space-y-2">

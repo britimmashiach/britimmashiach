@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { Star } from 'lucide-react'
+import { MagenDavidIcon } from '@/components/ui/MagenDavidIcon'
 import { ResetPasswordForm } from '@/components/ui/ResetPasswordForm'
 import { createServerSupabaseClient, hasSupabaseServerEnv } from '@/lib/supabase-server'
 
@@ -27,7 +27,7 @@ export default async function RedefinirSenhaPage() {
       <div className="w-full max-w-md space-y-8">
         <div className="text-center space-y-3">
           <div className="w-12 h-12 rounded-full bg-petroleum-gradient flex items-center justify-center mx-auto shadow-petroleum-md">
-            <Star className="w-6 h-6 text-gold-400 fill-gold-400" />
+            <MagenDavidIcon className="w-6 h-6 text-gold-400" />
           </div>
           <div>
             <h1 className="font-cinzel text-2xl font-semibold text-petroleum-800 dark:text-parchment-100 tracking-wide">
