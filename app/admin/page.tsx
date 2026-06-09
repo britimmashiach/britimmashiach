@@ -5,9 +5,10 @@ import Link from 'next/link'
 import { ArrowLeft, ShieldCheck, Wrench } from 'lucide-react'
 import { createServerSupabaseClient, hasSupabaseServerEnv } from '@/lib/supabase-server'
 import { getSupabaseAdmin, hasServiceRoleEnv } from '@/lib/supabase-admin'
-import { listMembersAction } from '@/app/admin/actions'
+import { listMembersAction, type AdminShopProductRow } from '@/app/admin/actions'
 import { PromoteUserPanel } from '@/components/admin/PromoteUserPanel'
 import { AdminMembersPanel } from '@/components/admin/AdminMembersPanel'
+import { ShopAdminPanel } from '@/components/admin/ShopAdminPanel'
 import {
   LeaderPortalAdminPanel,
   type AdminAnnouncementRow,
@@ -55,12 +56,13 @@ export default async function AdminPage() {
 
   let announcements: AdminAnnouncementRow[] = []
   let resources: AdminResourceRow[] = []
+  let shopProducts: AdminShopProductRow[] = []
   let whatsappOptInCount = 0
   const whatsappProviderConfigured = getWhatsAppProvider() !== 'none'
   if (serviceOk) {
     whatsappOptInCount = await countWhatsAppOptInMembers()
     const admin = getSupabaseAdmin()
-    const [annRes, resRes] = await Promise.all([
+    const [annRes, resRes, shopRes] = await Promise.all([
       admin
         .from('leader_announcements')
         .select('id, title, pinned, show_on_home, created_at')
@@ -73,9 +75,16 @@ export default async function AdminPage() {
         .order('sort_order', { ascending: true })
         .order('created_at', { ascending: false })
         .limit(100),
+      admin
+        .from('shop_products')
+        .select('id, slug, name, description, price_cents, category, image_url, is_active, sort_order')
+        .order('sort_order', { ascending: true })
+        .order('created_at', { ascending: false })
+        .limit(100),
     ])
     announcements = annRes.data ?? []
     resources = resRes.data ?? []
+    shopProducts = shopRes.data ?? []
   }
 
   return (
@@ -151,6 +160,13 @@ export default async function AdminPage() {
           whatsappOptInCount={whatsappOptInCount}
           whatsappProviderConfigured={whatsappProviderConfigured}
         />
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="font-cinzel text-lg font-semibold text-petroleum-800 dark:text-parchment-100">
+          Loja Acqua Rios
+        </h2>
+        <ShopAdminPanel serviceRoleConfigured={serviceOk} products={shopProducts} />
       </section>
     </div>
   )

@@ -478,3 +478,189 @@ export async function deleteLeaderResourceAction(id: string): Promise<SimpleResu
   if (error) return { ok: false, message: error.message }
   return { ok: true, message: 'Material removido.' }
 }
+
+// ── Loja Acqua Rios: produtos e imagens ─────────────────────────────────────
+
+export type AdminShopProductRow = {
+  id: string
+  slug: string
+  name: string
+  description: string
+  price_cents: number
+  category: string
+  image_url: string | null
+  is_active: boolean
+  sort_order: number
+}
+
+function slugify(value: string): string {
+  return value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+}
+
+/** Aceita vazio (limpar), URL http(s) ou caminho relativo iniciando em "/". */
+function validImageUrl(url: string): boolean {
+  if (!url) return true
+  return /^(https?:\/\/|\/).+/i.test(url)
+}
+
+export async function createShopProductAction(input: {
+  name: string
+  slug?: string
+  description: string
+  priceCents: number
+  category: string
+  imageUrl: string
+  sortOrder: number
+}): Promise<SimpleResult> {
+  const gate = await requireAdmin()
+  if (!gate.ok) return { ok: false, message: gate.message }
+
+  const name = input.name.trim()
+  if (!name) return { ok: false, message: 'Informe o nome do produto.' }
+
+  const slug = slugify(input.slug?.trim() || name)
+  if (!slug) return { ok: false, message: 'Não foi possível gerar um slug válido a partir do nome.' }
+
+  if (!Number.isFinite(input.priceCents) || input.priceCents < 0) {
+    return { ok: false, message: 'Preço inválido.' }
+  }
+  const imageUrl = input.imageUrl.trim()
+  if (!validImageUrl(imageUrl)) {
+    return { ok: false, message: 'URL da imagem inválida (use http(s):// ou /caminho).' }
+  }
+
+  const admin = getSupabaseAdmin()
+  const { error } = await admin.from('shop_products').insert({
+    slug,
+    name,
+    description: input.description.trim(),
+    price_cents: Math.round(input.priceCents),
+    category: input.category.trim() || 'geral',
+    image_url: imageUrl || null,
+    is_active: true,
+    sort_order: Number.isFinite(input.sortOrder) ? input.sortOrder : 0,
+  })
+
+  if (error) {
+    if (error.code === '23505') {
+      return { ok: false, message: `Já existe um produto com o slug "${slug}".` }
+    }
+    return { ok: false, message: error.message }
+  }
+  return { ok: true, message: `Produto adicionado: ${name}` }
+}
+
+export async function updateShopProductAction(
+  id: string,
+  input: {
+    name?: string
+    description?: string
+    priceCents?: number
+    category?: string
+    imageUrl?: string | null
+    isActive?: boolean
+    sortOrder?: number
+  },
+): Promise<SimpleResult> {
+  const gate = await requireAdmin()
+  if (!gate.ok) return { ok: false, message: gate.message }
+
+  const patch: Record<string, unknown> = { updated_at: new Date().toISOString() }
+  if (input.name !== undefined) {
+    const n = input.name.trim()
+    if (!n) return { ok: false, message: 'O nome não pode ficar vazio.' }
+    patch.name = n
+  }
+  if (input.description !== undefined) patch.description = input.description.trim()
+  if (input.priceCents !== undefined) {
+    if (!Number.isFinite(input.priceCents) || input.priceCents < 0) {
+      return { ok: false, message: 'Preço inválido.' }
+    }
+    patch.price_cents = Math.round(input.priceCents)
+  }
+  if (input.category !== undefined) patch.category = input.category.trim() || 'geral'
+  if (input.imageUrl !== undefined) {
+    const u = (input.imageUrl ?? '').trim()
+    if (!validImageUrl(u)) {
+      return { ok: false, message: 'URL da imagem inválida (use http(s):// ou /caminho).' }
+    }
+    patch.image_url = u || null
+  }
+  if (input.isActive !== undefined) patch.is_active = input.isActive
+  if (input.sortOrder !== undefined && Number.isFinite(input.sortOrder)) {
+    patch.sort_order = input.sortOrder
+  }
+
+  const admin = getSupabaseAdmin()
+  const { error } = await admin.from('shop_products').update(patch).eq('id', id)
+  if (error) return { ok: false, message: error.message }
+  return { ok: true, message: 'Produto atualizado.' }
+}
+
+export async function deleteShopProductAction(id: string): Promise<SimpleResult> {
+  const gate = await requireAdmin()
+  if (!gate.ok) return { ok: false, message: gate.message }
+
+  const admin = getSupabaseAdmin()
+  const { error } = await admin.from('shop_products').delete().eq('id', id)
+  if (error) return { ok: false, message: error.message }
+  return { ok: true, message: 'Produto removido.' }
+}
+
+// Upload direto da imagem do produto para o Supabase Storage (bucket público).
+
+const SHOP_BUCKET = 'loja'
+const SHOP_IMAGE_MAX_BYTES = 4 * 1024 * 1024
+const SHOP_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/avif', 'image/gif']
+
+async function ensureShopBucket(admin: ReturnType<typeof getSupabaseAdmin>): Promise<string | null> {
+  const { data } = await admin.storage.getBucket(SHOP_BUCKET)
+  if (data) return null
+  const { error } = await admin.storage.createBucket(SHOP_BUCKET, {
+    public: true,
+    fileSizeLimit: SHOP_IMAGE_MAX_BYTES,
+    allowedMimeTypes: SHOP_IMAGE_TYPES,
+  })
+  if (error && !/already exists/i.test(error.message)) return error.message
+  return null
+}
+
+export async function uploadShopImageAction(
+  formData: FormData,
+): Promise<{ ok: boolean; url?: string; message?: string }> {
+  const gate = await requireAdmin()
+  if (!gate.ok) return { ok: false, message: gate.message }
+
+  const file = formData.get('file')
+  if (!(file instanceof File) || file.size === 0) {
+    return { ok: false, message: 'Nenhum arquivo recebido.' }
+  }
+  if (!SHOP_IMAGE_TYPES.includes(file.type)) {
+    return { ok: false, message: 'Formato inválido. Use JPG, PNG, WebP, AVIF ou GIF.' }
+  }
+  if (file.size > SHOP_IMAGE_MAX_BYTES) {
+    return { ok: false, message: 'Imagem muito grande (máx. 4 MB).' }
+  }
+
+  const admin = getSupabaseAdmin()
+  const bucketErr = await ensureShopBucket(admin)
+  if (bucketErr) return { ok: false, message: `Storage: ${bucketErr}` }
+
+  const ext = (file.name.split('.').pop() || 'jpg').toLowerCase().replace(/[^a-z0-9]/g, '') || 'jpg'
+  const path = `produtos/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`
+  const bytes = Buffer.from(await file.arrayBuffer())
+
+  const { error } = await admin.storage
+    .from(SHOP_BUCKET)
+    .upload(path, bytes, { contentType: file.type, upsert: false })
+  if (error) return { ok: false, message: error.message }
+
+  const { data } = admin.storage.from(SHOP_BUCKET).getPublicUrl(path)
+  return { ok: true, url: data.publicUrl }
+}

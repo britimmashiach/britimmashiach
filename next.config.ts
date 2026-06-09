@@ -25,6 +25,8 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     optimizePackageImports: ['lucide-react'],
+    // Upload de imagens de produtos da loja via Server Action (FormData).
+    serverActions: { bodySizeLimit: '5mb' },
   },
   // Cabeçalhos de segurança adicionais (complementa vercel.json)
   async headers() {
