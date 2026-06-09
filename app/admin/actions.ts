@@ -9,6 +9,9 @@ import {
 } from '@/lib/broadcast-announcement-whatsapp'
 import { getWhatsAppProvider } from '@/lib/whatsapp-notify'
 import type { UserRole } from '@/types'
+import type { Database } from '@/types/database'
+
+type ShopProductUpdate = Database['public']['Tables']['shop_products']['Update']
 
 type Gate = { ok: true } | { ok: false; message: string }
 
@@ -571,7 +574,7 @@ export async function updateShopProductAction(
   const gate = await requireAdmin()
   if (!gate.ok) return { ok: false, message: gate.message }
 
-  const patch: Record<string, unknown> = { updated_at: new Date().toISOString() }
+  const patch: ShopProductUpdate = { updated_at: new Date().toISOString() }
   if (input.name !== undefined) {
     const n = input.name.trim()
     if (!n) return { ok: false, message: 'O nome não pode ficar vazio.' }
