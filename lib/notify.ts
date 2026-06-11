@@ -21,10 +21,64 @@
 
 const CALLMEBOT_CALL_ENDPOINT = 'https://api.callmebot.com/call.php'
 const CALLMEBOT_WHATSAPP_ENDPOINT = 'https://api.callmebot.com/whatsapp.php'
+const CALLMEBOT_TEXT_ENDPOINT = 'https://api.callmebot.com/text.php'
 const REQUEST_TIMEOUT_MS = 8000
 
 function hasCallMeBotEnv(): boolean {
   return Boolean(process.env.CALLMEBOT_PHONE?.trim() && process.env.CALLMEBOT_APIKEY?.trim())
+}
+
+function hasTelegramEnv(): boolean {
+  return Boolean(process.env.CALLMEBOT_TELEGRAM_USER?.trim())
+}
+
+/**
+ * Envia uma MENSAGEM DE TEXTO para o Telegram do administrador via CallMeBot.
+ *
+ * Setup unico (uma vez, gratis e mais estavel que o WhatsApp):
+ *  1. No Telegram, abra o bot @CallMeBot_txtbot e envie: /start
+ *  2. Garanta que seu @usuario do Telegram esteja definido e visivel
+ *     (Configuracoes -> Privacidade).
+ *  3. Configure no Vercel:
+ *       CALLMEBOT_TELEGRAM_USER = @seu_usuario
+ *  Nao precisa de APIKEY nem numero de telefone.
+ *
+ * Nunca lanca: erros sao apenas logados. Retorna true em sucesso.
+ */
+export async function triggerTelegramNotification(text: string): Promise<boolean> {
+  if (!hasTelegramEnv()) {
+    return false
+  }
+
+  const raw = process.env.CALLMEBOT_TELEGRAM_USER!.trim().replace(/\s+/g, '')
+  const user = raw.startsWith('@') ? raw : `@${raw}`
+
+  const url = new URL(CALLMEBOT_TEXT_ENDPOINT)
+  url.searchParams.set('user', user)
+  url.searchParams.set('text', text)
+
+  const controller = new AbortController()
+  const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS)
+
+  try {
+    const res = await fetch(url.toString(), {
+      method: 'GET',
+      signal: controller.signal,
+      cache: 'no-store',
+    })
+    if (!res.ok) {
+      const body = await res.text().catch(() => '')
+      console.warn(`[notify] CallMeBot Telegram HTTP ${res.status}: ${body.slice(0, 200)}`)
+      return false
+    }
+    return true
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err)
+    console.warn(`[notify] Falha ao enviar Telegram: ${msg}`)
+    return false
+  } finally {
+    clearTimeout(timeout)
+  }
 }
 
 function hasWhatsAppEnv(): boolean {
@@ -159,13 +213,13 @@ export async function notifyNewSignup(params: {
 }
 
 /**
- * Notifica o administrador (via WhatsApp de texto, com fallback para chamada)
- * sobre uma nova mensagem enviada por um formulario do site.
+ * Notifica o administrador sobre uma nova mensagem enviada por um
+ * formulario do site, escolhendo o primeiro canal configurado.
  *
- * Preferencia:
- *  1. WhatsApp de texto (CallMeBot) -> mensagem completa e legivel.
- *  2. Se WhatsApp nao estiver configurado, cai para a chamada telefonica (TTS)
- *     com um resumo curto.
+ * Preferencia (cai para o proximo se nao estiver configurado/falhar):
+ *  1. Telegram de texto (CallMeBot) -> mais estavel, instantaneo.
+ *  2. WhatsApp de texto (CallMeBot).
+ *  3. Chamada telefonica (TTS) com um resumo curto.
  *
  * Nunca lanca. Falha de notificacao nao deve impactar o envio do visitante.
  */
@@ -181,17 +235,20 @@ export async function notifySiteMessage(params: {
   const email = (params.email || '').trim() || 'Nao informado'
   const message = (params.message || '').trim()
 
-  // WhatsApp aceita texto longo; ainda assim limitamos para evitar abusos.
+  // Limita o tamanho para evitar abusos, ainda que os canais aceitem texto longo.
   const safeMessage = message.length > 900 ? `${message.slice(0, 900)}...` : message
 
-  const whatsappText =
-    `*Brit im Mashiach - Nova mensagem do site*\n` +
+  const plainText =
+    `Brit im Mashiach - Nova mensagem do site\n` +
     `Tipo: ${kind}\n` +
     `Nome: ${name}\n` +
     `E-mail: ${email}\n` +
     `\n${safeMessage}`
 
-  const sentWhatsApp = await triggerWhatsAppNotification(whatsappText)
+  const sentTelegram = await triggerTelegramNotification(plainText)
+  if (sentTelegram) return true
+
+  const sentWhatsApp = await triggerWhatsAppNotification(plainText)
   if (sentWhatsApp) return true
 
   // Fallback: chamada telefonica curta (nao le a mensagem inteira).

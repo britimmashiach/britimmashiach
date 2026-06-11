@@ -172,7 +172,7 @@ export default async function AdminPage() {
         <p className="section-subtitle max-w-2xl">
           Pedidos de oração (<code className="text-xs bg-muted px-1 rounded">/comunidade</code>) e ouvidoria (
           <code className="text-xs bg-muted px-1 rounded">/ouvidoria</code>). Atualize o status, responda por e-mail ou
-          remova. Você também é avisado no WhatsApp a cada novo envio.
+          remova. Você também é avisado no Telegram/WhatsApp a cada novo envio.
         </p>
         <InboxAdminPanel
           serviceRoleConfigured={serviceOk}
