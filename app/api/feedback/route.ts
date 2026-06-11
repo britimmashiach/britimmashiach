@@ -1,8 +1,14 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { createServerSupabaseClient, hasSupabaseServerEnv } from '@/lib/supabase-server'
+import { notifySiteMessage } from '@/lib/notify'
 
 const CATEGORIES = new Set(['sugestao', 'opiniao', 'reclamacao'])
+const CATEGORY_LABELS: Record<string, string> = {
+  sugestao: 'Sugestão',
+  opiniao: 'Opinião',
+  reclamacao: 'Reclamação',
+}
 
 function getSupabaseAdmin() {
   return createClient(
@@ -102,6 +108,14 @@ export async function POST(req: Request) {
     }
     return NextResponse.json({ error: 'Não foi possível enviar. Tente novamente.' }, { status: 500 })
   }
+
+  // Notifica o Rav no WhatsApp (nunca lanca; falha aqui nao afeta o envio).
+  await notifySiteMessage({
+    kind: `Ouvidoria - ${CATEGORY_LABELS[category] ?? category}`,
+    name: contactName,
+    email: contactEmail,
+    message: subject ? `Assunto: ${subject}\n${message}` : message,
+  })
 
   return NextResponse.json({ ok: true })
 }

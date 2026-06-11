@@ -667,3 +667,71 @@ export async function uploadShopImageAction(
   const { data } = admin.storage.from(SHOP_BUCKET).getPublicUrl(path)
   return { ok: true, url: data.publicUrl }
 }
+
+// ---- Caixa de entrada: pedidos de oração e ouvidoria --------------------
+
+export type AdminPrayerRow = {
+  id: string
+  contact_name: string | null
+  contact_email: string | null
+  message: string
+  is_anonymous: boolean
+  status: string
+  created_at: string
+}
+
+export type AdminFeedbackRow = {
+  id: string
+  category: string
+  subject: string
+  message: string
+  contact_name: string | null
+  contact_email: string | null
+  status: string
+  created_at: string
+}
+
+const PRAYER_STATUSES = new Set(['novo', 'em_oracao', 'arquivado'])
+const FEEDBACK_STATUSES = new Set(['novo', 'lido', 'respondido', 'arquivado'])
+
+export async function updatePrayerStatusAction(id: string, status: string): Promise<SimpleResult> {
+  const gate = await requireAdmin()
+  if (!gate.ok) return { ok: false, message: gate.message }
+  if (!PRAYER_STATUSES.has(status)) return { ok: false, message: 'Status inválido.' }
+
+  const admin = getSupabaseAdmin()
+  const { error } = await admin.from('prayer_requests').update({ status }).eq('id', id)
+  if (error) return { ok: false, message: error.message }
+  return { ok: true, message: 'Status atualizado.' }
+}
+
+export async function deletePrayerRequestAction(id: string): Promise<SimpleResult> {
+  const gate = await requireAdmin()
+  if (!gate.ok) return { ok: false, message: gate.message }
+
+  const admin = getSupabaseAdmin()
+  const { error } = await admin.from('prayer_requests').delete().eq('id', id)
+  if (error) return { ok: false, message: error.message }
+  return { ok: true, message: 'Pedido removido.' }
+}
+
+export async function updateFeedbackStatusAction(id: string, status: string): Promise<SimpleResult> {
+  const gate = await requireAdmin()
+  if (!gate.ok) return { ok: false, message: gate.message }
+  if (!FEEDBACK_STATUSES.has(status)) return { ok: false, message: 'Status inválido.' }
+
+  const admin = getSupabaseAdmin()
+  const { error } = await admin.from('site_feedback').update({ status }).eq('id', id)
+  if (error) return { ok: false, message: error.message }
+  return { ok: true, message: 'Status atualizado.' }
+}
+
+export async function deleteFeedbackAction(id: string): Promise<SimpleResult> {
+  const gate = await requireAdmin()
+  if (!gate.ok) return { ok: false, message: gate.message }
+
+  const admin = getSupabaseAdmin()
+  const { error } = await admin.from('site_feedback').delete().eq('id', id)
+  if (error) return { ok: false, message: error.message }
+  return { ok: true, message: 'Mensagem removida.' }
+}

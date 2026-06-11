@@ -5,10 +5,16 @@ import Link from 'next/link'
 import { ArrowLeft, ShieldCheck, Wrench } from 'lucide-react'
 import { createServerSupabaseClient, hasSupabaseServerEnv } from '@/lib/supabase-server'
 import { getSupabaseAdmin, hasServiceRoleEnv } from '@/lib/supabase-admin'
-import { listMembersAction, type AdminShopProductRow } from '@/app/admin/actions'
+import {
+  listMembersAction,
+  type AdminShopProductRow,
+  type AdminPrayerRow,
+  type AdminFeedbackRow,
+} from '@/app/admin/actions'
 import { PromoteUserPanel } from '@/components/admin/PromoteUserPanel'
 import { AdminMembersPanel } from '@/components/admin/AdminMembersPanel'
 import { ShopAdminPanel } from '@/components/admin/ShopAdminPanel'
+import { InboxAdminPanel } from '@/components/admin/InboxAdminPanel'
 import {
   LeaderPortalAdminPanel,
   type AdminAnnouncementRow,
@@ -57,12 +63,14 @@ export default async function AdminPage() {
   let announcements: AdminAnnouncementRow[] = []
   let resources: AdminResourceRow[] = []
   let shopProducts: AdminShopProductRow[] = []
+  let prayerRequests: AdminPrayerRow[] = []
+  let feedback: AdminFeedbackRow[] = []
   let whatsappOptInCount = 0
   const whatsappProviderConfigured = getWhatsAppProvider() !== 'none'
   if (serviceOk) {
     whatsappOptInCount = await countWhatsAppOptInMembers()
     const admin = getSupabaseAdmin()
-    const [annRes, resRes, shopRes] = await Promise.all([
+    const [annRes, resRes, shopRes, prayerRes, feedbackRes] = await Promise.all([
       admin
         .from('leader_announcements')
         .select('id, title, pinned, show_on_home, created_at')
@@ -81,10 +89,22 @@ export default async function AdminPage() {
         .order('sort_order', { ascending: true })
         .order('created_at', { ascending: false })
         .limit(100),
+      admin
+        .from('prayer_requests')
+        .select('id, contact_name, contact_email, message, is_anonymous, status, created_at')
+        .order('created_at', { ascending: false })
+        .limit(200),
+      admin
+        .from('site_feedback')
+        .select('id, category, subject, message, contact_name, contact_email, status, created_at')
+        .order('created_at', { ascending: false })
+        .limit(200),
     ])
     announcements = annRes.data ?? []
     resources = resRes.data ?? []
     shopProducts = shopRes.data ?? []
+    prayerRequests = prayerRes.data ?? []
+    feedback = feedbackRes.data ?? []
   }
 
   return (
@@ -142,6 +162,22 @@ export default async function AdminPage() {
           serviceRoleConfigured={serviceOk}
           currentUserId={user.id}
           initialSnapshot={snapshot}
+        />
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="font-cinzel text-lg font-semibold text-petroleum-800 dark:text-parchment-100">
+          Mensagens recebidas
+        </h2>
+        <p className="section-subtitle max-w-2xl">
+          Pedidos de oração (<code className="text-xs bg-muted px-1 rounded">/comunidade</code>) e ouvidoria (
+          <code className="text-xs bg-muted px-1 rounded">/ouvidoria</code>). Atualize o status, responda por e-mail ou
+          remova. Você também é avisado no WhatsApp a cada novo envio.
+        </p>
+        <InboxAdminPanel
+          serviceRoleConfigured={serviceOk}
+          prayerRequests={prayerRequests}
+          feedback={feedback}
         />
       </section>
 

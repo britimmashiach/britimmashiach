@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { createServerSupabaseClient, hasSupabaseServerEnv } from '@/lib/supabase-server'
+import { notifySiteMessage } from '@/lib/notify'
 
 function getSupabaseAdmin() {
   return createClient(
@@ -99,6 +100,14 @@ export async function POST(req: Request) {
     }
     return NextResponse.json({ error: 'Não foi possível enviar. Tente novamente.' }, { status: 500 })
   }
+
+  // Notifica o Rav no WhatsApp (nunca lanca; falha aqui nao afeta o envio).
+  await notifySiteMessage({
+    kind: 'Pedido de oração',
+    name: isAnonymous ? 'Anônimo' : contactName,
+    email: isAnonymous ? null : contactEmail,
+    message,
+  })
 
   return NextResponse.json({ ok: true })
 }
