@@ -26,6 +26,7 @@ import {
 } from '@/lib/gematria'
 import { FAMOUS_VALUES, LEXICON_SIZE } from '@/lib/gematria-lexicon'
 import { useProfile } from '@/hooks/useProfile'
+import { ShlomoStamDownload } from '@/components/leaders/ShlomoStamDownload'
 
 type Tab = 'calc' | 'reverse'
 type SourceFilter = 'todos' | 'tanach' | 'dicionario'
@@ -516,6 +517,12 @@ export function GematriaClient() {
             )}
           </div>
         </section>
+      )}
+
+      {isMestre && (
+        <div className="mt-10">
+          <ShlomoStamDownload context="mestre" />
+        </div>
       )}
 
       <p className="mt-8 text-center text-xs font-inter text-warmgray-400">

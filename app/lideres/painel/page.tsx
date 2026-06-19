@@ -9,6 +9,7 @@ import { ManhigutSalutation } from '@/components/leaders/ManhigutSalutation'
 import { ManhigutProgressCard } from '@/components/leaders/ManhigutProgressCard'
 import { LeaderAnnouncements } from '@/components/leaders/LeaderAnnouncements'
 import { LeaderResourcesList } from '@/components/leaders/LeaderResourcesList'
+import { ShlomoStamDownload } from '@/components/leaders/ShlomoStamDownload'
 import { MinistryChecklist } from '@/components/leaders/MinistryChecklist'
 import { LeaderGate } from '@/components/ui/LeaderGate'
 import { BookOpen, Calendar, FileText, MessageCircle, Crown, GraduationCap } from 'lucide-react'
@@ -129,6 +130,8 @@ export default async function LideresPainelPage() {
         </div>
 
         <LeaderResourcesList resources={leaderResources} />
+
+        <ShlomoStamDownload />
 
         <MinistryChecklist />
 

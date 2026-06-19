@@ -99,6 +99,8 @@ A fonte Shlomo Stam não é de código aberto. Para o ambiente de desenvolviment
 
 O `@font-face` já está configurado em `globals.css`. Sem o arquivo TTF, o sistema usa `Times New Roman` como fallback.
 
+**Download para líderes e Mestres:** no Painel de Líderes (`/lideres/painel`) e na Gematria (usuários com papel Mestre), o card **Fonte hebraica Shlomo Stam** oferece o download via `/api/fonts/shlomo-stam` (requer login e permissão de líder ou Mestre).
+
 ---
 
 ## 7. Ícones PWA
