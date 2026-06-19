@@ -2,8 +2,8 @@ import { Download, Type } from 'lucide-react'
 import { SHLOMO_STAM_DOWNLOAD_URL } from '@/lib/shlomo-stam-font'
 
 interface Props {
-  /** Texto curto de contexto (painel de líderes vs. Gematria). */
-  context?: 'lideres' | 'mestre'
+  /** Texto curto de contexto (painel de líderes vs. Gematria vs. admin). */
+  context?: 'lideres' | 'mestre' | 'admin'
 }
 
 /** Card para baixar e instalar a fonte hebraica oficial da congregação. */
@@ -11,10 +11,12 @@ export function ShlomoStamDownload({ context = 'lideres' }: Props) {
   const intro =
     context === 'mestre'
       ? 'Como Mestre de Gematria, você pode instalar a mesma fonte hebraica usada nos materiais do Rav EBBY e no site da Brit Im Mashiach.'
-      : 'Instale a fonte hebraica oficial usada nas Aliyot, no Tehilim, no Siddur e nos documentos do Rav EBBY, para preparar estudos e materiais com o mesmo padrão tipográfico.'
+      : context === 'admin'
+        ? 'Fonte hebraica oficial da congregação. Disponível para líderes e Mestres no Portal de Líderes; aqui você também pode baixar para testar ou instalar no seu computador.'
+        : 'Instale a fonte hebraica oficial usada nas Aliyot, no Tehilim, no Siddur e nos documentos do Rav EBBY, para preparar estudos e materiais com o mesmo padrão tipográfico.'
 
   return (
-    <div className="glass-card p-6 space-y-5">
+    <div className="glass-card p-6 space-y-5 ring-1 ring-gold-500/30 bg-gold-500/5">
       <div className="flex items-start gap-3">
         <Type className="w-6 h-6 text-gold-600 dark:text-gold-400 shrink-0 mt-0.5" aria-hidden />
         <div className="space-y-1">

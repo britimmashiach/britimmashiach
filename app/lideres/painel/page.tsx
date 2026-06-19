@@ -113,6 +113,8 @@ export default async function LideresPainelPage() {
 
         <LeaderAnnouncements announcements={announcements} />
 
+        <ShlomoStamDownload />
+
         <div className="grid gap-5 sm:grid-cols-2">
           {resources.map(({ icon: Icon, title, text, href, cta, featured }) => (
             <div
@@ -130,8 +132,6 @@ export default async function LideresPainelPage() {
         </div>
 
         <LeaderResourcesList resources={leaderResources} />
-
-        <ShlomoStamDownload />
 
         <MinistryChecklist />
 

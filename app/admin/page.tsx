@@ -20,6 +20,7 @@ import {
   type AdminAnnouncementRow,
   type AdminResourceRow,
 } from '@/components/admin/LeaderPortalAdminPanel'
+import { ShlomoStamDownload } from '@/components/leaders/ShlomoStamDownload'
 import { countWhatsAppOptInMembers } from '@/lib/broadcast-announcement-whatsapp'
 import { getWhatsAppProvider } from '@/lib/whatsapp-notify'
 
@@ -146,6 +147,8 @@ export default async function AdminPage() {
           Sem ela, as ações de manutenção não funcionam.
         </div>
       )}
+
+      <ShlomoStamDownload context="admin" />
 
       <section className="space-y-3">
         <h2 className="font-cinzel text-lg font-semibold text-petroleum-800 dark:text-parchment-100">
