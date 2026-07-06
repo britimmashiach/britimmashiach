@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { Crown, Eye, GraduationCap, Users } from 'lucide-react'
-import type { SitePublicStats } from '@/lib/site-public-stats'
-import { formatPublicStat } from '@/lib/site-public-stats'
+import type { SitePublicStats } from '@/lib/site-public-stats-shared'
+import { formatPublicStat } from '@/lib/site-public-stats-shared'
 import { cn } from '@/lib/utils'
 
 type StatItem = {

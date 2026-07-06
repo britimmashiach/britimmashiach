@@ -1,19 +1,9 @@
 import { createServerSupabaseClient, hasSupabaseServerEnv } from '@/lib/supabase-server'
 import { getSupabaseAdmin, hasServiceRoleEnv } from '@/lib/supabase-admin'
+import type { LiveProfileCounts, SitePublicStats } from '@/lib/site-public-stats-shared'
 
-export type SitePublicStats = {
-  members: number
-  visitors: number
-  leaders: number
-  mestres: number
-  updatedAt: string | null
-}
-
-export type LiveProfileCounts = {
-  members: number
-  leaders: number
-  mestres: number
-}
+export type { LiveProfileCounts, SitePublicStats, SitePublicStatsPayload } from '@/lib/site-public-stats-shared'
+export { formatPublicStat } from '@/lib/site-public-stats-shared'
 
 const EMPTY: SitePublicStats = {
   members: 0,
@@ -74,8 +64,4 @@ export async function fetchLiveProfileCounts(): Promise<LiveProfileCounts | null
     leaders: leadersRes.count ?? 0,
     mestres: mestresRes.count ?? 0,
   }
-}
-
-export function formatPublicStat(n: number): string {
-  return new Intl.NumberFormat('pt-BR').format(Math.max(0, Math.floor(n)))
 }

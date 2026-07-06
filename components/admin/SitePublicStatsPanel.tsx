@@ -7,10 +7,10 @@ import { Crown, Eye, GraduationCap, Loader2, RefreshCw, Save, Users } from 'luci
 import {
   getLiveProfileCountsAction,
   updateSitePublicStatsAction,
-  type SitePublicStatsPayload,
 } from '@/app/admin/actions'
-import type { LiveProfileCounts, SitePublicStats } from '@/lib/site-public-stats'
-import { formatPublicStat } from '@/lib/site-public-stats'
+import type { LiveProfileCounts, SitePublicStats } from '@/lib/site-public-stats-shared'
+import type { SitePublicStatsPayload } from '@/lib/site-public-stats-shared'
+import { formatPublicStat } from '@/lib/site-public-stats-shared'
 import { cn } from '@/lib/utils'
 
 type FieldKey = keyof SitePublicStatsPayload
