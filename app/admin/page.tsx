@@ -21,7 +21,9 @@ import {
   type AdminResourceRow,
 } from '@/components/admin/LeaderPortalAdminPanel'
 import { ShlomoStamDownload } from '@/components/leaders/ShlomoStamDownload'
+import { SitePublicStatsPanel } from '@/components/admin/SitePublicStatsPanel'
 import { countWhatsAppOptInMembers } from '@/lib/broadcast-announcement-whatsapp'
+import { fetchLiveProfileCounts, fetchSitePublicStats } from '@/lib/site-public-stats'
 import { getWhatsAppProvider } from '@/lib/whatsapp-notify'
 
 export const dynamic = 'force-dynamic'
@@ -68,7 +70,10 @@ export default async function AdminPage() {
   let feedback: AdminFeedbackRow[] = []
   let whatsappOptInCount = 0
   const whatsappProviderConfigured = getWhatsAppProvider() !== 'none'
+  const publicStats = await fetchSitePublicStats()
+  let liveProfileCounts = null as Awaited<ReturnType<typeof fetchLiveProfileCounts>>
   if (serviceOk) {
+    liveProfileCounts = await fetchLiveProfileCounts()
     whatsappOptInCount = await countWhatsAppOptInMembers()
     const admin = getSupabaseAdmin()
     const [annRes, resRes, shopRes, prayerRes, feedbackRes] = await Promise.all([
@@ -149,6 +154,17 @@ export default async function AdminPage() {
       )}
 
       <ShlomoStamDownload context="admin" />
+
+      <section className="space-y-3">
+        <h2 className="font-cinzel text-lg font-semibold text-petroleum-800 dark:text-parchment-100">
+          Contadores da home
+        </h2>
+        <SitePublicStatsPanel
+          serviceRoleConfigured={serviceOk}
+          initialStats={publicStats}
+          initialLive={liveProfileCounts}
+        />
+      </section>
 
       <section className="space-y-3">
         <h2 className="font-cinzel text-lg font-semibold text-petroleum-800 dark:text-parchment-100">

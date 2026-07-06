@@ -7,6 +7,7 @@ import {
   broadcastAnnouncementWhatsApp,
   countWhatsAppOptInMembers,
 } from '@/lib/broadcast-announcement-whatsapp'
+import { fetchLiveProfileCounts, type LiveProfileCounts } from '@/lib/site-public-stats'
 import { getWhatsAppProvider } from '@/lib/whatsapp-notify'
 import type { UserRole } from '@/types'
 import type { Database } from '@/types/database'
@@ -735,3 +736,50 @@ export async function deleteFeedbackAction(id: string): Promise<SimpleResult> {
   if (error) return { ok: false, message: error.message }
   return { ok: true, message: 'Mensagem removida.' }
 }
+
+export type SitePublicStatsPayload = {
+  members: number
+  visitors: number
+  leaders: number
+  mestres: number
+}
+
+function sanitizeStat(n: number): number {
+  if (!Number.isFinite(n)) return 0
+  return Math.max(0, Math.floor(n))
+}
+
+export async function updateSitePublicStatsAction(
+  payload: SitePublicStatsPayload,
+): Promise<SimpleResult> {
+  const gate = await requireAdmin()
+  if (!gate.ok) return { ok: false, message: gate.message }
+
+  const row = {
+    id: 1,
+    members_count: sanitizeStat(payload.members),
+    visitors_count: sanitizeStat(payload.visitors),
+    leaders_count: sanitizeStat(payload.leaders),
+    mestres_count: sanitizeStat(payload.mestres),
+    updated_at: new Date().toISOString(),
+  }
+
+  const admin = getSupabaseAdmin()
+  const { error } = await admin.from('site_public_stats').upsert(row, { onConflict: 'id' })
+  if (error) return { ok: false, message: error.message }
+  return { ok: true, message: 'Contadores da página inicial salvos.' }
+}
+
+export async function getLiveProfileCountsAction(): Promise<
+  { ok: true; counts: LiveProfileCounts } | { ok: false; message: string }
+> {
+  const gate = await requireAdmin()
+  if (!gate.ok) return { ok: false, message: gate.message }
+
+  const counts = await fetchLiveProfileCounts()
+  if (!counts) {
+    return { ok: false, message: 'Não foi possível ler profiles (service role ausente).' }
+  }
+  return { ok: true, counts }
+}
+

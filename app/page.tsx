@@ -31,6 +31,8 @@ import { HebrewDateSkeleton } from '@/components/ui/Skeleton'
 import { getHebrewDateInfo, getNextChag } from '@/lib/hebrew-date'
 import { fetchHomeAnnouncements } from '@/lib/leader-portal-supabase'
 import { HomeAnnouncementsCall } from '@/components/home/HomeAnnouncementsCall'
+import { HomeCommunityStats } from '@/components/home/HomeCommunityStats'
+import { fetchSitePublicStats } from '@/lib/site-public-stats'
 import { cn } from '@/lib/utils'
 
 const recentStudies = [
@@ -105,7 +107,10 @@ const ecosystemCards = [
 export default async function HomePage() {
   const hebrewInfo = getHebrewDateInfo(new Date())
   const nextChag = getNextChag(new Date())
-  const homeAnnouncements = await fetchHomeAnnouncements()
+  const [homeAnnouncements, publicStats] = await Promise.all([
+    fetchHomeAnnouncements(),
+    fetchSitePublicStats(),
+  ])
 
   return (
     <div className="min-h-screen">
@@ -211,6 +216,8 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      <HomeCommunityStats stats={publicStats} />
 
       {/* Parashá da semana — entrada do ciclo */}
       <section className="container mx-auto px-4 py-14 md:py-16" aria-labelledby="ciclo-titulo">

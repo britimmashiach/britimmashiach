@@ -704,6 +704,33 @@ export interface Database {
         }
         Relationships: []
       }
+      site_public_stats: {
+        Row: {
+          id: number
+          members_count: number
+          visitors_count: number
+          leaders_count: number
+          mestres_count: number
+          updated_at: string
+        }
+        Insert: {
+          id?: number
+          members_count?: number
+          visitors_count?: number
+          leaders_count?: number
+          mestres_count?: number
+          updated_at?: string
+        }
+        Update: {
+          id?: number
+          members_count?: number
+          visitors_count?: number
+          leaders_count?: number
+          mestres_count?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
