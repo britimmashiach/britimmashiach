@@ -32,6 +32,61 @@ function hasTelegramEnv(): boolean {
   return Boolean(process.env.CALLMEBOT_TELEGRAM_USER?.trim())
 }
 
+function hasTelegramBotEnv(): boolean {
+  return Boolean(process.env.TELEGRAM_BOT_TOKEN?.trim() && process.env.TELEGRAM_CHAT_ID?.trim())
+}
+
+/**
+ * Envia uma MENSAGEM DE TEXTO usando o BOT OFICIAL do Telegram (BotFather).
+ * Canal mais confiavel: oficial, gratuito, instantaneo, sem terceiros.
+ *
+ * Setup unico:
+ *  1. No Telegram, abra @BotFather e envie /newbot. Siga os passos e copie o
+ *     TOKEN (formato 123456789:AA...).
+ *  2. Abra o seu novo bot e envie qualquer mensagem (ex.: "oi") para ele.
+ *  3. Descubra o seu chat_id abrindo no navegador:
+ *       https://api.telegram.org/bot<TOKEN>/getUpdates
+ *     e copie o numero em "chat":{"id": NUMERO }.
+ *  4. Configure no Vercel:
+ *       TELEGRAM_BOT_TOKEN = 123456789:AA...
+ *       TELEGRAM_CHAT_ID   = NUMERO
+ *
+ * Nunca lanca: erros sao apenas logados. Retorna true em sucesso.
+ */
+export async function triggerTelegramBotNotification(text: string): Promise<boolean> {
+  if (!hasTelegramBotEnv()) {
+    return false
+  }
+
+  const token = process.env.TELEGRAM_BOT_TOKEN!.trim()
+  const chatId = process.env.TELEGRAM_CHAT_ID!.trim()
+
+  const controller = new AbortController()
+  const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS)
+
+  try {
+    const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ chat_id: chatId, text, disable_web_page_preview: true }),
+      signal: controller.signal,
+      cache: 'no-store',
+    })
+    if (!res.ok) {
+      const body = await res.text().catch(() => '')
+      console.warn(`[notify] Telegram Bot HTTP ${res.status}: ${body.slice(0, 200)}`)
+      return false
+    }
+    return true
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err)
+    console.warn(`[notify] Falha ao enviar Telegram Bot: ${msg}`)
+    return false
+  } finally {
+    clearTimeout(timeout)
+  }
+}
+
 /**
  * Envia uma MENSAGEM DE TEXTO para o Telegram do administrador via CallMeBot.
  *
@@ -217,9 +272,10 @@ export async function notifyNewSignup(params: {
  * formulario do site, escolhendo o primeiro canal configurado.
  *
  * Preferencia (cai para o proximo se nao estiver configurado/falhar):
- *  1. Telegram de texto (CallMeBot) -> mais estavel, instantaneo.
- *  2. WhatsApp de texto (CallMeBot).
- *  3. Chamada telefonica (TTS) com um resumo curto.
+ *  1. Bot oficial do Telegram (BotFather) -> mais confiavel.
+ *  2. Telegram de texto (CallMeBot).
+ *  3. WhatsApp de texto (CallMeBot).
+ *  4. Chamada telefonica (TTS) com um resumo curto.
  *
  * Nunca lanca. Falha de notificacao nao deve impactar o envio do visitante.
  */
@@ -244,6 +300,9 @@ export async function notifySiteMessage(params: {
     `Nome: ${name}\n` +
     `E-mail: ${email}\n` +
     `\n${safeMessage}`
+
+  const sentTelegramBot = await triggerTelegramBotNotification(plainText)
+  if (sentTelegramBot) return true
 
   const sentTelegram = await triggerTelegramNotification(plainText)
   if (sentTelegram) return true
