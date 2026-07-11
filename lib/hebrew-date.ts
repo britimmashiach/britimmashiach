@@ -1055,6 +1055,8 @@ export interface NextChag {
   slug: string
   hebrew: string
   daysUntil: number
+  /** Data civil (YYYY-MM-DD, fuso de São Paulo) em que o Chag começa. */
+  isoDate: string
 }
 
 /** Chagim "de destaque" (com hebraico pontuado fixo para consistência visual). */
@@ -1078,7 +1080,13 @@ export function getNextChag(fromDate: Date = new Date()): NextChag | null {
   for (const ev of upcoming) {
     const match = HEADLINE_CHAGIM.find((h) => h.test(ev.title))
     if (match) {
-      return { name: match.name, slug: match.slug, hebrew: match.hebrew, daysUntil: ev.daysUntil }
+      return {
+        name: match.name,
+        slug: match.slug,
+        hebrew: match.hebrew,
+        daysUntil: ev.daysUntil,
+        isoDate: ev.isoDate,
+      }
     }
   }
   return null

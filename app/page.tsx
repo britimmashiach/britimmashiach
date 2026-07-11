@@ -27,8 +27,11 @@ export const metadata: Metadata = {
 import { HebrewDateDisplay } from '@/components/spiritual/HebrewDateDisplay'
 import { OmerCounter } from '@/components/spiritual/OmerCounter'
 import { ParashaWidget } from '@/components/spiritual/ParashaWidget'
+import { ChagCelebrationBanner } from '@/components/spiritual/ChagCelebrationBanner'
+import { ChagCountdownCard } from '@/components/spiritual/ChagCountdownCard'
 import { HebrewDateSkeleton } from '@/components/ui/Skeleton'
-import { getHebrewDateInfo, getNextChag } from '@/lib/hebrew-date'
+import { getDayInfo, getHebrewDateInfo, getNextChag } from '@/lib/hebrew-date'
+import { isCelebratoryHoliday } from '@/lib/chag-countdown'
 import { fetchHomeAnnouncements } from '@/lib/leader-portal-supabase'
 import { HomeAnnouncementsCall } from '@/components/home/HomeAnnouncementsCall'
 import { HomeCommunityStats } from '@/components/home/HomeCommunityStats'
@@ -107,6 +110,8 @@ const ecosystemCards = [
 export default async function HomePage() {
   const hebrewInfo = getHebrewDateInfo(new Date())
   const nextChag = getNextChag(new Date())
+  const todayInfo = getDayInfo(new Date())
+  const isCelebratingToday = isCelebratoryHoliday(todayInfo.holidayKey)
   const [homeAnnouncements, publicStats] = await Promise.all([
     fetchHomeAnnouncements(),
     fetchSitePublicStats(),
@@ -114,6 +119,13 @@ export default async function HomePage() {
 
   return (
     <div className="min-h-screen">
+
+      <ChagCelebrationBanner
+        holidayKey={todayInfo.holidayKey}
+        holidayName={todayInfo.holidayName}
+        dayNumber={todayInfo.holidayDayNumber}
+        totalDays={todayInfo.holidayTotalDays}
+      />
 
       <HomeAnnouncementsCall announcements={homeAnnouncements} />
 
@@ -149,27 +161,6 @@ export default async function HomePage() {
                 </p>
               </div>
 
-              {/* Próximo Chag — indicador sutil */}
-              {nextChag && (
-                <div className="flex items-center gap-2 text-xs font-inter text-warmgray-400">
-                  <Flame className="w-3 h-3 text-gold-500/70 flex-shrink-0" aria-hidden="true" />
-                  <span>Em breve:</span>
-                  <span
-                    className="font-hebrew text-sm text-warmgray-500 dark:text-warmgray-400"
-                    dir="rtl"
-                    lang="he"
-                  >
-                    {nextChag.hebrew}
-                  </span>
-                  <Link
-                    href="/chagim"
-                    className="text-warmgray-500 hover:text-foreground transition-colors hover:underline underline-offset-2 decoration-gold-500/40"
-                  >
-                    {nextChag.name}
-                  </Link>
-                </div>
-              )}
-
               {/* CTAs quietas — links, não botões */}
               <div className="flex flex-wrap items-center gap-x-6 gap-y-2 pt-1">
                 <Link
@@ -198,6 +189,7 @@ export default async function HomePage() {
 
             {/* Direita: ciclo da semana */}
             <div className="space-y-3">
+              {nextChag && !isCelebratingToday && <ChagCountdownCard nextChag={nextChag} />}
               <ParashaWidget name={hebrewInfo.parasha} />
               <OmerCounter day={hebrewInfo.omerDay} text={hebrewInfo.omerText} />
 
