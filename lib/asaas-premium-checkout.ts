@@ -4,9 +4,11 @@ import {
   AsaasApiError,
   createAsaasCustomer,
   createMonthlyPixPayment,
+  findExistingPendingPixPayment,
   getAsaasCustomer,
   getPaymentPixQrCode,
   isValidCpfCnpj,
+  monthlyPixExternalReference,
   normalizeCpfCnpj,
 } from '@/lib/asaas'
 
@@ -77,10 +79,20 @@ export async function createManualMonthlyPixCheckout(input: {
   encodedImage: string
   invoiceUrl: string | null
 }> {
-  const payment = await createMonthlyPixPayment({
+  // Reaproveita cobrança PIX ainda pendente (não paga) em vez de gerar outra: evita
+  // duplicar cobranças no Asaas quando o usuário reabre a tela antes de pagar a
+  // primeira, o que geraria lembretes automáticos diários de "pagamento não registrado".
+  const existing = await findExistingPendingPixPayment({
     customerId: input.customerId,
-    userId: input.userId,
-  })
+    externalReference: monthlyPixExternalReference(input.userId),
+  }).catch(() => null)
+
+  const payment =
+    existing ??
+    (await createMonthlyPixPayment({
+      customerId: input.customerId,
+      userId: input.userId,
+    }))
 
   const qr = await getPaymentPixQrCode(payment.id)
 

@@ -1,7 +1,9 @@
 import { NextResponse } from 'next/server'
 import {
+  annualPixExternalReference,
   createAnnualPixPayment,
   createAsaasCustomer,
+  findExistingPendingPixPayment,
   formatAsaasError,
   getAsaasCustomer,
   getPaymentPixQrCode,
@@ -73,10 +75,19 @@ export async function POST(req: Request) {
       customerId = customer.id
     }
 
-    const payment = await createAnnualPixPayment({
+    // Reaproveita cobrança PIX ainda pendente em vez de gerar outra (evita duplicar
+    // cobranças no Asaas e os lembretes automáticos diários de "pagamento não registrado").
+    const existing = await findExistingPendingPixPayment({
       customerId,
-      userId: user.id,
-    })
+      externalReference: annualPixExternalReference(user.id),
+    }).catch(() => null)
+
+    const payment =
+      existing ??
+      (await createAnnualPixPayment({
+        customerId,
+        userId: user.id,
+      }))
 
     const qr = await getPaymentPixQrCode(payment.id)
 

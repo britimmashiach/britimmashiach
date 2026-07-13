@@ -168,6 +168,34 @@ export function premiumContractId(userId: string): string {
   return `prem-${userId.replace(/-/g, '').slice(0, 28)}`
 }
 
+export function monthlyPixExternalReference(userId: string): string {
+  return `monthly:${userId}`
+}
+
+export function annualPixExternalReference(userId: string): string {
+  return `annual:${userId}`
+}
+
+/**
+ * Busca uma cobrança PIX ainda pendente (não paga, não vencida) já criada para
+ * o mesmo cliente/referência. Evita gerar uma cobrança duplicada no Asaas quando
+ * o usuário reabre a tela de PIX antes de pagar a primeira (ela continuaria
+ * gerando lembretes automáticos por e-mail do Asaas todo dia até ser paga/cancelada).
+ */
+export async function findExistingPendingPixPayment(input: {
+  customerId: string
+  externalReference: string
+}): Promise<AsaasPayment | null> {
+  const query = new URLSearchParams({
+    customer: input.customerId,
+    billingType: 'PIX',
+    status: 'PENDING',
+    externalReference: input.externalReference,
+  })
+  const res = await asaasRequest<{ data: AsaasPayment[] }>(`/v3/payments?${query.toString()}`)
+  return res.data?.[0] ?? null
+}
+
 /** Pix Automático mensal: 1º pagamento + autorização recorrente (SUBSCRIPTION). */
 export async function createPixAutomaticAuthorization(input: {
   customerId: string
@@ -211,7 +239,7 @@ export async function createMonthlyPixPayment(input: {
       value: ASAAS_PREMIUM_MONTHLY_BRL,
       dueDate: input.dueDate ?? formatDateYmd(),
       description: 'Brit Im Mashiach Premium - 1 mes',
-      externalReference: `monthly:${input.userId}`,
+      externalReference: monthlyPixExternalReference(input.userId),
     },
   })
 }
@@ -230,7 +258,7 @@ export async function createAnnualPixPayment(input: {
       value: ASAAS_PREMIUM_ANNUAL_BRL,
       dueDate: input.dueDate ?? formatDateYmd(),
       description: 'Brit Im Mashiach Premium - 12 meses',
-      externalReference: `annual:${input.userId}`,
+      externalReference: annualPixExternalReference(input.userId),
     },
   })
 }
