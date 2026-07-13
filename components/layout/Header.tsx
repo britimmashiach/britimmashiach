@@ -36,6 +36,7 @@ import {
 import { useState, useEffect } from 'react'
 import { cn } from '@/lib/utils'
 import { SiteLogo } from '@/components/layout/SiteLogo'
+import { NotificationBell } from '@/components/layout/NotificationBell'
 import { useProfile } from '@/hooks/useProfile'
 import type { SessionDisplay } from '@/lib/session-display'
 import { createClient, supabaseConfigured } from '@/lib/supabase'
@@ -141,7 +142,8 @@ function AccountTriggerContent({ session, isLeader }: { session: SessionDisplay;
 
 export function Header() {
   const { theme, setTheme } = useTheme()
-  const { loading, sessionDisplay, isLeader } = useProfile()
+  const { loading, sessionDisplay, isLeader, isMestre } = useProfile()
+  const canOpenLeaderPanel = isLeader || isMestre
   const showSession = Boolean(sessionDisplay)
   const showAuthLoading = loading && !showSession
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -232,6 +234,8 @@ export function Header() {
               </button>
             )}
 
+            <NotificationBell hasSession={showSession} />
+
             {/* Desktop: logado = dropdown Radix; deslogado = Entrar */}
             {showAuthLoading ? (
               <div className="hidden md:block">{authLoadingSlot}</div>
@@ -268,7 +272,7 @@ export function Header() {
                         Meu Perfil
                       </Link>
                     </DropdownMenuItem>
-                    {isLeader && (
+                    {canOpenLeaderPanel && (
                       <DropdownMenuItem asChild className="cursor-pointer rounded-lg p-0 focus:bg-muted">
                         <Link
                           href="/lideres/painel"
@@ -429,7 +433,7 @@ export function Header() {
                     <User className="w-4 h-4 text-warmgray-400 shrink-0" aria-hidden="true" />
                     Meu Perfil
                   </Link>
-                  {isLeader && (
+                  {canOpenLeaderPanel && (
                     <Link
                       href="/lideres/painel"
                       onClick={() => setMobileOpen(false)}

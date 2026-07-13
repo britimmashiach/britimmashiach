@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { createServerSupabaseClient, hasSupabaseServerEnv } from '@/lib/supabase-server'
 import { notifySiteMessage } from '@/lib/notify'
+import { notifyLeadersOfNewPrayerRequest } from '@/lib/prayer-notifications'
 
 function getSupabaseAdmin() {
   return createClient(
@@ -81,14 +82,18 @@ export async function POST(req: Request) {
     contactEmail = ''
   }
 
-  const { error } = await getSupabaseAdmin().from('prayer_requests').insert({
-    user_id: userId,
-    contact_name: contactName || null,
-    contact_email: contactEmail || null,
-    message,
-    is_anonymous: isAnonymous,
-    status: 'novo',
-  })
+  const { data: inserted, error } = await getSupabaseAdmin()
+    .from('prayer_requests')
+    .insert({
+      user_id: userId,
+      contact_name: contactName || null,
+      contact_email: contactEmail || null,
+      message,
+      is_anonymous: isAnonymous,
+      status: 'novo',
+    })
+    .select('id')
+    .single()
 
   if (error) {
     console.error('[prayer-requests] insert falhou:', error.message)
@@ -108,6 +113,15 @@ export async function POST(req: Request) {
     email: isAnonymous ? null : contactEmail,
     message,
   })
+
+  // Notifica líderes/mestres/admin no site e por e-mail (nunca lanca).
+  if (inserted?.id) {
+    await notifyLeadersOfNewPrayerRequest({
+      prayerRequestId: inserted.id,
+      requesterName: isAnonymous ? 'Anônimo' : contactName || 'Sem nome',
+      message,
+    })
+  }
 
   return NextResponse.json({ ok: true })
 }

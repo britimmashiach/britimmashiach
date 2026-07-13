@@ -692,7 +692,7 @@ export type AdminFeedbackRow = {
   created_at: string
 }
 
-const PRAYER_STATUSES = new Set(['novo', 'em_oracao', 'arquivado'])
+const PRAYER_STATUSES = new Set(['novo', 'em_oracao', 'respondido', 'arquivado'])
 const FEEDBACK_STATUSES = new Set(['novo', 'lido', 'respondido', 'arquivado'])
 
 export async function updatePrayerStatusAction(id: string, status: string): Promise<SimpleResult> {

@@ -1,16 +1,18 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getAuthSnapshot } from '@/lib/auth-snapshot'
-import { profileHasLeaderAccess } from '@/lib/leader-access-policy'
+import { profileHasLeaderAccess, profileHasMestreAccess } from '@/lib/leader-access-policy'
 import { getManhigutProgressFromProfile } from '@/lib/manhigut-progress'
 import { fetchManhigutModulesForLeader } from '@/lib/leader-modules-supabase'
 import { fetchLeaderAnnouncements, fetchLeaderResources } from '@/lib/leader-portal-supabase'
+import { listLeaderPrayerRequestsAction } from '@/app/lideres/actions'
 import { ManhigutSalutation } from '@/components/leaders/ManhigutSalutation'
 import { ManhigutProgressCard } from '@/components/leaders/ManhigutProgressCard'
 import { LeaderAnnouncements } from '@/components/leaders/LeaderAnnouncements'
 import { LeaderResourcesList } from '@/components/leaders/LeaderResourcesList'
 import { ShlomoStamDownload } from '@/components/leaders/ShlomoStamDownload'
 import { MinistryChecklist } from '@/components/leaders/MinistryChecklist'
+import { PrayerRequestsPanel } from '@/components/leaders/PrayerRequestsPanel'
 import { LeaderGate } from '@/components/ui/LeaderGate'
 import { BookOpen, Calendar, FileText, MessageCircle, Crown, GraduationCap } from 'lucide-react'
 
@@ -64,6 +66,9 @@ export default async function LideresPainelPage() {
   const auth = await getAuthSnapshot()
   const isLoggedIn = Boolean(auth.user)
   const hasLeader = isLoggedIn && profileHasLeaderAccess(auth.profile)
+  const hasMestre = isLoggedIn && profileHasMestreAccess(auth.profile)
+  // Mestres (mesmo sem is_leader) também podem entrar para responder pedidos de oração.
+  const canEnterPanel = hasLeader || hasMestre
 
   if (!isLoggedIn) {
     return (
@@ -73,12 +78,12 @@ export default async function LideresPainelPage() {
     )
   }
 
-  if (!hasLeader) {
+  if (!canEnterPanel) {
     return (
       <div className="container mx-auto px-4 py-10 max-w-3xl">
         <LeaderGate
           resourceName="o Painel de Líderes"
-          description="Sua conta está ativa, mas ainda não consta como líder aprovado. O Rav EBBY libera o acesso manualmente após conversa e discernimento. Premium pago não libera este painel."
+          description="Sua conta está ativa, mas ainda não consta como líder aprovado nem mestre. O Rav EBBY libera o acesso manualmente após conversa e discernimento. Premium pago não libera este painel."
         />
       </div>
     )
@@ -86,12 +91,14 @@ export default async function LideresPainelPage() {
 
   const firstName = auth.sessionDisplay?.firstName ?? 'Líder'
   const progress = getManhigutProgressFromProfile(auth.profile)
-  const [modules, announcements, leaderResources] = await Promise.all([
-    fetchManhigutModulesForLeader(auth.user?.id ?? null),
+  const [modules, announcements, leaderResources, prayerResult] = await Promise.all([
+    hasLeader ? fetchManhigutModulesForLeader(auth.user?.id ?? null) : Promise.resolve([]),
     fetchLeaderAnnouncements(),
     fetchLeaderResources(),
+    listLeaderPrayerRequestsAction(),
   ])
   const availableCount = modules.filter((m) => m.status === 'available').length
+  const prayerRequests = prayerResult.ok ? prayerResult.requests : []
 
   return (
     <div className="min-h-screen">
@@ -102,38 +109,45 @@ export default async function LideresPainelPage() {
           </p>
           <ManhigutSalutation firstName={firstName} compact className="mb-1" />
           <p className="text-sm font-inter text-warmgray-600 dark:text-warmgray-400 max-w-2xl">
-            Bem-vindo ao painel reservado a líderes aprovados. Acompanhe sua Formação Manhigut, os avisos do
-            Rav, os materiais exclusivos e seu checklist de ministério.
+            {hasLeader
+              ? 'Bem-vindo ao painel reservado a líderes aprovados. Acompanhe sua Formação Manhigut, os avisos do Rav, os materiais exclusivos, os pedidos de oração e seu checklist de ministério.'
+              : 'Bem-vindo, mestre. Aqui você acompanha e responde os pedidos de oração da kehilah.'}
           </p>
         </div>
       </section>
 
       <section className="container mx-auto px-4 py-12 max-w-4xl space-y-10">
-        <ManhigutProgressCard progress={progress} availableCount={availableCount} />
+        <PrayerRequestsPanel requests={prayerRequests} />
 
-        <LeaderAnnouncements announcements={announcements} />
+        {hasLeader && (
+          <>
+            <ManhigutProgressCard progress={progress} availableCount={availableCount} />
 
-        <ShlomoStamDownload />
+            <LeaderAnnouncements announcements={announcements} />
 
-        <div className="grid gap-5 sm:grid-cols-2">
-          {resources.map(({ icon: Icon, title, text, href, cta, featured }) => (
-            <div
-              key={title}
-              className={`glass-card p-6 space-y-3 flex flex-col${featured ? ' ring-1 ring-gold-500/25 bg-gold-500/5' : ''}`}
-            >
-              <Icon className="w-7 h-7 text-gold-600 dark:text-gold-400" aria-hidden />
-              <h2 className="font-cinzel text-lg font-semibold text-petroleum-800 dark:text-parchment-100">{title}</h2>
-              <p className="text-sm font-inter text-warmgray-600 dark:text-warmgray-400 leading-relaxed flex-1">{text}</p>
-              <Link href={href} className="text-sm font-inter font-semibold text-petroleum-700 dark:text-gold-400 hover:underline">
-                {cta} →
-              </Link>
+            <ShlomoStamDownload />
+
+            <div className="grid gap-5 sm:grid-cols-2">
+              {resources.map(({ icon: Icon, title, text, href, cta, featured }) => (
+                <div
+                  key={title}
+                  className={`glass-card p-6 space-y-3 flex flex-col${featured ? ' ring-1 ring-gold-500/25 bg-gold-500/5' : ''}`}
+                >
+                  <Icon className="w-7 h-7 text-gold-600 dark:text-gold-400" aria-hidden />
+                  <h2 className="font-cinzel text-lg font-semibold text-petroleum-800 dark:text-parchment-100">{title}</h2>
+                  <p className="text-sm font-inter text-warmgray-600 dark:text-warmgray-400 leading-relaxed flex-1">{text}</p>
+                  <Link href={href} className="text-sm font-inter font-semibold text-petroleum-700 dark:text-gold-400 hover:underline">
+                    {cta} →
+                  </Link>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
 
-        <LeaderResourcesList resources={leaderResources} />
+            <LeaderResourcesList resources={leaderResources} />
 
-        <MinistryChecklist />
+            <MinistryChecklist />
+          </>
+        )}
 
         <div className="glass-card p-6 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
           <div className="flex gap-3">

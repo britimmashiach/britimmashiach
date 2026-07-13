@@ -35,7 +35,10 @@ import { isCelebratoryHoliday } from '@/lib/chag-countdown'
 import { fetchHomeAnnouncements } from '@/lib/leader-portal-supabase'
 import { HomeAnnouncementsCall } from '@/components/home/HomeAnnouncementsCall'
 import { HomeCommunityStats } from '@/components/home/HomeCommunityStats'
+import { HomePrayerResponseCall } from '@/components/home/HomePrayerResponseCall'
 import { fetchSitePublicStats } from '@/lib/site-public-stats'
+import { fetchUnreadNotificationsByType } from '@/lib/prayer-notifications'
+import { getAuthSnapshot } from '@/lib/auth-snapshot'
 import { cn } from '@/lib/utils'
 
 const recentStudies = [
@@ -112,9 +115,11 @@ export default async function HomePage() {
   const nextChag = getNextChag(new Date())
   const todayInfo = getDayInfo(new Date())
   const isCelebratingToday = isCelebratoryHoliday(todayInfo.holidayKey)
-  const [homeAnnouncements, publicStats] = await Promise.all([
+  const auth = await getAuthSnapshot()
+  const [homeAnnouncements, publicStats, prayerResponseNotifications] = await Promise.all([
     fetchHomeAnnouncements(),
     fetchSitePublicStats(),
+    auth.user ? fetchUnreadNotificationsByType(auth.user.id, 'prayer_request_response') : Promise.resolve([]),
   ])
 
   return (
@@ -126,6 +131,8 @@ export default async function HomePage() {
         dayNumber={todayInfo.holidayDayNumber}
         totalDays={todayInfo.holidayTotalDays}
       />
+
+      <HomePrayerResponseCall notifications={prayerResponseNotifications} />
 
       <HomeAnnouncementsCall announcements={homeAnnouncements} />
 
@@ -189,6 +196,7 @@ export default async function HomePage() {
 
             {/* Direita: ciclo da semana */}
             <div className="space-y-3">
+              <HomeCommunityStats stats={publicStats} variant="compact" />
               {nextChag && !isCelebratingToday && <ChagCountdownCard nextChag={nextChag} />}
               <ParashaWidget name={hebrewInfo.parasha} />
               <OmerCounter day={hebrewInfo.omerDay} text={hebrewInfo.omerText} />
@@ -208,8 +216,6 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
-
-      <HomeCommunityStats stats={publicStats} />
 
       {/* Parashá da semana — entrada do ciclo */}
       <section className="container mx-auto px-4 py-14 md:py-16" aria-labelledby="ciclo-titulo">

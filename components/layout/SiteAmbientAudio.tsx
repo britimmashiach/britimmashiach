@@ -177,18 +177,42 @@ export function SiteAmbientAudio() {
     if (isSessionPaused()) return
     if (!mutedAutoplay && !needsTap) return
 
+    // Sem `once: true`: se a primeira tentativa falhar (rede lenta, gesto
+    // não reconhecido a tempo, etc.), o listener continua ativo para tentar
+    // de novo no próximo toque/clique/tecla, em vez de morrer silenciosamente.
     const onGesture = () => {
       if (mutedAutoplay) unmuteFromAutoplay()
       else if (needsTap) void tryAudibleAutoplay()
     }
 
-    const opts: AddEventListenerOptions = { once: true, passive: true, capture: true }
-    const events = ['pointerdown', 'keydown', 'touchstart'] as const
+    const opts: AddEventListenerOptions = { passive: true, capture: true }
+    const events = ['pointerdown', 'mousedown', 'keydown', 'touchstart', 'click'] as const
     events.forEach((ev) => document.addEventListener(ev, onGesture, opts))
     return () => {
       events.forEach((ev) => document.removeEventListener(ev, onGesture, opts))
     }
   }, [mounted, mutedAutoplay, needsTap, unmuteFromAutoplay, tryAudibleAutoplay])
+
+  // Retoma quando a aba volta a ficar visível (alguns navegadores pausam
+  // mídia de abas em segundo plano) e quando a rede/foco da janela retornam.
+  useEffect(() => {
+    if (!mounted) return
+
+    const onVisible = () => {
+      if (document.visibilityState !== 'visible') return
+      if (userPausedRef.current || isSessionPaused() || duckedByTorahRef.current) return
+      const el = audioRef.current
+      if (!el || !el.paused) return
+      void startPlayback(false)
+    }
+
+    document.addEventListener('visibilitychange', onVisible)
+    window.addEventListener('focus', onVisible)
+    return () => {
+      document.removeEventListener('visibilitychange', onVisible)
+      window.removeEventListener('focus', onVisible)
+    }
+  }, [mounted, startPlayback])
 
   const pause = useCallback(() => {
     const el = audioRef.current

@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Crown, Eye, GraduationCap, Users } from 'lucide-react'
+import { Crown, Eye, GraduationCap, Sparkles, Users } from 'lucide-react'
 import type { SitePublicStats } from '@/lib/site-public-stats-shared'
 import { formatPublicStat } from '@/lib/site-public-stats-shared'
 import { cn } from '@/lib/utils'
@@ -50,13 +50,65 @@ const ITEMS: StatItem[] = [
 
 type HomeCommunityStatsProps = {
   stats: SitePublicStats
+  /** 'section' = faixa larga entre seções da home; 'compact' = cartão único do hero. */
+  variant?: 'section' | 'compact'
+  className?: string
 }
 
-export function HomeCommunityStats({ stats }: HomeCommunityStatsProps) {
+export function HomeCommunityStats({ stats, variant = 'section', className }: HomeCommunityStatsProps) {
   const hasAny =
     stats.members > 0 || stats.visitors > 0 || stats.leaders > 0 || stats.mestres > 0
 
   if (!hasAny) return null
+
+  if (variant === 'compact') {
+    return (
+      <div className={cn('glass-card p-4 space-y-3', className)} aria-labelledby="kehilah-stats-compact-titulo">
+        <div className="flex items-center justify-between">
+          <span
+            id="kehilah-stats-compact-titulo"
+            className="text-xs font-inter font-semibold text-warmgray-400 uppercase tracking-widest"
+          >
+            Kehilah em crescimento
+          </span>
+          <Sparkles className="w-3.5 h-3.5 text-gold-500/70 flex-shrink-0" aria-hidden="true" />
+        </div>
+
+        <div className="grid grid-cols-4 gap-2">
+          {ITEMS.map(({ key, label, icon: Icon, href, accent }) => {
+            const value = formatPublicStat(stats[key])
+            const inner = (
+              <>
+                <Icon className={cn('w-3.5 h-3.5', accent)} aria-hidden="true" />
+                <p className="font-cinzel text-base font-semibold text-petroleum-800 dark:text-parchment-100 tabular-nums">
+                  {value}
+                </p>
+                <p className="font-inter text-[10px] text-warmgray-500 dark:text-warmgray-400 leading-none">
+                  {label}
+                </p>
+              </>
+            )
+
+            const itemClass = 'flex flex-col items-center text-center gap-1 rounded-lg py-1.5 hover:bg-muted/50 transition-colors'
+
+            if (href) {
+              return (
+                <Link key={key} href={href} className={cn(itemClass, 'group')}>
+                  {inner}
+                </Link>
+              )
+            }
+
+            return (
+              <div key={key} className={itemClass}>
+                {inner}
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    )
+  }
 
   return (
     <section

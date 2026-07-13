@@ -21,6 +21,7 @@
     "auth:recovery": "tsx --env-file=.env.local scripts/send-password-recovery.ts",
     "check:asaas-migration": "tsx --env-file=.env.local scripts/check-asaas-migration.mjs",
     "apply:asaas-migration": "tsx --env-file=.env.local scripts/apply-asaas-migration.mjs",
+    "apply:prayer-notifications-migration": "tsx --env-file=.env.local scripts/apply-prayer-notifications-migration.mjs",
     "populate": "npm run seed:aliyot && npm run sync:pdfs",
     "chag:pardes:aggregate": "node scripts/aggregate-chag-pardes.mjs --all",
     "chag:pardes:export": "node scripts/export-chag-pardes-fallback.mjs",
@@ -60,6 +61,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-pdf": "^9.2.1",
+    "resend": "^6.17.2",
     "sonner": "^1.7.2",
     "stripe": "^17.7.0",
     "tailwind-merge": "^2.6.0"

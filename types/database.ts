@@ -494,6 +494,9 @@ export interface Database {
           message: string
           is_anonymous: boolean
           status: string
+          response_text: string | null
+          responded_by: string | null
+          responded_at: string | null
           created_at: string
         }
         Insert: {
@@ -504,6 +507,9 @@ export interface Database {
           message: string
           is_anonymous?: boolean
           status?: string
+          response_text?: string | null
+          responded_by?: string | null
+          responded_at?: string | null
           created_at?: string
         }
         Update: {
@@ -514,6 +520,45 @@ export interface Database {
           message?: string
           is_anonymous?: boolean
           status?: string
+          response_text?: string | null
+          responded_by?: string | null
+          responded_at?: string | null
+          created_at?: string
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          id: string
+          user_id: string
+          type: string
+          title: string
+          body: string
+          link: string | null
+          metadata: Json
+          read_at: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          type: string
+          title: string
+          body?: string
+          link?: string | null
+          metadata?: Json
+          read_at?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          type?: string
+          title?: string
+          body?: string
+          link?: string | null
+          metadata?: Json
+          read_at?: string | null
           created_at?: string
         }
         Relationships: []

@@ -16,6 +16,7 @@ import {
 const PRAYER_STATUS: Record<string, string> = {
   novo: 'Novo',
   em_oracao: 'Em oração',
+  respondido: 'Respondido',
   arquivado: 'Arquivado',
 }
 

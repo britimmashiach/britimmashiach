@@ -12,12 +12,13 @@ import { useProfile } from '@/hooks/useProfile'
  */
 export function LeaderAccessBar() {
   const pathname = usePathname()
-  const { isLeader } = useProfile()
+  const { isLeader, isMestre } = useProfile()
+  const canOpenPanel = isLeader || isMestre
 
   if (pathname.startsWith('/lideres')) return null
 
-  const href = isLeader ? '/lideres/painel' : '/lideres'
-  const label = isLeader ? 'Abrir o Portal de Líderes' : 'Conheça a Área de Líderes'
+  const href = canOpenPanel ? '/lideres/painel' : '/lideres'
+  const label = canOpenPanel ? 'Abrir o Portal de Líderes' : 'Conheça a Área de Líderes'
 
   return (
     <div className="border-b border-gold-500/20 bg-gradient-to-r from-petroleum-800/5 via-gold-500/10 to-petroleum-800/5 dark:from-petroleum-950/40 dark:via-gold-500/10 dark:to-petroleum-950/40">

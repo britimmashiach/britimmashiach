@@ -66,6 +66,9 @@ export function PrayerRequestForm({ defaultEmail, defaultName }: PrayerRequestFo
         <p className="text-sm font-inter text-warmgray-600 dark:text-warmgray-400 leading-relaxed max-w-sm mx-auto">
           O Rav e a congregação levam seus pedidos à oração com discrição e kavanáh.
         </p>
+        <p className="text-xs font-inter text-warmgray-500 leading-relaxed max-w-sm mx-auto">
+          Quando alguém responder, você será avisado no site e por e-mail (se tiver informado contato).
+        </p>
       </div>
     )
   }
