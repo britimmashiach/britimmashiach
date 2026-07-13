@@ -16,6 +16,12 @@ export type SimpleResult =
 const missingEnvMsg =
   'Supabase não configurado no servidor. Na Vercel: Settings → Environment Variables (Production): NEXT_PUBLIC_SUPABASE_URL e NEXT_PUBLIC_SUPABASE_ANON_KEY. Depois Redeploy.'
 
+/** Valida um caminho de redirecionamento interno vindo de formulário/URL (evita open redirect). */
+function safeNextPath(value: string, fallback: string): string {
+  if (!value || !value.startsWith('/') || value.startsWith('//') || value.length > 128) return fallback
+  return value
+}
+
 // Recebe FormData (não args posicionais) para evitar que o logger de dev do
 // Next.js imprima senhas em texto puro no terminal.
 export async function signInWithPasswordAction(
@@ -27,12 +33,13 @@ export async function signInWithPasswordAction(
 
   const email = String(formData.get('email') ?? '')
   const password = String(formData.get('password') ?? '')
+  const next = safeNextPath(String(formData.get('next') ?? ''), '/')
 
   const supabase = await createServerSupabaseClient()
   const { error } = await supabase.auth.signInWithPassword({ email, password })
   if (error) return { error: error.message }
 
-  redirect('/')
+  redirect(next)
 }
 
 export async function signUpAction(formData: FormData): Promise<SignUpResult> {
@@ -43,11 +50,12 @@ export async function signUpAction(formData: FormData): Promise<SignUpResult> {
   const email = String(formData.get('email') ?? '')
   const password = String(formData.get('password') ?? '')
   const fullName = String(formData.get('name') ?? '')
+  const next = safeNextPath(String(formData.get('next') ?? ''), '/profile')
 
   const supabase = await createServerSupabaseClient()
   const origin = getPublicSiteOrigin()
   const callback = new URL('/auth/callback', `${origin}/`)
-  callback.searchParams.set('next', '/profile')
+  callback.searchParams.set('next', next)
   const { error } = await supabase.auth.signUp({
     email,
     password,

@@ -9,12 +9,20 @@ import { cn } from '@/lib/utils'
 
 type Mode = 'login' | 'register' | 'recover'
 
+const PENDING_LABELS: Record<string, string> = {
+  prayer: 'Finalize seu cadastro para enviar seu pedido de oração.',
+  testimonial: 'Finalize seu cadastro para compartilhar seu testemunho.',
+}
+
 function AuthFormInner() {
   const searchParams = useSearchParams()
-  const [mode, setMode] = useState<Mode>('login')
+  const [mode, setMode] = useState<Mode>(() => (searchParams.get('mode') === 'register' ? 'register' : 'login'))
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [form, setForm] = useState({ email: '', password: '', name: '' })
+
+  const nextPath = searchParams.get('next') ?? ''
+  const pendingLabel = PENDING_LABELS[searchParams.get('pending') ?? '']
 
   useEffect(() => {
     const err = searchParams.get('error')
@@ -32,6 +40,7 @@ function AuthFormInner() {
       const fd = new FormData()
       fd.set('email', form.email)
       fd.set('password', form.password)
+      if (nextPath) fd.set('next', nextPath)
       if (mode === 'login') {
         const err = await signInWithPasswordAction(fd)
         if (err) {
@@ -63,6 +72,12 @@ function AuthFormInner() {
 
   return (
     <div className="space-y-6">
+      {pendingLabel && (
+        <p className="text-xs font-inter text-gold-700 dark:text-gold-400 bg-gold-500/10 border border-gold-500/25 rounded-lg px-3 py-2 leading-relaxed">
+          {pendingLabel}
+        </p>
+      )}
+
       {mode !== 'recover' ? (
         <div className="flex rounded-lg overflow-hidden border border-border" role="group" aria-label="Modo de acesso">
           {(['login', 'register'] as Exclude<Mode, 'recover'>[]).map((m) => (

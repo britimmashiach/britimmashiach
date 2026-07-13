@@ -36,9 +36,12 @@ import { fetchHomeAnnouncements } from '@/lib/leader-portal-supabase'
 import { HomeAnnouncementsCall } from '@/components/home/HomeAnnouncementsCall'
 import { HomeCommunityStats } from '@/components/home/HomeCommunityStats'
 import { HomePrayerResponseCall } from '@/components/home/HomePrayerResponseCall'
+import { HomePrayerRequestCard } from '@/components/home/HomePrayerRequestCard'
+import { HomeTestimonyCard } from '@/components/home/HomeTestimonyCard'
 import { fetchSitePublicStats } from '@/lib/site-public-stats'
 import { fetchUnreadNotificationsByType } from '@/lib/prayer-notifications'
 import { getAuthSnapshot } from '@/lib/auth-snapshot'
+import { createServerSupabaseClient, hasSupabaseServerEnv } from '@/lib/supabase-server'
 import { cn } from '@/lib/utils'
 
 const recentStudies = [
@@ -110,6 +113,21 @@ const ecosystemCards = [
   },
 ]
 
+async function getHomeProfileDefaults(userId: string): Promise<{ email: string | null; name: string | null }> {
+  if (!hasSupabaseServerEnv()) return { email: null, name: null }
+  try {
+    const supabase = await createServerSupabaseClient()
+    const { data } = await supabase
+      .from('profiles')
+      .select('full_name, email')
+      .eq('id', userId)
+      .maybeSingle()
+    return { email: data?.email ?? null, name: data?.full_name ?? null }
+  } catch {
+    return { email: null, name: null }
+  }
+}
+
 export default async function HomePage() {
   const hebrewInfo = getHebrewDateInfo(new Date())
   const nextChag = getNextChag(new Date())
@@ -121,6 +139,16 @@ export default async function HomePage() {
     fetchSitePublicStats(),
     auth.user ? fetchUnreadNotificationsByType(auth.user.id, 'prayer_request_response') : Promise.resolve([]),
   ])
+
+  const isAuthenticated = Boolean(auth.user)
+  let profileDefaultEmail: string | null = auth.user?.email ?? null
+  let profileDefaultName: string | null = null
+
+  if (auth.user) {
+    const profile = await getHomeProfileDefaults(auth.user.id)
+    profileDefaultEmail = profileDefaultEmail ?? profile.email
+    profileDefaultName = profile.name
+  }
 
   return (
     <div className="min-h-screen">
@@ -214,6 +242,18 @@ export default async function HomePage() {
               </figure>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Pedido de oração e testemunho — a kehilah viva, aberta a todo visitante */}
+      <section className="container mx-auto px-4 py-10 md:py-12" aria-label="Pedido de oração e testemunho">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+          <HomePrayerRequestCard
+            isAuthenticated={isAuthenticated}
+            defaultEmail={profileDefaultEmail}
+            defaultName={profileDefaultName}
+          />
+          <HomeTestimonyCard isAuthenticated={isAuthenticated} defaultName={profileDefaultName} />
         </div>
       </section>
 

@@ -572,6 +572,7 @@ export interface Database {
           is_approved: boolean
           is_featured: boolean
           sort_order: number
+          user_id: string | null
           created_at: string
         }
         Insert: {
@@ -582,6 +583,7 @@ export interface Database {
           is_approved?: boolean
           is_featured?: boolean
           sort_order?: number
+          user_id?: string | null
           created_at?: string
         }
         Update: {
@@ -592,6 +594,7 @@ export interface Database {
           is_approved?: boolean
           is_featured?: boolean
           sort_order?: number
+          user_id?: string | null
           created_at?: string
         }
         Relationships: []
