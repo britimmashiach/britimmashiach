@@ -37,6 +37,7 @@ import { useState, useEffect } from 'react'
 import { cn } from '@/lib/utils'
 import { SiteLogo } from '@/components/layout/SiteLogo'
 import { NotificationBell } from '@/components/layout/NotificationBell'
+import { HeaderDonationPix } from '@/components/layout/HeaderDonationPix'
 import { useProfile } from '@/hooks/useProfile'
 import type { SessionDisplay } from '@/lib/session-display'
 import { createClient, supabaseConfigured } from '@/lib/supabase'
@@ -197,8 +198,9 @@ export function Header() {
           <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             <nav
               className="hidden md:flex items-center gap-0.5 sm:gap-1 pr-1 border-r border-border/40 mr-0.5"
-              aria-label="Loja e Premium"
+              aria-label="Doação, loja e Premium"
             >
+              <HeaderDonationPix />
               {featuredNavLinks.map(({ href, label, icon: Icon, accent }) => {
                 const isActive = pathname === href || pathname.startsWith(href + '/')
                 return (
@@ -385,12 +387,15 @@ export function Header() {
           })}
         </nav>
 
-        {mobileOpen && (
+            {mobileOpen && (
           <nav
             id="mobile-nav"
             className="md:hidden border-t border-border/40 py-3 pb-4 space-y-0.5 animate-fade-in"
             aria-label="Navegação mobile"
           >
+            <div className="px-1 pb-2 mb-1 border-b border-border/40">
+              <HeaderDonationPix />
+            </div>
             {mobileNavLinks.map(({ href, label, icon: Icon, accent }) => {
               const isActive = pathname === href || pathname.startsWith(href + '/')
               return (

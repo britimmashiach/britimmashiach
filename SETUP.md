@@ -159,6 +159,14 @@ Settings > Environment Variables
 Importante para SEO e redirects:
 - **`NEXT_PUBLIC_APP_URL`**: na **Production**, use `https://britimmashiach.com` (sem barra no fim). Após criar ou alterar, faça um **Redeploy** porque variáveis `NEXT_PUBLIC_*` entram no build.
 
+### Doação PIX no header
+O QR oficial fica em `public/images/doacao-pix-qr.png` e aparece no cabeçalho (ao lado de Acqua Rios).
+
+| Variável | Obrigatória | Descrição |
+|----------|-------------|-----------|
+| `NEXT_PUBLIC_DONATION_PIX_PAYLOAD` | Não | Código PIX copia e cola (ativa botão Copiar) |
+| `NEXT_PUBLIC_DONATION_PIX_BENEFICIARY` | Não | Nome exibido (padrão: Sinagoga Brit Im Mashiach) |
+
 ---
 
 ## 11. Verificação pós-deploy
