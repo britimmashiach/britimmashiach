@@ -142,7 +142,7 @@ function AccountTriggerContent({ session, isLeader }: { session: SessionDisplay;
 }
 
 export function Header() {
-  const { theme, setTheme } = useTheme()
+  const { resolvedTheme, setTheme } = useTheme()
   const { loading, sessionDisplay, isLeader, isMestre } = useProfile()
   const canOpenLeaderPanel = isLeader || isMestre
   const showSession = Boolean(sessionDisplay)
@@ -169,6 +169,7 @@ export function Header() {
   }
 
   const authLoadingSlot = <div className="h-9 w-9 rounded-full bg-muted animate-pulse shrink-0" aria-hidden="true" />
+  const isDark = mounted && resolvedTheme === 'dark'
 
   return (
     <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm relative">
@@ -224,11 +225,11 @@ export function Header() {
             {mounted && (
               <button
                 type="button"
-                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                onClick={() => setTheme(isDark ? 'light' : 'dark')}
                 className="p-2 rounded-lg hover:bg-muted transition-colors text-warmgray-500 hover:text-foreground"
-                aria-label={theme === 'dark' ? 'Ativar modo claro' : 'Ativar modo escuro'}
+                aria-label={isDark ? 'Ativar modo claro' : 'Ativar modo escuro'}
               >
-                {theme === 'dark' ? (
+                {isDark ? (
                   <Sun className="w-4 h-4" aria-hidden="true" />
                 ) : (
                   <Moon className="w-4 h-4" aria-hidden="true" />
