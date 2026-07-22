@@ -7,13 +7,29 @@ import { cn } from '@/lib/utils'
 import { TORAH_AUDIO_PLAY_EVENT, TORAH_AUDIO_STOP_EVENT } from '@/lib/ambient-audio-bus'
 
 /**
- * Áudio ambiente (Ana BeKoach). Coloque `public/audio/ana-bekoach.mp3` com licença válida.
+ * Áudio ambiente. Coloque os ficheiros em `public/audio/` com licença válida.
  * Autoplay: browsers permitem começar em silêncio; o som audível exige um toque (política do browser).
  */
-const AUDIO_SRC = '/audio/ana-bekoach.mp3'
+const AMBIENT_TRACKS = [
+  { src: '/audio/ana-bekoach.mp3', title: 'Ana BeKoach' },
+  { src: '/audio/ben-adam.mp3', title: 'Ben Adam' },
+] as const
+
 const DEFAULT_VOLUME = 0.22
 const SESSION_PAUSED_KEY = 'brit-ambient-paused-session'
 const RETRY_MS = [0, 400, 1200, 2800] as const
+
+function pickRandomTrackIndex(exclude?: number): number {
+  if (AMBIENT_TRACKS.length === 1) return 0
+  if (exclude == null || exclude < 0) {
+    return Math.floor(Math.random() * AMBIENT_TRACKS.length)
+  }
+  let next = exclude
+  while (next === exclude) {
+    next = Math.floor(Math.random() * AMBIENT_TRACKS.length)
+  }
+  return next
+}
 
 function isSessionPaused(): boolean {
   try {
@@ -29,11 +45,16 @@ export function SiteAmbientAudio() {
   const duckedByTorahRef = useRef(false)
   const wasPlayingBeforeTorahRef = useRef(false)
   const unmuteAttemptedRef = useRef(false)
+  const trackIndexRef = useRef(0)
+  const audibleRef = useRef(false)
   const [mounted, setMounted] = useState(false)
+  const [trackIndex, setTrackIndex] = useState(0)
   const [loadFailed, setLoadFailed] = useState(false)
   const [playing, setPlaying] = useState(false)
   const [needsTap, setNeedsTap] = useState(false)
   const [mutedAutoplay, setMutedAutoplay] = useState(false)
+
+  const currentTrack = AMBIENT_TRACKS[trackIndex] ?? AMBIENT_TRACKS[0]
 
   const startPlayback = useCallback(async (preferAudible = false) => {
     const el = audioRef.current
@@ -41,13 +62,14 @@ export function SiteAmbientAudio() {
 
     el.volume = DEFAULT_VOLUME
 
-    if (preferAudible) {
+    if (preferAudible || audibleRef.current) {
       try {
         el.muted = false
         await el.play()
         setPlaying(true)
         setNeedsTap(false)
         setMutedAutoplay(false)
+        audibleRef.current = true
         return true
       } catch {
         /* tenta mutado */
@@ -60,6 +82,7 @@ export function SiteAmbientAudio() {
       setPlaying(true)
       setNeedsTap(false)
       setMutedAutoplay(true)
+      audibleRef.current = false
       return true
     } catch {
       setPlaying(false)
@@ -79,6 +102,7 @@ export function SiteAmbientAudio() {
       setPlaying(true)
       setNeedsTap(false)
       setMutedAutoplay(false)
+      audibleRef.current = true
     } catch {
       void startPlayback(false)
     }
@@ -97,7 +121,18 @@ export function SiteAmbientAudio() {
   }, [startPlayback])
 
   useLayoutEffect(() => {
+    const initial = pickRandomTrackIndex()
+    trackIndexRef.current = initial
+    setTrackIndex(initial)
     setMounted(true)
+  }, [])
+
+  const playNextTrack = useCallback(() => {
+    if (userPausedRef.current || isSessionPaused() || duckedByTorahRef.current) return
+    const next = pickRandomTrackIndex(trackIndexRef.current)
+    trackIndexRef.current = next
+    setTrackIndex(next)
+    setLoadFailed(false)
   }, [])
 
   useEffect(() => {
@@ -105,22 +140,24 @@ export function SiteAmbientAudio() {
     const el = audioRef.current
     if (!el) return
 
+    el.load()
+
     const onReady = () => {
-      void startPlayback(false)
+      void startPlayback(audibleRef.current)
     }
 
     el.addEventListener('canplay', onReady)
     if (el.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) {
-      void startPlayback(false)
+      void startPlayback(audibleRef.current)
     }
 
     const clearRetries = scheduleRetries()
 
-  return () => {
+    return () => {
       el.removeEventListener('canplay', onReady)
       clearRetries()
     }
-  }, [mounted, loadFailed, startPlayback, scheduleRetries])
+  }, [mounted, loadFailed, trackIndex, startPlayback, scheduleRetries])
 
   const unmuteFromAutoplay = useCallback(() => {
     const el = audioRef.current
@@ -134,10 +171,12 @@ export function SiteAmbientAudio() {
         setPlaying(true)
         setMutedAutoplay(false)
         setNeedsTap(false)
+        audibleRef.current = true
       })
       .catch(() => {
         unmuteAttemptedRef.current = false
         el.muted = true
+        audibleRef.current = false
         void el.play().catch(() => {
           setNeedsTap(true)
           setPlaying(false)
@@ -293,7 +332,7 @@ export function SiteAmbientAudio() {
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-destructive/40',
       )}
       aria-label="Áudio em falta — toque para tentar carregar de novo"
-      title="Confirme o ficheiro public/audio/ana-bekoach.mp3"
+      title="Confirme os ficheiros em public/audio/ (ana-bekoach.mp3, ben-adam.mp3)"
     >
       <AlertCircle className="w-4 h-4 shrink-0" aria-hidden="true" />
       Áudio em falta — tocar para tentar
@@ -326,7 +365,7 @@ export function SiteAmbientAudio() {
       title={
         mutedAutoplay
           ? 'A música já está a tocar em silêncio. Toque para ouvir (regra do navegador).'
-          : 'Ana BeKoach — volume baixo'
+          : `${currentTrack.title} — volume baixo`
       }
     >
       {needsTap ? (
@@ -352,8 +391,7 @@ export function SiteAmbientAudio() {
     <>
       <audio
         ref={setAudioRef}
-        src={AUDIO_SRC}
-        loop
+        src={currentTrack.src}
         autoPlay
         muted
         preload="auto"
@@ -364,6 +402,7 @@ export function SiteAmbientAudio() {
           setLoadFailed(false)
           if (!userPausedRef.current && !isSessionPaused()) void startPlayback(false)
         }}
+        onEnded={playNextTrack}
         onPlay={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
         aria-hidden="true"
