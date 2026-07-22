@@ -20,15 +20,11 @@ const SESSION_PAUSED_KEY = 'brit-ambient-paused-session'
 const RETRY_MS = [0, 400, 1200, 2800] as const
 
 function pickRandomTrackIndex(exclude?: number): number {
-  if (AMBIENT_TRACKS.length === 1) return 0
-  if (exclude == null || exclude < 0) {
-    return Math.floor(Math.random() * AMBIENT_TRACKS.length)
-  }
-  let next = exclude
-  while (next === exclude) {
-    next = Math.floor(Math.random() * AMBIENT_TRACKS.length)
-  }
-  return next
+  const candidates = AMBIENT_TRACKS.map((_, i) => i).filter(
+    (i) => exclude == null || exclude < 0 || i !== exclude,
+  )
+  if (candidates.length === 0) return 0
+  return candidates[Math.floor(Math.random() * candidates.length)] ?? 0
 }
 
 function isSessionPaused(): boolean {
