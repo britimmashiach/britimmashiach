@@ -53,7 +53,7 @@ export function HeaderDonationPix({
             'inline-flex items-center rounded-lg',
             'outline-none focus-visible:ring-2 focus-visible:ring-gold-500/40',
             showInlineQr
-              ? 'p-0.5 hover:bg-gold-500/10'
+              ? 'h-full p-[2px] hover:bg-gold-500/10'
               : cn(
                   'py-2 text-[13px] gap-1.5 px-2 lg:px-2.5',
                   'text-petroleum-700 dark:text-parchment-200 hover:text-gold-700 dark:hover:text-gold-400',
@@ -63,14 +63,14 @@ export function HeaderDonationPix({
           aria-label="Apoie nosso ministério"
         >
           {showInlineQr ? (
-            <span className="inline-flex rounded-md border border-border/50 bg-white p-0.5 shrink-0 shadow-sm">
+            <span className="inline-flex h-full aspect-square max-h-[4.5rem] items-center justify-center rounded-md border border-border/40 bg-white p-[2px] shrink-0 shadow-sm">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={QR_SRC}
+                src={`${QR_SRC}?v=2`}
                 alt={`QR Code PIX, ${BENEFICIARY}`}
-                width={52}
-                height={52}
-                className="h-11 w-11 lg:h-12 lg:w-12 object-contain"
+                width={72}
+                height={72}
+                className="h-[95%] w-[95%] object-contain"
               />
             </span>
           ) : (
@@ -101,7 +101,7 @@ export function HeaderDonationPix({
           <div className="mx-auto mb-3 w-fit rounded-lg border border-border/50 bg-white p-2">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={QR_SRC}
+              src={`${QR_SRC}?v=2`}
               alt={`QR Code PIX para doação à ${BENEFICIARY}`}
               width={200}
               height={200}
