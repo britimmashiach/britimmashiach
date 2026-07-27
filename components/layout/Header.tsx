@@ -196,6 +196,11 @@ export function Header() {
             </div>
           </Link>
 
+          {/* QR PIX: área entre marca e links (desktop) */}
+          <div className="hidden md:flex flex-1 items-center justify-end min-w-0 px-3 lg:px-6">
+            <HeaderDonationPix showInlineQr />
+          </div>
+
           <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             <nav
               className="hidden md:flex items-center gap-0.5 sm:gap-1 pr-1 border-r border-border/40 mr-0.5"

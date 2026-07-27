@@ -23,7 +23,12 @@ const PAYLOAD = (process.env.NEXT_PUBLIC_DONATION_PIX_PAYLOAD ?? '').trim()
  * Doação no header, alinhada a Acqua Rios / Premium.
  * Usa o QR oficial da sinagoga.
  */
-export function HeaderDonationPix() {
+export function HeaderDonationPix({
+  showInlineQr = false,
+}: {
+  /** QR compacto na barra (área entre marca e links). */
+  showInlineQr?: boolean
+} = {}) {
   const [copied, setCopied] = useState(false)
 
   async function copyPix() {
@@ -44,17 +49,37 @@ export function HeaderDonationPix() {
         <button
           type="button"
           className={cn(
-            'whitespace-nowrap shrink-0 py-2 text-[13px] font-inter transition-colors duration-150',
-            'inline-flex items-center gap-1.5 px-2 lg:px-2.5 rounded-lg',
-            'text-petroleum-700 dark:text-parchment-200 hover:text-gold-700 dark:hover:text-gold-400',
-            'hover:bg-gold-500/10 font-medium',
+            'whitespace-nowrap shrink-0 font-inter transition-colors duration-150',
+            'inline-flex items-center rounded-lg',
             'outline-none focus-visible:ring-2 focus-visible:ring-gold-500/40',
+            showInlineQr
+              ? 'p-0.5 hover:bg-gold-500/10'
+              : cn(
+                  'py-2 text-[13px] gap-1.5 px-2 lg:px-2.5',
+                  'text-petroleum-700 dark:text-parchment-200 hover:text-gold-700 dark:hover:text-gold-400',
+                  'hover:bg-gold-500/10 font-medium',
+                ),
           )}
           aria-label="Apoie nosso ministério"
         >
-          <Heart className="w-3.5 h-3.5 shrink-0 text-gold-600 dark:text-gold-400" aria-hidden="true" />
-          <span className="hidden lg:inline">Apoie nosso ministério</span>
-          <span className="lg:hidden">Doar</span>
+          {showInlineQr ? (
+            <span className="inline-flex rounded-md border border-border/50 bg-white p-0.5 shrink-0 shadow-sm">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={QR_SRC}
+                alt={`QR Code PIX, ${BENEFICIARY}`}
+                width={52}
+                height={52}
+                className="h-11 w-11 lg:h-12 lg:w-12 object-contain"
+              />
+            </span>
+          ) : (
+            <>
+              <Heart className="w-3.5 h-3.5 shrink-0 text-gold-600 dark:text-gold-400" aria-hidden="true" />
+              <span className="hidden lg:inline">Apoie nosso ministério</span>
+              <span className="lg:hidden">Doar</span>
+            </>
+          )}
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuPortal>
