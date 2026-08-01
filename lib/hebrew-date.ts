@@ -1063,7 +1063,15 @@ export interface NextChag {
 const HEADLINE_CHAGIM: { test: (t: string) => boolean; name: string; slug: string; hebrew: string }[] = [
   { test: (t) => t.includes('Pesach'), name: 'Pesach', slug: 'pessach', hebrew: 'פֶּסַח' },
   { test: (t) => t.includes('Shavuot'), name: 'Shavuot', slug: 'shavuot', hebrew: 'שָׁבוּעוֹת' },
-  { test: (t) => t.includes('Rosh Hashana'), name: 'Rosh Hashaná', slug: 'rosh-hashana', hebrew: 'רֹאשׁ הַשָּׁנָה' },
+  {
+    test: (t) =>
+      (t.includes('Rosh Hashana') || t.includes('Rosh Hashanah')) &&
+      !t.includes('LaBehemot') &&
+      !t.includes('LeBehemot'),
+    name: 'Rosh Hashaná',
+    slug: 'rosh-hashana',
+    hebrew: 'רֹאשׁ הַשָּׁנָה',
+  },
   { test: (t) => t.includes('Yom Kippur') && !t.includes('Katán') && !t.includes('Katan'), name: 'Yom Kippur', slug: 'yom-kippur', hebrew: 'יוֹם כִּפּוּר' },
   { test: (t) => t.includes('Sukkot'), name: 'Sukkot', slug: 'sukkot', hebrew: 'סֻכּוֹת' },
   { test: (t) => t.includes('Shemini Atzeret'), name: 'Shemini Atzeret', slug: 'shemini-atzeret', hebrew: 'שְׁמִינִי עֲצֶרֶת' },
