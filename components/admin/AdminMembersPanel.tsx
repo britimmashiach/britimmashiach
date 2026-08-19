@@ -52,6 +52,13 @@ function isBanned(m: AdminMemberRow) {
 
 type CollectiveAudience = 'never_signed_in' | 'all'
 
+type Snapshot = {
+  members: AdminMemberRow[]
+  nextPage: number | null
+  total: number
+  perPage: number
+}
+
 const DEFAULT_COLLECTIVE_SUBJECT = 'Conseguiu entrar no site? Brit Im Mashiach'
 
 const DEFAULT_COLLECTIVE_BODY = `Shalom,
