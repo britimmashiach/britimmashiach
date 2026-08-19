@@ -7,12 +7,14 @@ import { createServerSupabaseClient, hasSupabaseServerEnv } from '@/lib/supabase
 import { getSupabaseAdmin, hasServiceRoleEnv } from '@/lib/supabase-admin'
 import {
   listMembersAction,
+  listFormationGraduatesAction,
   type AdminShopProductRow,
   type AdminPrayerRow,
   type AdminFeedbackRow,
 } from '@/app/admin/actions'
 import { PromoteUserPanel } from '@/components/admin/PromoteUserPanel'
 import { AdminMembersPanel } from '@/components/admin/AdminMembersPanel'
+import { AdminGraduatesPanel } from '@/components/admin/AdminGraduatesPanel'
 import { ShopAdminPanel } from '@/components/admin/ShopAdminPanel'
 import { InboxAdminPanel } from '@/components/admin/InboxAdminPanel'
 import {
@@ -62,6 +64,9 @@ export default async function AdminPage() {
           perPage: listResult.perPage,
         }
       : null
+  const graduatesResult = serviceOk ? await listFormationGraduatesAction() : null
+  const initialGraduates =
+    graduatesResult && graduatesResult.ok ? graduatesResult.graduates : []
 
   let announcements: AdminAnnouncementRow[] = []
   let resources: AdminResourceRow[] = []
@@ -181,6 +186,22 @@ export default async function AdminPage() {
           serviceRoleConfigured={serviceOk}
           currentUserId={user.id}
           initialSnapshot={snapshot}
+        />
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="font-cinzel text-lg font-semibold text-petroleum-800 dark:text-parchment-100">
+          Formação concluída · Diplomas
+        </h2>
+        <p className="section-subtitle max-w-2xl">
+          Quando um líder conclui a Formação Manhigut, marque <strong>+ Formação</strong> no diretório. Você recebe
+          aviso no Telegram/WhatsApp e aparece aqui a lista para parabenizar e enviar o diploma{' '}
+          <strong>Talmid Manhig</strong> por e-mail (anexo PDF). Requer{' '}
+          <code className="text-xs bg-muted px-1 rounded">RESEND_API_KEY</code>.
+        </p>
+        <AdminGraduatesPanel
+          serviceRoleConfigured={serviceOk}
+          initialGraduates={initialGraduates}
         />
       </section>
 

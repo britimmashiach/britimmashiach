@@ -16,6 +16,7 @@ import {
   ChevronDown,
   GraduationCap,
   Sparkles,
+  Mail,
 } from 'lucide-react'
 import type { AdminMemberRow } from '@/app/admin/actions'
 import {
@@ -27,6 +28,7 @@ import {
   banUserAction,
   unbanUserAction,
   deleteUserAction,
+  sendCollectiveMemberEmailAction,
 } from '@/app/admin/actions'
 import type { UserRole } from '@/types'
 import { cn } from '@/lib/utils'
@@ -48,12 +50,27 @@ function isBanned(m: AdminMemberRow) {
   return new Date(m.banned_until) > new Date()
 }
 
-type Snapshot = {
-  members: AdminMemberRow[]
-  nextPage: number | null
-  total: number
-  perPage: number
-}
+type CollectiveAudience = 'never_signed_in' | 'all'
+
+const DEFAULT_COLLECTIVE_SUBJECT = 'Conseguiu entrar no site? Brit Im Mashiach'
+
+const DEFAULT_COLLECTIVE_BODY = `Shalom,
+
+A Sinagoga Brit Im Mashiach (Franca SP) viu que a sua conta está no rol de membros, mas ainda não há registro de entrada no site.
+
+Pode ser confirmação de e-mail na caixa de spam, senha esquecida ou alguma dificuldade de acesso.
+
+1. Abra britimmashiach.com/auth
+2. Se não lembrar a senha, use Esqueci a senha
+3. Confira a pasta de spam do e-mail usado no cadastro
+
+Se precisar de ajuda, responda este e-mail.
+
+Ken Yehi Ratzon
+Rav.: EBBY`
+
+const inputClass =
+  'w-full rounded-lg border border-border bg-background px-3 py-2 text-sm font-inter text-foreground placeholder:text-warmgray-400'
 
 export function AdminMembersPanel({
   serviceRoleConfigured,
@@ -73,6 +90,11 @@ export function AdminMembersPanel({
   const [rowBusy, setRowBusy] = useState<string | null>(null)
   const [openPromote, setOpenPromote] = useState<string | null>(null)
   const [deleteTarget, setDeleteTarget] = useState<AdminMemberRow | null>(null)
+  const [mailOpen, setMailOpen] = useState(false)
+  const [mailAudience, setMailAudience] = useState<CollectiveAudience>('never_signed_in')
+  const [mailSubject, setMailSubject] = useState(DEFAULT_COLLECTIVE_SUBJECT)
+  const [mailBody, setMailBody] = useState(DEFAULT_COLLECTIVE_BODY)
+  const [mailBusy, setMailBusy] = useState(false)
 
   useEffect(() => {
     setMembers(initialSnapshot?.members ?? [])
@@ -226,6 +248,25 @@ export function AdminMembersPanel({
     }
   }
 
+  async function sendCollectiveEmail() {
+    setMailBusy(true)
+    try {
+      const r = await sendCollectiveMemberEmailAction({
+        audience: mailAudience,
+        subject: mailSubject,
+        body: mailBody,
+      })
+      if (!r.ok) {
+        toast.error('E-mail coletivo', { description: r.message })
+        return
+      }
+      toast.success('E-mail coletivo', { description: r.message })
+      setMailOpen(false)
+    } finally {
+      setMailBusy(false)
+    }
+  }
+
   if (!serviceRoleConfigured) {
     return (
       <div className="glass-card p-6 text-sm font-inter text-warmgray-500">
@@ -247,6 +288,14 @@ export function AdminMembersPanel({
             ; banir bloqueia login; excluir remove a conta (e o perfil se houver CASCADE).
           </p>
         </div>
+        <button
+          type="button"
+          onClick={() => setMailOpen(true)}
+          className="inline-flex items-center justify-center gap-2 rounded-lg bg-petroleum-800 px-3 py-2 text-xs font-inter font-semibold text-parchment-100 hover:bg-petroleum-700 shrink-0"
+        >
+          <Mail className="h-3.5 w-3.5" aria-hidden="true" />
+          E-mail coletivo
+        </button>
       </div>
 
       <div className="overflow-x-auto">
@@ -484,6 +533,91 @@ export function AdminMembersPanel({
                 className="rounded-lg bg-red-600 px-3 py-2 text-sm font-inter font-medium text-white hover:bg-red-700 disabled:opacity-50"
               >
                 {rowBusy === deleteTarget?.id ? 'A excluir…' : 'Excluir definitivamente'}
+              </button>
+            </div>
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
+
+      <Dialog.Root open={mailOpen} onOpenChange={(o) => !mailBusy && setMailOpen(o)}>
+        <Dialog.Portal>
+          <Dialog.Overlay className="fixed inset-0 z-[200] bg-black/50" />
+          <Dialog.Content className="fixed left-1/2 top-1/2 z-[201] w-[min(94vw,32rem)] max-h-[90vh] overflow-y-auto -translate-x-1/2 -translate-y-1/2 rounded-xl border border-border bg-background p-5 shadow-xl">
+            <Dialog.Title className="font-cinzel text-lg font-semibold text-foreground">
+              E-mail coletivo
+            </Dialog.Title>
+            <Dialog.Description className="mt-2 text-sm font-inter text-warmgray-500">
+              Envia um recado a cada destinatário em separado (os e-mails não se veem). Contas banidas ficam de fora.
+              É preciso RESEND_API_KEY na Vercel.
+            </Dialog.Description>
+
+            <fieldset className="mt-4 space-y-2">
+              <legend className="text-xs font-inter font-semibold uppercase tracking-wider text-warmgray-500">
+                Destinatários
+              </legend>
+              <label className="flex items-start gap-2 text-sm font-inter text-foreground">
+                <input
+                  type="radio"
+                  name="mail-audience"
+                  checked={mailAudience === 'never_signed_in'}
+                  onChange={() => setMailAudience('never_signed_in')}
+                  className="mt-1 h-4 w-4 accent-gold-600"
+                />
+                <span>Só quem nunca entrou (coluna Entrada vazia)</span>
+              </label>
+              <label className="flex items-start gap-2 text-sm font-inter text-foreground">
+                <input
+                  type="radio"
+                  name="mail-audience"
+                  checked={mailAudience === 'all'}
+                  onChange={() => setMailAudience('all')}
+                  className="mt-1 h-4 w-4 accent-gold-600"
+                />
+                <span>Todos os membros com e-mail válido</span>
+              </label>
+            </fieldset>
+
+            <label className="mt-4 block text-xs font-inter font-semibold text-warmgray-500" htmlFor="collective-subject">
+              Assunto
+            </label>
+            <input
+              id="collective-subject"
+              value={mailSubject}
+              onChange={(e) => setMailSubject(e.target.value)}
+              className={inputClass + ' mt-1'}
+              maxLength={140}
+            />
+
+            <label className="mt-3 block text-xs font-inter font-semibold text-warmgray-500" htmlFor="collective-body">
+              Mensagem
+            </label>
+            <textarea
+              id="collective-body"
+              value={mailBody}
+              onChange={(e) => setMailBody(e.target.value)}
+              rows={12}
+              className={inputClass + ' mt-1 resize-y'}
+              maxLength={4000}
+            />
+
+            <div className="mt-5 flex justify-end gap-2">
+              <Dialog.Close asChild>
+                <button
+                  type="button"
+                  disabled={mailBusy}
+                  className="rounded-lg border border-border px-3 py-2 text-sm font-inter hover:bg-muted disabled:opacity-50"
+                >
+                  Cancelar
+                </button>
+              </Dialog.Close>
+              <button
+                type="button"
+                disabled={mailBusy}
+                onClick={() => void sendCollectiveEmail()}
+                className="inline-flex items-center gap-2 rounded-lg bg-petroleum-800 px-3 py-2 text-sm font-inter font-medium text-parchment-100 hover:bg-petroleum-700 disabled:opacity-50"
+              >
+                {mailBusy ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : <Mail className="h-4 w-4" aria-hidden="true" />}
+                {mailBusy ? 'A enviar…' : 'Enviar agora'}
               </button>
             </div>
           </Dialog.Content>

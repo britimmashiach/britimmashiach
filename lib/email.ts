@@ -19,8 +19,19 @@ function hasResendEnv(): boolean {
   return Boolean(process.env.RESEND_API_KEY?.trim())
 }
 
+export function isResendConfigured(): boolean {
+  return hasResendEnv()
+}
+
 function getFrom(): string {
   return process.env.RESEND_FROM_EMAIL?.trim() || DEFAULT_FROM
+}
+
+export type EmailAttachment = {
+  filename: string
+  /** Conteúdo em Base64 (Resend). */
+  content: string
+  contentType?: string
 }
 
 export async function sendEmail(params: {
@@ -29,6 +40,7 @@ export async function sendEmail(params: {
   html: string
   text?: string
   replyTo?: string
+  attachments?: EmailAttachment[]
 }): Promise<boolean> {
   if (!hasResendEnv()) {
     console.warn('[email] RESEND_API_KEY ausente; pulando envio.')
@@ -51,6 +63,15 @@ export async function sendEmail(params: {
         html: params.html,
         text: params.text,
         ...(params.replyTo ? { reply_to: params.replyTo } : {}),
+        ...(params.attachments?.length
+          ? {
+              attachments: params.attachments.map((a) => ({
+                filename: a.filename,
+                content: a.content,
+                ...(a.contentType ? { content_type: a.contentType } : {}),
+              })),
+            }
+          : {}),
       }),
       cache: 'no-store',
     })

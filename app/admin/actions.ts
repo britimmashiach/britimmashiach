@@ -9,6 +9,10 @@ import {
 } from '@/lib/broadcast-announcement-whatsapp'
 import { fetchLiveProfileCounts, type LiveProfileCounts } from '@/lib/site-public-stats'
 import { getWhatsAppProvider } from '@/lib/whatsapp-notify'
+import { generateTalmidManhigDiplomaPdf } from '@/lib/diploma-talmid-manhig'
+import { emailLayout, isResendConfigured, sendEmail } from '@/lib/email'
+import { getPublicSiteOrigin } from '@/lib/public-site-url'
+import { notifySiteMessage } from '@/lib/notify'
 import type { UserRole } from '@/types'
 import type { Database } from '@/types/database'
 
@@ -23,10 +27,20 @@ export type AdminMemberRow = {
   role: UserRole
   is_leader: boolean
   formacao_concluida: boolean
+  formacao_concluida_at: string | null
   is_mestre: boolean
   created_at: string
   banned_until: string | null
   last_sign_in_at: string | null
+}
+
+export type AdminGraduateRow = {
+  id: string
+  email: string
+  full_name: string | null
+  is_leader: boolean
+  formacao_concluida_at: string | null
+  updated_at: string
 }
 
 async function requireAdmin(): Promise<Gate> {
@@ -99,7 +113,7 @@ export async function listMembersAction(
 
   const { data: profiles, error: profErr } = await admin
     .from('profiles')
-    .select('id, email, full_name, role, is_leader, formacao_concluida, is_mestre')
+    .select('id, email, full_name, role, is_leader, formacao_concluida, formacao_concluida_at, is_mestre')
     .in('id', ids)
 
   if (profErr) return { ok: false, message: profErr.message }
@@ -116,6 +130,7 @@ export async function listMembersAction(
       role,
       is_leader: Boolean(p?.is_leader),
       formacao_concluida: Boolean(p?.formacao_concluida),
+      formacao_concluida_at: p?.formacao_concluida_at ?? null,
       is_mestre: Boolean(p?.is_mestre),
       created_at: u.created_at,
       banned_until: u.banned_until ?? null,
@@ -130,6 +145,135 @@ export async function listMembersAction(
     total: listData.total ?? members.length,
     page,
     perPage,
+  }
+}
+
+function escapeEmailHtml(text: string): string {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+}
+
+function isAuthBanned(bannedUntil: string | null | undefined): boolean {
+  if (!bannedUntil) return false
+  return new Date(bannedUntil) > new Date()
+}
+
+async function listCollectiveEmailRecipients(
+  audience: 'all' | 'never_signed_in',
+): Promise<{ emails: string[]; skippedBanned: number; skippedNoEmail: number }> {
+  const admin = getSupabaseAdmin()
+  const emails: string[] = []
+  const seen = new Set<string>()
+  let skippedBanned = 0
+  let skippedNoEmail = 0
+  let page = 1
+
+  while (page <= 20) {
+    const { data, error } = await admin.auth.admin.listUsers({ page, perPage: 100 })
+    if (error) throw new Error(error.message)
+    const users = data.users ?? []
+    if (users.length === 0) break
+
+    for (const u of users) {
+      if (isAuthBanned(u.banned_until ?? null)) {
+        skippedBanned += 1
+        continue
+      }
+      if (audience === 'never_signed_in' && u.last_sign_in_at) continue
+      const email = (u.email ?? '').trim().toLowerCase()
+      if (!email.includes('@')) {
+        skippedNoEmail += 1
+        continue
+      }
+      if (seen.has(email)) continue
+      seen.add(email)
+      emails.push(email)
+    }
+
+    if (users.length < 100) break
+    page += 1
+  }
+
+  return { emails, skippedBanned, skippedNoEmail }
+}
+
+export async function sendCollectiveMemberEmailAction(params: {
+  audience: 'all' | 'never_signed_in'
+  subject: string
+  body: string
+}): Promise<{ ok: true; message: string } | { ok: false; message: string }> {
+  const gate = await requireAdmin()
+  if (!gate.ok) return { ok: false, message: gate.message }
+  if (!isResendConfigured()) {
+    return {
+      ok: false,
+      message: 'RESEND_API_KEY ausente. Configure o Resend na Vercel para enviar e-mails.',
+    }
+  }
+
+  const subject = params.subject.trim().slice(0, 140)
+  const body = params.body.trim().slice(0, 4000)
+  if (subject.length < 4) return { ok: false, message: 'Indique um assunto com pelo menos 4 caracteres.' }
+  if (body.length < 20) return { ok: false, message: 'Escreva uma mensagem com pelo menos 20 caracteres.' }
+  if (params.audience !== 'all' && params.audience !== 'never_signed_in') {
+    return { ok: false, message: 'Destino inválido.' }
+  }
+
+  let emails: string[]
+  try {
+    const listed = await listCollectiveEmailRecipients(params.audience)
+    emails = listed.emails
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err)
+    return { ok: false, message: msg }
+  }
+
+  if (emails.length === 0) {
+    return {
+      ok: false,
+      message:
+        params.audience === 'never_signed_in'
+          ? 'Não há membros sem entrada registrada com e-mail válido.'
+          : 'Não há destinatários com e-mail válido.',
+    }
+  }
+
+  const supabase = await createServerSupabaseClient()
+  const {
+    data: { user: caller },
+  } = await supabase.auth.getUser()
+  const replyTo = caller?.email?.trim() || undefined
+
+  const origin = getPublicSiteOrigin()
+  const bodyHtml = escapeEmailHtml(body).replace(/\n/g, '<br/>')
+  const html = emailLayout({
+    title: escapeEmailHtml(subject),
+    bodyHtml: `<p>${bodyHtml}</p>`,
+    ctaHref: `${origin}/auth`,
+    ctaLabel: 'Entrar no site',
+  })
+  const text = `${body}\n\nEntrar: ${origin}/auth`
+
+  after(async () => {
+    for (const to of emails) {
+      await sendEmail({
+        to,
+        subject,
+        html,
+        text,
+        replyTo,
+      })
+    }
+  })
+
+  const dest =
+    params.audience === 'never_signed_in' ? 'quem ainda não entrou' : 'todos os membros com e-mail'
+  return {
+    ok: true,
+    message: `Envio iniciado para ${emails.length} endereço(s) (${dest}). Respostas chegam ao e-mail do administrador, se o Resend aceitar reply-to.`,
   }
 }
 
@@ -278,25 +422,189 @@ export async function setFormacaoConcluidaByIdAction(
   const admin = getSupabaseAdmin()
   const { data: target, error: findErr } = await admin
     .from('profiles')
-    .select('id, email')
+    .select('id, email, full_name')
     .eq('id', userId)
     .maybeSingle()
 
   if (findErr) return { ok: false, message: findErr.message }
   if (!target) return { ok: false, message: 'Perfil não encontrado.' }
 
+  const now = new Date().toISOString()
   const { error: updateErr } = await admin
     .from('profiles')
     .update({
       formacao_concluida: concluida,
-      updated_at: new Date().toISOString(),
+      formacao_concluida_at: concluida ? now : null,
+      updated_at: now,
     })
     .eq('id', userId)
 
   if (updateErr) return { ok: false, message: updateErr.message }
 
+  if (concluida) {
+    const display = target.full_name?.trim() || target.email
+    after(() => {
+      void notifySiteMessage({
+        kind: 'Formação Manhigut concluída',
+        name: display,
+        email: target.email,
+        message:
+          'Concluiu a Formação Manhigut (Talmid Manhig). Abra /admin → Formação concluída para parabenizar e enviar o diploma por e-mail.',
+      }).catch(() => undefined)
+    })
+  }
+
   const label = concluida ? 'Formação concluída' : 'Formação não concluída'
   return { ok: true, message: `${target.email} → ${label}` }
+}
+
+/** Lista membros com formação Manhigut concluída (para diploma e parabéns). */
+export async function listFormationGraduatesAction(): Promise<
+  { ok: true; graduates: AdminGraduateRow[] } | { ok: false; message: string }
+> {
+  const gate = await requireAdmin()
+  if (!gate.ok) return { ok: false, message: gate.message }
+
+  const admin = getSupabaseAdmin()
+  const { data, error } = await admin
+    .from('profiles')
+    .select('id, email, full_name, is_leader, formacao_concluida_at, updated_at')
+    .eq('formacao_concluida', true)
+    .order('updated_at', { ascending: false })
+    .limit(200)
+
+  if (error) return { ok: false, message: error.message }
+
+  return {
+    ok: true,
+    graduates: (data ?? []).map((p) => ({
+      id: p.id,
+      email: p.email,
+      full_name: p.full_name,
+      is_leader: Boolean(p.is_leader),
+      formacao_concluida_at: p.formacao_concluida_at,
+      updated_at: p.updated_at,
+    })),
+  }
+}
+
+/** Gera o diploma Talmid Manhig em Base64 (download no admin). */
+export async function generateDiplomaBase64Action(
+  userId: string,
+): Promise<{ ok: true; filename: string; base64: string } | { ok: false; message: string }> {
+  const gate = await requireAdmin()
+  if (!gate.ok) return { ok: false, message: gate.message }
+
+  const admin = getSupabaseAdmin()
+  const { data: target, error } = await admin
+    .from('profiles')
+    .select('id, email, full_name, formacao_concluida, formacao_concluida_at')
+    .eq('id', userId)
+    .maybeSingle()
+
+  if (error) return { ok: false, message: error.message }
+  if (!target) return { ok: false, message: 'Perfil não encontrado.' }
+  if (!target.formacao_concluida) {
+    return { ok: false, message: 'Marque a formação como concluída antes de gerar o diploma.' }
+  }
+
+  const concludedAt = target.formacao_concluida_at
+    ? new Date(target.formacao_concluida_at)
+    : new Date()
+
+  const bytes = await generateTalmidManhigDiplomaPdf({
+    fullName: target.full_name?.trim() || target.email,
+    email: target.email,
+    concludedAt,
+  })
+
+  const safeName = (target.full_name?.trim() || 'talmid')
+    .normalize('NFD')
+    .replace(/\p{M}/gu, '')
+    .replace(/[^a-zA-Z0-9_-]+/g, '-')
+    .replace(/-+/g, '-')
+    .slice(0, 40)
+
+  return {
+    ok: true,
+    filename: `Diploma-Talmid-Manhig-${safeName}.pdf`,
+    base64: Buffer.from(bytes).toString('base64'),
+  }
+}
+
+/** Envia diploma personalizado por e-mail (Resend) com mensagem de parabéns. */
+export async function sendDiplomaEmailAction(
+  userId: string,
+): Promise<{ ok: true; message: string } | { ok: false; message: string }> {
+  const gate = await requireAdmin()
+  if (!gate.ok) return { ok: false, message: gate.message }
+
+  const admin = getSupabaseAdmin()
+  const { data: target, error } = await admin
+    .from('profiles')
+    .select('id, email, full_name, formacao_concluida, formacao_concluida_at')
+    .eq('id', userId)
+    .maybeSingle()
+
+  if (error) return { ok: false, message: error.message }
+  if (!target) return { ok: false, message: 'Perfil não encontrado.' }
+  if (!target.formacao_concluida) {
+    return { ok: false, message: 'Marque a formação como concluída antes de enviar o diploma.' }
+  }
+  if (!target.email?.includes('@')) {
+    return { ok: false, message: 'Membro sem e-mail válido.' }
+  }
+
+  const display = target.full_name?.trim() || 'Talmid'
+  const concludedAt = target.formacao_concluida_at
+    ? new Date(target.formacao_concluida_at)
+    : new Date()
+
+  const bytes = await generateTalmidManhigDiplomaPdf({
+    fullName: display,
+    email: target.email,
+    concludedAt,
+  })
+
+  const firstName = display.split(/\s+/)[0] || 'Talmid'
+  const html = emailLayout({
+    title: 'Parabéns, Talmid Manhig!',
+    bodyHtml: `
+      <p>Shalom, <strong>${firstName}</strong>.</p>
+      <p>A Sinagoga Brit Im Mashiach parabeniza você pela conclusão da
+      <strong>Formação Manhigut</strong>. Você recebe o título de
+      <strong>Talmid Manhig</strong>, segundo o Método Rav EBBY.</p>
+      <p>Em anexo está o seu diploma personalizado. Guarde-o com alegria e continue
+      servindo com humildade e fidelidade.</p>
+      <p style="margin-top:20px">Ken Yehi Ratzon<br/><em>Rav.: EBBY</em></p>
+    `,
+    ctaHref: 'https://britimmashiach.com/lideres/painel',
+    ctaLabel: 'Abrir painel de líderes',
+  })
+
+  const sent = await sendEmail({
+    to: target.email,
+    subject: 'Parabéns! Diploma Talmid Manhig — Brit Im Mashiach',
+    html,
+    text: `Shalom, ${firstName}. Parabéns pela conclusão da Formação Manhigut (Talmid Manhig). Seu diploma está em anexo. Rav.: EBBY`,
+    attachments: [
+      {
+        filename: `Diploma-Talmid-Manhig.pdf`,
+        content: Buffer.from(bytes).toString('base64'),
+        contentType: 'application/pdf',
+      },
+    ],
+  })
+
+  if (!sent) {
+    return {
+      ok: false,
+      message:
+        'Não foi possível enviar o e-mail. Verifique RESEND_API_KEY / RESEND_FROM_EMAIL no servidor.',
+    }
+  }
+
+  return { ok: true, message: `Diploma enviado para ${target.email}` }
 }
 
 /** Marca/desmarca Mestre (libera os métodos avançados da Gematria). */
