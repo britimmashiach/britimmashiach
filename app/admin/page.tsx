@@ -64,6 +64,7 @@ export default async function AdminPage() {
           perPage: listResult.perPage,
         }
       : null
+  const membersLoadError = listResult && !listResult.ok ? listResult.message : null
   const graduatesResult = serviceOk ? await listFormationGraduatesAction() : null
   const initialGraduates =
     graduatesResult && graduatesResult.ok ? graduatesResult.graduates : []
@@ -186,6 +187,7 @@ export default async function AdminPage() {
           serviceRoleConfigured={serviceOk}
           currentUserId={user.id}
           initialSnapshot={snapshot}
+          loadError={membersLoadError}
         />
       </section>
 

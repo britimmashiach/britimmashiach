@@ -83,10 +83,12 @@ export function AdminMembersPanel({
   serviceRoleConfigured,
   currentUserId,
   initialSnapshot,
+  loadError,
 }: {
   serviceRoleConfigured: boolean
   currentUserId: string
   initialSnapshot: Snapshot | null
+  loadError?: string | null
 }) {
   const router = useRouter()
   const [members, setMembers] = useState<AdminMemberRow[]>(initialSnapshot?.members ?? [])
@@ -294,6 +296,11 @@ export function AdminMembersPanel({
             ; líder altera <code className="text-[10px] bg-muted px-1 rounded">is_leader</code>
             ; banir bloqueia login; excluir remove a conta (e o perfil se houver CASCADE).
           </p>
+          {loadError && (
+            <p className="mt-2 text-xs font-inter text-red-600 dark:text-red-400">
+              Não foi possível carregar a lista: {loadError}
+            </p>
+          )}
         </div>
         <button
           type="button"
