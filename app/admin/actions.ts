@@ -116,33 +116,35 @@ export async function listMembersAction(
     }
   }
 
+  type ProfileListRow = {
+    id: string
+    email: string
+    full_name: string | null
+    role: UserRole | null
+    is_leader: boolean | null
+    formacao_concluida: boolean | null
+    formacao_concluida_at?: string | null
+    is_mestre: boolean | null
+  }
+
   const selectFull =
     'id, email, full_name, role, is_leader, formacao_concluida, formacao_concluida_at, is_mestre'
   const selectFallback =
     'id, email, full_name, role, is_leader, formacao_concluida, is_mestre'
 
-  let { data: profiles, error: profErr } = await admin.from('profiles').select(selectFull).in('id', ids)
-  if (profErr && missingColumn(profErr.message, 'formacao_concluida_at')) {
-    const retry = await admin.from('profiles').select(selectFallback).in('id', ids)
-    profiles = retry.data
-    profErr = retry.error
-  }
-  if (profErr) return { ok: false, message: profErr.message }
+  const first = await admin.from('profiles').select(selectFull).in('id', ids)
+  const listed =
+    first.error && missingColumn(first.error.message, 'formacao_concluida_at')
+      ? await admin.from('profiles').select(selectFallback).in('id', ids)
+      : first
 
-  const profileMap = new Map((profiles ?? []).map((p) => [p.id, p]))
+  if (listed.error) return { ok: false, message: listed.error.message }
+
+  const profiles = (listed.data ?? []) as ProfileListRow[]
+  const profileMap = new Map(profiles.map((p) => [p.id, p]))
 
   const members: AdminMemberRow[] = users.map((u) => {
-    const p = profileMap.get(u.id) as
-      | {
-          email?: string | null
-          full_name?: string | null
-          role?: UserRole | null
-          is_leader?: boolean | null
-          formacao_concluida?: boolean | null
-          formacao_concluida_at?: string | null
-          is_mestre?: boolean | null
-        }
-      | undefined
+    const p = profileMap.get(u.id)
     const role = (p?.role as UserRole | undefined) ?? 'free'
     return {
       id: u.id,
