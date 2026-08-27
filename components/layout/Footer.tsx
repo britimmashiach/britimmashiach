@@ -94,6 +94,7 @@ export function Footer() {
               {[
                 { href: '/comunidade', label: 'Comunidade viva' },
                 { href: '/premium', label: 'Portões internos' },
+                { href: '/loja-bim', label: 'Loja Brit Im Mashiach' },
                 { href: '/loja', label: 'Acqua Rios' },
                 { href: '/lideres', label: 'Área de Líderes' },
                 { href: '/profile', label: 'Meu Perfil' },

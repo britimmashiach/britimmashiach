@@ -29,6 +29,7 @@ import {
   Languages,
   Landmark,
   ShoppingBag,
+  Shirt,
   HeartHandshake,
   Sparkles,
   Hash,
@@ -46,7 +47,7 @@ type NavItem = {
   href: string
   label: string
   icon: typeof BookOpen
-  accent?: 'gold' | 'shop'
+  accent?: 'gold' | 'shop' | 'merch'
 }
 
 const mainNavLinks: NavItem[] = [
@@ -65,6 +66,7 @@ const mainNavLinks: NavItem[] = [
 
 /** Sempre visíveis no desktop, ao lado da conta — não ficam cortados pelo menu central. */
 const featuredNavLinks: NavItem[] = [
+  { href: '/loja-bim', label: 'Loja BIM', icon: Shirt, accent: 'merch' },
   { href: '/loja', label: 'Acqua Rios', icon: ShoppingBag, accent: 'shop' },
   { href: '/premium', label: 'Premium', icon: Crown, accent: 'gold' },
 ]
@@ -77,6 +79,9 @@ function navLinkClass(accent: NavItem['accent'], isActive: boolean) {
   }
   if (accent === 'shop') {
     return 'text-cyan-700 dark:text-cyan-400 hover:text-cyan-800 dark:hover:text-cyan-300 font-medium'
+  }
+  if (accent === 'merch') {
+    return 'text-petroleum-800 dark:text-gold-400 hover:text-gold-700 dark:hover:text-gold-300 font-medium'
   }
   if (isActive) {
     return 'text-petroleum-800 dark:text-parchment-100 font-semibold'
@@ -204,7 +209,7 @@ export function Header() {
           <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             <nav
               className="hidden md:flex items-center gap-0.5 sm:gap-1 pr-1 border-r border-border/40 mr-0.5"
-              aria-label="Doação, loja e Premium"
+              aria-label="Doação, lojas e Premium"
             >
               <HeaderDonationPix />
               {featuredNavLinks.map(({ href, label, icon: Icon, accent }) => {
@@ -217,6 +222,7 @@ export function Header() {
                       'whitespace-nowrap shrink-0 py-2 text-[13px] font-inter transition-colors duration-150 inline-flex items-center gap-1 px-2 lg:px-2.5 rounded-lg',
                       navLinkClass(accent, isActive),
                       accent === 'shop' && 'hover:bg-cyan-500/10',
+                      accent === 'merch' && 'hover:bg-gold-500/10',
                       accent === 'gold' && 'hover:bg-gold-500/10',
                     )}
                     aria-current={isActive ? 'page' : undefined}

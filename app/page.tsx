@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import Link from 'next/link'
-import { ArrowRight, BookOpen, Calendar, Library, Star, Flame, Crown, ChevronRight, ShoppingBag, DoorOpen, Sparkles, Users } from 'lucide-react'
+import { ArrowRight, BookOpen, Calendar, Library, Star, Flame, Crown, ChevronRight, ShoppingBag, Shirt, DoorOpen, Sparkles, Users } from 'lucide-react'
 import { RAV_NAME, SEO_HOME_DESCRIPTION, SEO_HOME_TITLE, SITE_NAME_ALT } from '@/lib/site-brand'
 import { getPublicSiteOrigin } from '@/lib/public-site-url'
 
@@ -98,6 +98,12 @@ const ecosystemCards = [
     icon: Library,
     title: 'Biblioteca Espiritual',
     description: 'Siddur, Machzor, Tehilim, comentários cabalísticos e obras do Rav.',
+  },
+  {
+    href: '/loja-bim',
+    icon: Shirt,
+    title: 'Loja Brit Im Mashiach',
+    description: 'Camisetas e acessórios da congregação. Vista a aliança no dia a dia.',
   },
   {
     href: '/loja',
@@ -204,6 +210,13 @@ export default async function HomePage() {
                 >
                   Estudos
                   <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                </Link>
+                <Link
+                  href="/loja-bim"
+                  className="text-sm font-inter font-medium text-petroleum-700 dark:text-gold-400 hover:text-gold-600 dark:hover:text-gold-300 transition-colors inline-flex items-center gap-1.5"
+                >
+                  <Shirt className="w-3.5 h-3.5" aria-hidden="true" />
+                  Loja BIM
                 </Link>
                 <Link
                   href="/loja"
@@ -386,7 +399,7 @@ export default async function HomePage() {
           <p className="section-subtitle mt-1">Tudo que você precisa para aprofundar sua caminhada</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {ecosystemCards.map(({ href, icon: Icon, title, description }) => (
             <Link
               key={href}

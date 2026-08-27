@@ -2,12 +2,30 @@ import Link from 'next/link'
 import { shopWhatsAppUrl, SHOP_NAME, SHOP_TAGLINE, SHOP_AVAILABILITY_LABEL } from '@/lib/shop-brand'
 import type { ShopProduct } from '@/lib/shop-products'
 import { ShopLogo } from '@/components/loja/ShopLogo'
-import { Flame } from 'lucide-react'
+import { Flame, type LucideIcon } from 'lucide-react'
 
-export function ProductCard({ product }: { product: ShopProduct }) {
-  const wa = shopWhatsAppUrl(
-    `${SHOP_NAME} — Shalom! Tenho interesse em: ${product.name}.`,
-  )
+type ProductCardProps = {
+  product: ShopProduct
+  href?: string
+  shopName?: string
+  availabilityLabel?: string
+  whatsappUrl?: string
+  PlaceholderIcon?: LucideIcon
+  availabilityClassName?: string
+}
+
+export function ProductCard({
+  product,
+  href = `/loja/${product.slug}`,
+  shopName = SHOP_NAME,
+  availabilityLabel = SHOP_AVAILABILITY_LABEL,
+  whatsappUrl,
+  PlaceholderIcon = Flame,
+  availabilityClassName = 'text-cyan-800 dark:text-cyan-400',
+}: ProductCardProps) {
+  const wa =
+    whatsappUrl ??
+    shopWhatsAppUrl(`${shopName} — Shalom! Tenho interesse em: ${product.name}.`)
 
   return (
     <article className="glass-card overflow-hidden flex flex-col h-full">
@@ -17,7 +35,7 @@ export function ProductCard({ product }: { product: ShopProduct }) {
           <img src={product.imageUrl} alt={product.name} className="w-full h-full object-cover" />
         ) : (
           <div className="text-center space-y-2 p-6">
-            <Flame className="w-10 h-10 mx-auto text-gold-600 dark:text-gold-400 opacity-80" aria-hidden />
+            <PlaceholderIcon className="w-10 h-10 mx-auto text-gold-600 dark:text-gold-400 opacity-80" aria-hidden />
             <p className="text-xs font-inter text-warmgray-500 uppercase tracking-widest">Foto em breve</p>
           </div>
         )}
@@ -34,12 +52,12 @@ export function ProductCard({ product }: { product: ShopProduct }) {
         <p className="text-sm font-inter text-warmgray-600 dark:text-warmgray-400 leading-relaxed flex-1 line-clamp-3">
           {product.description}
         </p>
-        <p className="font-inter text-sm font-medium text-cyan-800 dark:text-cyan-400 italic">
-          {SHOP_AVAILABILITY_LABEL}
+        <p className={`font-inter text-sm font-medium italic ${availabilityClassName}`}>
+          {availabilityLabel}
         </p>
         <div className="flex flex-col gap-2 pt-1">
           <Link
-            href={`/loja/${product.slug}`}
+            href={href}
             className="w-full text-center rounded-lg border border-border py-2.5 text-sm font-inter font-medium hover:bg-muted transition-colors"
           >
             Ver detalhes

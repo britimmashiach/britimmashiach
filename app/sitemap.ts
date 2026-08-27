@@ -7,6 +7,7 @@ import { fetchParashaSlugs } from '@/lib/parashot-supabase'
 import { fetchStudySlugs } from '@/lib/studies-supabase'
 import { getPublicSiteOrigin } from '@/lib/public-site-url'
 import { getShopCatalog } from '@/lib/shop-catalog'
+import { getBimShopCatalog } from '@/lib/bim-shop-products'
 import { getAllEnsinosSlugs } from '@/lib/ensinos-pillars'
 
 /** Sitemap gerado no build — evita timeout em runtime na Vercel. */
@@ -42,6 +43,7 @@ function staticRoutes(origin: string, now: Date): MetadataRoute.Sitemap {
     { url: `${origin}/tehilim`, lastModified: now, changeFrequency: 'weekly', priority: 0.65 },
     { url: `${origin}/premium`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
     { url: `${origin}/loja`, lastModified: now, changeFrequency: 'weekly', priority: 0.55 },
+    { url: `${origin}/loja-bim`, lastModified: now, changeFrequency: 'weekly', priority: 0.56 },
     { url: `${origin}/lideres`, lastModified: now, changeFrequency: 'monthly', priority: 0.45 },
   ]
 }
@@ -129,6 +131,13 @@ async function buildFullSitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.5,
   }))
 
+  const bimShopRoutes: MetadataRoute.Sitemap = getBimShopCatalog().map((p) => ({
+    url: `${origin}/loja-bim/${p.slug}`,
+    lastModified: now,
+    changeFrequency: 'monthly' as const,
+    priority: 0.5,
+  }))
+
   return [
     ...staticRoutes(origin, now),
     ...ensinosRoutes,
@@ -136,6 +145,7 @@ async function buildFullSitemap(): Promise<MetadataRoute.Sitemap> {
     ...studyRoutes,
     ...chagRoutes,
     ...shopRoutes,
+    ...bimShopRoutes,
     ...tanachBookRoutes,
     ...tanachChapterRoutes,
   ]
