@@ -11,12 +11,25 @@ export function AdminColacaoBanner({ isAdmin }: { isAdmin: boolean }) {
   useEffect(() => {
     if (!isAdmin) return
     let cancelled = false
-    void (async () => {
-      const n = await countPendingColacaoAction()
-      if (!cancelled) setCount(n)
-    })()
+
+    const refresh = () => {
+      void countPendingColacaoAction().then((n) => {
+        if (!cancelled) setCount(n)
+      })
+    }
+
+    refresh()
+    const interval = window.setInterval(refresh, 45_000)
+    const onFocus = () => refresh()
+    window.addEventListener('focus', onFocus)
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') refresh()
+    })
+
     return () => {
       cancelled = true
+      window.clearInterval(interval)
+      window.removeEventListener('focus', onFocus)
     }
   }, [isAdmin])
 

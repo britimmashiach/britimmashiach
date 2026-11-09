@@ -159,9 +159,37 @@ export default async function AdminPage() {
           className="rounded-xl border border-amber-500/40 bg-amber-500/10 px-4 py-3 text-sm font-inter text-amber-900 dark:text-amber-100"
         >
           Defina <code className="text-xs bg-background/60 px-1 rounded">SUPABASE_SERVICE_ROLE_KEY</code> na Vercel (Production).
-          Sem ela, as ações de manutenção não funcionam.
+          Sem ela, as ações de manutenção e a fila de colação da Escola não aparecem.
         </div>
       )}
+
+      {serviceOk && initialColacao.length > 0 && (
+        <div
+          role="alert"
+          className="rounded-xl border border-gold-500/50 bg-gold-500/15 px-4 py-4 text-sm font-inter text-petroleum-900 dark:text-parchment-100 flex flex-wrap items-center justify-between gap-3"
+        >
+          <span>
+            <strong>{initialColacao.length}</strong> colação(ões) da Escola aguardando sua assinatura (questionários aptos).
+          </span>
+          <a
+            href="#escola-colacao"
+            className="font-semibold text-petroleum-800 dark:text-gold-400 underline underline-offset-2"
+          >
+            Revisar agora
+          </a>
+        </div>
+      )}
+
+      <section id="escola-colacao" className="space-y-3 scroll-mt-24">
+        <h2 className="font-cinzel text-lg font-semibold text-petroleum-800 dark:text-parchment-100">
+          Escola Rav EBBY · Colação de cursos
+        </h2>
+        <p className="section-subtitle max-w-2xl">
+          Após o questionário, o líder fica apto e aguarda sua assinatura aqui. Ao concluir a última etapa de Manhigut, o
+          diploma e <code className="text-xs bg-muted px-1 rounded">formacao_concluida</code> são liberados na colação.
+        </p>
+        <AdminColacaoPanel serviceRoleConfigured={serviceOk} initialRows={initialColacao} />
+      </section>
 
       <ShlomoStamDownload context="admin" />
 
@@ -193,19 +221,6 @@ export default async function AdminPage() {
           initialSnapshot={snapshot}
           loadError={membersLoadError}
         />
-      </section>
-
-      <section id="escola-colacao" className="space-y-3 scroll-mt-24">
-        <h2 className="font-cinzel text-lg font-semibold text-petroleum-800 dark:text-parchment-100">
-          Escola Rav EBBY · Colação de cursos
-        </h2>
-        <p className="section-subtitle max-w-2xl">
-          Após o questionário, o membro fica apto e aguarda sua assinatura. A faixa dourada no topo do site permanece até
-          você aprovar ou rejeitar. Ao concluir a última etapa de Manhigut, o diploma e{' '}
-          <code className="text-xs bg-muted px-1 rounded">formacao_concluida</code> são liberados automaticamente
-          na colação.
-        </p>
-        <AdminColacaoPanel serviceRoleConfigured={serviceOk} initialRows={initialColacao} />
       </section>
 
       <section className="space-y-3">

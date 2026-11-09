@@ -2,6 +2,7 @@
 
 import { createServerSupabaseClient, hasSupabaseServerEnv } from '@/lib/supabase-server'
 import { getSupabaseAdmin, hasServiceRoleEnv } from '@/lib/supabase-admin'
+import { notifyAdminsEscolaColacao } from '@/lib/escola-admin-notify'
 import { scoreQuestionnaire } from '@/lib/escola-questionnaire'
 import type { EscolaQuestionnaire } from '@/lib/escola-questionnaire'
 
@@ -246,14 +247,42 @@ export async function submitEscolaQuizAction(
     }
   }
 
-  await admin.from('escola_colacao_queue').insert({
-    user_id: gate.userId,
-    course_id: course.id,
-    stage_id: stage.id,
-    attempt_id: attempt.id,
-    kind: 'stage',
-    status: 'pending',
-  })
+  const { count: pendingSameStage } = await admin
+    .from('escola_colacao_queue')
+    .select('id', { count: 'exact', head: true })
+    .eq('user_id', gate.userId)
+    .eq('stage_id', stage.id)
+    .eq('status', 'pending')
+
+  if ((pendingSameStage ?? 0) === 0) {
+    await admin.from('escola_colacao_queue').insert({
+      user_id: gate.userId,
+      course_id: course.id,
+      stage_id: stage.id,
+      attempt_id: attempt.id,
+      kind: 'stage',
+      status: 'pending',
+    })
+
+    const { data: courseRow } = await admin
+      .from('escola_courses')
+      .select('title')
+      .eq('id', course.id)
+      .single()
+    const { data: profile } = await admin
+      .from('profiles')
+      .select('full_name, email')
+      .eq('id', gate.userId)
+      .single()
+
+    void notifyAdminsEscolaColacao(admin, {
+      learnerName: profile?.full_name ?? null,
+      learnerEmail: profile?.email ?? '',
+      courseTitle: courseRow?.title ?? course.slug,
+      stageTitle: stage.title,
+      scorePct,
+    })
+  }
 
   return {
     ok: true,
