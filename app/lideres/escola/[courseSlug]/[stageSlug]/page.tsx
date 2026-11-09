@@ -5,6 +5,8 @@ import { getSupabaseAdmin, hasServiceRoleEnv } from '@/lib/supabase-admin'
 import { EscolaQuizForm } from '@/components/lideres/EscolaQuizForm'
 import { RichMarkdown } from '@/components/ui/RichMarkdown'
 import { getEscolaStudyMarkdown } from '@/lib/escola-study-content'
+import { fetchManhigutModuleBySlug } from '@/lib/leader-modules-supabase'
+import { prepareManhigutMarkdownForDisplay } from '@/lib/manhigut-content'
 import { getEscolaStageUserStatus } from '@/lib/escola-stage-attempt-status'
 import type { EscolaQuestionnaire } from '@/lib/escola-questionnaire'
 
@@ -50,6 +52,12 @@ export default async function LideresEscolaStagePage({ params }: Props) {
 
   const userStatus = await getEscolaStageUserStatus(admin, user.id, stage.id)
   const study = getEscolaStudyMarkdown(courseSlug, stageSlug, stage.stage_number, stage.title)
+  if (courseSlug === 'manhigut' && study.manhigutReadUrl) {
+    const mod = await fetchManhigutModuleBySlug(stageSlug, user.id)
+    if (mod?.content) {
+      study.markdown = prepareManhigutMarkdownForDisplay(mod.content)
+    }
+  }
   const questionnaire = stage.questionnaire as EscolaQuestionnaire
 
   return (

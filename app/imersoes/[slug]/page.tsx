@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { Users, ListChecks, ShieldCheck } from 'lucide-react'
 import { getPublicSiteOrigin } from '@/lib/public-site-url'
@@ -119,12 +120,19 @@ export default async function ImersaoPage({ params }: PageProps) {
           </div>
           <div className="grid gap-3 sm:grid-cols-2">
             {imersao.steps.map((step, idx) => (
-              <div key={step.title} className="rounded-xl border border-border/50 bg-card/40 p-5">
+              <Link
+                key={step.title}
+                href={`/imersoes/${imersao.slug}/etapa/${idx + 1}`}
+                className="rounded-xl border border-border/50 bg-card/40 p-5 block transition-colors hover:border-gold-500/40 hover:bg-gold-500/5"
+              >
                 <p className="font-cinzel text-sm font-semibold text-gold-700 dark:text-gold-400 mb-1">
                   {idx + 1}. {step.title}
                 </p>
                 <p className="font-inter text-sm leading-relaxed text-foreground/90">{step.text}</p>
-              </div>
+                <p className="mt-3 text-xs font-inter font-semibold text-petroleum-700 dark:text-gold-400">
+                  Abrir estudo completo →
+                </p>
+              </Link>
             ))}
           </div>
         </section>
