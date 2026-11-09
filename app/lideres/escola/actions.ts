@@ -3,6 +3,7 @@
 import { createServerSupabaseClient, hasSupabaseServerEnv } from '@/lib/supabase-server'
 import { getSupabaseAdmin, hasServiceRoleEnv } from '@/lib/supabase-admin'
 import { notifyAdminsEscolaColacao } from '@/lib/escola-admin-notify'
+import { getEscolaStageUserStatus } from '@/lib/escola-stage-attempt-status'
 import { scoreQuestionnaire } from '@/lib/escola-questionnaire'
 import type { EscolaQuestionnaire } from '@/lib/escola-questionnaire'
 
@@ -217,6 +218,14 @@ export async function submitEscolaQuizAction(
   }
   if (stage.stage_number > enrollment.highest_unlocked_stage) {
     return { ok: false, message: 'Conclua as etapas anteriores antes desta.' }
+  }
+
+  const attemptState = await getEscolaStageUserStatus(admin, gate.userId, stage.id)
+  if (attemptState.kind === 'approved') {
+    return { ok: false, message: 'Esta etapa já está APROVADA. Avance para a próxima quando liberada.' }
+  }
+  if (attemptState.kind === 'awaiting_colacao') {
+    return { ok: false, message: 'Você já está apto nesta etapa. Aguarde a colação do Rav.' }
   }
 
   const questionnaire = stage.questionnaire as EscolaQuestionnaire

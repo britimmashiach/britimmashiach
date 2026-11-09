@@ -5,6 +5,7 @@ export async function fetchEscolaStageBySlug(
   courseSlug: string,
   stageSlug: string,
 ): Promise<{
+  stageId: string
   stageNumber: number
   title: string
   questionnaire: EscolaQuestionnaire
@@ -17,13 +18,14 @@ export async function fetchEscolaStageBySlug(
 
   const { data: stage } = await admin
     .from('escola_course_stages')
-    .select('stage_number, title, questionnaire')
+    .select('id, stage_number, title, questionnaire')
     .eq('course_id', course.id)
     .eq('slug', stageSlug)
     .maybeSingle()
 
   if (!stage) return null
   return {
+    stageId: stage.id,
     stageNumber: stage.stage_number,
     title: stage.title,
     questionnaire: stage.questionnaire as EscolaQuestionnaire,

@@ -5,7 +5,10 @@
 import { MANHIGUT_CURRICULUM } from '@/lib/manhigut-curriculum'
 import { IMERSOES } from '@/lib/imersoes-content'
 import type { EscolaQuestionnaire } from '@/lib/escola-questionnaire'
-import { defaultQuestionnaireForStage } from '@/lib/escola-questionnaire'
+import { avodatHanefeshQuestionnaire } from '@/lib/escola-questionnaires/avodat-hanefesh'
+import { ieclCuraQuestionnaire } from '@/lib/escola-questionnaires/iecl-cura'
+import { ieclLibertacaoQuestionnaire } from '@/lib/escola-questionnaires/iecl-libertacao'
+import { manhigutQuestionnaire } from '@/lib/escola-questionnaires/manhigut'
 
 export type EscolaCatalogStage = {
   stageNumber: number
@@ -37,7 +40,7 @@ function avodatStages(): EscolaCatalogStage[] {
       slug: `modulo-${String(n).padStart(2, '0')}`,
       title: step.title,
       subtitle: step.text.slice(0, 180),
-      questionnaire: defaultQuestionnaireForStage(step.title, step.text),
+      questionnaire: avodatHanefeshQuestionnaire(n),
     }
   })
 }
@@ -51,7 +54,7 @@ function ieclCuraStages(): EscolaCatalogStage[] {
       slug: `fase-${String(n).padStart(2, '0')}`,
       title: step.title,
       subtitle: step.text.slice(0, 180),
-      questionnaire: defaultQuestionnaireForStage(step.title, step.text),
+      questionnaire: ieclCuraQuestionnaire(n),
     }
   })
 }
@@ -82,7 +85,7 @@ function ieclLibertacaoStages(): EscolaCatalogStage[] {
       slug: `libertacao-${String(n).padStart(2, '0')}`,
       title: t.title,
       subtitle: t.subtitle,
-      questionnaire: defaultQuestionnaireForStage(t.title, t.subtitle),
+      questionnaire: ieclLibertacaoQuestionnaire(n),
     }
   })
 }
@@ -93,7 +96,7 @@ function manhigutStages(): EscolaCatalogStage[] {
     slug: m.slug,
     title: m.title,
     subtitle: m.subtitle,
-    questionnaire: defaultQuestionnaireForStage(m.title, m.subtitle),
+    questionnaire: manhigutQuestionnaire(m.monthNum, m.title),
   }))
 }
 

@@ -5,7 +5,9 @@ import { ArrowLeft, Clock, GraduationCap } from 'lucide-react'
 import { LeaderPortalGuard } from '@/components/leaders/LeaderPortalGuard'
 import { EscolaQuizForm } from '@/components/lideres/EscolaQuizForm'
 import { fetchEscolaManhigutAccess, resolveEscolaModuleGate } from '@/lib/escola-manhigut-access'
-import { fetchEscolaStageBySlug, userHasPendingColacaoForStage } from '@/lib/escola-stage-content'
+import { fetchEscolaStageBySlug } from '@/lib/escola-stage-content'
+import { getEscolaStageUserStatus } from '@/lib/escola-stage-attempt-status'
+import { getSupabaseAdmin } from '@/lib/supabase-admin'
 import { ensureEscolaEnrollmentsAction } from '@/app/lideres/escola/actions'
 import { ManhigutSalutation } from '@/components/leaders/ManhigutSalutation'
 import { RichMarkdown } from '@/components/ui/RichMarkdown'
@@ -114,8 +116,10 @@ async function ModuleReader({
   }
 
   const stageMeta = await fetchEscolaStageBySlug('manhigut', slug)
-  const pendingColacao =
-    userId != null ? await userHasPendingColacaoForStage(userId, 'manhigut', slug) : false
+  const userStatus =
+    userId != null && stageMeta
+      ? await getEscolaStageUserStatus(getSupabaseAdmin(), userId, stageMeta.stageId)
+      : { kind: 'open' as const }
 
   return (
     <div className="container mx-auto px-4 py-10 max-w-3xl">
@@ -184,12 +188,13 @@ async function ModuleReader({
         </h2>
         {!escola.ready || !stageMeta ? (
           <p className="text-sm text-warmgray-500">Questionário indisponível neste ambiente.</p>
-        ) : pendingColacao ? (
-          <p className="text-sm text-amber-700 dark:text-amber-400">
-            Você já está apto nesta etapa. Aguarde a colação do Rav para avançar ao próximo mês.
-          </p>
         ) : (
-          <EscolaQuizForm courseSlug="manhigut" stageSlug={slug} questionnaire={stageMeta.questionnaire} />
+          <EscolaQuizForm
+            courseSlug="manhigut"
+            stageSlug={slug}
+            questionnaire={stageMeta.questionnaire}
+            userStatus={userStatus}
+          />
         )}
       </section>
     </div>
