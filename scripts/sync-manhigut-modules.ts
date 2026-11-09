@@ -9,6 +9,7 @@
 import { createClient } from '@supabase/supabase-js'
 import { readdir, readFile } from 'fs/promises'
 import { join, resolve } from 'path'
+import { stripMekorotAcharonimFromManhigut } from '../lib/manhigut-content'
 import { getCurriculumByMonth } from '../lib/manhigut-curriculum'
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -76,7 +77,7 @@ async function main() {
     }
 
     const raw = await readFile(join(dir, file), 'utf-8')
-    const content = stripCoverLines(raw)
+    const content = stripMekorotAcharonimFromManhigut(stripCoverLines(raw))
     const title = parseTitle(raw, curriculum.title)
     const subtitleMatch = raw.match(/^\*\*(Módulo.+?)\*\*/m)
     const excerpt = extractExcerpt(raw)

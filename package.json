@@ -15,6 +15,8 @@
     "sync:aliyah1": "tsx --env-file=.env.local scripts/sync-aliyah1-content.ts",
     "sync:seo": "npm run sync:pardes && npm run sync:aliyot",
     "sync:manhigut": "tsx --env-file=.env.local scripts/sync-manhigut-modules.ts",
+    "apply:escola-migration": "tsx --env-file=.env.local scripts/apply-escola-courses-migration.mjs",
+    "seed:escola": "tsx --env-file=.env.local scripts/seed-escola-courses.ts",
     "check:sitemap": "tsx --env-file=.env.local scripts/check-sitemap.ts",
     "check:tanach-audio": "tsx scripts/validate-mechon-coverage.ts",
     "check:auth": "tsx --env-file=.env.local scripts/check-auth-config.ts",

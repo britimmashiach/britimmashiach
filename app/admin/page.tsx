@@ -15,6 +15,8 @@ import {
 import { PromoteUserPanel } from '@/components/admin/PromoteUserPanel'
 import { AdminMembersPanel } from '@/components/admin/AdminMembersPanel'
 import { AdminGraduatesPanel } from '@/components/admin/AdminGraduatesPanel'
+import { AdminColacaoPanel } from '@/components/admin/AdminColacaoPanel'
+import { listPendingColacaoAction } from '@/app/admin/escola-actions'
 import { ShopAdminPanel } from '@/components/admin/ShopAdminPanel'
 import { InboxAdminPanel } from '@/components/admin/InboxAdminPanel'
 import {
@@ -68,6 +70,8 @@ export default async function AdminPage() {
   const graduatesResult = serviceOk ? await listFormationGraduatesAction() : null
   const initialGraduates =
     graduatesResult && graduatesResult.ok ? graduatesResult.graduates : []
+  const colacaoResult = serviceOk ? await listPendingColacaoAction() : null
+  const initialColacao = colacaoResult && colacaoResult.ok ? colacaoResult.rows : []
 
   let announcements: AdminAnnouncementRow[] = []
   let resources: AdminResourceRow[] = []
@@ -189,6 +193,19 @@ export default async function AdminPage() {
           initialSnapshot={snapshot}
           loadError={membersLoadError}
         />
+      </section>
+
+      <section id="escola-colacao" className="space-y-3 scroll-mt-24">
+        <h2 className="font-cinzel text-lg font-semibold text-petroleum-800 dark:text-parchment-100">
+          Escola Rav EBBY · Colação de cursos
+        </h2>
+        <p className="section-subtitle max-w-2xl">
+          Após o questionário, o membro fica apto e aguarda sua assinatura. A faixa dourada no topo do site permanece até
+          você aprovar ou rejeitar. Ao concluir a última etapa de Manhigut, o diploma e{' '}
+          <code className="text-xs bg-muted px-1 rounded">formacao_concluida</code> são liberados automaticamente
+          na colação.
+        </p>
+        <AdminColacaoPanel serviceRoleConfigured={serviceOk} initialRows={initialColacao} />
       </section>
 
       <section className="space-y-3">

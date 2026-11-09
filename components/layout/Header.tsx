@@ -38,6 +38,7 @@ import { useState, useEffect } from 'react'
 import { cn } from '@/lib/utils'
 import { SiteLogo } from '@/components/layout/SiteLogo'
 import { NotificationBell } from '@/components/layout/NotificationBell'
+import { AdminColacaoBanner } from '@/components/admin/AdminColacaoBanner'
 import { HeaderDonationPix } from '@/components/layout/HeaderDonationPix'
 import { useProfile } from '@/hooks/useProfile'
 import type { SessionDisplay } from '@/lib/session-display'
@@ -176,7 +177,11 @@ export function Header() {
   const authLoadingSlot = <div className="h-9 w-9 rounded-full bg-muted animate-pulse shrink-0" aria-hidden="true" />
   const isDark = mounted && resolvedTheme === 'dark'
 
+  const isAdmin = sessionDisplay?.role === 'admin'
+
   return (
+    <>
+    <AdminColacaoBanner isAdmin={isAdmin} />
     <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm relative">
       <div
         className="absolute bottom-0 inset-x-0 h-px pointer-events-none"
@@ -494,5 +499,6 @@ export function Header() {
         )}
       </div>
     </header>
+    </>
   )
 }

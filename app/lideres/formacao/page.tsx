@@ -13,6 +13,9 @@ import { getAuthSnapshot } from '@/lib/auth-snapshot'
 import { fetchManhigutModulesForLeader } from '@/lib/leader-modules-supabase'
 import { MANHIGUT_PROGRAM } from '@/lib/manhigut-curriculum'
 import { getManhigutProgressFromProfile } from '@/lib/manhigut-progress'
+import { fetchEscolaManhigutAccess } from '@/lib/escola-manhigut-access'
+import { ensureEscolaEnrollmentsAction } from '@/app/lideres/escola/actions'
+import { EscolaManhigutStatus } from '@/components/leaders/EscolaManhigutStatus'
 
 export const metadata: Metadata = {
   title: 'Formação Manhigut',
@@ -44,6 +47,8 @@ async function FormacaoContent({
   firstName: string
   progress: ReturnType<typeof getManhigutProgressFromProfile>
 }) {
+  await ensureEscolaEnrollmentsAction()
+  const escola = await fetchEscolaManhigutAccess(userId)
   const modules = await fetchManhigutModulesForLeader(userId)
   const availableCount = modules.filter((m) => m.status === 'available').length
 
@@ -76,20 +81,20 @@ async function FormacaoContent({
       <section className="container mx-auto px-4 py-10 max-w-4xl space-y-8">
         <ManhigutPastoralNote />
         {progress.bypassMonthGate && <ManhigutAdminInspectNote />}
-        <ManhigutMonthStatus progress={progress} />
+        <EscolaManhigutStatus escola={escola} />
         <ManhigutSequentialStudyCard />
         <ManhigutStageProgress availableCount={availableCount} />
-        <ManhigutAvailableNow modules={modules} progress={progress} />
+        <ManhigutAvailableNow modules={modules} escola={escola} />
         <div className="space-y-2 pt-2">
           <h2 className="font-cinzel text-lg font-semibold text-petroleum-800 dark:text-parchment-100">
             Grade completa · 24 meses
           </h2>
           <p className="text-sm font-inter text-warmgray-500 dark:text-warmgray-400">
-            Visão do programa inteiro. Módulos à frente do seu mês civil aparecem com aviso; módulos ainda
-            sem texto completo permanecem bloqueados até nova publicação do Rav EBBY.
+            Visão do programa inteiro. Só a etapa liberada (após colação) pode ser aberta. Questionário ao final
+            de cada módulo.
           </p>
         </div>
-        <ManhigutCurriculumGrid modules={modules} progress={progress} />
+        <ManhigutCurriculumGrid modules={modules} escola={escola} />
       </section>
     </div>
   )

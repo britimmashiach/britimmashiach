@@ -1,24 +1,19 @@
 import Link from 'next/link'
 import { BookOpen, Sparkles } from 'lucide-react'
 import type { ManhigutModule } from '@/lib/leader-modules-supabase'
-import {
-  getManhigutModuleAccess,
-  type ManhigutProgress,
-} from '@/lib/manhigut-progress'
+import { resolveEscolaModuleGate, type EscolaManhigutAccess } from '@/lib/escola-manhigut-access'
 
 interface Props {
   modules: ManhigutModule[]
-  progress: ManhigutProgress
+  escola: EscolaManhigutAccess
 }
 
-export function ManhigutAvailableNow({ modules, progress }: Props) {
+export function ManhigutAvailableNow({ modules, escola }: Props) {
   const published = modules
     .filter((m) => m.status === 'available')
     .sort((a, b) => a.monthNum - b.monthNum)
 
-  const open = published.filter(
-    (m) => getManhigutModuleAccess(m.monthNum, true, progress) === 'open',
-  )
+  const open = published.filter((m) => resolveEscolaModuleGate(m.monthNum, true, escola) === 'open')
 
   if (published.length === 0) return null
 
@@ -31,11 +26,15 @@ export function ManhigutAvailableNow({ modules, progress }: Props) {
             Disponível agora
           </p>
           <h2 className="font-cinzel text-xl font-semibold text-petroleum-800 dark:text-parchment-100">
-            {open.length} módulo(s) liberado(s) para o seu mês atual
+            {open.length} módulo(s) liberado(s) na sua etapa atual
           </h2>
           <p className="text-sm font-inter text-warmgray-600 dark:text-warmgray-400 leading-relaxed max-w-2xl">
-            Leia na ordem numérica. Módulos publicados mas ainda à frente do seu ciclo aparecem bloqueados
-            até o mês civil correspondente.
+            Leia e envie o questionário na ordem numérica. A próxima etapa só abre após a colação do Rav.
+            Antes do Manhigut, conclua Avodat HaNefesh em{' '}
+            <Link href="/lideres/escola" className="text-gold-700 dark:text-gold-400 underline">
+              Cursos da Escola
+            </Link>
+            .
           </p>
         </div>
       </div>
@@ -70,8 +69,9 @@ export function ManhigutAvailableNow({ modules, progress }: Props) {
         </ol>
       ) : (
         <p className="text-sm font-inter text-warmgray-600 dark:text-warmgray-400">
-          Nenhum módulo novo neste mês civil. Continue revisando o mês atual ou aguarde a próxima
-          liberação do calendário.
+          {!escola.avodatCompleted
+            ? 'Conclua Avodat HaNefesh em /lideres/escola para iniciar o Mês 01 do Manhigut.'
+            : 'Envie o questionário da etapa atual e aguarde a colação do Rav para avançar.'}
         </p>
       )}
     </section>

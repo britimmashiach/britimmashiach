@@ -782,6 +782,231 @@ export interface Database {
         }
         Relationships: []
       }
+      escola_courses: {
+        Row: {
+          id: string
+          slug: string
+          title: string
+          certification_title: string
+          subtitle: string
+          audience: string
+          prerequisite_course_id: string | null
+          sort_order: number
+          requires_leader: boolean
+          profile_flag_on_complete: string | null
+          is_published: boolean
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          slug: string
+          title: string
+          certification_title: string
+          subtitle?: string
+          audience?: string
+          prerequisite_course_id?: string | null
+          sort_order?: number
+          requires_leader?: boolean
+          profile_flag_on_complete?: string | null
+          is_published?: boolean
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          slug?: string
+          title?: string
+          certification_title?: string
+          subtitle?: string
+          audience?: string
+          prerequisite_course_id?: string | null
+          sort_order?: number
+          requires_leader?: boolean
+          profile_flag_on_complete?: string | null
+          is_published?: boolean
+          created_at?: string
+        }
+        Relationships: []
+      }
+      escola_course_stages: {
+        Row: {
+          id: string
+          course_id: string
+          stage_number: number
+          slug: string
+          title: string
+          subtitle: string
+          passing_score_pct: number
+          questionnaire: Json
+        }
+        Insert: {
+          id?: string
+          course_id: string
+          stage_number: number
+          slug: string
+          title: string
+          subtitle?: string
+          passing_score_pct?: number
+          questionnaire?: Json
+        }
+        Update: {
+          id?: string
+          course_id?: string
+          stage_number?: number
+          slug?: string
+          title?: string
+          subtitle?: string
+          passing_score_pct?: number
+          questionnaire?: Json
+        }
+        Relationships: []
+      }
+      escola_enrollments: {
+        Row: {
+          id: string
+          user_id: string
+          course_id: string
+          highest_unlocked_stage: number
+          status: 'active' | 'completed'
+          started_at: string
+          completed_at: string | null
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          course_id: string
+          highest_unlocked_stage?: number
+          status?: 'active' | 'completed'
+          started_at?: string
+          completed_at?: string | null
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          course_id?: string
+          highest_unlocked_stage?: number
+          status?: 'active' | 'completed'
+          started_at?: string
+          completed_at?: string | null
+        }
+        Relationships: []
+      }
+      escola_stage_attempts: {
+        Row: {
+          id: string
+          user_id: string
+          stage_id: string
+          answers: Json
+          score_pct: number
+          is_apt: boolean
+          status: 'submitted' | 'awaiting_colacao' | 'approved' | 'rejected'
+          submitted_at: string
+          reviewed_at: string | null
+          reviewed_by: string | null
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          stage_id: string
+          answers?: Record<string, string>
+          score_pct?: number
+          is_apt?: boolean
+          status?: 'submitted' | 'awaiting_colacao' | 'approved' | 'rejected'
+          submitted_at?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          stage_id?: string
+          answers?: Record<string, string>
+          score_pct?: number
+          is_apt?: boolean
+          status?: 'submitted' | 'awaiting_colacao' | 'approved' | 'rejected'
+          submitted_at?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+        }
+        Relationships: []
+      }
+      escola_colacao_queue: {
+        Row: {
+          id: string
+          user_id: string
+          course_id: string
+          stage_id: string
+          attempt_id: string
+          kind: 'stage' | 'course_diploma'
+          status: 'pending' | 'approved' | 'rejected'
+          created_at: string
+          resolved_at: string | null
+          resolved_by: string | null
+          admin_note: string | null
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          course_id: string
+          stage_id: string
+          attempt_id: string
+          kind?: 'stage' | 'course_diploma'
+          status?: 'pending' | 'approved' | 'rejected'
+          created_at?: string
+          resolved_at?: string | null
+          resolved_by?: string | null
+          admin_note?: string | null
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          course_id?: string
+          stage_id?: string
+          attempt_id?: string
+          kind?: 'stage' | 'course_diploma'
+          status?: 'pending' | 'approved' | 'rejected'
+          created_at?: string
+          resolved_at?: string | null
+          resolved_by?: string | null
+          admin_note?: string | null
+        }
+        Relationships: []
+      }
+      escola_diplomas: {
+        Row: {
+          id: string
+          user_id: string
+          course_id: string
+          colacao_id: string | null
+          certificate_code: string
+          course_title: string
+          certification_title: string
+          issued_at: string
+          issued_by: string | null
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          course_id: string
+          colacao_id?: string | null
+          certificate_code: string
+          course_title: string
+          certification_title: string
+          issued_at?: string
+          issued_by?: string | null
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          course_id?: string
+          colacao_id?: string | null
+          certificate_code?: string
+          course_title?: string
+          certification_title?: string
+          issued_at?: string
+          issued_by?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

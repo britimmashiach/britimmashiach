@@ -26,11 +26,19 @@ export const dynamic = 'force-dynamic'
 const resources = [
   {
     icon: GraduationCap,
+    title: 'Cursos da Escola (colação)',
+    text: 'Avodat HaNefesh, Manhigut e IECL em etapas sequenciais, com questionário e colação do Rav.',
+    href: '/lideres/escola',
+    cta: 'Abrir cursos',
+    featured: true,
+  },
+  {
+    icon: GraduationCap,
     title: 'Formação Manhigut',
-    text: 'Beit Midrash do Manhig: vinte e quatro módulos kabalísticos para líderes, com reverência à jornada evangélica e profundidade rabínica.',
+    text: 'Beit Midrash do Manhig: leitura dos vinte e quatro módulos kabalísticos.',
     href: '/lideres/formacao',
     cta: 'Abrir formação',
-    featured: true,
+    featured: false,
   },
   {
     icon: FileText,

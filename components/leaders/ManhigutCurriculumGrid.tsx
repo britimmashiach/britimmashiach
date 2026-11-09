@@ -3,25 +3,25 @@ import { Lock, BookOpen, CheckCircle2, CalendarClock } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { ManhigutModule } from '@/lib/leader-modules-supabase'
 import {
-  getManhigutModuleAccess,
-  type ManhigutProgress,
-} from '@/lib/manhigut-progress'
+  resolveEscolaModuleGate,
+  type EscolaManhigutAccess,
+} from '@/lib/escola-manhigut-access'
 import { STAGE_LABELS, type ManhigutStage } from '@/lib/manhigut-curriculum'
 
 interface Props {
   modules: ManhigutModule[]
-  progress: ManhigutProgress
+  escola: EscolaManhigutAccess
 }
 
 const STAGE_ORDER: ManhigutStage[] = [1, 2, 3, 4]
 
-export function ManhigutCurriculumGrid({ modules, progress }: Props) {
+export function ManhigutCurriculumGrid({ modules, escola }: Props) {
   return (
     <div className="space-y-10">
       {STAGE_ORDER.map((stage) => {
         const stageModules = modules.filter((m) => m.stage === stage)
         const openCount = stageModules.filter(
-          (m) => getManhigutModuleAccess(m.monthNum, m.status === 'available', progress) === 'open',
+          (m) => resolveEscolaModuleGate(m.monthNum, m.status === 'available', escola) === 'open',
         ).length
         return (
           <section key={stage} aria-labelledby={`stage-${stage}`}>
@@ -45,7 +45,7 @@ export function ManhigutCurriculumGrid({ modules, progress }: Props) {
             <ul className="grid gap-3 sm:grid-cols-2">
               {stageModules.map((mod) => (
                 <li key={mod.slug}>
-                  <ModuleCard module={mod} progress={progress} />
+                  <ModuleCard module={mod} escola={escola} />
                 </li>
               ))}
             </ul>
@@ -56,12 +56,8 @@ export function ManhigutCurriculumGrid({ modules, progress }: Props) {
   )
 }
 
-function ModuleCard({ module, progress }: { module: ManhigutModule; progress: ManhigutProgress }) {
-  const access = getManhigutModuleAccess(
-    module.monthNum,
-    module.status === 'available',
-    progress,
-  )
+function ModuleCard({ module, escola }: { module: ManhigutModule; escola: EscolaManhigutAccess }) {
+  const access = resolveEscolaModuleGate(module.monthNum, module.status === 'available', escola)
   const isOpen = access === 'open'
 
   const inner = (
@@ -73,7 +69,7 @@ function ModuleCard({ module, progress }: { module: ManhigutModule; progress: Ma
         </span>
         {isOpen ? (
           <CheckCircle2 className="w-4 h-4 text-green-600 dark:text-green-400 shrink-0" aria-hidden />
-        ) : access === 'ahead' ? (
+        ) : access === 'ahead' || access === 'locked_prerequisite' ? (
           <CalendarClock className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" aria-hidden />
         ) : (
           <Lock className="w-4 h-4 text-warmgray-400 shrink-0" aria-hidden />
@@ -90,9 +86,13 @@ function ModuleCard({ module, progress }: { module: ManhigutModule; progress: Ma
           <BookOpen className="w-3 h-3" aria-hidden />
           Abrir módulo →
         </span>
+      ) : access === 'locked_prerequisite' ? (
+        <span className="text-xs font-inter text-amber-700 dark:text-amber-400 mt-auto pt-2">
+          Conclua Avodat HaNefesh em /lideres/escola antes do Manhigut
+        </span>
       ) : access === 'ahead' ? (
         <span className="text-xs font-inter text-amber-700 dark:text-amber-400 mt-auto pt-2">
-          Seu ciclo chegará ao Mês {String(module.monthNum).padStart(2, '0')} · toque para orientação
+          Conclua e receba colação do Rav nas etapas anteriores
         </span>
       ) : (
         <span className="text-xs font-inter text-warmgray-400 mt-auto pt-2">
@@ -102,15 +102,13 @@ function ModuleCard({ module, progress }: { module: ManhigutModule; progress: Ma
     </>
   )
 
-  if (isOpen || access === 'ahead') {
+  if (isOpen) {
     return (
       <Link
         href={`/lideres/formacao/${module.slug}`}
         className={cn(
           'glass-card p-4 h-full flex flex-col gap-2 transition-colors',
-          isOpen
-            ? 'hover:border-gold-500/30 hover:bg-gold-500/5'
-            : 'opacity-90 hover:border-amber-500/30',
+          'hover:border-gold-500/30 hover:bg-gold-500/5',
         )}
       >
         {inner}

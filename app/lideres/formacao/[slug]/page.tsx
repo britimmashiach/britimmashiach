@@ -3,15 +3,16 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ArrowLeft, Clock, GraduationCap } from 'lucide-react'
 import { LeaderPortalGuard } from '@/components/leaders/LeaderPortalGuard'
-import { ManhigutModuleAheadGate } from '@/components/leaders/ManhigutModuleAheadGate'
+import { EscolaQuizForm } from '@/components/lideres/EscolaQuizForm'
+import { fetchEscolaManhigutAccess, resolveEscolaModuleGate } from '@/lib/escola-manhigut-access'
+import { fetchEscolaStageBySlug, userHasPendingColacaoForStage } from '@/lib/escola-stage-content'
+import { ensureEscolaEnrollmentsAction } from '@/app/lideres/escola/actions'
 import { ManhigutSalutation } from '@/components/leaders/ManhigutSalutation'
 import { RichMarkdown } from '@/components/ui/RichMarkdown'
 import { getAuthSnapshot } from '@/lib/auth-snapshot'
 import { fetchManhigutModuleBySlug, fetchManhigutModuleSlugs } from '@/lib/leader-modules-supabase'
 import { prepareManhigutMarkdownForDisplay } from '@/lib/manhigut-content'
 import { getCurriculumBySlug } from '@/lib/manhigut-curriculum'
-import { getManhigutModuleAccess, getManhigutProgressFromProfile } from '@/lib/manhigut-progress'
-
 export const dynamic = 'force-dynamic'
 
 export async function generateStaticParams() {
@@ -47,7 +48,6 @@ export default async function ManhigutModulePage({ params }: { params: Promise<{
         slug={slug}
         userId={auth.user?.id ?? null}
         firstName={auth.sessionDisplay?.firstName ?? null}
-        progress={getManhigutProgressFromProfile(auth.profile)}
       />
     </LeaderPortalGuard>
   )
@@ -57,13 +57,13 @@ async function ModuleReader({
   slug,
   userId,
   firstName,
-  progress,
 }: {
   slug: string
   userId: string | null
   firstName: string | null
-  progress: ReturnType<typeof getManhigutProgressFromProfile>
 }) {
+  await ensureEscolaEnrollmentsAction()
+  const escola = await fetchEscolaManhigutAccess(userId)
   const mod = await fetchManhigutModuleBySlug(slug, userId)
   const displayContent = mod ? prepareManhigutMarkdownForDisplay(mod.content) : ''
 
@@ -91,10 +91,31 @@ async function ModuleReader({
     )
   }
 
-  const access = getManhigutModuleAccess(mod.monthNum, true, progress)
-  if (access === 'ahead') {
-    return <ManhigutModuleAheadGate requestedMonth={mod.monthNum} progress={progress} />
+  const escolaGate = resolveEscolaModuleGate(mod.monthNum, mod.status === 'available', escola)
+  if (escolaGate === 'ahead' || escolaGate === 'locked_prerequisite') {
+    return (
+      <div className="container mx-auto px-4 py-10 max-w-3xl space-y-4">
+        <Link href="/lideres/formacao" className="text-sm text-gold-700 dark:text-gold-400">
+          ← Voltar à formação
+        </Link>
+        <div className="glass-card p-8 space-y-3">
+          <h1 className="font-cinzel text-xl">Etapa bloqueada</h1>
+          <p className="text-sm text-warmgray-600 dark:text-warmgray-400">
+            {escolaGate === 'locked_prerequisite'
+              ? 'Conclua Avodat HaNefesh em /lideres/escola antes de abrir este módulo do Manhigut.'
+              : `O Mês ${String(mod.monthNum).padStart(2, '0')} só libera após colação do Rav na etapa anterior.`}
+          </p>
+          <Link href="/lideres/escola" className="text-sm font-semibold text-gold-700 dark:text-gold-400">
+            Ir para Cursos da Escola
+          </Link>
+        </div>
+      </div>
+    )
   }
+
+  const stageMeta = await fetchEscolaStageBySlug('manhigut', slug)
+  const pendingColacao =
+    userId != null ? await userHasPendingColacaoForStage(userId, 'manhigut', slug) : false
 
   return (
     <div className="container mx-auto px-4 py-10 max-w-3xl">
@@ -156,6 +177,21 @@ async function ModuleReader({
           </p>
         </div>
       </div>
+
+      <section className="mt-12 pt-8 border-t border-border space-y-4" aria-labelledby="avaliacao-modulo">
+        <h2 id="avaliacao-modulo" className="font-cinzel text-xl text-petroleum-800 dark:text-parchment-100">
+          Avaliação desta etapa
+        </h2>
+        {!escola.ready || !stageMeta ? (
+          <p className="text-sm text-warmgray-500">Questionário indisponível neste ambiente.</p>
+        ) : pendingColacao ? (
+          <p className="text-sm text-amber-700 dark:text-amber-400">
+            Você já está apto nesta etapa. Aguarde a colação do Rav para avançar ao próximo mês.
+          </p>
+        ) : (
+          <EscolaQuizForm courseSlug="manhigut" stageSlug={slug} questionnaire={stageMeta.questionnaire} />
+        )}
+      </section>
     </div>
   )
 }
